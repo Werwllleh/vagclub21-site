@@ -1,0 +1,20 @@
+.header {
+  padding: 2.4rem 0;
+  background-color: transparent;
+  transition: background-color $transition;
+  z-index: 99;
+
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  &__logo {
+    display: flex;
+    max-width: 20rem;
+    width: 100%;
+  }
+
+}

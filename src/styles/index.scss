@@ -1,0 +1,15 @@
+@import "variables";
+@import "breakpoints";
+@import "base";
+
+//components
+@import "./components/index";
+
+//icons
+//@import "./components/icons/index";
+
+
+@import "./pages/index";
+
+
+@import "global";
