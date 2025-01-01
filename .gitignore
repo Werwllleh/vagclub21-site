@@ -13,6 +13,7 @@
 !.yarn/versions
 
 ecosystem.config.js
+.env
 
 # testing
 /coverage
