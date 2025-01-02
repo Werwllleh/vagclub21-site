@@ -1,11 +1,12 @@
 import "@/styles/index.scss";
+import SnowMode from "@/components/snow-mode";
 
 export const metadata = {
   title: "VAGCLUB21 - Скоро открытие!",
   description: "Клубный сайт самого лучшего автомобильного сообщества в г. Чебоксары",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children}) {
 
   // console.log(process.env.NODE_ENV)
 
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
             <div>
               <img
                 src={`https://mc.yandex.ru/watch/${process.env.NEXT_PUBLIC_YM_ID}`}
-                style={{ position: "absolute", left: "-9999px" }}
+                style={{position: "absolute", left: "-9999px"}}
                 alt=""
               />
             </div>
@@ -43,7 +44,10 @@ export default function RootLayout({ children }) {
         </>
       )}
     </head>
-    <body>{children}</body>
+    <body>
+      <SnowMode />
+      {children}
+    </body>
     </html>
   );
 }
