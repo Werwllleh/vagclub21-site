@@ -1,5 +1,8 @@
 import "@/styles/index.scss";
 import SnowMode from "@/components/snow-mode";
+import Providers from "@/app/providers";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata = {
   title: "VAGCLUB21-Сайт авто сообщества в Чебоксарах!",
@@ -46,8 +49,12 @@ export default function RootLayout({children}) {
       )}
     </head>
     <body>
+    <Providers>
+      <Header/>
+      <main>{children}</main>
+      <Footer/>
+    </Providers>
     {/*<SnowMode/>*/}
-    {children}
     </body>
     </html>
   );

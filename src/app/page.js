@@ -1,29 +1,23 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import SocialLinks from "@/components/social-links";
-
+import {Button} from "antd";
 
 export default function Home() {
-  
+
   return (
-    <>
-      <Header/>
-      <main>
-        <div className="page-soon">
-          <div className="container">
-            <div className="page-soon__body">
-              <div className="page-soon__information">
-                <h1 className="page-soon__title">Сайт в разработке</h1>
-                <div className="page-soon__links">
-                  <p className="page-soon__links-text">Вступайте в нашу беседу и подписывайтесь на соц. сети</p>
-                  <SocialLinks />
-                </div>
-              </div>
-            </div>
+    <div className="page page-main">
+      <div className="container">
+        <section className="page-main__about">
+          <div className="page-main__about_image">
+            <img src={"/images/sections/about/cars.jpg"} alt="cars"/>
           </div>
-        </div>
-      </main>
-      <Footer/>
-    </>
+          <div className="page-main__about_description">
+            <h3>Автомобильное сообщество VAGCLUB21</h3>
+            <p>SAIC-Volkswagen Co., Ltd. («SAIC-Volkswagen») — совместное китайско-германское предприятие, управляемое
+              компаниями SAIC Motor и Volkswagen Group. Компания подписала контракт и заложила первый камень в фундамент
+              в октябре 1984 года. Это одно из старейших совместных автомобильных предприятий в Китае. </p>
+            <Button>Подробнее</Button>
+          </div>
+        </section>
+      </div>
+    </div>
   );
 }
