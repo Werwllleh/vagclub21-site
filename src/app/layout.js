@@ -2,18 +2,19 @@ import "@/styles/index.scss";
 import SnowMode from "@/components/snow-mode";
 
 export const metadata = {
-  title: "VAGCLUB21 - Скоро открытие!",
-  description: "Клубный сайт самого лучшего автомобильного сообщества в г. Чебоксары",
+  title: "VAGCLUB21-Сайт авто сообщества в Чебоксарах!",
+  description: "Клубный сайт авто сообщества в Чебоксарах, где автолюбители могут делиться опытом, участвовать в мероприятиях и общаться.",
+  keywords: "VAGCLUB21, автомобильный клуб, Чебоксары, автосообщество, автолюбители, мероприятия, автомобили",
 };
 
 export default function RootLayout({children}) {
 
-  // console.log(process.env.NODE_ENV)
-
   return (
     <html lang="ru">
     <head>
-      {process.env.NODE_ENV === "production" && (
+      <link rel="canonical" href="https://vagclub21.ru/"/>
+      <meta name="yandex-verification" content="e1783a4d4e4edd5b"/>
+      {process.env.START_MODE === "production" && (
         <>
           <script
             dangerouslySetInnerHTML={{
@@ -45,8 +46,8 @@ export default function RootLayout({children}) {
       )}
     </head>
     <body>
-      <SnowMode />
-      {children}
+    {/*<SnowMode/>*/}
+    {children}
     </body>
     </html>
   );
