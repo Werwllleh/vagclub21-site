@@ -3,5 +3,31 @@
 
 .footer {
   margin: auto 0 0 0;
-  padding: 3rem 0;
+  padding: 2.4rem 0;
+  background-color: variables.$colorPrimaryDark;
+
+  &__body {
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    align-items: center;
+  }
+
+  &__logo {
+    svg {
+      .main-logo__symbol {
+        fill: variables.$white;
+      }
+    }
+  }
+
+  &__date {
+    user-select: none;
+    pointer-events: none;
+    color: variables.$white;
+    opacity: .65;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.8rem;
+    letter-spacing: 0.55rem;
+  }
 }

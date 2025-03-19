@@ -1,0 +1,60 @@
+@use "../variables";
+
+.products {
+
+  &__list{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__item {
+    position: relative;
+    flex: 0 1 25%;
+    border-radius: variables.$borderRadius15;
+    overflow: hidden;
+    height: 34.5rem;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    &_title {
+      position: absolute;
+      bottom: 2rem;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      display: inline-flex;
+      justify-content: center;
+      text-align: center;
+      color: variables.$white;
+      font-weight: 500;
+      font-size: 2.2rem;
+    }
+
+    &_link {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+    &_image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &_noimage {}
+  }
+}

@@ -1,0 +1,58 @@
+@use "../variables";
+
+.page-main {
+
+  &__products {
+    padding: 5rem 0;
+    margin: 0 0 5rem 0;
+
+    h3 {
+      text-align: center;
+      margin: 0 0 6rem 0;
+    }
+
+  }
+
+  &__about {
+    padding: 10rem 0 12rem;
+    background-color: variables.$colorSecondary;
+
+    &_body {
+      display: flex;
+      align-items: stretch;
+      gap: 6rem;
+    }
+
+    &_image {
+      max-width: 63rem;
+      width: 100%;
+
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: variables.$borderRadius15;
+        overflow: hidden;
+      }
+    }
+
+    &_description {
+      flex: 0 1 65%;
+      min-width: 45rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+
+      h3 {
+      }
+
+      p {
+      }
+
+      button {
+        max-width: 22.5rem;
+      }
+    }
+  }
+}

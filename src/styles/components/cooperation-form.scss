@@ -1,0 +1,42 @@
+@use "../variables";
+
+.cooperation-form {
+  background-color: variables.$colorPrimaryDark;
+  padding: 10rem 0;
+
+  &__body {}
+
+  &__title {
+    color: variables.$white;
+    text-align: center;
+  }
+
+  &__form {
+    margin: 6rem 0 0 0;
+    display: flex;
+    align-items: stretch;
+    gap: 3rem;
+
+    .ant-form-item {
+      flex: 1;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  &__note {
+    margin: 2.5rem 0 0 0;
+    font-weight: 300;
+    font-size: 14px;
+    text-align: center;
+    color: variables.$white;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: .35rem;
+    }
+  }
+}

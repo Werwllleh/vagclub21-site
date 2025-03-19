@@ -1,8 +1,10 @@
 @use "../variables";
 
 .header {
+  position: sticky;
+  top: 0;
   padding: 2.4rem 0;
-  background-color: transparent;
+  background-color: variables.$white;
   transition: background-color variables.$transition;
   z-index: 99;
 
