@@ -48,6 +48,16 @@
       height: 100%;
       z-index: 0;
 
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #00000030;
+      }
+
       img {
         object-fit: cover;
         width: 100%;
