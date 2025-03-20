@@ -1,4 +1,5 @@
 @use "../variables";
+@use "../breakpoints";
 
 .page-main {
 
@@ -21,11 +22,19 @@
       display: flex;
       align-items: stretch;
       gap: 6rem;
+
+      @include breakpoints.xxl {
+        gap: 2rem;
+      }
     }
 
     &_image {
       max-width: 63rem;
       width: 100%;
+
+      @include breakpoints.lg {
+        display: none;
+      }
 
 
       img {
@@ -44,13 +53,18 @@
       flex-direction: column;
       gap: 4rem;
 
+      @include breakpoints.lg {
+        flex: 1;
+        min-width: auto;
+      }
+
       h3 {
       }
 
       p {
       }
 
-      button {
+      a {
         max-width: 22.5rem;
       }
     }

@@ -1,11 +1,16 @@
 import {Button} from "antd";
 import CooperationForm from "@/components/cooperation-form";
 import Products from "@/components/blocks/products";
+import MainSlider from "@/components/blocks/main-slider/main-slider";
+import Link from "next/link";
 
 export default function Home() {
 
   return (
     <div className="page page-main">
+      <section className="page-main__slider">
+        <MainSlider />
+      </section>
       <section className="page-main__products">
         <h3>Атрибутика клуба</h3>
         <div className="container"><Products /></div>
@@ -25,7 +30,7 @@ export default function Home() {
                 компаниями SAIC Motor и Volkswagen Group. Компания подписала контракт и заложила первый камень в
                 фундамент
                 в октябре 1984 года. Это одно из старейших совместных автомобильных предприятий в Китае. </p>
-              <Button className="style-btn">Подробнее</Button>
+              <Link href={"/about"} className="style-btn style-btn-default">Подробнее</Link>
             </div>
           </div>
         </div>

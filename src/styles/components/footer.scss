@@ -3,7 +3,7 @@
 
 .footer {
   margin: auto 0 0 0;
-  padding: 2.4rem 0;
+  padding-block: clamp(1.8rem, 2vw, 2.4rem);
   background-color: variables.$colorPrimaryDark;
 
   &__body {
@@ -13,6 +13,9 @@
   }
 
   &__logo {
+
+    max-width: clamp(14rem, 12vw, 20rem);
+
     svg {
       .main-logo__symbol {
         fill: variables.$white;
@@ -27,7 +30,7 @@
     opacity: .65;
     text-align: center;
     font-weight: 600;
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
     letter-spacing: 0.55rem;
   }
 }

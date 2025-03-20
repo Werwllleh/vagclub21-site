@@ -3,7 +3,7 @@
 .header {
   position: sticky;
   top: 0;
-  padding: 2.4rem 0;
+  padding-block: clamp(1.8rem, 2vw, 2.4rem);
   background-color: variables.$white;
   transition: background-color variables.$transition;
   z-index: 99;
@@ -17,7 +17,7 @@
 
   &__logo {
     display: flex;
-    max-width: 20rem;
+    max-width: clamp(14rem, 12vw, 20rem);
     width: 100%;
   }
 

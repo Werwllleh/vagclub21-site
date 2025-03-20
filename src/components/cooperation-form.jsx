@@ -17,7 +17,7 @@ const CooperationForm = () => {
     <div className="cooperation-form">
       <div className="container">
         <div className="cooperation-form__body">
-          <h3 className="cooperation-form__title">Оставьте заявку на партнерство с нами</h3>
+          <h3 className="cooperation-form__title">Оставьте заявку на&nbsp;партнерство с&nbsp;нами</h3>
           <Form
             className="cooperation-form__form"
             requiredMark={false}
@@ -52,7 +52,7 @@ const CooperationForm = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Button className="style-btn" type="primary" htmlType="submit">
+              <Button className="style-btn style-btn-primary" type="primary" htmlType="submit">
                 Отправить
               </Button>
             </Form.Item>
@@ -60,7 +60,7 @@ const CooperationForm = () => {
           <p className="cooperation-form__note">
             Нажимая на&nbsp;кнопку, вы&nbsp;даете согласие на&nbsp;обработку персональных данных и&nbsp;соглашаетесь
             с&nbsp;
-            <Link href={'/'} target='_blank'>политикой конфиденциальности</Link>
+            <Link href={"/policy"} target='_blank'>политикой конфиденциальности</Link>
           </p>
         </div>
       </div>

@@ -1,54 +1,61 @@
 @use "breakpoints";
 @use "variables";
 
+.page {
+  overflow-x: hidden;
+}
+
 .title {
   font-weight: 600;
-  font-size: 4rem;
+  font-size: clamp(3.2rem, 5vw, 4rem);
   color: variables.$black;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: clamp(4.5rem, 4vw, 7rem);
 }
 
 h3 {
   font-weight: 600;
-  font-size: 4rem;
+  font-size: clamp(3.2rem, 4vw, 4rem);
   color: variables.$black;
-
-  @include breakpoints.xxl {
-    font-size: 3.5rem;
-  }
-
-  @include breakpoints.xl {
-    font-size: 3.2rem;
-  }
-
-  @include breakpoints.lg {
-    font-size: 2.8rem;
-  }
-
-  @include breakpoints.md {
-    font-size: 2.6rem;
-  }
-
-  @include breakpoints.sm {
-    font-size: 2.4rem;
-  }
-
 }
 
 .text {
   font-weight: 400;
-  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 4vw, 1.6rem);
   line-height: 1.5;
   color: variables.$black;
 }
 
 .style-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem 1rem;
-  font-size: 1.8rem;
+  padding: 1.1rem 2rem;
+  font-size: clamp(1.6rem, 2vw, 1.8rem);
   font-weight: 500;
   border-radius: variables.$borderRadius5;
+  color: inherit;
+  transition: background-color variables.$transition, border-color variables.$transition, color variables.$transition;
+
+  &-primary {
+    border: 1px solid variables.$colorPrimary;
+    background-color: variables.$colorPrimary;
+    color: variables.$white;
+  }
+
+  &-default {
+    border: 1px solid variables.$colorPrimary;
+    background-color: variables.$white;
+    color: variables.$colorPrimaryDark;
+
+    &:hover {
+      background-color: variables.$colorPrimary;
+      color: variables.$white;
+    }
+  }
 }
 
 .ant-btn {

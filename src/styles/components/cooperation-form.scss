@@ -1,4 +1,5 @@
 @use "../variables";
+@use "../breakpoints";
 
 .cooperation-form {
   background-color: variables.$colorPrimaryDark;
@@ -16,6 +17,16 @@
     display: flex;
     align-items: stretch;
     gap: 3rem;
+    transition: gap variables.$transition;
+
+    @include breakpoints.xxl {
+      gap: 1rem;
+    }
+
+    @include breakpoints.md {
+      gap: 2rem;
+      flex-direction: column;
+    }
 
     .ant-form-item {
       flex: 1;
@@ -29,9 +40,10 @@
   &__note {
     margin: 2.5rem 0 0 0;
     font-weight: 300;
-    font-size: 14px;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
     text-align: center;
     color: variables.$white;
+
 
     a {
       color: inherit;
