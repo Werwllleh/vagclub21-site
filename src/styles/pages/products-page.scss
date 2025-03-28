@@ -1,0 +1,34 @@
+@use "../breakpoints";
+@use "../variables";
+
+
+.products-page {
+
+  &__title {}
+
+  &__grid {
+    margin: 2rem 0 0 0;
+    display: grid;
+    grid-template-columns: 20rem 1fr;
+    gap: 2rem;
+  }
+
+  &__filter {
+    position: sticky;
+    top: 2rem;
+  }
+
+  &__content {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include breakpoints.lg {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include breakpoints.sm {
+      grid-template-columns: 1fr;
+    }
+  }
+}
