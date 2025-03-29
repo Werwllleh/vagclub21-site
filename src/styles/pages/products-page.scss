@@ -4,18 +4,23 @@
 
 .products-page {
 
+
   &__title {}
 
   &__grid {
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 5rem;
     display: grid;
-    grid-template-columns: 20rem 1fr;
+    grid-template-columns: 30rem 1fr;
     gap: 2rem;
   }
 
   &__filter {
-    position: sticky;
-    top: 2rem;
+
+
+    .products-filter {
+      position: sticky;
+      top: 2rem;
+    }
   }
 
   &__content {

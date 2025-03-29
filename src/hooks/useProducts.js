@@ -12,3 +12,15 @@ export function useProducts() {
     products: data?.data ? Object.values(data.data) : null,
   }
 }
+
+export function useProductsTypes() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['products-types'],
+    queryFn: () => productsService.fetchProductsTypes(),
+  })
+
+  return {
+    isLoading,
+    types: data?.data ? data.data : null,
+  }
+}

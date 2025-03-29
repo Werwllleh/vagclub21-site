@@ -1,13 +1,11 @@
 'use client'
-import ProductsFilter from "@/components/products-filter";
+import ProductsFilter from "@/components/products/products-filter";
 import {useProducts} from "@/hooks/useProducts";
 import ProductItem from "@/components/products/product-item";
 
 const Products = () => {
 
   const {isLoading, products} = useProducts();
-
-  console.log(products)
 
   return (
     <div className="products-page page">
@@ -22,7 +20,7 @@ const Products = () => {
               <>
                 {products.length ? (
                   <>
-                    {products.map((product) => <ProductItem product={product} />)}
+                    {products.map((product) => <ProductItem key={product.documentId} product={product} />)}
                   </>
                 ) : 'No products'}
               </>
