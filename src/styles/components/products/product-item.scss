@@ -4,7 +4,15 @@
   position: relative;
   border-radius: variables.$borderRadius5;
   border: 1px solid variables.$grey-light;
-  overflow: hidden;
+
+  &:hover {
+    .product-item__image {
+      img {
+        animation: img-shaking variables.$transition;
+      }
+
+    }
+  }
 
   &__body {
     display: flex;
@@ -12,39 +20,21 @@
     height: 100%;
   }
 
-  &__images {
-    position: relative;
-    border-radius: variables.$borderRadius5;
+  &__image {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .swiper {
-
-      .swiper-slide {
-        position: relative;
-        width: 100% !important;
-        padding: 2rem 0 3rem;
-        background-color: variables.$white;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-          height: 35rem;
-          object-fit: contain;
-          pointer-events: none;
-          user-select: none;
-          border-radius: variables.$borderRadius5;
-          overflow: hidden;
-        }
-      }
-
-      .swiper-pagination {
-        bottom: 1rem;
-
-        .swiper-pagination-bullet-active {
-          background-color: variables.$colorPrimary;
-        }
-      }
+    img {
+      height: 100%;
+      max-height: 30rem;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      border-radius: variables.$borderRadius5;
+      overflow: hidden;
+      transition: transform variables.$transition;
     }
 
   }
@@ -76,19 +66,38 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    line-height: 1;
 
-    span {
-      &:nth-child(1) {
-        font-weight: 300;
-        font-size: 1.8rem;
-      }
+    &_current {
+      font-weight: 500;
+      font-size: 2.2rem;
+      color: variables.$red;
+    }
 
-      &:nth-child(2) {
-        font-weight: 500;
-        font-size: 1.8rem;
-        color: variables.$red;
+    &_old {
+      font-weight: 300;
+      font-size: 1.6rem;
+      position: relative;
+      color: #737373;
+      padding: 0 .5rem;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto 0;
+        width: 100%;
+        height: .2rem;
+        background-color: #e60303;
       }
     }
+
+  }
+
+  &__button {
+
   }
 
   &__link {
@@ -98,4 +107,12 @@
     width: 100%;
     height: 100%;
   }
+}
+
+@keyframes img-shaking {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(.5rem, .5rem) rotate(5deg); }
+  50% { transform: translate(0, 0) rotate(0); }
+  75% { transform: translate(-.5rem, .5rem) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
 }

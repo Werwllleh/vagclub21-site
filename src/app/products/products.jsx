@@ -8,7 +8,7 @@ const Products = () => {
   const {isLoading, products} = useProducts();
 
   return (
-    <div className="products-page page">
+    <div className="products-page">
       <div className="container">
         <h1 className="products-page__title">Клубная атрибутика</h1>
         <div className="products-page__grid">

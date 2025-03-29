@@ -2,6 +2,7 @@ export const theme = {
   token: {
     colorPrimary: '#004c9d',
     borderRadius: 5,
+    fontFamily: 'Montserrat", sans-serif',
   },
   components: {
     Button: {
@@ -22,6 +23,9 @@ export const theme = {
       activeShadow: 'none',
       inputFontSize: '1.6rem',
       borderRadius: '.5rem',
+    },
+    Checkbox: {
+      lineHeight: '1.3',
     }
   }
 }

@@ -4,7 +4,6 @@
 
 .products-page {
 
-
   &__title {}
 
   &__grid {
@@ -12,10 +11,26 @@
     display: grid;
     grid-template-columns: 30rem 1fr;
     gap: 2rem;
+
+    @include breakpoints.lg {
+      grid-template-columns: 20rem 1fr;
+    }
+
+    @include breakpoints.md {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__filter {
 
+    @include breakpoints.md {
+      position: fixed;
+      width: 100%;
+      top: auto;
+      left: 0;
+      bottom: 0;
+      transform: translateY(100%);
+    }
 
     .products-filter {
       position: sticky;
@@ -30,10 +45,6 @@
 
     @include breakpoints.lg {
       grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include breakpoints.sm {
-      grid-template-columns: 1fr;
     }
   }
 }

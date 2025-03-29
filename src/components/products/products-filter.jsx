@@ -16,9 +16,10 @@ const ProductsFilter = () => {
   return (
     <div className="products-filter">
       <div className="products-filter__body">
-        <div className="products-filter__category">
-          {!!types.length && types.map((type) => (
-            <Checkbox value={type} onChange={onChange}>{type}</Checkbox>
+        <div className="products-filter__categories">
+          <h4>Категории</h4>
+          {!!types?.length && types.map((type) => (
+            <Checkbox key={type} value={type} onChange={onChange}>{type}</Checkbox>
           ))}
         </div>
       </div>

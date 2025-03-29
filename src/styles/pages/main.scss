@@ -2,6 +2,7 @@
 @use "../breakpoints";
 
 .page-main {
+  padding: 0 !important;
 
   &__products {
     padding: 5rem 0;

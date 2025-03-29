@@ -6,6 +6,10 @@ class ProductsService {
     return axiosCmsClassic.get(`/products`)
   }
 
+  async fetchProduct(slug) {
+    return axiosCmsClassic.get(`/products/${slug}`)
+  }
+
   async fetchProductsTypes() {
     return axiosCmsClassic.get(`/products-types`)
   }

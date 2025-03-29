@@ -13,6 +13,18 @@ export function useProducts() {
   }
 }
 
+export function useProduct(slug) {
+  const { data, isLoading } = useQuery({
+    queryKey: ['product'],
+    queryFn: () => productsService.fetchProduct(slug),
+  })
+
+  return {
+    isLoading,
+    product: data?.data ? data.data : null,
+  }
+}
+
 export function useProductsTypes() {
   const { data, isLoading } = useQuery({
     queryKey: ['products-types'],
