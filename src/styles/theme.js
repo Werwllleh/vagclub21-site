@@ -1,8 +1,7 @@
 export const theme = {
   token: {
     colorPrimary: '#004c9d',
-    borderRadius: 5,
-    fontFamily: 'Montserrat", sans-serif',
+    fontFamily: "Montserrat",
   },
   components: {
     Button: {
@@ -12,17 +11,18 @@ export const theme = {
       defaultColor: '#004c9d',
       defaultHoverColor: '#ffffff',
       defaultShadow: 'none',
-      borderRadius: '.5rem',
-      borderRadiusLG: '.5rem',
+      borderRadius: 5,
+      borderRadiusLG: 5,
       fontWeight: 500,
-      fontSize: '1.6rem',
+      fontSize: 16,
       controlHeight: 'auto',
       primaryShadow: 'none',
     },
     Input: {
       activeShadow: 'none',
-      inputFontSize: '1.6rem',
-      borderRadius: '.5rem',
+      inputFontSize: 16,
+      borderRadius: 5,
+      paddingInline: 5,
     },
     Checkbox: {
       lineHeight: '1.3',

@@ -32,7 +32,7 @@ const CooperationForm = () => {
                   message: 'Введите ваше имя',
                 }
               ]}>
-              <Input placeholder="Ваше имя" allowClear/>
+              <Input placeholder="Ваше имя" allowClear />
             </Form.Item>
             <Form.Item
               name="phone"
@@ -48,11 +48,12 @@ const CooperationForm = () => {
               ]}
             >
               <MaskedInput
+                type={"tel"}
                 mask="+7 (000)-000-00-00"
               />
             </Form.Item>
             <Form.Item>
-              <Button className="style-btn style-btn-primary" type="primary" htmlType="submit">
+              <Button className="cooperation-form__submit style-btn style-btn-primary" type="primary" htmlType="submit">
                 Отправить
               </Button>
             </Form.Item>

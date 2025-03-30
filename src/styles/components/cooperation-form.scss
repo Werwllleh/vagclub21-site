@@ -16,6 +16,7 @@
     margin: 6rem 0 0 0;
     display: flex;
     align-items: stretch;
+    justify-content: space-between;
     gap: 3rem;
     transition: gap variables.$transition;
 
@@ -30,11 +31,23 @@
 
     .ant-form-item {
       flex: 1;
-
-      button {
-        width: 100%;
-      }
+      //height: 4.2rem;
     }
+    input {
+      //height: 4.2rem;
+      background-color: variables.$white;
+    }
+
+    .ant-form-item-explain-error {
+      color: variables.$white;
+      font-weight: 500;
+      font-size: clamp(1.3rem, 3vw, 1.5rem);
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    padding: 1.2rem 2rem !important;
   }
 
   &__note {

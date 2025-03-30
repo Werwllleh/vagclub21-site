@@ -1,28 +1,28 @@
 export const products = [
   {
     title: 'Наклейки',
-    url: '?type=stickers',
+    url: '?type=наклейка',
     image: 'stickers.jpg',
     active: true,
     label: 'Скоро'
   },
   {
     title: 'Ароматизаторы',
-    url: '?type=aromatizers',
+    url: '?type=ароматизатор',
     image: 'aromatizers.jpg',
     active: true,
     label: 'Скоро'
   },
   {
     title: 'Мерч',
-    url: '?type=merch',
+    url: '?type=мерч',
     image: 'merch.jpg',
     active: false,
     label: 'Скоро'
   },
   {
     title: 'Номерные рамки',
-    url: '?type=number-frames',
+    url: '?type=номерные-рамки',
     image: 'number-frames.jpg',
     active: false,
     label: 'Скоро'

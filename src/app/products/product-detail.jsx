@@ -15,8 +15,6 @@ const ProductDetail = ({slug}) => {
 
   const {isLoading, product} = useProduct(slug);
 
-  console.log(product);
-
   return (
     <div className="product-detail">
       <div className="container">

@@ -3,8 +3,6 @@ import Link from "next/link";
 
 const MainSliderCard = ({data}) => {
 
-  console.log(data)
-
   return (
     <div
       style={{backgroundColor: data.bgColor, color: data.textColor}}
