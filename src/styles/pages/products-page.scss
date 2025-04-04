@@ -9,19 +9,21 @@
   &__grid {
     margin: 2rem 0 5rem;
     display: grid;
-    grid-template-columns: 30rem 1fr;
+    //grid-template-columns: 30rem 1fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
 
-    @include breakpoints.lg {
+    /*@include breakpoints.lg {
       grid-template-columns: 20rem 1fr;
     }
 
     @include breakpoints.md {
       grid-template-columns: 1fr;
-    }
+    }*/
   }
 
   &__filter {
+    display: none;
     position: relative;
 
     @include breakpoints.md {

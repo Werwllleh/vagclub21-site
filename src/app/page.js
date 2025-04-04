@@ -1,4 +1,3 @@
-import {Button} from "antd";
 import CooperationForm from "@/components/cooperation-form";
 import Products from "@/components/blocks/products";
 import MainSlider from "@/components/blocks/main-slider/main-slider";

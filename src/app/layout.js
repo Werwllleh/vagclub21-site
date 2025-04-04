@@ -3,10 +3,11 @@ import SnowMode from "@/components/snow-mode";
 import Providers from "@/app/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import {PUBLIC_PAGES} from "@/config/pages/public.config";
 
 export const metadata = {
-  title: "VAGCLUB21-Сайт авто сообщества в Чебоксарах!",
-  description: "Клубный сайт авто сообщества в Чебоксарах, где автолюбители могут делиться опытом, участвовать в мероприятиях и общаться.",
+  title: PUBLIC_PAGES.HOME.SEO_TITLE,
+  description: PUBLIC_PAGES.HOME.SEO_DESCRIPTION,
   keywords: "VAGCLUB21, автомобильный клуб, Чебоксары, автосообщество, автолюбители, мероприятия, автомобили",
 };
 

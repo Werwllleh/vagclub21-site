@@ -11,7 +11,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="container">
         <div className="footer__body">
-          <Link href={PUBLIC_PAGES.HOME} className="footer__logo">
+          <Link href={PUBLIC_PAGES.HOME.URL} className="footer__logo">
             <MainLogo/>
           </Link>
           <div className="footer__date">{dayjs().year()}</div>
