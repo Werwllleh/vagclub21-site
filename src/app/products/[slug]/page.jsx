@@ -1,6 +1,6 @@
 import ProductDetail from "@/app/products/product-detail";
 
-const ProductItemPage = async ({ params }) => {
+const Page = async ({ params }) => {
 
   const { slug } = await params;
 
@@ -11,4 +11,4 @@ const ProductItemPage = async ({ params }) => {
   );
 };
 
-export default ProductItemPage;
+export default Page;

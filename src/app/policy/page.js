@@ -1,6 +1,12 @@
 import React from 'react';
+import {PUBLIC_PAGES} from "@/config/pages/public.config";
 
-const Policy = () => {
+export const metadata = {
+  title: PUBLIC_PAGES.POLICY.SEO_TITLE,
+  description: PUBLIC_PAGES.POLICY.SEO_DESCRIPTION,
+};
+
+const Page = () => {
   return (
     <div>
       Политика
@@ -8,4 +14,4 @@ const Policy = () => {
   );
 };
 
-export default Policy;
+export default Page;

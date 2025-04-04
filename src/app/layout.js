@@ -4,6 +4,7 @@ import Providers from "@/app/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
+import {Suspense} from "react";
 
 export const metadata = {
   title: PUBLIC_PAGES.HOME.SEO_TITLE,
@@ -52,7 +53,11 @@ export default function RootLayout({children}) {
     <body>
     <Providers>
       <Header/>
-      <main>{children}</main>
+      <main>
+        <Suspense fallback={null}>
+          {children}
+        </Suspense>
+      </main>
       <Footer/>
     </Providers>
     {/*<SnowMode/>*/}

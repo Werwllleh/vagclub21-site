@@ -1,11 +1,12 @@
-import React from 'react';
 import Products from "@/app/products/products";
+import {PUBLIC_PAGES} from "@/config/pages/public.config";
 
 export const metadata = {
-  title: 'Клубная атрибутика VagClub21'
-}
+  title: PUBLIC_PAGES.PRODUCTS.SEO_TITLE,
+  description: PUBLIC_PAGES.PRODUCTS.SEO_DESCRIPTION,
+};
 
-const ProductsPage = () => {
+const Page = () => {
   return (
     <div className="page">
       <Products />
@@ -13,4 +14,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default Page;

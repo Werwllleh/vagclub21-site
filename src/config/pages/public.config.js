@@ -35,6 +35,13 @@ class PublicPages {
     SEO_DESCRIPTION: 'VAGClub21 | Контакты',
     URL: '/contacts'
   }
+  POLICY = {
+    TITLE: 'Политика',
+    SEO_TITLE: 'VAGClub21 | Политика пользовательского соглашения',
+    SEO_DESCRIPTION: 'VAGClub21 | Политика пользовательского соглашения',
+    URL: '/policy'
+  }
+
   AUTH = '/auth'
 
   LOGIN = `${this.AUTH}/login`
