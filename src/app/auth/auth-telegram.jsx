@@ -5,7 +5,8 @@ const AuthTelegram = () => {
   return (
     <div>
       <LoginButton
-        botUsername={process.env.NEXT_PUBLIC_BOT_USERNAME}
+        botUsername={"VW21ClubBot"}
+        // botUsername={process.env.NEXT_PUBLIC_BOT_USERNAME}
         authCallbackUrl="vagclub21-site.vercel.app"
         buttonSize="large" // "large" | "medium" | "small"
         cornerRadius={5} // 0 - 20
