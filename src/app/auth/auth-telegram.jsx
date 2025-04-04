@@ -7,7 +7,7 @@ const AuthTelegram = () => {
       <LoginButton
         botUsername={"VW21AuthBot"}
         // botUsername={process.env.NEXT_PUBLIC_BOT_USERNAME}
-        // authCallbackUrl="vagclub21-site.vercel.app"
+        authCallbackUrl="/"
         onAuthCallback={(data) => {
           console.log(data);
         }}
