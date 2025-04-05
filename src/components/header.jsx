@@ -7,9 +7,14 @@ import TelegramIcon from "@/components/icons/telegram-icon";
 import InstagramIcon from "@/components/icons/instagram-icon";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import NavMenu from "@/components/nav-menu";
+import {useAuthUser} from "@/hooks/useAuthUser";
 
 
 const Header = () => {
+
+  const {isLoading, user} = useAuthUser();
+
+  console.log(user)
 
   const headerRef = useRef(null);
   const mobileMenuRef = useRef(null);

@@ -8,6 +8,7 @@ import {Toaster} from "react-hot-toast";
 import {ConfigProvider} from "antd";
 import {theme} from "@/styles/theme";
 
+
 const Providers = ({children}) => {
 
   const [client] = useState(new QueryClient())

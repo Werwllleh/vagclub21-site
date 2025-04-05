@@ -1,10 +1,10 @@
 import {getContentType} from "@/api/api.helper";
-import {API_CMS_URL} from "@/constants";
+import {API_URL, API_CMS_URL} from "@/constants";
 import axios from "axios";
 
 
 const axiosOptions = {
-  baseURL: API_CMS_URL,
+  baseURL: API_URL,
   headers: getContentType(),
   withCredentials: false
 }
