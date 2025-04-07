@@ -12,9 +12,9 @@ import {useAuthUser} from "@/hooks/useAuthUser";
 
 const Header = () => {
 
-  const {isLoading, user} = useAuthUser();
+  // const {isLoading, user} = useAuthUser();
 
-  console.log(user)
+  // console.log(user)
 
   const headerRef = useRef(null);
   const mobileMenuRef = useRef(null);

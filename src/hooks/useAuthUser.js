@@ -41,24 +41,3 @@ export function useAuthUser() {
     user: data ? data : null,
   };
 }
-
-async function refreshAuthData() {
-  AuthTokenService.removeAccessToken();
-
-  const loginButton = document.createElement('div');
-  document.body.appendChild(loginButton);
-
-  const authData = await new Promise((resolve) => {
-    const button = new LoginButton({
-      botUsername: process.env.NEXT_PUBLIC_BOT_USERNAME,
-      onAuthCallback: (data) => resolve(data),
-      lang: 'ru',
-    });
-    button.mount(loginButton);
-  });
-
-
-  document.body.removeChild(loginButton);
-
-  AuthTokenService.saveAccessToken(JSON.stringify(authData));
-}

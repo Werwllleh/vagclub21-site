@@ -1,15 +1,14 @@
 import Cookies from 'js-cookie';
-
-export const TOKEN = 'token';
+import {AuthToken} from "@/constants";
 
 class AuthTokenService {
   getAccessToken() {
-    const accessToken = Cookies.get(TOKEN)
+    const accessToken = Cookies.get(AuthToken.ACCESS_TOKEN);
     return accessToken || null
   }
 
   saveAccessToken(token) {
-    Cookies.set(TOKEN, token, {
+    Cookies.set(AuthToken.ACCESS_TOKEN, token, {
       domain: process.env.DOMAIN,
       sameSite: 'strict',
       expires: 1
@@ -17,7 +16,7 @@ class AuthTokenService {
   }
 
   removeAccessToken() {
-    Cookies.remove(TOKEN)
+    Cookies.remove(AuthToken.ACCESS_TOKEN)
   }
 }
 

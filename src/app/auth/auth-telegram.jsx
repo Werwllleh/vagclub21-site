@@ -1,6 +1,7 @@
 'use client'
 import {LoginButton} from "@telegram-auth/react";
-import AuthTokenService from "@/services/auth-token.service";
+import AuthService from "@/services/auth.service";
+import UserService from "@/services/user.service";
 
 const AuthTelegram = () => {
   return (
@@ -8,11 +9,11 @@ const AuthTelegram = () => {
       <LoginButton
         botUsername={process.env.NEXT_PUBLIC_BOT_USERNAME}
         // authCallbackUrl="/"
-        onAuthCallback={(data) => {
+        onAuthCallback={async (data) => {
+          console.log('Data from Telegram: ', data);
 
-          AuthTokenService.saveAccessToken(JSON.stringify(data));
-
-          console.log(data);
+          const response = await UserService.fetchUser(data.id)
+          console.log(response)
         }}
         buttonSize="medium" // "large" | "medium" | "small"
         cornerRadius={5} // 0 - 20
