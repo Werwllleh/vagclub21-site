@@ -1,12 +1,11 @@
-import {axiosClassic} from "@/api/axios";
-
+import AuthTokenService from "@/services/auth-token.service";
+import {axiosClassic, instance} from "@/api/axios";
+import * as jose from 'jose'
 
 class UserService {
 
-  async fetchUser(chatId) {
-    return await axiosClassic.post('/about-user', {
-      chatId: chatId
-    })
+  async fetchUser() {
+    return await instance.post('/about-user')
   }
 
 }

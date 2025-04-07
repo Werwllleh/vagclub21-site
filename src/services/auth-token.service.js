@@ -4,14 +4,17 @@ import {AuthToken} from "@/constants";
 class AuthTokenService {
   getAccessToken() {
     const accessToken = Cookies.get(AuthToken.ACCESS_TOKEN);
+
     return accessToken || null
   }
 
   saveAccessToken(token) {
     Cookies.set(AuthToken.ACCESS_TOKEN, token, {
-      domain: process.env.DOMAIN,
+      httpOnly: false,
+      domain: ".vagclub21.ru",
       sameSite: 'strict',
-      expires: 1
+      secure: true,
+      expires: 60 * 60 * 1000,
     })
   }
 

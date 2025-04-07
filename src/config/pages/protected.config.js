@@ -1,8 +1,6 @@
 
 class ProtectedPages {
-  PARTNERS = '/auth'
-  AUTH = '/auth'
-  LOGIN = `${this.AUTH}/login`
+  PARTNERS = '/partners';
   PROFILE = '/profile'
 }
 
