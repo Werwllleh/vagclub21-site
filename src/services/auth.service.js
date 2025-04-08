@@ -1,5 +1,4 @@
-import {axiosClassic, instance} from "@/api/axios";
-import authTokenService from "@/services/auth-token.service";
+import {axiosClassic} from "@/api/axios";
 
 
 class AuthService {
