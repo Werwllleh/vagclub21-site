@@ -41,6 +41,7 @@ instance.interceptors.response.use(
 
     if (
       (error.response?.status === 401 ||
+        error.response?.status === 403 ||
         errorCatch(error) === 'jwt expired' ||
         errorCatch(error) === 'jwt must be provided') &&
       !originalRequest._isRetry

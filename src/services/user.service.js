@@ -1,11 +1,11 @@
-import AuthTokenService from "@/services/auth-token.service";
-import {axiosClassic, instance} from "@/api/axios";
-import * as jose from 'jose'
+import {instance} from "@/api/axios";
 
 class UserService {
 
+  PROTECT = '/protect';
+
   async fetchUser() {
-    return await instance.post('/about-user')
+    return await instance.post(`${this.PROTECT}/user`)
   }
 
 }

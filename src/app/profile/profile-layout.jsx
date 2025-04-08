@@ -1,7 +1,4 @@
 'use client'
-import {useEffect} from 'react';
-import AuthTokenService from '@/services/auth-token.service';
-import UserService from '@/services/user.service';
 import {useUser} from "@/hooks/useUser";
 
 /*export const metadata = {

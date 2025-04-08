@@ -20,6 +20,7 @@ class AuthTokenService {
 
   removeAccessToken() {
     Cookies.remove(AuthToken.ACCESS_TOKEN)
+    Cookies.remove(AuthToken.REFRESH_TOKEN)
   }
 }
 

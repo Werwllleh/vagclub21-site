@@ -10,7 +10,7 @@ class AuthService {
 
   async getNewTokens() {
     return await axiosClassic.post(
-      '/auth/access-token'
+      '/auth/refresh-token'
     )
   }
 }
