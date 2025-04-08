@@ -49,10 +49,14 @@ instance.interceptors.response.use(
       originalRequest._isRetry = true;
 
       try {
-        const { data } = await authService.getNewTokens();
-        authTokenService.saveAccessToken(data.accessToken);
+        await authService.getNewTokens();
+        // const { data } = await authService.getNewTokens();
+        // authTokenService.saveAccessToken(data.accessToken);
         return instance.request(originalRequest);
       } catch (refreshError) {
+
+        console.log(refreshError)
+
         if (
           errorCatch(refreshError) === 'jwt expired' ||
           errorCatch(refreshError) === 'Refresh token not passed'
