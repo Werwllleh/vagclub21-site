@@ -3,6 +3,9 @@ export const getContentType = () => ({
 })
 
 export const errorCatch = (error) => {
+
+  console.log(error)
+
   const message = error?.response?.error
 
   return message
