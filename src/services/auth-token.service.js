@@ -9,13 +9,26 @@ class AuthTokenService {
   }
 
   saveAccessToken(token) {
-    Cookies.set(AuthToken.ACCESS_TOKEN, token, {
-      httpOnly: false,
-      domain: ".vagclub21.ru",
-      sameSite: 'strict',
-      secure: true,
-      expires: 60 * 60 * 1000,
-    })
+    if (token.accessToken) {
+      Cookies.set(AuthToken.ACCESS_TOKEN, token.accessToken, {
+        httpOnly: false,
+        domain: ".vagclub21.ru",
+        sameSite: 'strict',
+        secure: true,
+        expires: 60 * 60 * 1000,
+      })
+    }
+
+    if (token.refreshToken) {
+      Cookies.set(AuthToken.REFRESH_TOKEN, token.refreshToken, {
+        httpOnly: true,
+        domain: ".vagclub21.ru",
+        sameSite: 'strict',
+        secure: true,
+        expires: 60 * 60 * 1000,
+      })
+    }
+
   }
 
   removeAccessToken() {

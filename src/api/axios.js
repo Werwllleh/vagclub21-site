@@ -27,6 +27,8 @@ export const instance = axios.create(axiosOptions)
 instance.interceptors.request.use(config => {
   const accessToken = AuthTokenService.getAccessToken();
 
+  console.log(accessToken)
+
   if (config?.headers && accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`
   }
@@ -50,12 +52,8 @@ instance.interceptors.response.use(
 
       try {
         await authService.getNewTokens();
-        // const { data } = await authService.getNewTokens();
-        // authTokenService.saveAccessToken(data.accessToken);
         return instance.request(originalRequest);
       } catch (refreshError) {
-
-        console.log(refreshError)
 
         if (
           errorCatch(refreshError) === 'jwt expired' ||
