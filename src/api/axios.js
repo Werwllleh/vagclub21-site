@@ -27,8 +27,6 @@ export const instance = axios.create(axiosOptions)
 instance.interceptors.request.use(config => {
   const accessToken = AuthTokenService.getAccessToken();
 
-  console.log(accessToken)
-
   if (config?.headers && accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`
   }
@@ -59,7 +57,7 @@ instance.interceptors.response.use(
           errorCatch(refreshError) === 'jwt expired' ||
           errorCatch(refreshError) === 'Refresh token not passed'
         ) {
-          authTokenService.removeAccessToken();
+          authTokenService.removeAuthTokens();
         }
       }
     }

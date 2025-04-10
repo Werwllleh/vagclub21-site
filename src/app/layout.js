@@ -15,7 +15,7 @@ export const metadata = {
 export default function RootLayout({children}) {
 
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
     <head>
       <link rel="canonical" href="https://vagclub21.ru/"/>
       <meta name="yandex-verification" content="e1783a4d4e4edd5b"/>
@@ -61,6 +61,7 @@ export default function RootLayout({children}) {
       <Footer/>
     </Providers>
     {/*<SnowMode/>*/}
+    <div className="bg"/>
     </body>
     </html>
   );

@@ -7,13 +7,24 @@ import TelegramIcon from "@/components/icons/telegram-icon";
 import InstagramIcon from "@/components/icons/instagram-icon";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import NavMenu from "@/components/nav-menu";
+import Burger from "@/components/burger";
+import {useUser} from "@/hooks/useUser";
+import {useBlackout} from "@/hooks/useBlackout";
+import {Avatar, Popover} from "antd";
+import {UserOutlined} from "@ant-design/icons";
+import AuthButton from "@/components/auth-button";
+import {usePathname} from "next/navigation";
+import {MENU} from "@/config/menu.config";
 
 
 const Header = () => {
 
+  const pathname = usePathname();
+
+  const {isLoadingUser, user} = useUser();
+
   const headerRef = useRef(null);
   const mobileMenuRef = useRef(null);
-  const headerBgRef = useRef(null);
 
   const [isFixed, setFixed] = useState(false);
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -25,8 +36,7 @@ const Header = () => {
 
     const header = headerRef.current;
     const mobileMenu = mobileMenuRef.current;
-    const mobileMenuContent = mobileMenu.querySelector(".header__mobile_body");
-
+    const mobileMenuContent = mobileMenu.querySelector(".header__menu_body");
 
     mobileMenu.style.top = `${header.clientHeight}px`;
 
@@ -87,6 +97,14 @@ const Header = () => {
     getTopPosition();
   }, [isMenuActive]);
 
+  useBlackout(isMenuActive, closeMenu);
+
+  const headerAvatarAuth = (
+    <div className="header__auth">
+      <AuthButton />
+    </div>
+  )
+
   return (
     <>
       <header ref={headerRef} className={`header ${isFixed && !isMenuActive ? "fixed" : ""}`}>
@@ -95,36 +113,53 @@ const Header = () => {
             <Link onClick={closeMenu} href={PUBLIC_PAGES.HOME.URL} className="header__logo">
               <MainLogo/>
             </Link>
-            <div className="header__nav">
-              <NavMenu />
+            <div className="header__info">
+              {pathname !== MENU.PROFILE.URL && (
+                <div className="header__avatar">
+                  {!isLoadingUser && user && (
+                    <Link href={'/profile'}>
+                      <Avatar
+                        src={user?.userPhoto ? user.userPhoto : false}
+                        style={{backgroundColor: user?.data.user_color}}
+                        size={32}
+                      >{!user?.userPhoto && user?.data?.user_name ? user.data.user_name?.slice(0, 2).toUpperCase() : null}</Avatar>
+                    </Link>
+                  )}
+                  {!isLoadingUser && user === null && (
+                    <Popover placement="bottom" content={headerAvatarAuth}>
+                      <Avatar size={32} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
+                    </Popover>
+                  )}
+                </div>
+              )}
+              <div className={`header__socials ${isMenuActive ? 'hide' : ''}`}>
+                <Link href={SOCIALS.TELEGRAM} target={"_blank"}><TelegramIcon/></Link>
+                <Link href={SOCIALS.INSTAGRAM} target={"_blank"}><InstagramIcon/></Link>
+              </div>
             </div>
-            <div className="header__socials">
-              <Link href={SOCIALS.TELEGRAM} target={"_blank"}><TelegramIcon/></Link>
-              <Link href={SOCIALS.INSTAGRAM} target={"_blank"}><InstagramIcon/></Link>
+            <div className="header__burger">
+              <Burger onClick={toggleMenu} status={isMenuActive}/>
             </div>
-            <button onClick={toggleMenu} className={`header__burger ${isMenuActive ? "active" : ""}`}>
-              <span></span>
-            </button>
           </div>
         </div>
       </header>
-      <div ref={mobileMenuRef} className={`header__mobile ${isMenuActive ? "show" : ""}`}>
+      <div ref={mobileMenuRef} className={`header__menu ${isMenuActive ? "show" : ""}`}>
         <div className="container">
-          <div className="header__mobile_body">
-            <div className="header__mobile_nav">
+          <div className="header__menu_body">
+            <div className="header__menu_nav">
               <NavMenu/>
             </div>
-            <div className="header__mobile_socials">
-              <ul className="header__mobile_socials_list">
-                <li className="header__mobile_socials_item">
+            <div className="header__menu_socials">
+              <ul className="header__menu_socials_list">
+                <li className="header__menu_socials_item">
                   <p>Беседа</p>
                   <Link href={SOCIALS.TELEGRAM} target={"_blank"}><TelegramIcon/></Link>
                 </li>
-                <li className="header__mobile_socials_item">
+                <li className="header__menu_socials_item">
                   <p>Instagram</p>
                   <Link href={SOCIALS.INSTAGRAM} target={"_blank"}><InstagramIcon/></Link>
                 </li>
-                <li className="header__mobile_socials_item">
+                <li className="header__menu_socials_item">
                   <p>Telegram BOT</p>
                   <Link href={SOCIALS.TELEGRAM} target={"_blank"}><TelegramIcon/></Link>
                 </li>
@@ -133,7 +168,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div ref={headerBgRef} onClick={closeMenu} className={`header__bg ${isMenuActive ? "active" : ""}`}/>
     </>
   );
 };

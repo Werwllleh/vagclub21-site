@@ -11,7 +11,7 @@ import {theme} from "@/styles/theme";
 
 const Providers = ({children}) => {
 
-  const [client] = useState(new QueryClient())
+  const [client] = useState(new QueryClient());
 
   return (
     <QueryClientProvider client={client}>

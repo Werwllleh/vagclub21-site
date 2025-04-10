@@ -4,13 +4,13 @@ import AuthTokenService from '@/services/auth-token.service';
 
 export function useUser() {
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: () => UserService.fetchUser(),
   });
 
   return {
     isLoading,
-    user: data?.data ? data.data : null,
+    user: data?.data?.user ? data?.data?.user : null,
   };
 }

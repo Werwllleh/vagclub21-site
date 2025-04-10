@@ -1,28 +1,26 @@
-'use client'
-import {LoginButton} from "@telegram-auth/react";
-import AuthService from "@/services/auth.service";
-import UserService from "@/services/user.service";
-import { TG_AUTH_REDIRECT_URL } from '@/constants'
+"use client"
 import {Button} from "antd";
+import AuthService from "@/services/auth.service";
 import {loginData} from "@/data/test";
-import AuthTokenService from "@/services/auth-token.service";
+import {LoginButton} from "@telegram-auth/react";
 
-const AuthTelegram = () => {
+const AuthButton = () => {
+
+
+
   return (
-    <div>
-      <Button
+    <>
+      {/*<Button
         className="style-btn style-btn-primary"
         type="primary"
         onClick={async () => {
           await AuthService.login(loginData)
-
         }}
       >
-        Получить данные
-      </Button>
+        Войти
+      </Button>*/}
       <LoginButton
         botUsername={process.env.NEXT_PUBLIC_BOT_USERNAME}
-        // authCallbackUrl={TG_AUTH_REDIRECT_URL}
         onAuthCallback={async (data) => {
           console.log('Data from Telegram: ', data);
           await AuthService.login(data)
@@ -32,8 +30,8 @@ const AuthTelegram = () => {
         showAvatar={true} // true | false
         lang="ru"
       />
-    </div>
+    </>
   );
 };
 
-export default AuthTelegram;
+export default AuthButton;

@@ -16,8 +16,13 @@
   &__body {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 2rem;
+  }
+
+  &__info {
+    margin: 0 0 0 auto;
+    display: flex;
+    align-items: center;
   }
 
   &__logo {
@@ -26,22 +31,41 @@
     width: 100%;
   }
 
-  &__nav {
+  &__burger {
+    flex: 0 0 3rem;
 
-    @include breakpoints.lg {
-      display: none;
+    &_desktop {
+
+      margin: 0 0 0 5rem;
+
+      @include breakpoints.lg {
+        display: none;
+      }
     }
 
+    &_mobile {
+      display: none;
+
+      @include breakpoints.lg {
+        display: block;
+      }
+    }
   }
 
   &__socials {
+    margin: 0 0 0 2rem;
     flex: 0 0 7.4rem;
     display: flex;
     align-items: center;
     gap: 1rem;
+    max-width: 7.4rem;
+    visibility: visible;
+    transition: max-width variables.$transition, visibility variables.$transition, margin variables.$transition;
 
-    @include breakpoints.lg {
-      display: none;
+    &.hide {
+      margin: 0;
+      max-width: 0;
+      visibility: hidden;
     }
 
     a {
@@ -51,75 +75,7 @@
     }
   }
 
-  &__burger {
-    position: relative;
-    display: none;
-    align-items: center;
-    width: 3rem;
-    height: 2rem;
-    transition-duration: 1s;
-    cursor: pointer;
-
-    @include breakpoints.lg {
-      display: inline-flex;
-    }
-
-    span {
-      height: .3rem;
-      width: 100%;
-      background-color: variables.$colorPrimary;
-      position: absolute;
-      transition-duration: .25s;
-      transition-delay: .25s;
-
-      &::before,
-      &::after {
-        position: absolute;
-        left: 0;
-        height: .3rem;
-        width: 100%;
-        background-color: variables.$colorPrimary;
-        content: "";
-        transition-duration: .25s;
-        transition: transform .25s, top .25s .25s;
-      }
-
-      &::before {
-        top: -1rem;
-      }
-
-      &::after {
-        top: 1rem;
-      }
-
-    }
-
-    &.active {
-
-      span {
-        transition-duration: 0.1s;
-        transition-delay: .25s;
-        background: transparent;
-
-        &::before,
-        &::after {
-          top: 0;
-        }
-
-        &::before {
-          transition: top .25s, transform .25s .25s;
-          transform: rotateZ(-45deg);
-        }
-
-        &::after {
-          transition: top 0.4s, transform .25s .25s;
-          transform: rotateZ(45deg);
-        }
-      }
-    }
-  }
-
-  &__mobile {
+  &__menu {
     position: fixed;
     left: 0;
     right: 0;
@@ -149,35 +105,29 @@
     }
 
     &_body {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 14rem;
+      padding: 2rem 0;
     }
 
     &_nav {
-      margin: 2rem 0 0 0;
 
       .nav-menu__list {
-        gap: .5rem;
 
-        @include breakpoints.lg {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        @include breakpoints.sm {
-          grid-template-columns: 1fr;
-        }
 
       }
     }
 
     &_socials {
-      margin: 1rem 0 0 0;
-      padding: 2rem 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &_list {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
+        grid-template-columns: 1fr;
+        gap: 2rem;
       }
 
       &_item {
@@ -187,6 +137,7 @@
         gap: 1rem;
 
         p {
+          user-select: none;
           text-align: center;
           font-size: 1.4rem;
           white-space: nowrap;
@@ -197,31 +148,20 @@
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          transition: transform variables.$transition;
+
+          &:hover {
+            transform: scale(1.15);
+          }
         }
       }
     }
   }
 
-  &__bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 98;
-    opacity: 0;
-    visibility: hidden;
-    background: none;
-    transition: opacity variables.$transition,
-                background variables.$transition,
-                visibility variables.$transition;
-
-    &.active {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      background: #282424b3;
-      user-select: none;
-    }
+  &__auth {
+    display: flex;
+    flex-direction: column;
   }
 }
+
+

@@ -5,23 +5,52 @@
   &__body {}
 
   &__list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    align-items: center;
-    gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    max-width: 30rem;
 
     &_item {
     }
 
     &_link {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
       padding: 1rem 1.5rem;
       color: variables.$colorPrimary;
       font-size: 1.8rem;
       font-weight: 500;
       white-space: nowrap;
+
+      &::before, &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 1px;
+        transition: width variables.$transition;
+      }
+
+      &::before {
+        bottom: 0;
+        left: 0;
+        background-color: variables.$colorPrimary;
+      }
+
+      &::after {
+        top: 0;
+        right: 0;
+        background-color: variables.$colorPrimary;
+      }
+
+      &:hover,
+      &.active {
+
+        &::before, &::after {
+          width: 100%;
+        }
+
+      }
     }
 
   }
