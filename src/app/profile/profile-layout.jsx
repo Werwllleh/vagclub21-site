@@ -11,14 +11,12 @@ const ProfileLayout = () => {
 
 
   const handleUpdateUserData = async (values) => {
-    console.log(values);
+    // console.log(values);
 
     try {
       setIsPendingForm(true);
 
       const response = await UserService.updateUserData(values)
-
-      console.log(response)
 
       if (!response) return
 

@@ -1,6 +1,4 @@
 'use server'
-
-import { transformUserToState } from '@/utils/transform-user-to-state'
 import * as jose from 'jose'
 
 export async function jwtVerifyServer(accessToken) {

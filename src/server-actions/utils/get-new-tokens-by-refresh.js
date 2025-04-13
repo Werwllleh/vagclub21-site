@@ -1,15 +1,19 @@
 'use server'
 
-import { API_URL } from '@/constants'
+import {API_URL} from '@/constants'
 
 export async function getNewTokensByRefresh(refreshToken) {
-  const response = await fetch(`${API_URL}/auth/access-token`, {
+  const response = await fetch(`${API_URL}/auth/refresh-token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Cookie: `refreshToken=${refreshToken}`
     },
-    credentials: 'include'
+    credentials: 'include',
+    body: {
+      data: {
+        refreshToken: refreshToken
+      }
+    }
   })
 
   if (!response.ok) {
