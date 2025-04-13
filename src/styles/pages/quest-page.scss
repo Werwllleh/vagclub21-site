@@ -1,7 +1,7 @@
 
 .page-quest {
 
-  padding-block: 5rem 7rem;
+  padding-block: clamp(2rem, 4vw, 5rem) clamp(4rem, 4vw, 7rem);
 
   &__not-found {
     display: flex;
