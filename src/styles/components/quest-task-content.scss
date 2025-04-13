@@ -1,0 +1,82 @@
+@use "../variables";
+@use "../breakpoints";
+
+
+.quest-task-content {
+
+  &__title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 7rem);
+    font-weight: 600;
+  }
+
+  &__preview {
+    margin-top: clamp(2rem, 5vw, 3rem);
+
+    img {
+      height: clamp(20rem, 32vw, 60rem);
+      object-fit: cover;
+      width: 100%;
+      border-radius: variables.$border-radius20;
+      overflow: hidden;
+    }
+  }
+
+  &__content {
+    margin-top: clamp(2rem, 5vw, 5rem);
+    max-width: 80%;
+    margin-inline: auto;
+
+    @include breakpoints.sm {
+      max-width: none;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 5vw, 4rem);
+
+      & + ol {
+        margin-top: clamp(1rem, 5vw, 2rem);
+      }
+    }
+
+    h3 {
+      font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    h4 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem auto 0 auto;
+      font-size: 1.8rem;
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: variables.$border-radius20;
+      background-color: variables.$green-light;
+      font-weight: 600;
+    }
+
+    p, li {
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+    }
+
+    img {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      object-fit: contain;
+      border-radius: variables.$border-radius20;
+      overflow: hidden;
+      width: 100%;
+      height: clamp(30rem, 50vw, 70rem);
+    }
+
+    ul, ol {
+      display: flex;
+      flex-direction: column;
+      row-gap: clamp(.5rem, 5vw, 1.5rem);
+      list-style-position: inside;
+    }
+
+  }
+}

@@ -1,0 +1,19 @@
+
+.page-quest {
+
+
+  &__not-found {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    margin-inline: auto;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 5rem);
+      font-weight: 600;
+    }
+  }
+}

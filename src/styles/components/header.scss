@@ -1,7 +1,9 @@
+@use "../variables";
+
 .header {
   padding: 2.4rem 0;
   background-color: transparent;
-  transition: background-color $transition;
+  transition: background-color variables.$transition;
   z-index: 99;
 
   &__body {
