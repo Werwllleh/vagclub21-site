@@ -14,13 +14,14 @@ $mt: clamp(1rem, 5vw, 2rem);
 
   &__preview {
     margin-top: clamp(2rem, 5vw, 3rem);
+    display: flex;
 
     img {
-      height: clamp(20rem, 32vw, 60rem);
-      object-fit: cover;
-      width: 100%;
+      max-height: 60rem;
+      object-fit: contain;
       border-radius: variables.$border-radius20;
       overflow: hidden;
+      margin: 0 auto;
     }
   }
 
