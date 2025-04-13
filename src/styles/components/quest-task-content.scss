@@ -2,6 +2,8 @@
 @use "../breakpoints";
 
 
+$mt: clamp(1rem, 5vw, 2rem);
+
 .quest-task-content {
 
   &__title {
@@ -34,8 +36,9 @@
     h2 {
       font-size: clamp(1.8rem, 5vw, 4rem);
 
-      & + ol {
-        margin-top: clamp(1rem, 5vw, 2rem);
+      & + ol,
+      & + li {
+        margin-top: $mt;
       }
     }
 
@@ -56,8 +59,20 @@
       font-weight: 600;
     }
 
-    p, li {
+    li {
       font-size: clamp(1.4rem, 5vw, 1.8rem);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      line-height: 1.6;
+    }
+
+    p + p,
+    p + li,
+    p + ol {
+      margin-top: $mt;
     }
 
     img {
