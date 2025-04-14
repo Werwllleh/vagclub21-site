@@ -1,5 +1,10 @@
 
 class Menu {
+  CARS = {
+    ICON: "",
+    TITLE: "Клубные авто",
+    URL: "/cars",
+  }
   PRODUCTS = {
     ICON: "",
     TITLE: "Атрибутика",

@@ -11,6 +11,12 @@ class PublicPages {
     SEO_DESCRIPTION: 'VAGClub21 | Атрибутика клуба',
     URL: '/products'
   }
+  CARS = {
+    TITLE: 'Клубные авто',
+    SEO_TITLE: 'VAGClub21 | Клубные авто',
+    SEO_DESCRIPTION: 'VAGClub21 | Клубные авто',
+    URL: '/cars'
+  }
   PARTNERS = {
     TITLE: 'Партнеры',
     SEO_TITLE: 'VAGClub21 | Партнеры клуба',

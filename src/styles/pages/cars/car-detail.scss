@@ -1,0 +1,97 @@
+@use '../../variables';
+@use '../../breakpoints';
+
+.car-detail{
+
+  &__body {
+    display: flex;
+    gap: clamp(2rem, 5vw, 7rem);
+    align-items: flex-start;
+
+    @include breakpoints.md {
+      flex-direction: column;
+    }
+  }
+
+  &__images {
+    position: relative;
+    max-width: clamp(30rem, 30vw, 50rem);
+
+    @include breakpoints.md {
+      max-width: 100%;
+    }
+
+    .swiper {
+
+      .swiper-slide {
+        border-radius: .5rem;
+        overflow: hidden;
+      }
+
+      img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        object-fit: contain;
+        pointer-events: none;
+        user-select: none;
+        border-radius: .5rem;
+        overflow: hidden;
+      }
+
+      .swiper-pagination {
+
+        &-bullet {
+          background-color: variables.$white;
+        }
+      }
+    }
+
+
+  }
+
+  &__description {
+
+  }
+
+  &__info {
+
+    h1 {
+      text-transform: uppercase;
+      font-size: clamp(3rem, 4vw, 7rem) !important;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    &_row {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &_number {
+      user-select: none;
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: clamp(2rem, 4vw, 4rem);
+    }
+
+    &_instagram {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &_drive2 {
+      margin: 1rem 0 0 0;
+      display: flex;
+      max-width: 10rem;
+    }
+
+  }
+
+}

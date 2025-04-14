@@ -1,3 +1,8 @@
 @use "main";
 @use "products-page";
 @use "profile-page";
+
+//cars
+@use "./cars/cars-content";
+@use "./cars/car-card";
+@use "./cars/car-detail";

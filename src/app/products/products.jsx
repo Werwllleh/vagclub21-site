@@ -2,6 +2,7 @@
 import ProductsFilter from "@/components/products/products-filter";
 import {useProducts} from "@/hooks/useProducts";
 import ProductItem from "@/components/products/product-item";
+import Loader from "@/components/loader";
 
 const Products = () => {
 
@@ -16,7 +17,7 @@ const Products = () => {
             <ProductsFilter/>
           </div>
           <div className="products-page__content">
-            {isLoading ? '...Loading' : (
+            {isLoading ? <Loader /> : (
               <>
                 {products.length ? (
                   <>

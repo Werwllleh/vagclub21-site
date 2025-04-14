@@ -10,6 +10,7 @@ import { EffectFade, Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
+import Loader from "@/components/loader";
 
 const ProductDetail = ({slug}) => {
 
@@ -19,7 +20,7 @@ const ProductDetail = ({slug}) => {
     <div className="product-detail">
       <div className="container">
         <div className="product-detail__body">
-          {isLoading && '...Загрузка'}
+          {isLoading && <Loader />}
           {product && (
             <>
               <div className="product-detail__top">

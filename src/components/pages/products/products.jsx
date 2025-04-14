@@ -1,5 +1,4 @@
 "use client"
-
 import {products} from "@/data/products";
 import Link from "next/link";
 

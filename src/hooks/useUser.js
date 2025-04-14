@@ -6,7 +6,7 @@ export function useUser() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['user'],
-    queryFn: () => UserService.fetchUser(),
+    queryFn: async () => await UserService.fetchUser(),
   });
 
   return {

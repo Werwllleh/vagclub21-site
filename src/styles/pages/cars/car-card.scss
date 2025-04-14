@@ -1,0 +1,11 @@
+@use "../../variables";
+
+.car-card {
+  aspect-ratio: 1/1;
+
+  &__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}

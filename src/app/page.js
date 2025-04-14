@@ -1,5 +1,5 @@
 import CooperationForm from "@/components/cooperation-form";
-import Products from "@/components/blocks/products";
+import Products from "@/components/pages/products/products";
 import MainSlider from "@/components/blocks/main-slider/main-slider";
 import Link from "next/link";
 

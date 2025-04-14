@@ -1,4 +1,4 @@
-import ProductDetail from "@/app/products/product-detail";
+import ProductDetail from "@/components/pages/products/product-detail";
 
 const Page = async ({ params }) => {
 
