@@ -7,8 +7,6 @@ const CarsContent = () => {
 
   const {cars, isLoading} = useCar();
 
-  console.log(cars)
-
   return (
     <div className="cars-page">
       <div className="container">

@@ -4,6 +4,15 @@ import CarService from "@/services/car.service";
 export function useCar(carNumber) {
 
   const {
+    data: carsRegData,
+    isLoading: isCarsRegDataLoading,
+    isError: isCarsRegDataError,
+  } = useQuery({
+    queryKey: ['cars-reg-data'],
+    queryFn: async () => await CarService.fetchCarsAndModels(),
+  });
+
+  const {
     data: carsData,
     isLoading: isCarsLoading,
     isError: isCarsError,
@@ -25,7 +34,8 @@ export function useCar(carNumber) {
   return {
     cars: carsData?.data || null,
     carData: carInfoData?.data || null,
-    isLoading: isCarsLoading || isCarInfoLoading,
-    isError: isCarsError || isCarInfoError,
+    carRegData: carsRegData?.data || null,
+    isLoading: isCarsLoading || isCarInfoLoading || isCarsRegDataLoading,
+    isError: isCarsError || isCarInfoError || isCarsRegDataError,
   };
 }

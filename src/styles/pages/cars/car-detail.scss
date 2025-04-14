@@ -26,6 +26,9 @@
       .swiper-slide {
         border-radius: .5rem;
         overflow: hidden;
+        background-color: variables.$white;
+        display: flex;
+        justify-content: center;
       }
 
       img {
@@ -37,6 +40,7 @@
         user-select: none;
         border-radius: .5rem;
         overflow: hidden;
+
       }
 
       .swiper-pagination {
@@ -47,6 +51,10 @@
       }
     }
 
+    &_items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
 
   }
 
@@ -90,6 +98,12 @@
       margin: 1rem 0 0 0;
       display: flex;
       max-width: 10rem;
+    }
+
+    &_note {
+      margin: 1rem 0 0 0;
+      font-size: 1.8rem;
+      font-style: italic;
     }
 
   }

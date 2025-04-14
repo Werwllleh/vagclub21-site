@@ -95,7 +95,7 @@ html {
   background-color: variables.$white !important;
   scrollbar-color: variables.$colorPrimary transparent;
   scrollbar-width: thin;
-  overflow-x: hidden;
+  //overflow-x: hidden;
 
   &.block {
     overflow-y: hidden;

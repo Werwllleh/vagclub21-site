@@ -13,7 +13,8 @@
   }
 
   &__avatar {
-    flex: 0 0 clamp(9rem, 5vw, 20rem);
+    flex: 0 0 clamp(9rem, 15vw, 20rem);
+
     .ant-avatar {
       width: 100%;
       height: 100%;
@@ -35,6 +36,17 @@
       }
 
       &_footer {}
+    }
+  }
+
+  &__cars {
+    margin: 5rem 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+
+    @include breakpoints.sm {
+      grid-template-columns: 1fr;
     }
   }
 }

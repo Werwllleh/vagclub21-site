@@ -24,6 +24,9 @@ export const theme = {
       borderRadius: 5,
       paddingInline: 5,
     },
+    Select: {
+
+    },
     Checkbox: {
       lineHeight: '1.3',
     }

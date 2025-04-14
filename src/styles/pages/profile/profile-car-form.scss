@@ -1,0 +1,20 @@
+@use "../../variables";
+@use "../../breakpoints";
+
+.profile-car-form {
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &_fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &_footer {
+    }
+  }
+}

@@ -20,7 +20,12 @@ const Providers = ({children}) => {
           {children}
         </ConfigProvider>
       </LazyMotion>
-      <Toaster/>
+      <Toaster toastOptions={{
+        style: {
+          fontSize: '1.6rem',
+          padding: '1.2rem',
+        },
+      }}/>
       <ReactQueryDevtools initialIsOpen={false}/>
     </QueryClientProvider>
   );

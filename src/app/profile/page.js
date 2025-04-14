@@ -1,4 +1,4 @@
-import ProfileLayout from "@/app/profile/profile-layout";
+import ProfileLayout from "@/components/pages/profile/profile-layout";
 import {SEO_CONFIG} from "@/config/seo.config";
 import {Suspense} from "react";
 
