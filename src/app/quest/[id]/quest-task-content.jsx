@@ -1,8 +1,9 @@
 'use client'
 
-import {CMS_URL} from "@/contstans";
+
 import Markdown from 'react-markdown'
 import remarkGfm from "remark-gfm";
+import {CMS_URL} from "@/constants";
 
 const QuestTaskContent = ({data}) => {
 

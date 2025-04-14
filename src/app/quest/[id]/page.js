@@ -21,7 +21,7 @@ const Page = async ({params}) => {
       <div className="page-quest">
         <div className="container">
           {data ? (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={null}>
               {data && <QuestTaskContent data={data}/>}
             </Suspense>
           ) : (
