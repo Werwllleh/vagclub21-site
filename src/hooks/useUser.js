@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import UserService from '@/services/user.service';
-import AuthTokenService from '@/services/auth-token.service';
 
 export function useUser() {
 

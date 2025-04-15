@@ -23,11 +23,11 @@ class PublicPages {
     SEO_DESCRIPTION: 'VAGClub21 | Партнеры клуба',
     URL: '/partners'
   }
-  NEWS = {
-    TITLE: 'Новости',
+  BLOG = {
+    TITLE: 'Блог',
     SEO_TITLE: 'VAGClub21 | Жизнь клуба',
     SEO_DESCRIPTION: 'VAGClub21 | Жизнь клуба',
-    URL: '/news'
+    URL: '/blog'
   }
   ABOUT = {
     TITLE: 'О нас',

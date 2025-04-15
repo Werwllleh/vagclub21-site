@@ -119,3 +119,15 @@ h3 {
     pointer-events: none;
   }
 }
+
+.ant-modal {
+
+  .ant-modal-close {
+    top: 5px;
+    inset-inline-end: 5px;
+  }
+
+  .ant-modal-content {
+    padding: 4rem 2rem 2rem;
+  }
+}

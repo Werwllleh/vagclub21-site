@@ -1,5 +1,5 @@
-import React from 'react';
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
+import AboutContent from "@/components/pages/about/about-content";
 
 export const metadata = {
   title: PUBLIC_PAGES.ABOUT.SEO_TITLE,
@@ -9,7 +9,7 @@ export const metadata = {
 const Page = () => {
   return (
     <div className="page">
-      <div className="container">About</div>
+      <AboutContent />
     </div>
   );
 };

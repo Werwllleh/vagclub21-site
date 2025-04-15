@@ -19,13 +19,18 @@ export const theme = {
       primaryShadow: 'none',
     },
     Input: {
+      defaultShadow: 'none',
       activeShadow: 'none',
       inputFontSize: 16,
       borderRadius: 5,
       paddingInline: 5,
+      controlHeight: 44,
     },
     Select: {
-
+      activeOutlineColor: 'none',
+      activeShadow: 'none',
+      fontSize: 16,
+      controlHeight: 44,
     },
     Checkbox: {
       lineHeight: '1.3',

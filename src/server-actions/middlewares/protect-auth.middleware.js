@@ -8,6 +8,7 @@ import {NextResponse} from "next/server";
 export async function protectAuthPages(request) {
 
   const tokens = await getTokensFromRequest(request)
+
   if (!tokens) return NextResponse.next()
 
   const verifiedData = await jwtVerifyServer(tokens.accessToken)

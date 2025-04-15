@@ -14,8 +14,8 @@ class SeoConfig {
     SEO_TITLE: 'VAGClub21 | Партнеры клуба',
     SEO_DESCRIPTION: 'VAGClub21 | Партнеры клуба',
   }
-  NEWS = {
-    TITLE: 'Новости',
+  BLOG = {
+    TITLE: 'Блог',
     SEO_TITLE: 'VAGClub21 | Жизнь клуба',
     SEO_DESCRIPTION: 'VAGClub21 | Жизнь клуба',
   }

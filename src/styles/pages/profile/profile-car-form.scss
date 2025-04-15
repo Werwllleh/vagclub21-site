@@ -15,6 +15,13 @@
     }
 
     &_footer {
+      display: flex;
+      justify-content: center;
+
+      button {
+        width: 100%;
+        max-width: 70%;
+      }
     }
   }
 }

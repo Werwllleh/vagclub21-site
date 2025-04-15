@@ -10,7 +10,7 @@ const AuthButton = () => {
 
   return (
     <>
-      {/*<Button
+      <Button
         className="style-btn style-btn-primary"
         type="primary"
         onClick={async () => {
@@ -18,11 +18,10 @@ const AuthButton = () => {
         }}
       >
         Войти
-      </Button>*/}
+      </Button>
       <LoginButton
         botUsername={process.env.NEXT_PUBLIC_BOT_USERNAME}
         onAuthCallback={async (data) => {
-          console.log('Data from Telegram: ', data);
           await AuthService.login(data)
         }}
         buttonSize="medium" // "large" | "medium" | "small"

@@ -8,7 +8,7 @@ export async function middleware(request) {
 
   const {pathname} = request.nextUrl
 
-  console.log(pathname)
+  console.log(request)
 
   if (pathname === '/quest') {
     return nextRedirect('/', request.url)

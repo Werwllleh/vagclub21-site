@@ -7,13 +7,29 @@
 
   &__grid {
     margin: 2rem 0 0 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: clamp(14rem, 15vw, 20rem) 1fr;
+    grid-template-areas:
+      "avatar user_data"
+      ". car_buttons";
     align-items: flex-start;
     gap: clamp(2rem, 5vw, 4rem);
+
+    @include breakpoints.sm {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+      "avatar"
+      "user_data"
+      "car_buttons";
+    }
   }
 
   &__avatar {
-    flex: 0 0 clamp(9rem, 15vw, 20rem);
+    grid-area: avatar;
+
+    @include breakpoints.sm {
+      max-width: 20rem;
+    }
 
     .ant-avatar {
       width: 100%;
@@ -22,7 +38,7 @@
   }
 
   &__user {
-    flex: 1;
+    grid-area: user_data;
 
     &_form {
       display: flex;
@@ -40,13 +56,18 @@
   }
 
   &__cars {
-    margin: 5rem 0 0 0;
+    grid-area: car_buttons;
+    margin: 3rem 0 0 0;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 2rem;
 
     @include breakpoints.sm {
       grid-template-columns: 1fr;
+    }
+
+    &_button {
+
     }
   }
 }

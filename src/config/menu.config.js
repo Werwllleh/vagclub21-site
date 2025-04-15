@@ -15,10 +15,10 @@ class Menu {
     TITLE: "Партнеры",
     URL: "/partners",
   }
-  NEWS = {
+  BLOG = {
     ICON: "",
-    TITLE: "Новости",
-    URL: "/news",
+    TITLE: "Блог",
+    URL: "/blog",
   }
   ABOUT = {
     ICON: "",

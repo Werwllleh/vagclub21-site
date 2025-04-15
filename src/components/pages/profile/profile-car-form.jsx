@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import CarService from "@/services/car.service";
 
-const ProfileCarForm = ({car}) => {
+const ProfileCarForm = ({car, onClose}) => {
 
   const {carRegData, isLoading} = useCar();
 
@@ -56,6 +56,7 @@ const ProfileCarForm = ({car}) => {
     const response = await CarService.changeCarInfo(car.car_id, values);
 
     if (response.status === 200) {
+      onClose();
       toast.success(response.data)
       setFormPending(false);
     } else {
