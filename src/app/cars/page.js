@@ -7,7 +7,8 @@ export const metadata = {
   description: PUBLIC_PAGES.CARS.SEO_DESCRIPTION,
 };
 
-const Page = () => {
+const Page = async () => {
+
   return (
     <div className="page">
       <CarsContent />

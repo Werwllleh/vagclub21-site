@@ -2,6 +2,11 @@
 
 .car-card {
   aspect-ratio: 1/1;
+  transition: variables.$transition;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   &__image {
     object-fit: cover;

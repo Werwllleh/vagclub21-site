@@ -17,10 +17,11 @@ import Drive2Icon from "@/components/icons/drive2-icon";
 import BackButton from "@/components/back-button";
 import {useEffect, useState} from "react";
 import {Image} from "antd";
+import {useCarInfo} from "@/hooks/useCarInfo";
 
 const CarDetail = ({carNumber}) => {
 
-  const {isLoading, carData} = useCar(carNumber);
+  const {isLoading, carData} = useCarInfo(carNumber);
 
   const [carImages, setCarImages] = useState([]);
 

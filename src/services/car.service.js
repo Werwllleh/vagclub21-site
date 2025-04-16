@@ -6,8 +6,12 @@ class CarService {
     return await axiosClassic.get(`/get-cars`)
   }
 
-  async fetchUsersCars() {
-    return await axiosClassic.post(`/get-users-cars`)
+  async fetchUsersCars(number) {
+    return await axiosClassic.get(`/cars`, {
+      params: {
+        number: number
+      }
+    })
   }
 
   async fetchCarInfo(carNumber) {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import CarService from "@/services/car.service";
 
-export function useCar(carNumber) {
+export function useCar() {
 
   const {
     data: carsRegData,
@@ -21,21 +21,10 @@ export function useCar(carNumber) {
     queryFn: async () => await CarService.fetchUsersCars(),
   });
 
-  const {
-    data: carInfoData,
-    isLoading: isCarInfoLoading,
-    isError: isCarInfoError,
-  } = useQuery({
-    queryKey: ['car-info'],
-    queryFn: async () => await CarService.fetchCarInfo(carNumber),
-    enabled: !!carNumber,
-  });
-
   return {
     cars: carsData?.data || null,
-    carData: carInfoData?.data || null,
     carRegData: carsRegData?.data || null,
-    isLoading: isCarsLoading || isCarInfoLoading || isCarsRegDataLoading,
-    isError: isCarsError || isCarInfoError || isCarsRegDataError,
+    isLoading: isCarsLoading || isCarsRegDataLoading,
+    isError: isCarsError || isCarsRegDataError,
   };
 }
