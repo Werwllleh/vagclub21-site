@@ -49,9 +49,8 @@ class PublicPages {
   }
 
   AUTH = '/auth'
-
   LOGIN = `${this.AUTH}/login`
-  // REGISTER = `${this.AUTH}/register`
+  REGISTER = `${this.AUTH}/register`
 
 }
 

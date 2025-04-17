@@ -1,13 +1,10 @@
 import { AuthToken } from '@/constants'
-import { NextRequest } from 'next/server'
 import { getNewTokensByRefresh } from './get-new-tokens-by-refresh'
-import {getAuthorizationField} from "@/server-actions/utils/get-auth-header";
-import AuthTokenService from "@/services/auth-token.service";
 
 export async function getTokensFromRequest(request) {
 
   const refreshToken = request.cookies.get(AuthToken.REFRESH_TOKEN)?.value
-  let accessToken = getAuthorizationField(request)
+  let accessToken = request.cookies.get(AuthToken.ACCESS_TOKEN)?.value
 
   if (!refreshToken) {
     request.cookies.delete(AuthToken.ACCESS_TOKEN)

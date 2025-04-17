@@ -7,9 +7,9 @@ class AuthService {
   async login(data) {
     const response = await axiosClassic.post('/auth/login', { data });
 
-    if (!response.data.tokens) return;
-
-    AuthTokenService.saveAccessToken(JSON.parse(response.data.tokens));
+    if (response.data.accessToken) {
+      AuthTokenService.saveAccessToken(response.data.accessToken)
+    }
 
     return response;
 
@@ -17,25 +17,18 @@ class AuthService {
 
   async getNewTokens() {
 
-    const refreshToken = AuthTokenService.getRefreshToken();
-
-    if (!refreshToken) return;
-
-    const response = await axiosClassic.post(
+    return await axiosClassic.post(
       '/auth/refresh-token',
-      {
-        refreshToken: refreshToken
-      }
     )
 
-    if (!response.data.tokens) return;
+  }
 
-    AuthTokenService.removeAuthTokens();
+  async logout() {
+    const response = await axiosClassic.post('/auth/logout')
 
-    AuthTokenService.saveAccessToken(JSON.parse(response.data.tokens));
+    if (response.data) AuthTokenService.removeAccessToken()
 
-    return response;
-
+    return response
   }
 }
 
