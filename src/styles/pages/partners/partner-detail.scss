@@ -1,0 +1,24 @@
+@use "../../variables";
+@use "../../breakpoints";
+
+.partner-detail {
+
+  &__title {}
+
+  &__content {}
+
+  &__description {
+    margin-top: clamp(1rem, 2vw, 2rem);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    max-width: 70%;
+    line-height: 1.55;
+
+    @include breakpoints.md {
+      max-width: none;
+    }
+  }
+
+  &__other-partners {
+    margin-top: clamp(5rem, 10vw, 15rem);
+  }
+}

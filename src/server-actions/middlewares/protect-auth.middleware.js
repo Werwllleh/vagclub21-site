@@ -17,6 +17,9 @@ export async function protectAuthPages(request) {
 
     // Проверяем валидность токена
     const verifiedData = await jwtVerifyServer(tokens.accessToken);
+
+    console.log(verifiedData);
+
     if (!verifiedData) {
       return nextRedirect(PUBLIC_PAGES.LOGIN, request.url);
     }

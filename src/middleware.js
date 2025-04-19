@@ -4,7 +4,8 @@ import {protectAuthPages} from "@/server-actions/middlewares/protect-auth.middle
 import {nextRedirect} from "@/server-actions/utils/next-redirect";
 import Cookies from "js-cookie";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
-import {ProtectLoginPagesMiddleware} from "@/server-actions/middlewares/protect-login-pages.middleware";
+import {ProtectAuthTelegramMiddleware} from "@/server-actions/middlewares/protect-auth-telegram.middleware";
+import {ProtectRegisterPageMiddleware} from "@/server-actions/middlewares/protect-register-page.middleware";
 
 
 
@@ -21,8 +22,12 @@ export async function middleware(request) {
     return protectAuthPages(request)
   }
 
-  if (pathname.startsWith(PUBLIC_PAGES.AUTH)) {
-    // return ProtectLoginPagesMiddleware(request)
+  if (pathname.startsWith(PUBLIC_PAGES.LOGIN)) {
+    return ProtectAuthTelegramMiddleware(request)
+  }
+
+  if (pathname.startsWith(PUBLIC_PAGES.REGISTER)) {
+    return ProtectRegisterPageMiddleware(request)
   }
 
   return NextResponse.next()
@@ -32,6 +37,7 @@ export async function middleware(request) {
 export const config = {
   matcher: [
     '/auth/login',
+    '/auth/register',
     '/quest',
     '/profile',
     '/partners'

@@ -1,6 +1,7 @@
 @use "main";
 @use "products-page";
 @use "profile-page";
+@use "login-page";
 
 //cars
 @use "./cars/cars-content";
@@ -10,3 +11,10 @@
 
 //profile
 @use "./profile/profile-car-form";
+
+//partners
+@use "./partners/partners-content";
+@use "./partners/partners-list";
+@use "./partners/partner-card";
+@use "./partners/partner-detail";
+@use "./partners/partners-slider-others";

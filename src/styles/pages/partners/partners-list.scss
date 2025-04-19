@@ -1,0 +1,21 @@
+@use "../../breakpoints";
+
+
+.partners-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+  gap: 1rem;
+
+  @include breakpoints.xxl {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include breakpoints.xl {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoints.sm {
+    grid-template-columns: 1fr;
+  }
+}

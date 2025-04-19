@@ -16,23 +16,19 @@ const Page = async ({params}) => {
   const {data} = await QuestService.fetchQuestTask(id)
 
   return (
-    <>
-      <Header/>
-      <div className="page-quest">
-        <div className="container">
-          {data ? (
-            <Suspense fallback={null}>
-              {data && <QuestTaskContent data={data}/>}
-            </Suspense>
-          ) : (
-            <div className="page-quest__not-found">
-              <h2>Задание не найдено</h2>
-            </div>
-          )}
-        </div>
+    <div className="page-quest">
+      <div className="container">
+        {data ? (
+          <Suspense fallback={null}>
+            {data && <QuestTaskContent data={data}/>}
+          </Suspense>
+        ) : (
+          <div className="page-quest__not-found">
+            <h2>Задание не найдено</h2>
+          </div>
+        )}
       </div>
-      <Footer/>
-    </>
+    </div>
   );
 };
 

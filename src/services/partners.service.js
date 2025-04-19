@@ -1,10 +1,14 @@
-import {axiosCmsClassic, instance} from "@/api/axios";
+import {instance} from "@/api/axios";
 
 class PartnersService {
 
-  async fetchPartners(params) {
-    return instance.get(`/protect/partners`, {
-      params: params
+  async fetchPartners(filter) {
+    return instance.post(`/protect/partners`, filter)
+  }
+
+  async fetchPartnerInfo(slug) {
+    return instance.post(`/protect/partner`, {
+      slug: slug
     })
   }
 

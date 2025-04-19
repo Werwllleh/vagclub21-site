@@ -1,0 +1,31 @@
+@use "../../variables";
+
+.partner-slider-others {
+
+  h3 {
+    margin-bottom: clamp(2rem, 4vw, 4rem) ;
+  }
+
+  .swiper {
+    overflow: unset;
+
+    .swiper-wrapper {
+
+      align-items: stretch;
+
+      .swiper-slide {
+        width: auto;
+        height: auto;
+
+        .partner-card {
+          min-width: 34rem;
+          max-width: 40rem;
+          background-color: variables.$colorSecondary;
+          border-color: variables.$colorSecondary;
+        }
+      }
+    }
+
+  }
+
+}

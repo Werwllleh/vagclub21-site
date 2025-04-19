@@ -7,7 +7,10 @@ const Page = () => {
     <div className="page">
       <div className="container">
         <div className="login-page">
-          <AuthButton />
+          <h1 className="login-page__title">Войти</h1>
+          <div className="login-page__auth-button">
+            <AuthButton />
+          </div>
         </div>
       </div>
     </div>
