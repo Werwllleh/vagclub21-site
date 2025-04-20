@@ -1,16 +1,14 @@
 "use client"
-import {usePartner} from "@/hooks/usePartner";
 import Loader from "@/components/loader";
 import {usePartners} from "@/hooks/usePartners";
 import {useEffect, useState} from "react";
 import getRandomNumber from "@/functions/getRandomNumber";
-import PartnerCard from "@/components/pages/partners/partner-card";
 import PartnerSliderOthers from "@/components/pages/partners/partner-slider-others";
+import MapYandex from "@/components/map-yandex";
 
-const PartnerDetail = ({slug}) => {
+const PartnerDetail = ({partner}) => {
 
-  const {partner, isLoading} = usePartner(slug);
-  const {partners, isLoading: partnersLoading} = usePartners();
+  const {partners, isLoading} = usePartners();
 
   const [otherPartners, setOtherPartners] = useState([]);
 
@@ -40,11 +38,13 @@ const PartnerDetail = ({slug}) => {
     console.log(otherPartners)
   }, [otherPartners]);*/
 
+  console.log(partner)
+
 
   return (
     <div className="partner-detail">
       <div className="container">
-        {isLoading && <Loader/>}
+        {!partner && <Loader/>}
         {partner && (
           <div className="partner-detail__body">
             <h1 className="partner-detail__title">{partner.title}</h1>
@@ -52,13 +52,18 @@ const PartnerDetail = ({slug}) => {
               {partner.description}
             </h2>
             <div className="partner-detail__content">
+              <div className="partner-detail__map">
+                <MapYandex />
+              </div>
+              <div className="partner-detail__contacts">
 
+              </div>
             </div>
-            {!!otherPartners.length && (
+            {!!otherPartners.length ? (
               <div className="partner-detail__other-partners">
                 <PartnerSliderOthers items={otherPartners} />
               </div>
-            )}
+            ) : <Loader />}
           </div>
         )}
       </div>

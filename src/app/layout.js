@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {Suspense} from "react";
+import Script from "next/script";
 
 export const metadata = {
   title: PUBLIC_PAGES.HOME.SEO_TITLE,
@@ -15,7 +16,7 @@ export const metadata = {
 export default function RootLayout({children}) {
 
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="ru">
     <head>
       <link rel="canonical" href="https://vagclub21.ru/"/>
       <meta name="yandex-verification" content="e1783a4d4e4edd5b"/>
@@ -62,6 +63,10 @@ export default function RootLayout({children}) {
     </Providers>
     {/*<SnowMode/>*/}
     <div className="bg"/>
+    <Script
+      src={`https://api-maps.yandex.ru/v3/?apikey=${process.env.YM_KEY}&lang=ru_RU`}
+      strategy="beforeInteractive"
+    />
     </body>
     </html>
   );

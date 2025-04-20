@@ -1,13 +1,13 @@
-import {instance} from "@/api/axios";
+import {axiosClassic} from "@/api/axios";
 
 class PartnersService {
 
   async fetchPartners(filter) {
-    return instance.post(`/protect/partners`, filter)
+    return axiosClassic.post(`/partners`, filter)
   }
 
   async fetchPartnerInfo(slug) {
-    return instance.post(`/protect/partner`, {
+    return axiosClassic.post(`/partner`, {
       slug: slug
     })
   }

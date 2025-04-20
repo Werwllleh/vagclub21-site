@@ -18,7 +18,7 @@ export async function middleware(request) {
     return nextRedirect('/', request.url)
   }
 
-  if (pathname.startsWith(PROTECTED_PAGES.PROFILE) || pathname.startsWith(PROTECTED_PAGES.PARTNERS)) {
+  if (pathname.startsWith(PROTECTED_PAGES.PROFILE)) {
     return protectAuthPages(request)
   }
 
