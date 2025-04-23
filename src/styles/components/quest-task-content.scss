@@ -84,7 +84,7 @@ $mt: clamp(1rem, 5vw, 2rem);
       border-radius: variables.$border-radius20;
       overflow: hidden;
       width: 100%;
-      height: clamp(30rem, 50vw, 70rem);
+      max-height: clamp(30rem, 50vw, 70rem);
     }
 
     ul, ol {
