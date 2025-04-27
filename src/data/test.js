@@ -3,7 +3,7 @@ export const loginData = {
   "first_name": "Lesha",
   "username": "all_lllll",
   "photo_url": "https://t.me/i/userpic/320/ajAoMBlfX9ObWz6WCgFSkAA_wfFUOg_YFag3InvZYWs.jpg",
-  "auth_date": 1745079710,
-  "hash": "b852dacf581af603e6cf6718f08d3667f70903b370815fd03db777b394fef692"
+  "auth_date": 1745781922,
+  "hash": "fc7102fd28fb58bc8820a845a1e1aaa9e75facdc599ddbe43c5a17d1f8a8f7d2"
 }
 

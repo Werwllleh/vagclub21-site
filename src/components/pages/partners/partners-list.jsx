@@ -1,4 +1,3 @@
-import React from 'react';
 import PartnerCard from "@/components/pages/partners/partner-card";
 
 const PartnersList = ({partners, filteredPartners}) => {

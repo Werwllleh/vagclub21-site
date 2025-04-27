@@ -1,0 +1,35 @@
+@use "../../variables";
+@use "../../breakpoints";
+
+
+.partners-search {
+  position: sticky;
+  top: clamp(6.8rem, 8vw, 9rem);
+  z-index: 2;
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding-block: clamp(1.8rem, 2vw, 2.4rem);
+  background-color: variables.$white;
+
+
+  &__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-start;
+    gap: 2rem;
+
+    @include breakpoints.sm {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  &__input {
+
+  }
+
+  &__select {
+
+  }
+}

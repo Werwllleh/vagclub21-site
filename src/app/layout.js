@@ -64,7 +64,7 @@ export default function RootLayout({children}) {
     {/*<SnowMode/>*/}
     <div className="bg"/>
     <Script
-      src={`https://api-maps.yandex.ru/v3/?apikey=${process.env.YM_KEY}&lang=ru_RU`}
+      src={`https://api-maps.yandex.ru/v3/?apikey=07d9285b-8395-4497-9596-7adf46a6bdea`}
       strategy="beforeInteractive"
     />
     </body>

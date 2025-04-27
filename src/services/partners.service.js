@@ -3,7 +3,20 @@ import {axiosClassic} from "@/api/axios";
 class PartnersService {
 
   async fetchPartners(filter) {
-    return axiosClassic.post(`/partners`, filter)
+
+    if (!filter) {
+      return axiosClassic.post(`/partners`)
+    } else {
+      return axiosClassic.post(`/partners`, {
+        label: filter.label,
+        categories: filter.categories,
+      })
+    }
+
+  }
+
+  async fetchPartnersCategories() {
+    return axiosClassic.get(`/get-partners-categories`)
   }
 
   async fetchPartnerInfo(slug) {

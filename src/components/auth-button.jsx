@@ -3,14 +3,17 @@ import {Button} from "antd";
 import AuthService from "@/services/auth.service";
 import {loginData} from "@/data/test";
 import {LoginButton} from "@telegram-auth/react";
-import {redirect} from "next/navigation";
+import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {useEffect, useState} from "react";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 const AuthButton = () => {
 
   const [domain, setDomain] = useState("");
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -18,12 +21,24 @@ const AuthButton = () => {
     }
   }, []);
 
-  const loginHandler = async (data) => {
-    const response = await AuthService.login(data);
-    if (response.status !== 200) return toast.error('Ошибка авторизации');
+  const loginMutation = useMutation({
+    mutationFn: async (data) => await AuthService.login(data),
+    onSuccess: async (response) => {
+      if (response.status === 200) {
+        toast.success('Успешная авторизация!');
+        await queryClient.invalidateQueries(['user']);
+        router.push(PUBLIC_PAGES.HOME.URL);
+      } else {
+        toast.error('Ошибка авторизации');
+      }
+    },
+    onError: (error) => {
+      toast.error('Ошибка при выполнении запроса');
+    },
+  });
 
-    toast.success('Успешная авторизация!');
-    redirect(PUBLIC_PAGES.HOME.URL);
+  const loginHandler = async (data) => {
+    loginMutation.mutate(data);
   }
 
   if (domain === 'localhost') {
