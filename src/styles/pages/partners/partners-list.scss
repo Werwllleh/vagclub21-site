@@ -18,4 +18,8 @@
   @include breakpoints.sm {
     grid-template-columns: 1fr;
   }
+
+  &__not-found {
+    margin-top: 2rem;
+  }
 }

@@ -4,7 +4,7 @@
 .header {
   position: sticky;
   top: 0;
-  padding-block: clamp(1.8rem, 2vw, 2.4rem);
+  padding-block: 2.4rem;
   background-color: variables.$white;
   transition: background-color variables.$transition, box-shadow variables.$transition;
   z-index: 99;

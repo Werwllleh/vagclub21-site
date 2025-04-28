@@ -1,27 +1,61 @@
-import {useEffect, useState} from 'react';
+'use client'
+
+import {useCallback, useEffect, useState} from 'react';
 import {usePartnersStore} from "@/store/partners.store";
 import {Input, Select} from "antd";
 import {usePartners} from "@/hooks/usePartners";
+import PartnersService from "@/services/partners.service";
+import {debounce} from "@/functions/debounce";
 
 const PartnersSearch = () => {
 
   const {categories, isLoading} = usePartners();
-
-  // console.log(categories);
 
   const {updateFilteredPartners, updateLoading} = usePartnersStore();
 
   const [searchInput, setSearchInput] = useState('');
   const [searchSelect, setSearchSelect] = useState([]);
 
+  const [payload, setPayload] = useState({})
+
   const handleSearchCategory = (value) => {
     setSearchSelect(value)
   }
 
+  const handleFilterPartners = async (payload) => {
+
+    updateLoading(true)
+    try {
+      const response = await PartnersService.fetchPartners(payload);
+
+      if (response.status === 200) {
+        updateFilteredPartners(response.data);
+      }
+
+      updateLoading(false)
+
+    } catch (e) {
+      updateLoading(false);
+      updateFilteredPartners([]);
+    }
+  }
+
   useEffect(() => {
-    console.log(searchInput)
-    console.log(searchSelect)
+    setPayload({
+      label: searchInput,
+      categories: searchSelect,
+    })
   }, [searchInput, searchSelect]);
+
+  const debouncedSearchPartners = useCallback(debounce(handleFilterPartners, 500), []);
+
+  useEffect(() => {
+    if (payload?.label || (Array.isArray(payload?.categories) && !!payload.categories.length)) {
+      debouncedSearchPartners(payload);
+    } else {
+      updateFilteredPartners([]);
+    }
+  }, [payload, debouncedSearchPartners]);
 
 
 
