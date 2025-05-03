@@ -22,6 +22,7 @@ const PartnerSliderOthers = ({items}) => {
         >
           {
             items.map((partner) => {
+
               return (
                 <SwiperSlide key={partner.slug}>
                   <PartnerCard partner={partner}/>

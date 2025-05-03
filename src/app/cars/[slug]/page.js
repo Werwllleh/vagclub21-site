@@ -1,4 +1,5 @@
 import CarDetail from "@/components/pages/cars/car-detail";
+import CarsOthers from "@/components/pages/cars/cars-others";
 
 const Page = async ({params}) => {
 

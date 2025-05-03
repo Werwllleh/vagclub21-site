@@ -1,0 +1,36 @@
+@use "../../variables";
+
+.cars-others {
+
+  &__title {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  &__cars {
+
+    .swiper{
+      overflow: unset;
+
+      .swiper-wrapper {
+        align-items: stretch;
+      }
+
+      .swiper-slide {
+        width: auto;
+        height: auto;
+
+        .car-card {
+
+          img {
+            height: 30rem;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+
+
+  }
+
+
+}

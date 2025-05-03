@@ -18,6 +18,7 @@ import BackButton from "@/components/back-button";
 import {useEffect, useState} from "react";
 import {Image} from "antd";
 import {useCarInfo} from "@/hooks/useCarInfo";
+import CarsOthers from "@/components/pages/cars/cars-others";
 
 const CarDetail = ({carNumber}) => {
 
@@ -62,7 +63,8 @@ const CarDetail = ({carNumber}) => {
                           key={index}
                           src={image}
                           preview={{
-                            mask: 'Просмотр',
+                            mask: false,
+                            movable: false
                           }}
                           alt={`${carData.car_brand}_${carData.car_model}_${carData.car_number}_${index}`}
                         />
@@ -101,6 +103,7 @@ const CarDetail = ({carNumber}) => {
           </div>
         </div>
       )}
+      {carData && <div className="car-detail__others"><CarsOthers /></div>}
     </div>
   );
 };
