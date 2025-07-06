@@ -14,9 +14,9 @@ const Providers = ({children}) => {
   const [client] = useState(new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 5 * 60 * 1000,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
+        // staleTime: 5 * 60 * 1000,
+        // refetchOnMount: false,
+        // refetchOnWindowFocus: false,
       }
     }
   }));
