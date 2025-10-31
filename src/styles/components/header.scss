@@ -160,8 +160,9 @@
 
   &__auth {
     display: flex;
-    flex-direction: column;
-    width: 30rem;
+    justify-content: center;
+    min-width: 20rem;
+    max-width: max-content;
   }
 }
 

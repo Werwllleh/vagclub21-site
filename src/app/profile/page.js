@@ -1,6 +1,5 @@
-import ProfileLayout from "@/components/pages/profile/profile-layout";
+import Profile from "@/components/pages/profile";
 import {SEO_CONFIG} from "@/config/seo.config";
-import {Suspense} from "react";
 
 export const metadata = {
   title: SEO_CONFIG.PROFILE.SEO_TITLE,
@@ -8,11 +7,7 @@ export const metadata = {
 };
 
 const Page = () => {
-
-  return (
-    <div className="page">
-      <ProfileLayout />
-    </div>);
+  return <Profile />
 };
 
 export default Page;

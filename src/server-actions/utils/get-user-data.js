@@ -15,7 +15,8 @@ export async function getUserData(accessToken) {
 
     // Проверяем статус ответа
     if (!response.ok) {
-      throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+      // throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+      return await response.json();
     }
 
     return await response.json();

@@ -1,4 +1,4 @@
-import Products from "@/app/products/products";
+import Products from "@/components/pages/products";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 
 export const metadata = {

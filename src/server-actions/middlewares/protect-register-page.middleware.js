@@ -12,7 +12,9 @@ export async function ProtectRegisterPageMiddleware(request) {
   if (!tokens) return nextRedirect(PUBLIC_PAGES.LOGIN, request.url);
 
   const verifiedData = await jwtVerifyServer(tokens.accessToken)
-  if (!verifiedData) return NextResponse.next();
+  if (!verifiedData) {
+    return NextResponse.next();
+  }
 
   // Получаем данные пользователя
   const user = await getUserData(tokens.accessToken);

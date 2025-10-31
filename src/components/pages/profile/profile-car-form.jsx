@@ -1,3 +1,4 @@
+"use client"
 import {Button, Form, Input, Select} from "antd";
 import {useCar} from "@/hooks/useCar";
 import {useEffect, useState} from "react";

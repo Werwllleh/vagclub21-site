@@ -109,8 +109,18 @@ body, html {
 }
 
 body {
-  font-family: variables.$ff-main !important;
   -webkit-font-smoothing: antialiased;
+  background: variables.$white;
+  font-family: variables.$ff-main;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  font-weight: 400;
+  min-width: 32rem;
+  overflow-x: hidden;
+  line-height: 1.3;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
 }
 
 body {
@@ -121,20 +131,9 @@ body {
   line-height: 1.3;
 }
 
-#__next {
-  background: variables.$white;
-  font-family: variables.$ff-main;
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-  font-weight: 400;
-  min-width: 37.5rem;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.3;
-  scroll-behavior: smooth;
-  text-rendering: optimizeSpeed;
-}
+/*#__next {
+
+}*/
 
 span, p, a, h1, h2, h3, h4, h5, h6 {
   transition: color variables.$transition;
@@ -142,6 +141,8 @@ span, p, a, h1, h2, h3, h4, h5, h6 {
 
 main {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {

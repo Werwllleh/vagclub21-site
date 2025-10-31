@@ -2,17 +2,13 @@
 @use "breakpoints";
 @use "base";
 
-//components
-@use "components/index";
 
 //icons
 //@import "./components/icons/index";
 
-//blocks
-@use "blocks/index" as index3;
-
-
-@use "pages/index" as index2;
-
 
 @use "global";
+
+@use "./blocks/blocks";
+@use "./components/components";
+@use "./pages/pages";

@@ -11,18 +11,21 @@ import {theme} from "@/styles/theme";
 
 const Providers = ({children}) => {
 
-  const [client] = useState(new QueryClient({
-    defaultOptions: {
-      queries: {
-        // staleTime: 5 * 60 * 1000,
-        // refetchOnMount: false,
-        // refetchOnWindowFocus: false,
-      }
-    }
-  }));
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            // staleTime: 5 * 60 * 1000,
+            // refetchOnMount: false,
+            // refetchOnWindowFocus: false,
+          },
+        },
+      })
+  );
 
   return (
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       <LazyMotion features={domAnimation}>
         <ConfigProvider theme={theme}>
           {children}

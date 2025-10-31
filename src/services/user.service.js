@@ -5,11 +5,17 @@ class UserService {
   PROTECT = '/protect';
 
   async fetchUser() {
-    return await instance.post(`${this.PROTECT}/user`)
+    return instance.post(`${this.PROTECT}/user`)
   }
 
-  async updateUserData(values) {
-    return await instance.post(`${this.PROTECT}/update-user`, {
+  async createUser(values) {
+    return instance.post(`${this.PROTECT}/create-user`, {
+      data: values
+    })
+  }
+
+  async updateUser(values) {
+    return instance.post(`${this.PROTECT}/update-user`, {
       data: values,
     })
   }

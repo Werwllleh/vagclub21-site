@@ -7,7 +7,7 @@ const Page = () => {
     <div className="page">
       <div className="container">
         <div className="login-page">
-          <h1 className="login-page__title">Войти</h1>
+          <h1 className="login-page__title">Авторизация</h1>
           <div className="login-page__auth-button">
             <AuthButton />
           </div>

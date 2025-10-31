@@ -23,7 +23,7 @@ const MainSlider = () => {
         modules={[EffectFade, Autoplay, Pagination]}
         effect="fade"
         spaceBetween={0}
-        loop={true}
+        loop={slides && !!Object.values(slides)?.length > 3}
         pagination={true}
         autoplay={{
           enabled: false,

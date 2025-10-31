@@ -1,11 +1,12 @@
 import "@/styles/index.scss";
 import SnowMode from "@/components/snow-mode";
-import Providers from "@/app/providers";
+import Providers from "@/providers/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {Suspense} from "react";
 import Script from "next/script";
+import YandexMetrica from "@/components/yandex-metrica";
 
 export const metadata = {
   title: PUBLIC_PAGES.HOME.SEO_TITLE,
@@ -20,36 +21,6 @@ export default function RootLayout({children}) {
     <head>
       <link rel="canonical" href="https://vagclub21.ru/"/>
       <meta name="yandex-verification" content="e1783a4d4e4edd5b"/>
-      {process.env.START_MODE === "production" && (
-        <>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) {return;}}
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-                (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-                
-                ym(${process.env.NEXT_PUBLIC_YM_ID}, "init", {
-                  clickmap: true,
-                  trackLinks: true,
-                  accurateTrackBounce: true,
-                  webvisor: true
-                });`,
-            }}
-          />
-          <noscript>
-            <div>
-              <img
-                src={`https://mc.yandex.ru/watch/${process.env.NEXT_PUBLIC_YM_ID}`}
-                style={{position: "absolute", left: "-9999px"}}
-                alt=""
-              />
-            </div>
-          </noscript>
-        </>
-      )}
     </head>
     <body>
     <Providers>
@@ -57,16 +28,13 @@ export default function RootLayout({children}) {
       <main>
         <Suspense fallback={null}>
           {children}
+          {process.env.START_MODE === "production" && <YandexMetrica />}
         </Suspense>
       </main>
       <Footer/>
     </Providers>
     {/*<SnowMode/>*/}
     <div className="bg"/>
-    <Script
-      src={`https://api-maps.yandex.ru/v3/?apikey=${process.env.NEXT_PUBLIC_YM_KEY}`}
-      strategy="beforeInteractive"
-    />
     </body>
     </html>
   );
