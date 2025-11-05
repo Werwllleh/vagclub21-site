@@ -1,7 +1,7 @@
 export const theme = {
   token: {
     colorPrimary: '#004c9d',
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat, sans-serif",
   },
   components: {
     Button: {

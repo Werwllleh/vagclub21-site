@@ -1,35 +1,32 @@
 @use "../variables";
 @use "../breakpoints";
 
-.profile-page {
+.profile {
 
   &__title {}
 
-  &__grid {
+  &__body {}
+
+  &__top {
     margin: 2rem 0 0 0;
     display: grid;
-    grid-template-columns: clamp(14rem, 15vw, 20rem) 1fr;
-    grid-template-areas:
-      "avatar user_data"
-      ". car_buttons";
+    grid-template-columns: auto 1fr;
     align-items: flex-start;
-    gap: clamp(2rem, 5vw, 4rem);
+    gap: 4rem;
 
     @include breakpoints.sm {
       grid-template-columns: 1fr;
-      grid-template-areas:
-      "avatar"
-      "user_data"
-      "car_buttons";
     }
   }
 
-  &__avatar {
-    grid-area: avatar;
+  &__bottom {
+    margin-top: 7rem;
+  }
 
-    @include breakpoints.sm {
-      max-width: 20rem;
-    }
+  &__avatar {
+    max-width: 20rem;
+    width: 100%;
+    height: auto;
 
     .ant-avatar {
       width: 100%;
@@ -38,7 +35,6 @@
   }
 
   &__user {
-    grid-area: user_data;
 
     &_form {
       display: flex;
@@ -68,6 +64,20 @@
 
     &_button {
 
+    }
+
+    &--empty {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      p {
+        font-size: 1.6rem;
+      }
+
+      button {
+        max-width: max-content;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import {useCar} from "@/hooks/useCar";
+import {useCar} from "@/hooks/useRegisterCar";
 import Loader from "@/components/loader";
 import {API_URL, CMS_URL} from "@/constants";
 

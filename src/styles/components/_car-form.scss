@@ -1,0 +1,33 @@
+@use "../variables";
+@use "../breakpoints";
+
+.car-form {
+
+
+  &__form {
+
+    &--fields {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+
+      /*textarea {
+        max-height: 12rem;
+      }*/
+    }
+
+    &--images {
+      & > p {
+        margin-bottom: 1rem;
+        font-size: 1.6rem;
+      }
+    }
+
+    &--footer {
+      margin-top: 2rem;
+      display: flex;
+      align-items: stretch;
+      gap: 1rem;
+    }
+  }
+}

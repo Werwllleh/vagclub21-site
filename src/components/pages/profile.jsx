@@ -5,14 +5,30 @@ import {useEffect, useState} from "react";
 import Loader from "@/components/loader";
 import ProfileCarForm from "@/components/pages/profile/profile-car-form";
 import UserForm from "@/components/user-form";
+import {useUserCars} from "@/hooks/useUserCars";
+import CarForm from "@/components/car-form";
+
+// import dynamic from 'next/dynamic'
 
 
 const Profile = () => {
 
   const {isLoading, user} = useUser();
+  const {isLoading: userCarsLoading, userCars} = useUserCars();
+
+  const [mounted, setMounted] = useState(false);
 
   const [isModalActive, setIsModalActive] = useState(false);
   const [selectCarData, setSelectCarData] = useState({});
+
+  const [isModalAddCarActive, setIsModalAddCarActive] = useState(false);
+  const openAddCarModal = () => {
+    setIsModalAddCarActive(true)
+  }
+  const closeAddCarModal = () => {
+    setIsModalAddCarActive(false)
+  }
+
 
   const handleOpenModal = (data) => {
     setSelectCarData(data);
@@ -24,26 +40,31 @@ const Profile = () => {
     setSelectCarData({});
   }
 
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   return (
     <>
-      <div className="page profile-page">
+      <div className="page profile">
         <div className="container">
-          <h1 className="profile-page__title">Профиль</h1>
+          <h1 className="profile__title">Профиль</h1>
           {isLoading && <Loader/>}
-          {isLoading ? <Loader/> : (
-            user && Object.values(user).length ? (
-              <div className="profile-page__grid">
-                <div className="profile-page__avatar">
+          {!isLoading && user && Object.values(user).length && (
+            <div className="profile__body">
+              <div className="profile__top">
+                <div className="profile__avatar">
                   <Avatar src={user?.userPhoto || false}/>
                 </div>
-                <div className="profile-page__user">
+                <div className="profile__user">
                   <UserForm type={'update'} initialValues={{
                     name: user?.data?.name,
                     instagram: user?.data?.instagram,
                   }}/>
                 </div>
-                {!!user?.data?.cars.length && (
-                  <div className="profile-page__cars">
+              </div>
+              <div className="profile__bottom">
+                {userCars && userCars.length ? (
+                  <div className="profile__cars">
                     {user.data.cars.map((car) => {
                       // console.log(car)
                       return (
@@ -58,14 +79,28 @@ const Profile = () => {
                       )
                     })}
                   </div>
+                ) : (
+                  <div className="profile__cars--empty">
+                    <p>Сейчас нет добавленных автомобилей</p>
+                    <Button
+                      onClick={openAddCarModal}
+                      type="primary"
+                      className="style-btn style-btn-primary"
+                    >
+                      Добавить авто
+                    </Button>
+                  </div>
                 )}
               </div>
-            ) : ''
+            </div>
           )}
         </div>
       </div>
       <Modal open={isModalActive} onCancel={handleCloseModal} footer={false}>
-        <ProfileCarForm onClose={handleCloseModal} key={selectCarData.car_number} car={selectCarData}/>
+        {/*<ProfileCarForm onClose={handleCloseModal} key={selectCarData.car_number} car={selectCarData}/>*/}
+      </Modal>
+      <Modal open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
+        <CarForm type={'register'} onClose={closeAddCarModal} />
       </Modal>
     </>
   );

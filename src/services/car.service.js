@@ -2,8 +2,12 @@ import {axiosClassic, instance} from "@/api/axios";
 
 class CarService {
 
-  async fetchCarsAndModels() {
-    return await axiosClassic.get(`/get-cars`)
+  async getRegisterCars() {
+    return await axiosClassic.get(`/register-cars`)
+  }
+
+  async addCar(data) {
+    return await instance.post(`/protect/add-car`, data)
   }
 
   async fetchUsersCars(number) {

@@ -1,5 +1,5 @@
 "use client"
-import {useCar} from "@/hooks/useCar";
+import {useCar} from "@/hooks/useRegisterCar";
 import CarCard from "@/components/pages/cars/car-card";
 import {useEffect, useState} from "react";
 import {getRandomItems} from "@/functions/getRandomItems";

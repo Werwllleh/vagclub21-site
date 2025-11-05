@@ -1,6 +1,5 @@
 "use client"
 import {Button, Form, Input, Select} from "antd";
-import {useCar} from "@/hooks/useCar";
 import {useEffect, useState} from "react";
 import {validateCarNumber} from "@/utils/patterns";
 import toast from "react-hot-toast";
@@ -9,7 +8,6 @@ import CarService from "@/services/car.service";
 
 const ProfileCarForm = ({car, onClose}) => {
 
-  const {carRegData, isLoading} = useCar();
 
   const [form] = Form.useForm();
   const selectedBrand = Form.useWatch('carBrand', form);

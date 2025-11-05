@@ -14,6 +14,10 @@ class UserService {
     })
   }
 
+  async getUserCars() {
+    return instance.post(`${this.PROTECT}/user-cars`)
+  }
+
   async updateUser(values) {
     return instance.post(`${this.PROTECT}/update-user`, {
       data: values,

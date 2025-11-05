@@ -112,10 +112,17 @@ h3 {
   padding: 0 .75rem 0 0;
 }
 
-.ant-input {
+input.ant-input {
   font-family: variables.$ff-main;
   padding: 1.25rem 1rem !important;
   max-height: 4.4rem;
+  height: 100%;
+  font-size: clamp(1.4rem, 3vw, 1.6rem);
+}
+
+textarea.ant-input {
+  font-family: variables.$ff-main;
+  padding: 1.25rem 1rem !important;
   height: 100%;
   font-size: clamp(1.4rem, 3vw, 1.6rem);
 }

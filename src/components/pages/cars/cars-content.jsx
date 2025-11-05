@@ -1,5 +1,5 @@
 'use client'
-import {useCar} from "@/hooks/useCar";
+import {useCar} from "@/hooks/useRegisterCar";
 import Loader from "@/components/loader";
 import CarCard from "@/components/pages/cars/car-card";
 import CarSearch from "@/components/pages/cars/car-search";
