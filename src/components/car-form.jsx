@@ -12,7 +12,7 @@ import {API_URL} from "@/constants";
 import {getBase64} from "@/utils/utils";
 import CarService from "@/services/car.service";
 
-const CarForm = ({initialValues, type, step = 1}) => {
+const CarForm = ({initialValues, type, step = 1, images}) => {
 
   const {brands, models, isLoading} = useRegisterCars();
 
@@ -22,6 +22,7 @@ const CarForm = ({initialValues, type, step = 1}) => {
 
   const [isSubmittingForm, setIsSubmittingForm] = useState(false);
 
+  const [carId, setCarId] = useState(null)
   const [carRegisterStep, setCarRegisterStep] = useState(step)
 
   useEffect(() => {
@@ -31,6 +32,14 @@ const CarForm = ({initialValues, type, step = 1}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    if (images?.length) {
+      setFileList(images)
+    } else {
+      setFileList([])
+    }
+  }, [images]);
 
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -71,6 +80,10 @@ const CarForm = ({initialValues, type, step = 1}) => {
 
   }, [form, brands, models, selectedBrand, selectedModel]);
 
+  /*useEffect(() => {
+    console.log(carId)
+  }, [carId]);*/
+
   const submitForm = async (values) => {
 
     if (carRegisterStep === 1) {
@@ -93,8 +106,7 @@ const CarForm = ({initialValues, type, step = 1}) => {
       try {
         setIsSubmittingForm(true);
         const res = await CarService.addCar(values);
-
-        console.log(res.status)
+        setCarId(res.data?.carId)
 
         if (res.status === 200) {
           setIsSubmittingForm(false);
@@ -108,6 +120,8 @@ const CarForm = ({initialValues, type, step = 1}) => {
       } catch (error) {
         setIsSubmittingForm(false);
 
+        setCarId(error.response.data?.carId)
+
         if (error.status === 409) {
           setIsSubmittingForm(false);
           toast.error(error.response.data?.message);
@@ -120,6 +134,10 @@ const CarForm = ({initialValues, type, step = 1}) => {
           toast.error('Ошибка сети. Попробуйте позже');
         }
       }
+    }
+
+    if (carRegisterStep === 2) {
+
     }
 
   }
@@ -137,7 +155,7 @@ const CarForm = ({initialValues, type, step = 1}) => {
         requiredMark={false}
       >
         <div className="car-form__form--fields">
-          {carRegisterStep === 1 && (
+          {carRegisterStep === 1 && !isLoading && (
             <>
               <Form.Item
                 name="brand"
@@ -246,7 +264,9 @@ const CarForm = ({initialValues, type, step = 1}) => {
             </Button>
           )}
           <Button className="style-btn style-btn-primary" type="primary" htmlType="submit">
-            {type === 'update' ? 'Обновить' : 'Добавить'}
+            {/*{type === 'update' ? 'Обновить' : 'Добавить'}*/}
+            {carRegisterStep === 1 && 'Далее'}
+            {carRegisterStep === 2 && 'Сохранить'}
           </Button>
         </div>
       </Form>

@@ -66,6 +66,16 @@
 
     }
 
+    & > h3 {
+
+    }
+
+    &--list {
+      display: flex;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
     &--empty {
       display: flex;
       flex-direction: column;

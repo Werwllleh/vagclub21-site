@@ -1,0 +1,17 @@
+@use "../variables";
+@use "../breakpoints";
+
+.profile-car-card {
+  cursor: pointer;
+
+  &__body {}
+
+  &__images {}
+
+  &__info {
+
+    &--name {}
+
+    &--year {}
+  }
+}

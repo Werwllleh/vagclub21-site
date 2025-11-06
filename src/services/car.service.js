@@ -31,6 +31,13 @@ class CarService {
     })
   }
 
+  async updateUserCar(carId, data) {
+    return await instance.post(`/protect/update-car`, {
+      carId: carId,
+      data: data,
+    })
+  }
+
 }
 
 export default new CarService();

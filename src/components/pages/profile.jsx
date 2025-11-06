@@ -7,6 +7,8 @@ import ProfileCarForm from "@/components/pages/profile/profile-car-form";
 import UserForm from "@/components/user-form";
 import {useUserCars} from "@/hooks/useUserCars";
 import CarForm from "@/components/car-form";
+import ProfileCarCard from "@/components/profile-car-card";
+import {PlusOutlined} from "@ant-design/icons";
 
 // import dynamic from 'next/dynamic'
 
@@ -28,6 +30,10 @@ const Profile = () => {
   const closeAddCarModal = () => {
     setIsModalAddCarActive(false)
   }
+
+  useEffect(() => {
+    console.log(userCars)
+  }, [userCars]);
 
 
   const handleOpenModal = (data) => {
@@ -63,21 +69,37 @@ const Profile = () => {
                 </div>
               </div>
               <div className="profile__bottom">
-                {userCars && userCars.length ? (
+                {userCarsLoading && !userCars && <Loader/>}
+                {!userCarsLoading && userCars ? (
                   <div className="profile__cars">
-                    {user.data.cars.map((car) => {
-                      // console.log(car)
-                      return (
+                    <h3>Ваши авто</h3>
+                    <div className="profile__cars--list">
+                      <>
+                        {userCars.map((car) => {
+                          return (
+                            <ProfileCarCard key={car.id} data={car}/>
+                          )
+                          /*return (
+                            <Button
+                              key={car.car_number}
+                              onClick={() => handleOpenModal(car)}
+                              type="primary"
+                              className="style-btn style-btn-default profile-page__cars_button"
+                            >
+                              {car.car_number}
+                            </Button>
+                          )*/
+                        })}
                         <Button
-                          key={car.car_number}
-                          onClick={() => handleOpenModal(car)}
+                          onClick={openAddCarModal}
                           type="primary"
-                          className="style-btn style-btn-default profile-page__cars_button"
+                          className="style-btn style-btn-primary"
                         >
-                          {car.car_number}
+                          <PlusOutlined />
+                          Добавить
                         </Button>
-                      )
-                    })}
+                      </>
+                    </div>
                   </div>
                 ) : (
                   <div className="profile__cars--empty">
@@ -100,7 +122,7 @@ const Profile = () => {
         {/*<ProfileCarForm onClose={handleCloseModal} key={selectCarData.car_number} car={selectCarData}/>*/}
       </Modal>
       <Modal open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
-        <CarForm type={'register'} onClose={closeAddCarModal} />
+        <CarForm type={'register'} onClose={closeAddCarModal}/>
       </Modal>
     </>
   );
