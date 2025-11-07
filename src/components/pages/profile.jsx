@@ -31,9 +31,9 @@ const Profile = () => {
     setIsModalAddCarActive(false)
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(userCars)
-  }, [userCars]);
+  }, [userCars]);*/
 
 
   const handleOpenModal = (data) => {
@@ -77,7 +77,7 @@ const Profile = () => {
                       <>
                         {userCars.map((car) => {
                           return (
-                            <ProfileCarCard key={car.id} data={car}/>
+                            <ProfileCarCard key={car.id} carId={car.id} data={car}/>
                           )
                           /*return (
                             <Button

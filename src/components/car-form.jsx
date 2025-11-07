@@ -8,11 +8,12 @@ import {useRegisterCars} from "@/hooks/useRegisterCar";
 import {validateCarNumber} from "@/utils/patterns";
 import dayjs from "dayjs";
 import {PlusOutlined} from "@ant-design/icons";
-import {API_URL} from "@/constants";
 import {getBase64} from "@/utils/utils";
 import CarService from "@/services/car.service";
+import UploadService from "@/services/upload.service";
+import {API_URL} from "@/constants";
 
-const CarForm = ({initialValues, type, step = 1, images}) => {
+const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
 
   const {brands, models, isLoading} = useRegisterCars();
 
@@ -26,20 +27,18 @@ const CarForm = ({initialValues, type, step = 1, images}) => {
   const [carRegisterStep, setCarRegisterStep] = useState(step)
 
   useEffect(() => {
+    if (carIndex) {
+      setCarId(carIndex);
+    }
+  }, [carIndex]);
+
+  useEffect(() => {
     setCarRegisterStep(step)
   }, [step]);
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
-
-  useEffect(() => {
-    if (images?.length) {
-      setFileList(images)
-    } else {
-      setFileList([])
-    }
-  }, [images]);
 
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -80,9 +79,9 @@ const CarForm = ({initialValues, type, step = 1, images}) => {
 
   }, [form, brands, models, selectedBrand, selectedModel]);
 
-  /*useEffect(() => {
-    console.log(carId)
-  }, [carId]);*/
+  useEffect(() => {
+    console.log(images)
+  }, [images]);
 
   const submitForm = async (values) => {
 
@@ -211,23 +210,24 @@ const CarForm = ({initialValues, type, step = 1, images}) => {
               </Form.Item>
             </>
           )}
-          {carRegisterStep === 2 && (
+          {carRegisterStep === 2 && carId && (
             <div className="car-form__form--images">
               <p>Добавить фото</p>
               <Form.Item valuePropName="fileList" getValueFromEvent={normFile}>
                 <>
                   <Upload
-                    action={`${API_URL}/upload`}
-                    // action={UploadService.upload}
+                    // action={`${API_URL}/upload`}
+                    customRequest={UploadService.upload("car", carId)}
                     listType="picture-card"
                     fileList={fileList}
+                    withCredentials={true}
                     onPreview={handlePreview}
                     onChange={handleChangeUpload}
                     onRemove={handleRemoveUpload}
                     multiple={true}
                     maxCount={6}
                   >
-                    {fileList.length >= 6 ? null : (
+                    {fileList.length >= 6 - images?.length ? null : (
                       <button
                         style={{color: 'inherit', cursor: 'inherit', border: 0, background: 'none'}}
                         type="button"
@@ -237,6 +237,20 @@ const CarForm = ({initialValues, type, step = 1, images}) => {
                       </button>
                     )}
                   </Upload>
+                  {images?.length && (
+                    images.map(image => (
+                      <Image
+                        key={image.id}
+                        // wrapperStyle={{display: 'none'}}
+                        /*preview={{
+                          visible: previewOpen,
+                          onVisibleChange: visible => setPreviewOpen(visible),
+                          afterOpenChange: visible => !visible && setPreviewImage(''),
+                        }}*/
+                        src={`${API_URL}/${image.source}`}
+                      />
+                    ))
+                  )}
                   {previewImage && (
                     <Image
                       wrapperStyle={{display: 'none'}}

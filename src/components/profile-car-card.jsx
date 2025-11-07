@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CarForm from "@/components/car-form";
 import {Modal} from "antd";
 
-const ProfileCarCard = ({data}) => {
+const ProfileCarCard = ({carId, data}) => {
 
   const [isModalUpdateCarActive, setIsModalUpdateCarActive] = useState(false);
 
@@ -13,7 +13,9 @@ const ProfileCarCard = ({data}) => {
     setIsModalUpdateCarActive(false)
   }
 
-  console.log(data)
+  useEffect(() => {
+    console.log(data.carsImages)
+  }, [carId, data]);
 
   return (
     <>
@@ -27,14 +29,19 @@ const ProfileCarCard = ({data}) => {
         </div>
       </div>
       <Modal open={isModalUpdateCarActive} onCancel={closeUpdateCarModal} footer={false}>
-        <CarForm type={'update'} onClose={closeUpdateCarModal} initialValues={{
-          brand: data?.brand,
-          model: data?.model,
-          number: data?.number,
-          year: data?.year,
-          drive2: data?.drive2,
-          note: data?.note,
-        }}/>
+        <CarForm
+          type={'update'}
+          carIndex={carId}
+          onClose={closeUpdateCarModal}
+          images={data?.carsImages}
+          initialValues={{
+            brand: data?.brand,
+            model: data?.model,
+            number: data?.number,
+            year: data?.year,
+            drive2: data?.drive2,
+            note: data?.note,
+          }}/>
       </Modal>
     </>
   );
