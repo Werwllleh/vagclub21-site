@@ -31,12 +31,11 @@ const UserForm = ({initialValues, type, setStep}) => {
       const res = await UserService.updateUser(values);
 
       if (res.status === 200 || res.status === 409) {
-        setStep(2)
-        form.resetFields()
         setIsSubmittingForm(false);
-      } else {
         toast.success(res.data.message)
+      } else {
         setIsSubmittingForm(false);
+        toast.success(res.data.message)
       }
     }
 

@@ -13,9 +13,9 @@ const ProfileCarCard = ({carId, data}) => {
     setIsModalUpdateCarActive(false)
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(data.carsImages)
-  }, [carId, data]);
+  }, [carId, data]);*/
 
   return (
     <>

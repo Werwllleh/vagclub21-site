@@ -7,13 +7,13 @@ import toast from "react-hot-toast";
 import {useRegisterCars} from "@/hooks/useRegisterCar";
 import {validateCarNumber} from "@/utils/patterns";
 import dayjs from "dayjs";
-import {PlusOutlined} from "@ant-design/icons";
+import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {getBase64} from "@/utils/utils";
 import CarService from "@/services/car.service";
 import UploadService from "@/services/upload.service";
 import {API_URL} from "@/constants";
 
-const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
+const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}) => {
 
   const {brands, models, isLoading} = useRegisterCars();
 
@@ -50,8 +50,13 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
 
   const handleChangeUpload = ({fileList: newFileList}) => setFileList(newFileList);
 
-  const handleRemoveUpload = () => {
+  const handleRemoveUploadImage = (file) => {
+    console.log(file)
     console.log('Delete')
+  }
+
+  const deleteImage = (image) => {
+
   }
 
   const normFile = e => {
@@ -79,9 +84,9 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
 
   }, [form, brands, models, selectedBrand, selectedModel]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(images)
-  }, [images]);
+  }, [images]);*/
 
   const submitForm = async (values) => {
 
@@ -136,7 +141,11 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
     }
 
     if (carRegisterStep === 2) {
-
+      onClose();
+      setTimeout(() => {
+        form.resetFields();
+        setCarRegisterStep(1);
+      }, 300)
     }
 
   }
@@ -211,23 +220,22 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
             </>
           )}
           {carRegisterStep === 2 && carId && (
-            <div className="car-form__form--images">
-              <p>Добавить фото</p>
-              <Form.Item valuePropName="fileList" getValueFromEvent={normFile}>
-                <>
-                  <Upload
-                    // action={`${API_URL}/upload`}
-                    customRequest={UploadService.upload("car", carId)}
-                    listType="picture-card"
-                    fileList={fileList}
-                    withCredentials={true}
-                    onPreview={handlePreview}
-                    onChange={handleChangeUpload}
-                    onRemove={handleRemoveUpload}
-                    multiple={true}
-                    maxCount={6}
-                  >
-                    {fileList.length >= 6 - images?.length ? null : (
+            <>
+              <div className="car-form__form--images">
+                <p>Добавить фото</p>
+                <Form.Item valuePropName="fileList" getValueFromEvent={normFile}>
+                  <>
+                    <Upload
+                      // action={`${API_URL}/upload`}
+                      customRequest={UploadService.upload("car", carId)}
+                      listType="picture-card"
+                      fileList={fileList}
+                      withCredentials={true}
+                      onPreview={handlePreview}
+                      onChange={handleChangeUpload}
+                      onRemove={handleRemoveUploadImage}
+                      multiple={true}
+                    >
                       <button
                         style={{color: 'inherit', cursor: 'inherit', border: 0, background: 'none'}}
                         type="button"
@@ -235,36 +243,47 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = []}) => {
                         <PlusOutlined/>
                         <div style={{marginTop: 8}}>Загрузить</div>
                       </button>
-                    )}
-                  </Upload>
-                  {images?.length && (
-                    images.map(image => (
+                    </Upload>
+                    {previewImage && (
                       <Image
-                        key={image.id}
-                        // wrapperStyle={{display: 'none'}}
-                        /*preview={{
+                        wrapperStyle={{display: 'none'}}
+                        preview={{
                           visible: previewOpen,
                           onVisibleChange: visible => setPreviewOpen(visible),
                           afterOpenChange: visible => !visible && setPreviewImage(''),
-                        }}*/
-                        src={`${API_URL}/${image.source}`}
+                        }}
+                        src={previewImage}
                       />
-                    ))
-                  )}
-                  {previewImage && (
-                    <Image
-                      wrapperStyle={{display: 'none'}}
-                      preview={{
-                        visible: previewOpen,
-                        onVisibleChange: visible => setPreviewOpen(visible),
-                        afterOpenChange: visible => !visible && setPreviewImage(''),
-                      }}
-                      src={previewImage}
-                    />
-                  )}
-                </>
-              </Form.Item>
-            </div>
+                    )}
+                  </>
+                </Form.Item>
+              </div>
+              {!!images?.length && (
+                <div className="car-form__available-images">
+                  <p>Ваши фото</p>
+                  <ul className="car-form__available-images--list">
+                    {images.map(image => (
+                      <li key={image.id}>
+                        <div className="car-form__available-images--img">
+                          <Image
+                            src={`${API_URL}/image/${image.source}`}
+                          />
+                        </div>
+                        <div className="car-form__available-images--actions">
+                          <Button
+                            onClick={() => handleRemoveUploadImage({file: image.source})}
+                            type="primary"
+                            className="style-btn style-btn-default"
+                          >
+                            <DeleteOutlined/>
+                          </Button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
           )}
         </div>
         <div className="car-form__form--footer">

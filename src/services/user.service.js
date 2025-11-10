@@ -9,18 +9,18 @@ class UserService {
   }
 
   async createUser(values) {
-    return instance.post(`${this.PROTECT}/create-user`, {
+    return instance.post(`/create-user`, {
       data: values
     })
   }
 
   async getUserCars() {
-    return instance.post(`${this.PROTECT}/user-cars`)
+    return instance.post(`/user-cars`)
   }
 
   async updateUser(values) {
-    return instance.post(`${this.PROTECT}/update-user`, {
-      data: values,
+    return instance.post(`/update-user`, {
+      data: values
     })
   }
 
