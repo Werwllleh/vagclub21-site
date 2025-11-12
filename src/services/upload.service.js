@@ -45,6 +45,27 @@ class UploadService {
     };
   }
 
+  async uploadFiles(type, files, carId, partnerId) {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files[]", file);
+    });
+    formData.append("type", type);
+    if (carId) formData.append("carId", carId);
+    if (partnerId) formData.append("partnerId", partnerId);
+
+    return instance.post(`/upload`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    });
+  }
+
+  async deleteFile(filename, type) {
+    return instance.post(`/remove`, {
+      filename: filename,
+      type: type
+    })
+  }
 }
 
 export default new UploadService();

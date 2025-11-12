@@ -71,9 +71,11 @@
     }
 
     &--list {
-      display: flex;
+      display: grid;
       align-items: stretch;
+      grid-template-columns: repeat(auto-fit, minmax(370px, 3fr));
       gap: 1rem;
+
     }
 
     &--empty {

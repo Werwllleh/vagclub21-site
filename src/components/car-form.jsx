@@ -8,12 +8,23 @@ import {useRegisterCars} from "@/hooks/useRegisterCar";
 import {validateCarNumber} from "@/utils/patterns";
 import dayjs from "dayjs";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
-import {getBase64} from "@/utils/utils";
 import CarService from "@/services/car.service";
 import UploadService from "@/services/upload.service";
 import {API_URL} from "@/constants";
+import {useQueryClient} from "@tanstack/react-query";
+import {deepEqual, getBase64} from "@/utils/utils";
+
+// Import Swiper React components
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Pagination} from 'swiper/modules';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/pagination';
 
 const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}) => {
+
+  const queryClient = useQueryClient();
 
   const {brands, models, isLoading} = useRegisterCars();
 
@@ -39,6 +50,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [uploadingImages, setUploadingImages] = useState(false);
 
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -48,15 +60,38 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
     setPreviewOpen(true);
   };
 
-  const handleChangeUpload = ({fileList: newFileList}) => setFileList(newFileList);
+  const handleChangeUpload = ({ fileList: newFileList }) => {
+    newFileList.forEach((file) => {
+      if (!file.url && !file.preview) {
+        file.preview = URL.createObjectURL(file.originFileObj || file);
+      }
+    });
 
-  const handleRemoveUploadImage = (file) => {
-    console.log(file)
-    console.log('Delete')
+    setFileList(newFileList);
+  };
+
+  const beforeUpload = (file) => {
+    setFileList([...fileList, file]);
+    return false;
   }
 
-  const deleteImage = (image) => {
+  const handleRemoveUploadImage = async (file) => {
 
+    const index = fileList.indexOf(file);
+    const newFileList = fileList.slice();
+    newFileList.splice(index, 1);
+    setFileList(newFileList);
+  }
+
+  const deleteImage = async (file) => {
+    const res = await UploadService.deleteFile(file, "car");
+
+    if (res.status === 200) {
+      toast.success(res.data.message);
+      await queryClient.invalidateQueries(['user-cars']);
+    } else {
+      toast.error(res.data.message);
+    }
   }
 
   const normFile = e => {
@@ -84,13 +119,49 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
   }, [form, brands, models, selectedBrand, selectedModel]);
 
-  /*useEffect(() => {
-    console.log(images)
-  }, [images]);*/
+  const handleSaveImages = async () => {
+    if (!fileList.length) return;
+
+    try {
+      setUploadingImages(true);
+
+      const files = fileList.map((file) => file.originFileObj || file);
+
+      const response = await UploadService.uploadFiles("car", files, carId);
+
+      if (response.status === 200) {
+        toast.success("Файлы успешно загружены!");
+        onClose();
+        await queryClient.invalidateQueries(['user-cars']);
+        setFileList([])
+
+        setTimeout(async () => {
+          form.resetFields();
+          setCarRegisterStep(1);
+        }, 300)
+      } else {
+        toast.error("Ошибка при загрузке файлов");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Ошибка загрузки");
+    } finally {
+      setUploadingImages(false);
+    }
+  };
 
   const submitForm = async (values) => {
 
     if (carRegisterStep === 1) {
+
+      if (initialValues) {
+        const compare = deepEqual(values, initialValues)
+
+        if (compare) {
+          return setCarRegisterStep(2)
+        }
+      }
+
       if (!validateCarNumber.test(values.number.trim())) {
         return toast.error('Номер авто некорректный')
       }
@@ -115,7 +186,12 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
         if (res.status === 200) {
           setIsSubmittingForm(false);
           setCarRegisterStep(carRegisterStep + 1);
-          toast.success('Автомобиль успешно добавлен!');
+
+          if (type === 'update') {
+            toast.success('Данные обновлены');
+          } else {
+            toast.success('Автомобиль успешно добавлен');
+          }
         } else {
           setIsSubmittingForm(false);
           toast.error(res.data?.message || 'Ошибка при добавлении автомобиля');
@@ -141,13 +217,15 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
     }
 
     if (carRegisterStep === 2) {
-      onClose();
-      setTimeout(() => {
-        form.resetFields();
-        setCarRegisterStep(1);
-      }, 300)
+      if (!fileList.length) {
+        onClose()
+        setTimeout(() => {
+          setCarRegisterStep(1)
+        }, 100)
+      } else {
+        await handleSaveImages()
+      }
     }
-
   }
 
   return (
@@ -226,15 +304,16 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
                 <Form.Item valuePropName="fileList" getValueFromEvent={normFile}>
                   <>
                     <Upload
-                      // action={`${API_URL}/upload`}
-                      customRequest={UploadService.upload("car", carId)}
+                      // customRequest={UploadService.upload("car", carId)}
                       listType="picture-card"
                       fileList={fileList}
                       withCredentials={true}
+                      beforeUpload={beforeUpload}
                       onPreview={handlePreview}
                       onChange={handleChangeUpload}
                       onRemove={handleRemoveUploadImage}
                       multiple={true}
+                      maxCount={6}
                     >
                       <button
                         style={{color: 'inherit', cursor: 'inherit', border: 0, background: 'none'}}
@@ -259,25 +338,45 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
                 </Form.Item>
               </div>
               {!!images?.length && (
-                <div className="car-form__available-images">
+                <div className="car-form__available-list">
                   <p>Ваши фото</p>
+                  <Swiper
+                    modules={[Pagination]}
+                    spaceBetween={20}
+                    pagination={{
+                      enabled: true,
+                      clickable: true,
+                    }}
+                    slidesPerView={"auto"}
+                  >
+                    {images.map(image => {
+                      return (
+                        <SwiperSlide key={image.id}>
+                          <div className="car-form__available-list--card">
+                            <div className="car-form__available-list--img">
+                              <Image
+                                src={`${API_URL}/image/${image.source}`}
+                              />
+                            </div>
+                            <div className="car-form__available-list--actions">
+                              <Button
+                                onClick={() => deleteImage(image.source)}
+                                type="primary"
+                                size={"small"}
+                                className="style-btn style-btn-default "
+                              >
+                                <DeleteOutlined/>
+                              </Button>
+                            </div>
+                          </div>
+                        </SwiperSlide>
+                      )
+                    })}
+                  </Swiper>
                   <ul className="car-form__available-images--list">
                     {images.map(image => (
                       <li key={image.id}>
-                        <div className="car-form__available-images--img">
-                          <Image
-                            src={`${API_URL}/image/${image.source}`}
-                          />
-                        </div>
-                        <div className="car-form__available-images--actions">
-                          <Button
-                            onClick={() => handleRemoveUploadImage({file: image.source})}
-                            type="primary"
-                            className="style-btn style-btn-default"
-                          >
-                            <DeleteOutlined/>
-                          </Button>
-                        </div>
+
                       </li>
                     ))}
                   </ul>

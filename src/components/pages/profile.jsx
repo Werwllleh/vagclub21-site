@@ -3,14 +3,11 @@ import {useUser} from "@/hooks/useUser";
 import {Avatar, Button, Modal} from "antd";
 import {useEffect, useState} from "react";
 import Loader from "@/components/loader";
-import ProfileCarForm from "@/components/pages/profile/profile-car-form";
 import UserForm from "@/components/user-form";
 import {useUserCars} from "@/hooks/useUserCars";
 import CarForm from "@/components/car-form";
-import ProfileCarCard from "@/components/profile-car-card";
 import {PlusOutlined} from "@ant-design/icons";
-
-// import dynamic from 'next/dynamic'
+import ProfileCarCard from "@/components/profile-car-card";
 
 
 const Profile = () => {
@@ -30,11 +27,6 @@ const Profile = () => {
   const closeAddCarModal = () => {
     setIsModalAddCarActive(false)
   }
-
-  /*useEffect(() => {
-    console.log(userCars)
-  }, [userCars]);*/
-
 
   const handleOpenModal = (data) => {
     setSelectCarData(data);
@@ -79,24 +71,14 @@ const Profile = () => {
                           return (
                             <ProfileCarCard key={car.id} carId={car.id} data={car}/>
                           )
-                          /*return (
-                            <Button
-                              key={car.car_number}
-                              onClick={() => handleOpenModal(car)}
-                              type="primary"
-                              className="style-btn style-btn-default profile-page__cars_button"
-                            >
-                              {car.car_number}
-                            </Button>
-                          )*/
                         })}
                         <Button
                           onClick={openAddCarModal}
                           type="primary"
-                          className="style-btn style-btn-primary"
+                          className="style-btn style-btn-default"
                         >
                           <PlusOutlined />
-                          Добавить
+                          Добавить авто
                         </Button>
                       </>
                     </div>

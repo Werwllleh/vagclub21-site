@@ -1,13 +1,14 @@
 'use client'
-import {useCar} from "@/hooks/useRegisterCar";
+
 import Loader from "@/components/loader";
 import CarCard from "@/components/pages/cars/car-card";
 import CarSearch from "@/components/pages/cars/car-search";
 import {useCarsStore} from "@/store/cars.store";
+import {useUserCars} from "@/hooks/useUserCars";
 
 const CarsContent = () => {
 
-  const {cars, isLoading} = useCar();
+  const {cars, isLoading} = useUserCars();
 
   const {filteredCars, loading} = useCarsStore()
 
