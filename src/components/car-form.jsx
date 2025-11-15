@@ -154,14 +154,6 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
     if (carRegisterStep === 1) {
 
-      if (initialValues) {
-        const compare = deepEqual(values, initialValues)
-
-        if (compare) {
-          return setCarRegisterStep(2)
-        }
-      }
-
       if (!validateCarNumber.test(values.number.trim())) {
         return toast.error('Номер авто некорректный')
       }
@@ -178,40 +170,63 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
         }
       }
 
-      try {
-        setIsSubmittingForm(true);
-        const res = await CarService.addCar(values);
-        setCarId(res.data?.carId)
+      if (type === 'update' && carIndex && initialValues) {
+        const compare = deepEqual(values, initialValues)
 
-        if (res.status === 200) {
-          setIsSubmittingForm(false);
-          setCarRegisterStep(carRegisterStep + 1);
+        if (compare) {
+          return setCarRegisterStep(2)
+        } else {
+          try {
+            setIsSubmittingForm(true);
+            const res = await CarService.updateUserCar(carIndex, values);
 
-          if (type === 'update') {
-            toast.success('Данные обновлены');
-          } else {
-            toast.success('Автомобиль успешно добавлен');
+            if (res.status === 200) {
+              setIsSubmittingForm(false);
+              await queryClient.invalidateQueries(['user-cars']);
+              toast.success('Данные обновлены');
+              setCarRegisterStep(2);
+            }
+          } catch (error) {
+            setIsSubmittingForm(false);
+            if (error.response) {
+              toast.error(error.response.data?.message || 'Ошибка на сервере');
+            } else {
+              toast.error('Ошибка сети. Попробуйте позже');
+            }
           }
-        } else {
-          setIsSubmittingForm(false);
-          toast.error(res.data?.message || 'Ошибка при добавлении автомобиля');
         }
+      } else {
+        try {
+          setIsSubmittingForm(true);
+          const res = await CarService.addCar(values);
+          setCarId(res.data?.carId)
 
-      } catch (error) {
-        setIsSubmittingForm(false);
+          if (res.status === 200) {
+            setIsSubmittingForm(false);
+            setCarRegisterStep(carRegisterStep + 1);
+            await queryClient.invalidateQueries(['user-cars']);
+            toast.success('Автомобиль успешно добавлен');
+          } else {
+            setIsSubmittingForm(false);
+            toast.error(res.data?.message || 'Ошибка при добавлении автомобиля');
+          }
 
-        setCarId(error.response.data?.carId)
-
-        if (error.status === 409) {
+        } catch (error) {
           setIsSubmittingForm(false);
-          toast.error(error.response.data?.message);
-          return setCarRegisterStep(carRegisterStep + 1)
-        }
 
-        if (error.response) {
-          toast.error(error.response.data?.message || 'Ошибка на сервере');
-        } else {
-          toast.error('Ошибка сети. Попробуйте позже');
+          setCarId(error.response.data?.carId)
+
+          if (error.status === 409) {
+            setIsSubmittingForm(false);
+            toast.error(error.response.data?.message);
+            return setCarRegisterStep(carRegisterStep + 1)
+          }
+
+          if (error.response) {
+            toast.error(error.response.data?.message || 'Ошибка на сервере');
+          } else {
+            toast.error('Ошибка сети. Попробуйте позже');
+          }
         }
       }
     }

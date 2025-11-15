@@ -85,9 +85,74 @@
     margin-top: auto;
     display: grid;
     grid-template-columns: 1fr auto;
-    align-items: flex-start;
     gap: 1rem;
     padding: 2rem 1.5rem;
     background-color: variables.$colorSecondary;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    button {
+      flex: 0 1 50%;
+      padding: 1rem;
+
+      &.delete {
+        background-color: variables.$red;
+        border-color: variables.$red;
+
+        svg {
+          color: variables.$white;
+          transition: color variables.$transition;
+        }
+
+        &:hover {
+          background-color: variables.$white !important;
+          border-color: variables.$red !important;
+
+          svg {
+            color: variables.$red !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.confirm-delete-car {
+
+  &__title {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  &__actions {
+    margin-top: 2rem;
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    max-width: 80%;
+
+    button {
+
+      &.agree {
+        flex: 0 1 40%;
+      }
+
+      &.disagree {
+        flex: 0 1 60%;
+        background-color: variables.$red;
+        border-color: variables.$red;
+        color: variables.$white;
+
+        &:hover {
+          border-color: variables.$red !important;
+          background-color: variables.$white !important;
+          color: variables.$red !important;
+        }
+      }
+    }
   }
 }

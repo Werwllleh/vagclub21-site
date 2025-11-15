@@ -7,7 +7,7 @@ class CarService {
   }
 
   async addCar(data) {
-    return await instance.post(`/protect/add-car`, data)
+    return await instance.post(`/add-car`, data)
   }
 
   async fetchUsersCars(number) {
@@ -24,15 +24,22 @@ class CarService {
     })
   }
 
-  async changeCarInfo(carId, data) {
-    return await instance.post(`/protect/change-car-info`, {
+  async updateUserCar(carId, data) {
+    return await instance.post(`/update-car`, {
       carId: carId,
       data: data,
     })
   }
 
-  async updateUserCar(carId, data) {
-    return await instance.post(`/protect/update-car`, {
+  async deleteUserCar(carId) {
+    return await instance.post(`/delete-car`, {
+      carId: carId,
+    })
+  }
+
+  //Old
+  async changeCarInfo(carId, data) {
+    return await instance.post(`/protect/change-car-info`, {
       carId: carId,
       data: data,
     })

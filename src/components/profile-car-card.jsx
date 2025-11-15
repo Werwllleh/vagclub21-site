@@ -10,11 +10,17 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 import {API_URL} from "@/constants";
-import {EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import CarService from "@/services/car.service";
+import toast from "react-hot-toast";
+import {useQueryClient} from "@tanstack/react-query";
 
 const profileCarCard = ({carId, data}) => {
 
+  const queryClient = useQueryClient();
+
   const [isModalUpdateCarActive, setIsModalUpdateCarActive] = useState(false);
+  const [isModalDeleteCarActive, setIsModalDeleteCarActive] = useState(false);
 
   const openUpdateCarModal = () => {
     setIsModalUpdateCarActive(true)
@@ -22,6 +28,30 @@ const profileCarCard = ({carId, data}) => {
   const closeUpdateCarModal = () => {
     setIsModalUpdateCarActive(false)
   }
+
+  const openDeleteCarModal = () => {
+    setIsModalDeleteCarActive(true)
+  }
+  const closeDeleteCarModal = () => {
+    setIsModalDeleteCarActive(false)
+  }
+
+  const deleteCar = async (carId) => {
+
+    try {
+      const res = await CarService.deleteUserCar(carId);
+
+      if (res.status === 200) {
+        await queryClient.invalidateQueries(['user-cars']);
+        closeDeleteCarModal();
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data?.message || 'Ошибка на сервере');
+    }
+  }
+
 
   return (
     <>
@@ -79,6 +109,13 @@ const profileCarCard = ({carId, data}) => {
               >
                 <EditOutlined/>
               </Button>
+              <Button
+                onClick={openDeleteCarModal}
+                className="style-btn delete"
+                size="small"
+              >
+                <DeleteOutlined />
+              </Button>
             </div>
           </div>
         </div>
@@ -97,6 +134,27 @@ const profileCarCard = ({carId, data}) => {
             drive2: data?.drive2,
             note: data?.note,
           }}/>
+      </Modal>
+      <Modal open={isModalDeleteCarActive} onCancel={closeDeleteCarModal} footer={false}>
+        <div className="confirm-delete-car">
+          <h3 className="confirm-delete-car__title">Удалить автомобиль из вашего профиля?</h3>
+          <div className="confirm-delete-car__actions">
+            <Button
+              onClick={() => deleteCar(carId)}
+              className="style-btn agree"
+              size="small"
+            >
+              Да
+            </Button>
+            <Button
+              onClick={closeDeleteCarModal}
+              className="style-btn disagree"
+              size="small"
+            >
+              Нет
+            </Button>
+          </div>
+        </div>
       </Modal>
     </>
   );
