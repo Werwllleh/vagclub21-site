@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CarForm from "@/components/car-form";
 import {Button, Image, Modal} from "antd";
 
@@ -57,7 +57,7 @@ const profileCarCard = ({carId, data}) => {
     <>
       <div className="profile-car-card">
         <div className="profile-car-card__body">
-          {data.carsImages.length ? (
+          {data.carsImages?.length ? (
             <div className="profile-car-card__images">
               <Image.PreviewGroup>
                 <Swiper

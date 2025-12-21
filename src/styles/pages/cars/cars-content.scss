@@ -4,12 +4,13 @@
 .cars-page {
 
 
-  &__title {}
+  &__title {
+  }
 
   &__grid {
     margin-top: clamp(2rem, 4vw, 4rem);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, calc(25% - 1rem));
     align-items: stretch;
     gap: 1rem;
 
@@ -21,5 +22,59 @@
   &__not-found {
     font-weight: 600;
     font-size: clamp(2rem, 4vw, 4rem);
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+
+    .ant-pagination {
+      font-size: 1.6rem;
+    }
+
+    .ant-pagination-prev, .ant-pagination-next, .ant-pagination-item, .ant-pagination-jump-prev, .ant-pagination-jump-next {
+      height: auto;
+      min-width: auto;
+      font-family: inherit;
+      border-radius: variables.$borderRadius5;
+      line-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      a, .ant-pagination-item-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 4rem;
+        height: 4rem;
+      }
+    }
+
+    .ant-pagination-item-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    .ant-pagination-item-ellipsis {
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      inset-inline-end: auto !important;
+      inset-inline-start: auto !important;
+      margin: auto;
+      width: 100%;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ant-pagination-item-link {
+      position: relative;
+    }
   }
 }

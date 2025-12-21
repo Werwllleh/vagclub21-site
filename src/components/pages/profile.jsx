@@ -4,16 +4,37 @@ import {Avatar, Button, Modal} from "antd";
 import {useEffect, useState} from "react";
 import Loader from "@/components/loader";
 import UserForm from "@/components/user-form";
-import {useUserCars} from "@/hooks/useUserCars";
 import CarForm from "@/components/car-form";
 import {PlusOutlined} from "@ant-design/icons";
 import ProfileCarCard from "@/components/profile-car-card";
+import {checkUrl} from "@/utils/utils";
 
 
 const Profile = () => {
 
   const {isLoading, user} = useUser();
-  const {isLoading: userCarsLoading, userCars} = useUserCars();
+
+  const [photoAvailable, setPhotoAvailable] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function check() {
+      if (!user?.userPhoto) {
+        setPhotoAvailable(false);
+        return;
+      }
+
+      const exists = await checkUrl(user.userPhoto);
+      if (!cancelled) setPhotoAvailable(exists);
+    }
+
+    check();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.userPhoto]);
 
   const [mounted, setMounted] = useState(false);
 
@@ -51,7 +72,20 @@ const Profile = () => {
             <div className="profile__body">
               <div className="profile__top">
                 <div className="profile__avatar">
-                  <Avatar src={user?.userPhoto || false}/>
+                  {photoAvailable === true && (
+                    <Avatar
+                      src={user.userPhoto}
+                      style={{backgroundColor: user?.data.user_color}}
+                    />
+                  )}
+                  {photoAvailable === false && (
+                    <span
+                      className="profile__avatar--not"
+                      style={{ backgroundColor: user.data.color}}
+                    >
+                      <span>{user.data.name.substring(0, 2).toUpperCase()}</span>
+                    </span>
+                  )}
                 </div>
                 <div className="profile__user">
                   <UserForm type={'update'} initialValues={{
@@ -61,13 +95,13 @@ const Profile = () => {
                 </div>
               </div>
               <div className="profile__bottom">
-                {userCarsLoading && !userCars && <Loader/>}
-                {!userCarsLoading && userCars ? (
+                {isLoading && !user.data.cars && <Loader/>}
+                {user.data.cars && user.data.cars.length ? (
                   <div className="profile__cars">
                     <h3>Ваши авто</h3>
                     <div className="profile__cars--list">
                       <>
-                        {userCars.map((car) => {
+                        {user.data.cars.map((car) => {
                           return (
                             <ProfileCarCard key={car.id} carId={car.id} data={car}/>
                           )

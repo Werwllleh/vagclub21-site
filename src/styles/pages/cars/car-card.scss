@@ -1,16 +1,73 @@
 @use "../../variables";
 
 .car-card {
-  aspect-ratio: 1/1;
+  position: relative;
+  width: 100%;
+  border-radius: variables.$borderRadius5;
+  overflow: hidden;
   transition: variables.$transition;
+  cursor: pointer;
 
   &:hover {
-    transform: scale(1.05);
+    //transform: scale(1.05);
+  }
+
+  &__body {
+    height: 100%;
+  }
+
+  &__images {
+    height: 100%;
+
+    .swiper {
+      height: 100%;
+
+      .swiper-wrapper {
+        align-items: stretch;
+      }
+
+      .swiper-slide {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: auto;
+      }
+    }
+  }
+
+  &__info {
+
+  }
+
+  &__link {
+    position: absolute;
+    inset: 0;
   }
 
   &__image {
-    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 100%;
+
+    &--main {
+      object-fit: contain;
+      object-position: center;
+      width: 100%;
+      height: 100%;
+      max-height: 30rem;
+      margin: auto;
+    }
+
+    &--bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: blur(1rem);
+      inset: 0;
+    }
   }
 }

@@ -37,7 +37,7 @@ const CarDetail = ({carNumber}) => {
     <div className="car-detail">
       <BackButton url={'/cars'} title={'К списку авто'}/>
       {isLoading && <Loader/>}
-      {carData && (
+      {/*{carData && (
         <div className="car-detail__body">
           <div className="car-detail__images">
             {!!carImages.length && (
@@ -102,7 +102,7 @@ const CarDetail = ({carNumber}) => {
           </div>
         </div>
       )}
-      {carData && <div className="car-detail__others"><CarsOthers /></div>}
+      {carData && <div className="car-detail__others"><CarsOthers /></div>}*/}
     </div>
   );
 };

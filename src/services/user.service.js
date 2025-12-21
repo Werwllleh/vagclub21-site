@@ -1,4 +1,4 @@
-import {instance} from "@/api/axios";
+import {axiosClassic, instance} from "@/api/axios";
 
 class UserService {
 
@@ -6,6 +6,7 @@ class UserService {
 
   async fetchUser() {
     return instance.post(`${this.PROTECT}/user`)
+    // return instance.post(`/about-user`)
   }
 
   async createUser(values) {
@@ -14,8 +15,15 @@ class UserService {
     })
   }
 
-  async getUserCars() {
-    return instance.post(`/user-cars`)
+  async getUserCars({ page = 1, limit = 20, number } = {}) {
+    // return instance.post(`/cars`)
+    return axiosClassic.get(`/cars`, {
+      params: {
+        page,
+        limit,
+        number,
+      },
+    })
   }
 
   async updateUser(values) {

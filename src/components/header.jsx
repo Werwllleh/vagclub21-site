@@ -15,6 +15,7 @@ import {UserOutlined} from "@ant-design/icons";
 import AuthButton from "@/components/auth-button";
 import {usePathname} from "next/navigation";
 import {MENU} from "@/config/menu.config";
+import {checkUrl} from "@/utils/utils";
 
 
 const Header = () => {
@@ -22,6 +23,28 @@ const Header = () => {
   const pathname = usePathname();
 
   const {isLoadingUser, user} = useUser();
+
+  const [photoAvailable, setPhotoAvailable] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function check() {
+      if (!user?.userPhoto) {
+        setPhotoAvailable(false);
+        return;
+      }
+
+      const exists = await checkUrl(user.userPhoto);
+      if (!cancelled) setPhotoAvailable(exists);
+    }
+
+    check();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.userPhoto]);
 
   const headerRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -101,7 +124,7 @@ const Header = () => {
 
   const headerAvatarAuth = (
     <div className="header__auth">
-      <AuthButton />
+      <AuthButton/>
     </div>
   )
 
@@ -118,11 +141,21 @@ const Header = () => {
                 <div className="header__avatar">
                   {!isLoadingUser && user && (
                     <Link href={'/profile'}>
-                      <Avatar
-                        src={user?.userPhoto ? user.userPhoto : false}
-                        style={{backgroundColor: user?.data.user_color}}
-                        size={32}
-                      >{!user?.userPhoto && user?.data?.user_name ? user.data.user_name?.slice(0, 2).toUpperCase() : null}</Avatar>
+                      {photoAvailable === true && (
+                        <Avatar
+                          src={user.userPhoto}
+                          style={{backgroundColor: user?.data.user_color}}
+                          size={32}
+                        />
+                      )}
+                      {photoAvailable === false && (
+                        <span
+                          className="header__avatar--not"
+                          style={{backgroundColor: user.data.color}}
+                        >
+                          <span>{user.data.name.substring(0, 2).toUpperCase()}</span>
+                        </span>
+                      )}
                     </Link>
                   )}
                   {!isLoadingUser && user === null && (

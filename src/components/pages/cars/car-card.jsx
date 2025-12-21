@@ -2,16 +2,58 @@ import getRandomNumber from "@/functions/getRandomNumber";
 import Link from "next/link";
 import {API_URL} from "@/constants";
 
-const CarCard = ({car}) => {
-  const link = `/cars/${car.car_brand}_${car.car_model}_${car.car_number}`;
+// Import Swiper
+import {Swiper, SwiperSlide} from 'swiper/react';
+import {Pagination} from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+import 'swiper/css/pagination';
 
-  const images = JSON.parse(car.car_images);
-  const image = images[getRandomNumber(0, images.length - 1)];
+import React from "react";
+import {useRouter} from "next/navigation";
+
+const CarCard = ({car}) => {
+  const router = useRouter()
+  const link = `/cars/${car.brand}_${car.model}_${car.id}`;
+
+  const followLink = (link) => {
+
+  }
+
 
   return (
-    <Link className="car-card" href={link}>
-      <img className="car-card__image" src={`${API_URL}/car/${image}`}  alt={`${car.car_brand} ${car.car_model}`}/>
-    </Link>
+    /*<Link className="car-card" href={link}>
+      ${car.brand}${car.model}
+      {/!*<img className="car-card__image" src={`${API_URL}/car/${image}`}  alt={`${car.car_brand} ${car.car_model}`}/>*!/}
+    </Link>*/
+    <div className="car-card" onClick={() => router.push(link)}>
+      <div className="car-card__body">
+        <div className="car-card__images">
+          <Swiper
+            modules={[Pagination]}
+            spaceBetween={0}
+            pagination={{
+              enabled: true,
+              clickable: true,
+            }}
+            slidesPerView={1}
+          >
+            {car.carsImages.map((image) => {
+              return (
+                <SwiperSlide key={image.id}>
+                  <div className="car-card__image">
+                    <img className="car-card__image--main" src={`${API_URL}/image/${image.source}`} alt=""/>
+                    <img className="car-card__image--bg" src={`${API_URL}/image/${image.source}`} alt=""/>
+                  </div>
+                </SwiperSlide>
+              )
+            })}
+          </Swiper>
+        </div>
+        <div className="car-card__info"></div>
+      </div>
+      <Link className="car-card__link" href={link} />
+    </div>
   )
 };
 

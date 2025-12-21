@@ -1,5 +1,5 @@
 "use client"
-import {useCar} from "@/hooks/useRegisterCar";
+import {useRegisterCars} from "@/hooks/useRegisterCar";
 import CarCard from "@/components/pages/cars/car-card";
 import {useEffect, useState} from "react";
 import {getRandomItems} from "@/functions/getRandomItems";
@@ -11,7 +11,7 @@ import 'swiper/css';
 
 const CarsOthers = () => {
 
-  const {cars, isLoading} = useCar();
+  const {cars, isLoading} = useRegisterCars();
 
   const [carsShuffled, setCarsShuffled] = useState([]);
 
@@ -28,7 +28,7 @@ const CarsOthers = () => {
       {cars && !!cars.length && !!carsShuffled.length && (
         <div className="cars-others">
           <h3 className="cars-others__title">Другие авто</h3>
-          <div className="cars-others__cars">
+          {/*<div className="cars-others__cars">
             <Swiper
               spaceBetween={20}
               slidesPerView={"auto"}
@@ -41,7 +41,7 @@ const CarsOthers = () => {
                 )
               })}
             </Swiper>
-          </div>
+          </div>*/}
         </div>
       )}
     </>

@@ -25,6 +25,23 @@
     align-items: center;
   }
 
+  &__avatar {
+
+    &--not {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 100%;
+
+      span {
+        color: variables.$white;
+        font-size: 1.4rem;
+      }
+    }
+  }
+
   &__logo {
     display: flex;
     flex: 0 0 clamp(14rem, 12vw, 20rem);
@@ -59,12 +76,15 @@
     align-items: center;
     gap: 1rem;
     max-width: 7.4rem;
+    transform: scaleX(1);
+    transform-origin: right;
     visibility: visible;
-    transition: max-width variables.$transition, visibility variables.$transition, margin variables.$transition;
+    transition: transform variables.$transition, max-width variables.$transition, visibility variables.$transition, margin variables.$transition;
 
     &.hide {
       margin: 0;
       max-width: 0;
+      transform: scaleX(0);
       visibility: hidden;
     }
 

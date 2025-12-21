@@ -22,3 +22,12 @@ export const deepEqual = (a, b) => {
 
   return true;
 };
+
+export async function checkUrl(url) {
+  try {
+    const response = await fetch(url, { method: 'HEAD' });
+    return response.ok; // true если 200–299
+  } catch (e) {
+    return false;
+  }
+}
