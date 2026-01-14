@@ -1,47 +1,36 @@
 "use client"
-import {useRegisterCars} from "@/hooks/useRegisterCar";
+
 import CarCard from "@/components/pages/cars/car-card";
-import {useEffect, useState} from "react";
-import {getRandomItems} from "@/functions/getRandomItems";
 
 // Import Swiper React components
 import {Swiper, SwiperSlide} from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
+import {useOtherCars} from "@/hooks/useOtherCars";
 
 const CarsOthers = () => {
 
-  const {cars, isLoading} = useRegisterCars();
-
-  const [carsShuffled, setCarsShuffled] = useState([]);
-
-  useEffect(() => {
-    if (cars && !!cars.length) {
-      const shuffledCars = getRandomItems(cars, 15);
-      setCarsShuffled(shuffledCars)
-    }
-
-  }, [cars]);
+  const {otherCarsData} = useOtherCars(15);
 
   return (
     <>
-      {cars && !!cars.length && !!carsShuffled.length && (
+      {!!otherCarsData.length && (
         <div className="cars-others">
           <h3 className="cars-others__title">Другие авто</h3>
-          {/*<div className="cars-others__cars">
+          <div className="cars-others__cars">
             <Swiper
               spaceBetween={20}
               slidesPerView={"auto"}
             >
-              {carsShuffled.map((car) => {
+              {otherCarsData.map((car) => {
                 return (
-                  <SwiperSlide key={car.car_number}>
+                  <SwiperSlide key={car.id}>
                     <CarCard car={car} />
                   </SwiperSlide>
                 )
               })}
             </Swiper>
-          </div>*/}
+          </div>
         </div>
       )}
     </>

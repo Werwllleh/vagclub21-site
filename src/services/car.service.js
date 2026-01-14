@@ -18,9 +18,16 @@ class CarService {
     })
   }
 
-  async fetchCarInfo(carNumber) {
-    return await axiosClassic.post(`/get-car-info`, {
-      car_number: carNumber.toUpperCase().trim()
+  async fetchCarInfo(carId, carNumber) {
+    return await axiosClassic.post(`/car-info`, {
+      carId: !carId ? null : carId,
+      carNumber: !carNumber ? null : carNumber?.toUpperCase().trim()
+    })
+  }
+
+  async fetchOtherCars(count){
+    return await axiosClassic.post(`/other-cars`, {
+      count: !count ? null : count,
     })
   }
 

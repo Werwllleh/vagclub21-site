@@ -1,16 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import CarService from "@/services/car.service";
 
-export function useCarInfo(carNumber) {
+export function useCarInfo(carId) {
 
   const {
     data: carInfoData,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['car-info', carNumber],
-    queryFn: async () => await CarService.fetchCarInfo(carNumber),
-    enabled: !!carNumber,
+    queryKey: ['car-info', carId],
+    queryFn: async () => await CarService.fetchCarInfo(carId),
+    enabled: !!carId
   });
 
   return {

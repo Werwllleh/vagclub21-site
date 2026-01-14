@@ -8,7 +8,11 @@ const BackButton = ({url, title}) => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(url, {scroll: false}); // Отключаем автоматический скролл в начало
+    if (url) {
+      router.push(url, {scroll: false}); // Отключаем автоматический скролл в начало
+    } else {
+      router.back()
+    }
   };
 
   return (

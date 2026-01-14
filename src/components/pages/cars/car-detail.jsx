@@ -18,17 +18,18 @@ import {useEffect, useState} from "react";
 import {Image} from "antd";
 import {useCarInfo} from "@/hooks/useCarInfo";
 import CarsOthers from "@/components/pages/cars/cars-others";
+import CarService from "@/services/car.service";
 
-const CarDetail = ({carNumber}) => {
+const CarDetail = ({carId}) => {
 
-  const {isLoading, carData} = useCarInfo(carNumber);
+  const {isLoading, carData} = useCarInfo(carId);
 
-  const [carImages, setCarImages] = useState([]);
+  const [carImages, setCarImages] = useState([])
 
   useEffect(() => {
 
-    if (carData?.car_images && !!JSON.parse(carData.car_images).length) {
-      setCarImages(JSON.parse(carData.car_images).map((image) => `${API_URL}/car/${image}`))
+    if (!!carData?.carsImages.length) {
+      setCarImages(carData.carsImages.map((image) => `${API_URL}/image/${image.source}`))
     }
 
   }, [carData]);
@@ -37,7 +38,7 @@ const CarDetail = ({carNumber}) => {
     <div className="car-detail">
       <BackButton url={'/cars'} title={'К списку авто'}/>
       {isLoading && <Loader/>}
-      {/*{carData && (
+      {carData && (
         <div className="car-detail__body">
           <div className="car-detail__images">
             {!!carImages.length && (
@@ -65,7 +66,7 @@ const CarDetail = ({carNumber}) => {
                             mask: false,
                             movable: false
                           }}
-                          alt={`${carData.car_brand}_${carData.car_model}_${carData.car_number}_${index}`}
+                          alt={`${carData.brand}_${carData.model}_${carData.number}_${index}`}
                         />
                       </Image.PreviewGroup>
                     </SwiperSlide>
@@ -76,33 +77,33 @@ const CarDetail = ({carNumber}) => {
           </div>
           <div className="car-detail__description">
             <div className="car-detail__info">
-              <h1>{`${carData.car_brand} ${carData.car_model} ${carData.car_year}`}</h1>
+              <h1>{`${carData.brand} ${carData.model} ${carData.year}`}</h1>
               <span className="car-detail__info_row">
                 <p className="car-detail__info_number">
-                  {carData.car_number}
+                  {carData.number}
                 </p>
-                {carData.user.user_instagram && (
-                  <Link href={`https://www.instagram.com/${carData.user.user_instagram}`} target="_blank"
+                {carData.user.instagram && (
+                  <Link href={`https://www.instagram.com/${carData.user.instagram}`} target="_blank"
                         className="car-detail__info_instagram">
                     <InstagramIcon/>
                   </Link>
                 )}
               </span>
-              {carData?.car_drive2 && (
+              {carData?.drive2 && (
                 <span className="car-detail__info_drive2">
-                  <Drive2Icon url={carData.car_drive2}/>
+                  <Drive2Icon url={carData.drive2}/>
                 </span>
               )}
-              {carData?.car_note && (
+              {carData?.note && (
                 <p className="car-detail__info_note">
-                  {carData.car_note}
+                  {carData.note}
                 </p>
               )}
             </div>
           </div>
         </div>
       )}
-      {carData && <div className="car-detail__others"><CarsOthers /></div>}*/}
+      {carData && <div className="car-detail__others"><CarsOthers /></div>}
     </div>
   );
 };

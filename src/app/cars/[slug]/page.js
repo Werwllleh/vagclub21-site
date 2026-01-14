@@ -4,13 +4,12 @@ import CarsOthers from "@/components/pages/cars/cars-others";
 const Page = async ({params}) => {
 
   const {slug} = await params;
-
-  const carNumber = decodeURIComponent(slug.split('_')[2]);
+  const carId = decodeURIComponent(slug.split('_')[1]);
 
   return (
     <div className="page">
       <div className="container">
-        {carNumber && <CarDetail carNumber={carNumber} />}
+        {carId && <CarDetail carId={carId} />}
       </div>
     </div>
   );

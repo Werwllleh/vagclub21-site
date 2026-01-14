@@ -13,19 +13,11 @@ import React from "react";
 import {useRouter} from "next/navigation";
 
 const CarCard = ({car}) => {
+
   const router = useRouter()
-  const link = `/cars/${car.brand}_${car.model}_${car.id}`;
-
-  const followLink = (link) => {
-
-  }
-
+  const link = `/cars/${car.brand.substring(0,1)}${car.model.substring(0,1)}_${car.id}`;
 
   return (
-    /*<Link className="car-card" href={link}>
-      ${car.brand}${car.model}
-      {/!*<img className="car-card__image" src={`${API_URL}/car/${image}`}  alt={`${car.car_brand} ${car.car_model}`}/>*!/}
-    </Link>*/
     <div className="car-card" onClick={() => router.push(link)}>
       <div className="car-card__body">
         <div className="car-card__images">
