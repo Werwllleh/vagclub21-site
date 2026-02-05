@@ -40,7 +40,7 @@
       max-width: 55rem;
       z-index: 1;
 
-      @include breakpoints.sm {
+      @include breakpoints.small {
         color: variables.$white;
       }
 
@@ -81,20 +81,20 @@
         transition: background-color variables.$transition;
       }
 
-      @include breakpoints.lg {
+      @include breakpoints.tablet {
         &::before {
           background-color: #0000002e;
         }
       }
 
 
-      @include breakpoints.sm {
+      @include breakpoints.small {
         &::before {
           background-color: #000000a6;
         }
       }
 
-      @include breakpoints.sm {
+      @include breakpoints.small {
         clip-path: none;
         width: 100vw;
         left: 0;

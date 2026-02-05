@@ -2,14 +2,18 @@ import CooperationForm from "@/components/cooperation-form";
 import Products from "@/components/pages/products/products";
 import MainSlider from "@/components/blocks/main-slider/main-slider";
 import Link from "next/link";
+import HeroBlock from "@/components/blocks/hero-block";
 
 export default function Home() {
 
   return (
     <div className="page page-main">
-      <section className="page-main__slider">
+      <div className="page-main__hero">
+        <HeroBlock />
+      </div>
+      {/*<section className="page-main__slider">
         <MainSlider />
-      </section>
+      </section>*/}
       <section className="page-main__products">
         <h3>Атрибутика клуба</h3>
         <div className="container"><Products /></div>

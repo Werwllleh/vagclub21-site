@@ -20,11 +20,11 @@
     gap: 3rem;
     transition: gap variables.$transition;
 
-    @include breakpoints.xxl {
+    @include breakpoints.semiDesktop {
       gap: 1rem;
     }
 
-    @include breakpoints.md {
+    @include breakpoints.desktop {
       gap: 2rem;
       flex-direction: column;
     }

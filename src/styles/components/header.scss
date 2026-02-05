@@ -2,18 +2,26 @@
 @use "../breakpoints";
 
 .header {
-  position: sticky;
-  top: 0;
+  position: relative;
   padding-block: 2.4rem;
   background-color: variables.$white;
   transition: background-color variables.$transition, box-shadow variables.$transition;
-  z-index: 99;
+
+  &.pm {
+    background-color: transparent;
+  }
 
   &.fixed {
     box-shadow: 0 0 1.5rem 0 #e0e0e0b5;
   }
 
-  &__body {
+  &__logo {
+    display: flex;
+    align-items: center;
+    max-width: max-content;
+  }
+
+  /*&__body {
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -55,7 +63,7 @@
 
       margin: 0 0 0 5rem;
 
-      @include breakpoints.lg {
+      @include breakpoints.tablet {
         display: none;
       }
     }
@@ -63,7 +71,7 @@
     &_mobile {
       display: none;
 
-      @include breakpoints.lg {
+      @include breakpoints.tablet {
         display: block;
       }
     }
@@ -183,7 +191,7 @@
     justify-content: center;
     min-width: 20rem;
     max-width: max-content;
-  }
+  }*/
 }
 
 

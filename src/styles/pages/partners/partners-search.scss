@@ -19,7 +19,7 @@
     align-items: flex-start;
     gap: 2rem;
 
-    @include breakpoints.sm {
+    @include breakpoints.small {
       grid-template-columns: 1fr;
     }
   }

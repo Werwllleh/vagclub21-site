@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-$ff-main: "Montserrat", sans-serif;
+$ff-main: "Martian Mono", monospace;
+$ff-secondary: "Montserrat", sans-serif;
 $transition: .3s ease-in-out;
 $transition2: .5s ease-in-out;
 $border-radius: .5rem;
@@ -14,6 +13,7 @@ $grey-light: #eaeaea;
 $grey: #737373;
 $red: #ff4646;
 $colorPrimary: #004c9d;
+$blue: #004c9d;
 $colorPrimaryDark: #182232;
 $colorSecondary: #f8f8f8;
 

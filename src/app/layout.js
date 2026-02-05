@@ -21,6 +21,12 @@ export default function RootLayout({children}) {
     <head>
       <link rel="canonical" href="https://vagclub21.ru/"/>
       <meta name="yandex-verification" content="e1783a4d4e4edd5b"/>
+      <link rel="preconnect" href="https://fonts.googleapis.com"/>
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"/>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&display=swap" rel="stylesheet"/>
+      <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap" rel="stylesheet"/>
     </head>
     <body>
     <Providers>
@@ -28,7 +34,7 @@ export default function RootLayout({children}) {
       <main>
         <Suspense fallback={null}>
           {children}
-          {process.env.START_MODE === "production" && <YandexMetrica />}
+          {process.env.START_MODE === "production" && <YandexMetrica/>}
         </Suspense>
       </main>
       <Footer/>

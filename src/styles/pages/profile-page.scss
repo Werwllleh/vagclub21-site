@@ -14,7 +14,7 @@
     align-items: flex-start;
     gap: 4rem;
 
-    @include breakpoints.sm {
+    @include breakpoints.small {
       grid-template-columns: 1fr;
     }
   }
@@ -74,7 +74,7 @@
     grid-template-columns: 1fr;
     gap: 2rem;
 
-    @include breakpoints.sm {
+    @include breakpoints.small {
       grid-template-columns: 1fr;
     }
 

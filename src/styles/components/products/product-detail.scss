@@ -17,7 +17,7 @@
     gap: clamp(2rem, 5vw, 4rem);
     grid-template-columns: auto 1fr;
 
-    @include breakpoints.sm {
+    @include breakpoints.small {
       grid-template-columns: 1fr;
     }
   }
@@ -25,7 +25,7 @@
   &__images {
     max-width: clamp(35rem, 30vw, 50rem);
 
-    @include breakpoints.sm {
+    @include breakpoints.small {
       margin: 0 auto;
     }
 
@@ -57,7 +57,7 @@
         .swiper-pagination-bullet-active {
           background-color: variables.$white;
 
-          @include breakpoints.sm {
+          @include breakpoints.small {
             background-color: variables.$colorPrimary;
           }
         }
@@ -133,7 +133,7 @@
       }
 
 
-      @include breakpoints.md {
+      @include breakpoints.desktop {
         flex-direction: column;
       }
     }
@@ -159,7 +159,7 @@
       display: inline-block;
       max-width: 70%;
 
-      @include breakpoints.md {
+      @include breakpoints.desktop {
         max-width: none;
       }
     }

@@ -3,6 +3,7 @@
 
 .page-main {
   padding: 0 !important;
+  margin-top: -9.2rem;
 
   &__products {
     padding: 5rem 0;
@@ -24,7 +25,7 @@
       align-items: stretch;
       gap: 6rem;
 
-      @include breakpoints.xxl {
+      @include breakpoints.semiDesktop {
         gap: 2rem;
       }
     }
@@ -33,7 +34,7 @@
       max-width: 63rem;
       width: 100%;
 
-      @include breakpoints.lg {
+      @include breakpoints.tablet {
         display: none;
       }
 
@@ -54,7 +55,7 @@
       flex-direction: column;
       gap: 4rem;
 
-      @include breakpoints.lg {
+      @include breakpoints.tablet {
         flex: 1;
         min-width: auto;
       }

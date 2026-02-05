@@ -1,6 +1,5 @@
 'use client'
-import {useCallback, useEffect, useRef, useState} from "react";
-import MainLogo from "@/components/main-logo";
+import {useEffect, useState} from "react";
 import Link from "next/link";
 import {SOCIALS} from "@/config/socials.config";
 import TelegramIcon from "@/components/icons/telegram-icon";
@@ -16,6 +15,8 @@ import AuthButton from "@/components/auth-button";
 import {usePathname} from "next/navigation";
 import {MENU} from "@/config/menu.config";
 import {checkUrl} from "@/utils/utils";
+import SvgIcon from "@/components/svg-icon";
+import Logo from "@/components/logo";
 
 
 const Header = () => {
@@ -46,82 +47,6 @@ const Header = () => {
     };
   }, [user?.userPhoto]);
 
-  const headerRef = useRef(null);
-  const mobileMenuRef = useRef(null);
-
-  const [isFixed, setFixed] = useState(false);
-  const [isMenuActive, setIsMenuActive] = useState(false);
-
-  const getTopPosition = useCallback(() => {
-    if (!headerRef.current || !mobileMenuRef.current) {
-      return;
-    }
-
-    const header = headerRef.current;
-    const mobileMenu = mobileMenuRef.current;
-    const mobileMenuContent = mobileMenu.querySelector(".header__menu_body");
-
-    mobileMenu.style.top = `${header.clientHeight}px`;
-
-    if (isMenuActive && mobileMenuContent) {
-      mobileMenu.style.maxHeight = `${mobileMenuContent.clientHeight}px`;
-    } else {
-      mobileMenu.style.maxHeight = '';
-    }
-  }, [isMenuActive]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setFixed(true);
-      } else {
-        setFixed(false);
-      }
-      getTopPosition();
-    };
-
-    const handleResize = () => {
-      getTopPosition();
-    };
-
-    const mobileMenuLinks = mobileMenuRef.current.querySelectorAll(".nav-menu__list_link");
-
-    if (mobileMenuLinks.length) {
-      mobileMenuLinks.forEach(link => {
-        link.addEventListener("click", closeMenu);
-      })
-    }
-
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", () => {
-      handleResize()
-
-      if (window.innerWidth >= 992 && isMenuActive) {
-        closeMenu();
-      }
-    });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [getTopPosition]);
-
-  const toggleMenu = () => {
-    setIsMenuActive((prev) => !prev);
-  };
-
-  const closeMenu = () => {
-    setIsMenuActive(false);
-  };
-
-  useEffect(() => {
-    getTopPosition();
-  }, [isMenuActive]);
-
-  useBlackout(isMenuActive, closeMenu);
-
   const headerAvatarAuth = (
     <div className="header__auth">
       <AuthButton/>
@@ -129,12 +54,24 @@ const Header = () => {
   )
 
   return (
-    <>
-      <header ref={headerRef} className={`header ${isFixed && !isMenuActive ? "fixed" : ""}`}>
+    <header className={`header ${pathname === '/' ? 'pm' : ''}`}>
+      <div className="header__inner">
+        <div className="header__container container">
+          <div className="header__body">
+            <Link href={PUBLIC_PAGES.HOME.URL} className="header__logo">
+              <Logo />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
+    /*<>
+      <header ref={headerRef} className={`header ${isFixed && !isMenuActive ? "fixed" : ""} ${path === '/' ? 'pm' : ''}`}>
         <div className="container">
           <div className="header__body">
             <Link onClick={closeMenu} href={PUBLIC_PAGES.HOME.URL} className="header__logo">
-              <MainLogo/>
+              {/!*<MainLogo/>*!/}
+              <SvgIcon name={"logo"}/>
             </Link>
             <div className="header__info">
               {pathname !== MENU.PROFILE.URL && (
@@ -166,7 +103,10 @@ const Header = () => {
                 </div>
               )}
               <div className={`header__socials ${isMenuActive ? 'hide' : ''}`}>
-                <Link href={SOCIALS.TELEGRAM} target={"_blank"}><TelegramIcon/></Link>
+                {/!*<Link href={SOCIALS.TELEGRAM} target={"_blank"}><TelegramIcon/></Link>*!/}
+                <Link href={SOCIALS.TELEGRAM} target={"_blank"}>
+                  <SvgIcon name={"telegram"}/>
+                </Link>
                 <Link href={SOCIALS.INSTAGRAM} target={"_blank"}><InstagramIcon/></Link>
               </div>
             </div>
@@ -201,7 +141,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </>
+    </>*/
   );
 };
 

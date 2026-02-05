@@ -30,7 +30,7 @@ $mt: clamp(1rem, 5vw, 2rem);
     max-width: 80%;
     margin-inline: auto;
 
-    @include breakpoints.sm {
+    @include breakpoints.small {
       max-width: none;
     }
 

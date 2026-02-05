@@ -92,10 +92,6 @@ legend {
 }
 
 html {
-  background-color: variables.$white !important;
-  scrollbar-color: variables.$colorPrimary transparent;
-  scrollbar-width: thin;
-  //overflow-x: hidden;
 
   &.block {
     overflow-y: hidden;
@@ -110,7 +106,6 @@ body, html {
 
 body {
   -webkit-font-smoothing: antialiased;
-  background: variables.$white;
   font-family: variables.$ff-main;
   display: flex;
   flex-direction: column;
@@ -119,7 +114,6 @@ body {
   min-width: 32rem;
   overflow-x: hidden;
   line-height: 1.3;
-  scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
 }
 
@@ -129,14 +123,6 @@ body {
   min-height: 100vh;
   min-width: 35rem;
   line-height: 1.3;
-}
-
-/*#__next {
-
-}*/
-
-span, p, a, h1, h2, h3, h4, h5, h6 {
-  transition: color variables.$transition;
 }
 
 main {
@@ -150,16 +136,14 @@ main {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  max-width: clamp(45rem, 95vw, 147rem);
-  padding-inline: clamp(1.5rem, 3vw, 5.5rem);
+  max-width: 147rem;
+  padding-inline: 3rem;
 }
 
 .content {
-  //margin: 7rem 0 0 0;
   padding: 2rem 0 0 0;
-
 }
 
-button {
-  transition: background-color variables.$transition, color variables.$transition, border-color variables.$transition, border-radius variables.$transition;
+button, svg, a {
+  transition: all variables.$transition;
 }

@@ -1,0 +1,8 @@
+@use "../variables";
+@use "../breakpoints";
+
+
+.hero-block {
+  min-height: 100vh;
+  background-color: variables.$grey-light;
+}
