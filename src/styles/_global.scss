@@ -28,6 +28,14 @@
   overflow-x: clip;
 }
 
+.ppt {
+  padding-top: 10rem;
+
+  @include breakpoints.w1250 {
+    padding-top: 14rem;
+  }
+}
+
 .btn {
   display: flex;
   align-items: center;

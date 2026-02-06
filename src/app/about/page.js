@@ -8,9 +8,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div className="page">
-      <AboutContent />
-    </div>
+    <AboutContent />
   );
 };
 

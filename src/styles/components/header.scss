@@ -21,7 +21,7 @@
   }
 
   &__inner {
-    max-width: 98%;
+    max-width: 95%;
     margin: 0 auto;
     padding-block: 1.4rem;
     padding-inline: 1.6rem;
@@ -31,13 +31,11 @@
     box-shadow: 0 0 1.5rem .5rem #969696a1;
 
     @include breakpoints.tablet {
-      max-width: 95%;
       padding-block: 1.6rem;
       padding-inline: 2rem;
     }
 
     @include breakpoints.w1250 {
-      max-width: 90%;
       padding-block: 2rem;
       padding-inline: 3rem;
     }

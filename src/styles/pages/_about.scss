@@ -1,0 +1,183 @@
+@use "../variables";
+@use "../breakpoints";
+
+.page-about {
+  padding-bottom: 6rem;
+
+  @include breakpoints.w1250 {
+    padding-bottom: 10rem;
+  }
+
+  &__title {}
+
+  &__description {
+    margin-top: 3rem;
+    max-width: 90%;
+
+    @include breakpoints.desktop {
+      margin-top: 5rem;
+    }
+
+    @include breakpoints.laptop {
+      max-width: 90rem;
+    }
+
+    p {
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 1.4;
+      color: #000;
+
+      @include breakpoints.tablet {
+        font-size: 1.8rem;
+      }
+
+      @include breakpoints.desktop {
+        font-size: 2rem;
+      }
+
+      @include breakpoints.w1250 {
+        font-size: 2.4rem;
+      }
+
+      b {
+        font-weight: 500;
+      }
+
+      &:last-child {
+        color: #7d7d7d;
+      }
+
+    }
+
+    p + p {
+      margin-top: 2rem;
+    }
+  }
+
+  .about-list {
+    position: relative;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem 0;
+
+    @include breakpoints.w1250 {
+      margin-top: 10rem;
+      gap: 5rem 0;
+    }
+
+    .about-list-item:nth-child(8n + 2) {
+
+      .about-list-item__body {
+        flex-direction: column-reverse;
+
+        @include breakpoints.tablet {
+          flex-direction: row-reverse;
+        }
+      }
+
+      .about-list-item__text {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+
+  .about-list-item {
+
+    &__body {
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+
+      @include breakpoints.tablet {
+        flex-direction: row;
+      }
+    }
+
+    &__image {
+
+      @include breakpoints.tablet {
+        flex: 0 1 50%;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        max-height: 22rem;
+
+        @include breakpoints.tablet {
+          max-height: none;
+        }
+      }
+    }
+
+    &__text {
+      flex: 0 1 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-inline: 1.5rem;
+      padding-block: 2rem;
+      background-color: variables.$light-blue;
+
+      @include breakpoints.tablet {
+        padding-inline: 2.5rem;
+        padding-block: 2.5rem;
+      }
+
+      @include breakpoints.desktop {
+        padding-inline: 5rem;
+        padding-block: 5rem;
+      }
+
+      h5 {
+        font-weight: 500;
+        font-size: 2rem;
+        line-height: 1.25;
+        color: #000;
+
+        @include breakpoints.tablet {
+          font-size: 2rem;
+        }
+
+        @include breakpoints.semiDesktop {
+          font-size: 2.4rem;
+        }
+      }
+
+      h5 + p {
+        margin-top: 1.2rem;
+
+        @include breakpoints.tablet {
+          margin-top: 2rem;
+        }
+      }
+
+      p {
+        font-weight: 300;
+        font-size: 1.3rem;
+        line-height: 1.4;
+        color: #000;
+
+        @include breakpoints.mobile {
+          font-size: 1.6rem;
+        }
+
+        @include breakpoints.tablet {
+          font-size: 1.8rem;
+        }
+
+        @include breakpoints.w1250 {
+          font-size: 2rem;
+        }
+      }
+
+      p + p {
+        margin-top: 1rem;
+      }
+    }
+  }
+}
