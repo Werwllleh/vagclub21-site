@@ -5,4 +5,161 @@
 .hero-block {
   min-height: 100vh;
   background-color: variables.$grey-light;
+  display: flex;
+  flex-direction: column;
+
+  &__swiper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    //height: 100%;
+
+    .swiper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .swiper-wrapper {
+        flex: 1;
+        align-items: stretch;
+      }
+
+      .swiper-slide {
+        height: auto;
+      }
+
+      .swiper-pagination {
+        position: absolute;
+        z-index: 1;
+        bottom: 2rem;
+        top: auto;
+        left: 0;
+        right: 0;
+        margin-inline: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0 1.5rem;
+
+        .swiper-pagination-bullet {
+          position: relative;
+          display: flex;
+          width: 1rem;
+          height: 1rem;
+          border-radius: 100%;
+          margin: 0;
+          background-color: transparent;
+          transition: background-color variables.$transition;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            width: calc(100% + 6px);
+            height: calc(100% + 6px);
+            border: 2px solid variables.$grey-light;
+            border-radius: 100%;
+            transition: border-color variables.$transition;
+          }
+        }
+
+        .swiper-pagination-bullet-active {
+          background-color: variables.$blue;
+
+          &::before {
+            border-color: variables.$white;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.hero-block-card {
+  position: relative;
+  height: 100%;
+
+  &__container {}
+
+  &__body {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    padding-block: 12rem;
+  }
+
+  &__text {
+    color: variables.$white;
+  }
+
+  &__title {
+    text-align: center;
+    font-weight: 600;
+    font-family: variables.$ff-secondary;
+  }
+
+  &__description {
+    margin-top: 3rem;
+    max-width: 80rem;
+    margin-inline: auto;
+    font-size: 1.8rem;
+    font-family: variables.$ff-secondary;
+    font-weight: 500;
+    text-align: center;
+
+    @include breakpoints.mobile {
+      font-size: 2rem;
+    }
+
+    @include breakpoints.tablet {
+      font-size: 2.4rem;
+    }
+
+    @include breakpoints.desktop {
+      font-size: 2.6rem;
+    }
+
+    @include breakpoints.w1600 {
+      font-size: 3rem;
+    }
+
+    p {}
+
+    b {
+      font-weight: 700;
+    }
+  }
+
+  &__link {
+    margin-top: 5rem;
+    margin-inline: auto;
+  }
+
+  &__background {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #00000085;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
 }

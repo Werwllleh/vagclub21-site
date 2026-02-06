@@ -6,7 +6,7 @@ const Products = () => {
 
   return (
     <div className="products">
-      {!!products.length && (
+      {products && !!products.length && (
         <ul className="products__list">
           {products.map((product) => {
             return (

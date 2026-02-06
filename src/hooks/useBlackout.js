@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export const useBlackout = (active, onClose) => {
   useEffect(() => {
-    const blackoutWrap = document.querySelector('.bg');
+    const blackoutWrap = document.querySelector('.overlay');
 
     if (blackoutWrap) {
       // Добавляем или удаляем класс 'active' в зависимости от значения active
@@ -15,7 +15,7 @@ export const useBlackout = (active, onClose) => {
       // Добавляем обработчик клика на затемнение
       const handleClick = () => {
         if (onClose) {
-          onClose(); // Вызываем функцию закрытия меню
+          onClose();
         }
       };
 

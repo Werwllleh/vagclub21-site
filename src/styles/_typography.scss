@@ -1,0 +1,23 @@
+@use "variables";
+@use "breakpoints";
+
+.h1 {
+  font-size: 2.8rem;
+
+  @include breakpoints.tablet {
+    font-size: 3.2rem;
+  }
+
+  @include breakpoints.desktop {
+    font-size: 4.5rem;
+  }
+
+  @include breakpoints.w1250 {
+    font-size: 5.6rem;
+  }
+
+  @include breakpoints.w1600 {
+    font-size: 7.2rem;
+  }
+}
+

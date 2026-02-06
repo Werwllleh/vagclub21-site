@@ -32,15 +32,17 @@ export default function RootLayout({children}) {
     <Providers>
       <Header/>
       <main>
-        <Suspense fallback={null}>
-          {children}
-          {process.env.START_MODE === "production" && <YandexMetrica/>}
-        </Suspense>
+        <div className="page">
+          <Suspense fallback={null}>
+            {children}
+            {process.env.START_MODE === "production" && <YandexMetrica/>}
+          </Suspense>
+        </div>
       </main>
       <Footer/>
     </Providers>
-    {/*<SnowMode/>*/}
-    <div className="bg"/>
+    <SnowMode/>
+    <div className="overlay"/>
     </body>
     </html>
   );

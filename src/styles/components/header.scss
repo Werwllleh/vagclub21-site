@@ -2,10 +2,15 @@
 @use "../breakpoints";
 
 .header {
-  position: relative;
-  padding-block: 2.4rem;
-  background-color: variables.$white;
-  transition: background-color variables.$transition, box-shadow variables.$transition;
+  position: fixed;
+  top: 1rem;
+  transform: translateY(-150%);
+  opacity: 0;
+  width: 100%;
+  z-index: 6;
+  will-change: transform;
+  transition: background-color variables.$transition,
+  box-shadow variables.$transition, opacity variables.$transition, transform variables.$transition;
 
   &.pm {
     background-color: transparent;
@@ -15,25 +20,63 @@
     box-shadow: 0 0 1.5rem 0 #e0e0e0b5;
   }
 
+  &__inner {
+    max-width: 98%;
+    margin: 0 auto;
+    padding-block: 1.4rem;
+    padding-inline: 1.6rem;
+    background-color: #ffffffa3;
+    backdrop-filter: blur(1rem);
+    border-radius: variables.$borderRadius15;
+    box-shadow: 0 0 1.5rem .5rem #969696a1;
+
+    @include breakpoints.tablet {
+      max-width: 95%;
+      padding-block: 1.6rem;
+      padding-inline: 2rem;
+    }
+
+    @include breakpoints.w1250 {
+      max-width: 90%;
+      padding-block: 2rem;
+      padding-inline: 3rem;
+    }
+  }
+
+  &__container {
+  }
+
+  &__body {
+    display: flex;
+    align-items: center;
+    gap: 0 2rem;
+  }
+
   &__logo {
     display: flex;
     align-items: center;
     max-width: max-content;
   }
 
-  /*&__body {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+  &__nav {
+    margin-left: auto;
+    display: none;
+
+    @include breakpoints.tablet {
+      display: block;
+    }
   }
 
-  &__info {
-    margin: 0 0 0 auto;
-    display: flex;
-    align-items: center;
+  &__burger {
+    margin-left: auto;
+    display: block;
+
+    @include breakpoints.tablet {
+      display: none;
+    }
   }
 
-  &__avatar {
+  /*&__avatar {
 
     &--not {
       display: flex;
@@ -194,4 +237,59 @@
   }*/
 }
 
+.header-mobile {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height variables.$transition,
+  opacity variables.$transition, visibility variables.$transition;
 
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  &__inner {
+    padding-block: 1rem 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 12rem);
+  }
+
+  &__nav {
+
+    .nav-menu {
+
+      &__link {
+      }
+
+      &__list {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .5rem 0;
+      }
+
+      .nav-submenu {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        align-items: flex-start;
+        padding-inline: 0;
+        padding-block: 0;
+        width: auto;
+        background: none;
+        border-radius: 0;
+        backdrop-filter: none;
+        gap: 0;
+        padding-left: 2rem;
+      }
+    }
+
+  }
+}
