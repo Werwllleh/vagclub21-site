@@ -25,121 +25,45 @@ const AboutContent = () => {
     });
   }, [description]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     const block = list.current;
+    if (!block) return;
+
     const cards = block.querySelectorAll('.about-list-item');
-
     if (!cards.length) return;
-
-    const cardHeight = cards[0].offsetHeight;
-    // const scrollLength = cards.length * cardHeight + 60;
-    const scrollLength = block.offsetHeight;
 
     const mm = gsap.matchMedia();
 
+    // стартовые состояния
     cards.forEach((card, i) => {
       gsap.set(card, {
-        zIndex: cards.length + i
+        opacity: 0,
+        xPercent: i % 2 === 0 ? -100 : 100,
+        zIndex: cards.length + i,
+        willChange: 'transform,opacity',
       });
     });
 
-    mm.add("(max-width: 767px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: block,
-          start: "-100px",
-          end: () => `+=${endValue}`,
-          scrub: 1,
-          pin: true,
-        },
+    mm.add("(min-width: 0px)", () => {
+      cards.forEach((card) => {
+        gsap.to(card, {
+          xPercent: 0,
+          opacity: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,          // триггерим по самой карточке
+            start: "top 85%",       // когда карточка вошла снизу
+            end: "top 60%",         // участок анимации
+            scrub: 1,               // привязка к скроллу
+            // markers: true,
+          },
+        });
       });
-
-      cards.forEach((c, i) => {
-        if (i === 0) {
-          return tl.fromTo(
-            c,
-            {
-              y: 0,
-              opacity: 0.7
-            },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 2,
-              ease: "ease"
-            },
-            "+=1"
-          );
-        }
-
-        tl.fromTo(
-          c,
-          {
-            y: 0,
-            opacity: 0.7
-          },
-          {
-            y: -(cardHeight - 30) * i,
-            opacity: 1,
-            duration: 3,
-            ease: "ease"
-          },
-          "+=1"
-        );
-      })
-    })
-
-    mm.add("(min-width: 768px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: block,
-          start: "-150px",
-          end: () => `+=${scrollLength * 3}`,
-          // end: `+=2000`,
-          scrub: 1,
-          pin: true,
-          pinSpacing: false,
-        },
-      });
-
-      cards.forEach((c, i) => {
-        if (i === 0) {
-          return tl.fromTo(
-            c,
-            {
-              y: 0,
-              opacity: 0.7
-            },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 2,
-              ease: "ease"
-            },
-            "+=1"
-          );
-        }
-
-        tl.fromTo(
-          c,
-          {
-            y: 0,
-            opacity: 0.7
-          },
-          {
-            y: -(cardHeight - 60) * i,
-            opacity: 1,
-            duration: 3,
-            ease: "ease"
-          },
-          "+=1"
-        );
-      })
-    })
+    });
 
     return () => mm.revert();
+  }, [list]);
 
-  }, [list])*/
 
 
   useEffect(() => {
