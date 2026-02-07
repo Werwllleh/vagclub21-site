@@ -36,6 +36,14 @@
   }
 }
 
+.ppb {
+  padding-bottom: 6rem;
+
+  @include breakpoints.w1250 {
+    padding-bottom: 10rem;
+  }
+}
+
 .btn {
   display: flex;
   align-items: center;

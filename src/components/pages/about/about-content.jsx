@@ -75,7 +75,7 @@ const AboutContent = () => {
 
 
   return (
-    <div className="page-about ppt">
+    <div className="page-about ppt ppb">
       <div className="container">
         <h1 className="page-about__title h1">О клубе</h1>
         <div ref={description} className="page-about__description">

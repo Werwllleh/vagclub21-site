@@ -64,15 +64,13 @@ const CarSearch = () => {
 
   return (
     <div className="car-search">
-      <div className="container">
-        <Input
-          allowClear={true}
-          placeholder="Поиск авто по номеру"
-          className="car-search_input"
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-        />
-      </div>
+      <Input
+        allowClear={true}
+        placeholder="Поиск авто по номеру"
+        className="car-search_input"
+        onChange={(e) => setSearch(e.target.value)}
+        value={search}
+      />
     </div>
   );
 };

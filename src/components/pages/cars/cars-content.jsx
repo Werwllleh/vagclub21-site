@@ -8,7 +8,7 @@ import {useUserCars} from "@/hooks/useUserCars";
 import {useState} from "react";
 import { Pagination } from 'antd';
 
-const CarsContent = () => {
+const  CarsContent = () => {
 
   const {filteredCars, loading} = useCarsStore();
 
@@ -21,9 +21,9 @@ const CarsContent = () => {
   } = useUserCars({ page, limit: 20 });
 
   return (
-    <div className="cars-page">
+    <div className="cars-page ppt ppb">
       <div className="container">
-        <h1 className="cars-page__title">Клубные авто</h1>
+        <h1 className="cars-page__title h1">Клубные авто</h1>
         {(isLoading || loading) && <Loader/>}
         {!!userCars?.data?.length && !isLoading && (
           <>
