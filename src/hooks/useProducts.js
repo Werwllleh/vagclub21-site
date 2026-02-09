@@ -25,10 +25,10 @@ export function useProduct(slug) {
   }
 }
 
-export function useProductsTypes() {
+export function useProductsTypes(type) {
   const { data, isLoading } = useQuery({
-    queryKey: ['products-types'],
-    queryFn: () => productsService.fetchProductsTypes(),
+    queryKey: ['products-type'],
+    queryFn: () => productsService.fetchProductsTypes(type),
   })
 
   return {

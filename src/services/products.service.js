@@ -3,15 +3,15 @@ import {axiosCmsClassic} from "@/api/axios";
 class ProductsService {
 
   async fetchProducts() {
-    return axiosCmsClassic.get(`/products`)
+    return axiosCmsClassic.get(`/products/list`)
   }
 
   async fetchProduct(slug) {
-    return axiosCmsClassic.get(`/products/${slug}`)
+    return axiosCmsClassic.get(`/products/i/${slug}`)
   }
 
-  async fetchProductsTypes() {
-    return axiosCmsClassic.get(`/products-types`)
+  async fetchProductsTypes(type) {
+    return axiosCmsClassic.get(`/products/${type}`)
   }
 }
 
