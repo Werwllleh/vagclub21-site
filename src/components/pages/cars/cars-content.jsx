@@ -5,8 +5,9 @@ import CarCard from "@/components/pages/cars/car-card";
 import CarSearch from "@/components/pages/cars/car-search";
 import {useCarsStore} from "@/store/cars.store";
 import {useUserCars} from "@/hooks/useUserCars";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Pagination} from 'antd';
+import {useSearchParams} from "next/navigation";
 
 const CarsContent = () => {
 
@@ -19,6 +20,33 @@ const CarsContent = () => {
     pages,
     isLoading,
   } = useUserCars({page, limit: 20});
+
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const page = searchParams.get('page');
+    if (page) {
+      setPage(Number(page));
+    } else {
+      setPage(1);
+    }
+  }, [searchParams]);
+
+  const createQueryString = useCallback(
+    (value) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set('page', value);
+      } else {
+        params.delete('page');
+      }
+      window.history.pushState(null, '', `?${params.toString()}` || '/');
+    }, [searchParams]);
+
+  useEffect(() => {
+    createQueryString(page)
+  }, [page]);
 
   return (
     <div className="cars-page ppt ppb">

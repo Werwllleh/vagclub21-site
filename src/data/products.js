@@ -14,7 +14,7 @@ export const products = [
     label: 'Скоро'
   },
   {
-    title: 'Мерч',
+    title: 'Одежда',
     url: '',
     image: 'merch.jpg',
     active: false,

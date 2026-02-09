@@ -52,7 +52,7 @@ const CarSearch = () => {
     }
   };
 
-  const debouncedSearchCars = useCallback(debounce(searchCars, 500), []);
+  const debouncedSearchCars = useCallback(debounce(searchCars, 700), []);
 
   useEffect(() => {
     createQueryString(search);

@@ -1,12 +1,70 @@
 @use "../../variables";
+@use "../../breakpoints";
 
 .cars-others {
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 4rem;
+  }
+
   &__title {
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    gap: 0 1rem;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+
+      @include breakpoints.tablet {
+        width: 5rem;
+        height: 5rem;
+      }
+
+      svg {
+        width: 3rem;
+        height: 3rem;
+        color: variables.$black;
+
+        @include breakpoints.tablet {
+          width: 4rem;
+          height: 4rem;
+        }
+      }
+
+      &:hover {
+
+        svg {
+          color: variables.$blue;
+        }
+      }
+
+      &:first-child {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   &__cars {
+    margin-top: 3rem;
+
+    @include breakpoints.mobile {
+      margin-top: 5rem;
+    }
+
+    @include breakpoints.desktop {
+      margin-top: 10rem;
+    }
 
     .swiper{
       overflow: unset;
@@ -37,6 +95,4 @@
 
 
   }
-
-
 }

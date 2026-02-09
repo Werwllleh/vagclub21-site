@@ -35,18 +35,13 @@ const CarDetail = ({carId}) => {
 
   }, [carData]);
 
-  useEffect(() => {
-    console.log(carData?.user?.instagram)
-    console.log(carData?.drive2)
-  }, [carData]);
-
   return (
     <div className="car-detail">
       {isLoading && <Loader/>}
       <div className="car-detail__container container">
-        <div className="car-detail__top">
+        {/*<div className="car-detail__top">
           <BackButton url={'/cars'} title={'К списку авто'}/>
-        </div>
+        </div>*/}
         {carData && (
           <div className="car-detail__body">
             <div className="car-detail__images">
