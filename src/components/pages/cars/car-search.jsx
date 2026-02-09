@@ -16,6 +16,8 @@ const CarSearch = () => {
     const number = searchParams.get('number');
     if (number) {
       setSearch(number);
+    } else {
+      setSearch("");
     }
   }, [searchParams]);
 
@@ -35,9 +37,9 @@ const CarSearch = () => {
     try {
       const response = await CarService.fetchUsersCars(search);
 
-      if (!!response.data.length) {
+      if (!!response.data?.data.length) {
         updateLoading(false);
-        updateFilteredCars(response.data);
+        updateFilteredCars(response.data.data);
       } else {
         updateLoading(false);
         updateFilteredCars(null);

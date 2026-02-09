@@ -35,7 +35,7 @@ const Header = () => {
       duration: 0.2,
       ease: "none",
     });
-  }, [header.current]);
+  }, [header]);
 
   useEffect(() => {
     let cancelled = false;
@@ -78,6 +78,15 @@ const Header = () => {
       mobileMenuTarget.style.maxHeight = `${inner.offsetHeight}px`;
     } else {
       mobileMenuTarget.style.maxHeight = '';
+    }
+
+    const navLinks = mobileMenuTarget.querySelectorAll('a.link');
+    if (navLinks.length) {
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          setMobileMenuIsActive(false);
+        })
+      })
     }
 
     const checkMobileMenu = () => {

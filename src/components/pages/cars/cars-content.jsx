@@ -5,10 +5,10 @@ import CarCard from "@/components/pages/cars/car-card";
 import CarSearch from "@/components/pages/cars/car-search";
 import {useCarsStore} from "@/store/cars.store";
 import {useUserCars} from "@/hooks/useUserCars";
-import {useState} from "react";
-import { Pagination } from 'antd';
+import {useEffect, useState} from "react";
+import {Pagination} from 'antd';
 
-const  CarsContent = () => {
+const CarsContent = () => {
 
   const {filteredCars, loading} = useCarsStore();
 
@@ -18,7 +18,7 @@ const  CarsContent = () => {
     userCars,
     pages,
     isLoading,
-  } = useUserCars({ page, limit: 20 });
+  } = useUserCars({page, limit: 20});
 
   return (
     <div className="cars-page ppt ppb">
@@ -28,29 +28,39 @@ const  CarsContent = () => {
         {!!userCars?.data?.length && !isLoading && (
           <>
             <CarSearch/>
-            {
-              filteredCars === null ? <div className="cars-page__not-found">Ничего не найдено</div> : (
-                <div className="cars-page__grid">
-                  {!!filteredCars?.length ? (filteredCars.map((car) => {
-                    return <CarCard key={car.id} car={car}/>
-                  })) : (!!userCars?.data.length && userCars.data.map((car) => {
+            {filteredCars === null ? (
+              <div className="cars-page__not-found">Ничего не найдено</div>
+            ) : (
+              <>
+                {filteredCars?.length > 0 ? (
+                  <div className="cars-page__grid">
+                    {(filteredCars.map((car) => {
                       return <CarCard key={car.id} car={car}/>
-                    })
-                  )}
-                </div>
-              )
-            }
-            {userCars?.total &&
-              <div className="cars-page__pagination">
-                <Pagination
-                  current={page}
-                  total={userCars.total}
-                  pageSize={userCars.limit}
-                  onChange={(newPage) => setPage(newPage)}
-                  showSizeChanger={false}
-                />
-              </div>
-            }
+                    }))}
+                  </div>
+                ) : null}
+                {!!userCars?.data.length && !filteredCars?.length ? (
+                  <>
+                    <div className="cars-page__grid">
+                      {(userCars.data.map((car) => {
+                        return <CarCard key={car.id} car={car}/>
+                      }))}
+                    </div>
+                    {userCars?.total && !!!filteredCars?.length &&
+                      <div className="cars-page__pagination">
+                        <Pagination
+                          current={page}
+                          total={userCars.total}
+                          pageSize={userCars.limit}
+                          onChange={(newPage) => setPage(newPage)}
+                          showSizeChanger={false}
+                        />
+                      </div>
+                    }
+                  </>
+                ) : null}
+              </>
+            )}
           </>
         )}
       </div>

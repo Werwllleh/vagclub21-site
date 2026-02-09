@@ -4,8 +4,10 @@ const Page = async ({ params }) => {
 
   const { slug } = await params;
 
+  console.log(slug);
+
   return (
-    <div className="page">
+    <div className="page ppt ppb">
       <ProductDetail slug={slug} />
     </div>
   );

@@ -30,8 +30,9 @@
   }
 
   &__not-found {
+    margin-top: 3rem;
     font-weight: 600;
-    font-size: clamp(2rem, 4vw, 4rem);
+    font-size: 3rem;
   }
 
   &__pagination {
