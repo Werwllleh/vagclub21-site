@@ -30,7 +30,7 @@ const MainPage = () => {
               <p className="section-title h1">Авто сообщество VAGCLUB21</p>
               <div className="text">
                 <p>
-                  SAIC-Volkswagen Co., Ltd. (&laquo;SAIC-Volkswagen&raquo;)&nbsp;&mdash; совместное китайско-германское предприятие, управляемое компаниями SAIC Motor и&nbsp;Volkswagen Group. Компания подписала контракт и&nbsp;заложила первый камень в&nbsp;фундамент в&nbsp;октябре 1984&nbsp;года. Это одно из&nbsp;старейших совместных автомобильных предприятий в&nbsp;Китае.
+                  VAG_CLUB21&nbsp;&mdash; автомобильное сообщество, базирующееся в&nbsp;Чувашской Республике, в&nbsp;частности в&nbsp;Чебоксарах. Клуб объединяет владельцев и&nbsp;любителей автомобилей марок Volkswagen, Audi, Skoda, Seat и&nbsp;других брендов концерна VAG.
                 </p>
               </div>
               <Link href={"/about"} className="btn default l about__link">Подробнее</Link>

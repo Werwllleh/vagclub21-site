@@ -21,3 +21,22 @@
   }
 }
 
+.h2 {
+  font-size: 2.4rem;
+
+  @include breakpoints.tablet {
+    font-size: 2.8rem;
+  }
+
+  @include breakpoints.desktop {
+    font-size: 3.2rem;
+  }
+
+  @include breakpoints.w1250 {
+    font-size: 4.5rem;
+  }
+
+  @include breakpoints.w1600 {
+    font-size: 5.6rem;
+  }
+}

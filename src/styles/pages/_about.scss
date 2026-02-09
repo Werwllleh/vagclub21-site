@@ -7,6 +7,7 @@
   &__title {}
 
   &__description {
+    opacity: 0;
     margin-top: 3rem;
     max-width: 90%;
 
@@ -80,6 +81,8 @@
   }
 
   .about-list-item {
+    border-radius: variables.$borderRadius15;
+    overflow: hidden;
 
     &__body {
       display: flex;
@@ -140,7 +143,7 @@
         }
 
         @include breakpoints.semiDesktop {
-          font-size: 2.4rem;
+          font-size: 2.6rem;
         }
       }
 
@@ -167,12 +170,28 @@
         }
 
         @include breakpoints.w1250 {
-          font-size: 2rem;
+          font-size: 1.8rem;
+        }
+
+        b {
+          font-weight: 600;
         }
       }
 
       p + p {
         margin-top: 1rem;
+      }
+
+      ul {
+
+        li {
+
+
+        }
+
+        li + li {
+          margin-top: .5rem;
+        }
       }
     }
   }

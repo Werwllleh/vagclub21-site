@@ -4,49 +4,67 @@
 .car-detail{
 
   &__body {
-    display: flex;
-    gap: clamp(2rem, 5vw, 7rem);
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 3rem 0;
 
-    @include breakpoints.desktop {
-      flex-direction: column;
+    @include breakpoints.tablet {
+      gap: 0 4rem;
+      grid-template-columns: auto 1fr;
+      justify-content: space-between;
     }
+
+    @include breakpoints.w1600 {
+      gap: 0 8rem;
+    }
+
   }
 
   &__images {
     position: relative;
-    max-width: clamp(30rem, 30vw, 50rem);
-
-    @include breakpoints.desktop {
-      max-width: 100%;
-    }
 
     .swiper {
+      width: 100%;
+      height: 40rem;
+      margin: 0;
+      overflow: hidden;
+
+      @include breakpoints.tablet {
+        width: 40rem;
+        height: 40rem;
+      }
+
+      @include breakpoints.desktop {
+        width: 50rem;
+        height: 50rem;
+      }
+
+      @include breakpoints.w1600 {
+        width: 60rem;
+        height: 60rem;
+      }
 
       .swiper-slide {
+        position: relative;
         border-radius: .5rem;
         overflow: hidden;
         background-color: variables.$white;
         display: flex;
         justify-content: center;
+        align-items: center;
 
         .ant-image {
           cursor: pointer;
+
+          img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: variables.$borderRadius7;
+            overflow: hidden;
+          }
         }
       }
-
-      img {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        object-fit: contain;
-        pointer-events: none;
-        user-select: none;
-        border-radius: .5rem;
-        overflow: hidden;
-
-      }
-
       .swiper-pagination {
 
         &-bullet {
@@ -60,60 +78,103 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
+    &--bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        filter: blur(1rem);
+      }
+    }
+
   }
 
   &__description {
 
   }
 
-  &__info {
+  &__others {
+    margin-top: 5rem;
 
-    h1 {
-      text-transform: uppercase;
-      font-size: clamp(3rem, 4vw, 7rem) !important;
-      user-select: none;
-      pointer-events: none;
+    @include breakpoints.desktop {
+      margin-top: 10rem;
+    }
+  }
+
+}
+
+.car-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem 0;
+  height: 100%;
+
+  &__top {}
+
+  &__bottom {
+    margin-top: auto;
+  }
+
+  &__title {}
+
+  &__year {}
+
+  &__number {
+  }
+
+  &__socials {
+    margin-top: 2rem;
+    display: flex;
+    align-items: stretch;
+    gap: .7rem 1.2rem;
+  }
+
+  &__instagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__drive2 {
+    display: flex;
+    height: 5rem;
+  }
+
+  &__note {
+
+    span {
+      font-size: 2rem;
+      font-style: italic;
+      text-decoration: underline;
+      text-underline-offset: 0.4rem;
     }
 
-    &_row {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
+    span + p {
+      margin-top: .8rem;
     }
 
-    &_number {
-      user-select: none;
-      pointer-events: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      text-transform: uppercase;
-      font-weight: 500;
-      font-size: clamp(2rem, 4vw, 4rem);
-    }
-
-    &_instagram {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &_drive2 {
-      margin: 1rem 0 0 0;
-      display: flex;
-      max-width: 10rem;
-    }
-
-    &_note {
-      margin: 1rem 0 0 0;
+    p {
       font-size: 1.8rem;
       font-style: italic;
     }
-
   }
+}
 
-  &__others {
-    margin-top: clamp(4rem, 5vw, 7rem);
-  }
-
+.ant-image-preview-img {
+  border-radius: variables.$borderRadius7;
+  overflow: hidden;
 }

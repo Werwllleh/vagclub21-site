@@ -129,7 +129,11 @@ main {
   height: 100%;
   margin: 0 auto;
   max-width: 147rem;
-  padding-inline: 3rem;
+  padding-inline: 1.5rem;
+
+  @include breakpoints.tablet {
+    padding-inline: 3rem;
+  }
 }
 
 .content {

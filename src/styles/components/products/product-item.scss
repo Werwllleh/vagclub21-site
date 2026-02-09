@@ -2,7 +2,7 @@
 
 .product-item {
   position: relative;
-  border-radius: variables.$borderRadius5;
+  border-radius: variables.$borderRadius7;
   border: 1px solid variables.$grey-light;
 
   &:hover {
@@ -32,7 +32,7 @@
       object-fit: contain;
       pointer-events: none;
       user-select: none;
-      border-radius: variables.$borderRadius5;
+      border-radius: variables.$borderRadius7;
       overflow: hidden;
       transition: transform variables.$transition;
     }

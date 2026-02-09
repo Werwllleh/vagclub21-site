@@ -66,7 +66,7 @@ const UserForm = ({initialValues, type, setStep}) => {
           </Form.Item>
         </div>
         <div className="user-form__form--footer">
-          <Button className="style-btn style-btn-default" type="primary" htmlType="submit">
+          <Button className="btn default l" type="primary" htmlType="submit">
             {type === 'update' ? 'Обновить' : 'Отправить'}
           </Button>
         </div>

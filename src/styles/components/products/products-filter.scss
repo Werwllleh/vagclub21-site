@@ -1,7 +1,7 @@
 @use "../../variables";
 
 .products-filter {
-  border-radius: variables.$borderRadius5;
+  border-radius: variables.$borderRadius7;
   background-color: variables.$colorSecondary;
   overflow: hidden;
   padding: 1rem 1rem;
@@ -13,7 +13,7 @@
   }
 
   &__category {
-    border-radius: variables.$borderRadius5;
+    border-radius: variables.$borderRadius7;
     background-color: variables.$white;
     padding: 1rem .5rem;
 

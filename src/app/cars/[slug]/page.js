@@ -7,10 +7,8 @@ const Page = async ({params}) => {
   const carId = decodeURIComponent(slug.split('_')[1]);
 
   return (
-    <div className="page">
-      <div className="container">
-        {carId && <CarDetail carId={carId} />}
-      </div>
+    <div className="page ppt ppb">
+      {carId && <CarDetail carId={carId} />}
     </div>
   );
 };

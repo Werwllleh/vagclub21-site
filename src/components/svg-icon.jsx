@@ -1,7 +1,7 @@
 const SvgIcon = ({name}) => {
   return (
-    <svg className="icon">
-      <use xlinkHref={`/images/sprite.svg#${name}`}></use>
+    <svg className="icon" aria-hidden="true">
+      <use href={`/images/sprite.svg#${name}`}></use>
     </svg>
   );
 };

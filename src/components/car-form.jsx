@@ -403,14 +403,14 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
         <div className="car-form__form--footer">
           {carRegisterStep !== 1 && (
             <Button
-              className="style-btn style-btn-default"
+              className="btn default m"
               type="primary"
               onClick={() => setCarRegisterStep(carRegisterStep - 1)}
             >
               Назад
             </Button>
           )}
-          <Button className="style-btn style-btn-primary" type="primary" htmlType="submit">
+          <Button className="btn primary m" type="primary" htmlType="submit">
             {/*{type === 'update' ? 'Обновить' : 'Добавить'}*/}
             {carRegisterStep === 1 && 'Далее'}
             {carRegisterStep === 2 && 'Сохранить'}

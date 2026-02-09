@@ -44,7 +44,7 @@ const AuthButton = () => {
   if (domain === 'localhost') {
     return (
       <Button
-        className="style-btn style-btn-primary"
+        className="btn default l"
         type="primary"
         onClick={() => loginHandler(loginData)}
       >

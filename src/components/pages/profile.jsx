@@ -64,9 +64,9 @@ const Profile = () => {
 
   return (
     <>
-      <div className="page profile">
+      <div className="profile">
         <div className="container">
-          <h1 className="profile__title">Профиль</h1>
+          <h1 className="profile__title h1">Профиль</h1>
           {isLoading && <Loader/>}
           {!isLoading && user && Object.values(user).length && (
             <div className="profile__body">
@@ -98,7 +98,7 @@ const Profile = () => {
                 {isLoading && !user.data.cars && <Loader/>}
                 {user.data.cars && user.data.cars.length ? (
                   <div className="profile__cars">
-                    <h3>Ваши авто</h3>
+                    <h3 className="h2">Ваши авто</h3>
                     <div className="profile__cars--list">
                       <>
                         {user.data.cars.map((car) => {
@@ -109,7 +109,7 @@ const Profile = () => {
                         <Button
                           onClick={openAddCarModal}
                           type="primary"
-                          className="style-btn style-btn-default"
+                          className="btn default l"
                         >
                           <PlusOutlined />
                           Добавить авто
@@ -134,9 +134,6 @@ const Profile = () => {
           )}
         </div>
       </div>
-      <Modal open={isModalActive} onCancel={handleCloseModal} footer={false}>
-        {/*<ProfileCarForm onClose={handleCloseModal} key={selectCarData.car_number} car={selectCarData}/>*/}
-      </Modal>
       <Modal open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
         <CarForm type={'register'} onClose={closeAddCarModal}/>
       </Modal>

@@ -16,7 +16,7 @@ const CarsOthers = () => {
     <>
       {!!otherCarsData.length && (
         <div className="cars-others">
-          <h3 className="cars-others__title">Другие авто</h3>
+          <h3 className="cars-others__title h2">Другие авто</h3>
           <div className="cars-others__cars">
             <Swiper
               spaceBetween={20}
