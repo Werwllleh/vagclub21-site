@@ -2,7 +2,7 @@
 import {products} from "@/data/products";
 import Link from "next/link";
 
-const Products = () => {
+const ProductsTypes = () => {
 
   return (
     <div className="products">
@@ -35,4 +35,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductsTypes;

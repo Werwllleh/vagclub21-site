@@ -2,7 +2,7 @@
 @use "../variables";
 
 
-.products-page {
+.products {
 
   &__title {}
 
@@ -67,5 +67,50 @@
         }
       }
     }
+  }
+}
+
+
+.product-list {
+
+  &__body {}
+
+  &__grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    gap: 2rem;
+
+    @include breakpoints.mobile {
+      margin-top: 5rem;
+    }
+
+    @include breakpoints.desktop {
+      margin-top: 10rem;
+    }
+  }
+
+  &__empty {}
+}
+
+.product-item {
+  position: relative;
+
+  &__body {}
+
+  &__image {
+
+    img {}
+  }
+
+  &__info {}
+
+  &__name {}
+
+  &__footer {}
+
+  &__link {
+    position: absolute;
+    inset: 0;
   }
 }

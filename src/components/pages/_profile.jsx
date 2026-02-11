@@ -10,7 +10,7 @@ import ProfileCarCard from "@/components/profile-car-card";
 import {checkUrl} from "@/utils/utils";
 
 
-const Profile = () => {
+const _profile = () => {
 
   const {isLoading, user} = useUser();
 
@@ -141,4 +141,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default _profile;

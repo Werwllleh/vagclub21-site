@@ -1,9 +1,9 @@
 "use client"
 import React from 'react';
 import HeroBlock from "@/components/blocks/hero-block";
-import Products from "@/components/pages/products/products";
 import CooperationForm from "@/components/cooperation-form";
 import Link from "next/link";
+import ProductsTypes from "@/components/pages/products/products";
 
 const MainPage = () => {
   return (
@@ -14,7 +14,7 @@ const MainPage = () => {
       <section className="page-main__products">
         <div className="container">
           <p className="section-title h1">Атрибутика клуба</p>
-          <Products />
+          <ProductsTypes />
         </div>
       </section>
       {/*<section className="page-main__cooperation">

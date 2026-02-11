@@ -17,7 +17,7 @@ const ProductDetail = ({slug}) => {
   const {isLoading, product} = useProduct(slug);
 
   return (
-    <div className="product-detail">
+    <div className="product-detail ppt ppb">
       <div className="container">
         <div className="product-detail__body">
           {isLoading && <Loader />}

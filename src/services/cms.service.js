@@ -1,6 +1,6 @@
 import {axiosCmsClassic} from "@/api/axios";
 
-class ProductsService {
+class CmsService {
 
   async fetchProducts() {
     return axiosCmsClassic.get(`/products/list`)
@@ -15,4 +15,4 @@ class ProductsService {
   }
 }
 
-export default new ProductsService();
+export default new CmsService();

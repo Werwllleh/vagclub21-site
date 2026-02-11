@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import productsService from "@/services/products.service";
+import productsService from "@/services/cms.service";
 
 export function useProducts() {
   const { data, isLoading } = useQuery({
@@ -29,10 +29,15 @@ export function useProductsTypes(type) {
   const { data, isLoading } = useQuery({
     queryKey: ['products-type'],
     queryFn: () => productsService.fetchProductsTypes(type),
+    retry: false,
   })
 
   return {
     isLoading,
-    types: data?.data ? data.data : null,
+    data: {
+      type: data?.data?.type,
+      items: data?.data?.docs,
+      total: data?.data?.total
+    },
   }
 }

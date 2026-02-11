@@ -1,4 +1,4 @@
-import Profile from "@/components/pages/profile";
+import _profile from "@/components/pages/_profile";
 import {SEO_CONFIG} from "@/config/seo.config";
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
 
 const Page = () => {
   return <div className="page ppt ppb">
-    <Profile />
+    <_profile />
   </div>
 };
 

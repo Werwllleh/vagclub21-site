@@ -1,5 +1,5 @@
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
-import ProductsPage from "@/components/pages/products";
+import ProductsPage from "@/components/pages/_products";
 
 export const metadata = {
   title: PUBLIC_PAGES.PRODUCTS.SEO_TITLE,

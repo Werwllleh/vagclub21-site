@@ -23,8 +23,8 @@ const menuList = [
       },
       {
         label: 'Ароматизаторы',
-        key: 'flavors',
-        path: '/products/flavors',
+        key: 'flavours',
+        path: '/products/flavours',
       },
     ]
   },
