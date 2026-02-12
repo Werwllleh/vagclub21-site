@@ -96,8 +96,10 @@ const NavMenu = () => {
     setOpenKey(null);
   };
 
-  useBlackout(isOverlayActive, clearCloseTimer())
-
+  useBlackout(isOverlayActive, () => {
+    clearCloseTimer();
+    setOpenKey(null);
+  })
 
   return (
     <nav className="nav-menu" ref={navRef}>

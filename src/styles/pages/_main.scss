@@ -3,6 +3,10 @@
 
 .page-main {
 
+  section {
+    will-change: opacity;
+  }
+
   section:not(:first-child) {
     margin-top: 3rem;
 
@@ -19,7 +23,7 @@
     }
   }
 
-  &__products {
+  .products {
     .section-title {
       margin-bottom: 6rem;
     }

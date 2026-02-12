@@ -18,12 +18,6 @@
     font-size: 2.4rem;
   }
 
-  &:hover {
-    .logo__digit {
-      transform: translateY(-1rem);
-    }
-  }
-
   &.inversion {
     .logo__word {
       color: variables.$white;
@@ -48,7 +42,7 @@
     background-color: variables.$blue;
     border-radius: 100%;
     color: variables.$white;
-    transition: transform variables.$transition;
+    will-change: transform;
 
     @include breakpoints.mobile {
       width: 4.2rem;

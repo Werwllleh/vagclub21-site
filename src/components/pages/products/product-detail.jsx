@@ -14,7 +14,7 @@ import Loader from "@/components/loader";
 
 const ProductDetail = ({slug}) => {
 
-  const {isLoading, product} = useProduct(slug);
+  const {product, isLoading} = useProduct(slug);
 
   return (
     <div className="product-detail ppt ppb">

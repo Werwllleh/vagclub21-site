@@ -5,15 +5,47 @@ import CarCard from "@/components/pages/cars/car-card";
 import CarSearch from "@/components/pages/cars/car-search";
 import {useCarsStore} from "@/store/cars.store";
 import {useUserCars} from "@/hooks/useUserCars";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {Pagination} from 'antd';
-import {useSearchParams} from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 const CarsContent = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const {filteredCars, loading} = useCarsStore();
 
-  const [page, setPage] = useState(1);
+  const urlPage = useMemo(() => {
+    const p = Number(searchParams.get("page") ?? 1);
+    return Number.isFinite(p) && p > 0 ? p : 1;
+  }, [searchParams]);
+
+  const [page, setPage] = useState(urlPage);
+
+  useEffect(() => {
+    setPage((prev) => (prev === urlPage ? prev : urlPage));
+  }, [urlPage]);
+
+  const setPageInUrl = useCallback(
+    (nextPage) => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (nextPage > 1) params.set("page", String(nextPage));
+      else params.delete("page");
+
+      const qs = params.toString();
+      const nextUrl = qs ? `${pathname}?${qs}` : pathname;
+
+      router.replace(nextUrl, { scroll: false });
+    },
+    [router, pathname, searchParams]
+  );
+
+  useEffect(() => {
+    // важно: если URL уже соответствует page — не делаем replace
+    if (page !== urlPage) setPageInUrl(page);
+  }, [page, urlPage, setPageInUrl]);
 
   const {
     userCars,
@@ -22,10 +54,13 @@ const CarsContent = () => {
   } = useUserCars({page, limit: 20});
 
 
-  const searchParams = useSearchParams();
+  /*const searchParams = useSearchParams();
 
   useEffect(() => {
     const page = searchParams.get('page');
+
+    console.log(page);
+
     if (page) {
       setPage(Number(page));
     } else {
@@ -46,7 +81,7 @@ const CarsContent = () => {
 
   useEffect(() => {
     createQueryString(page)
-  }, [page]);
+  }, [page]);*/
 
   return (
     <div className="cars-page ppt ppb">

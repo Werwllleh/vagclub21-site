@@ -27,6 +27,7 @@
 
       .swiper-slide {
         height: auto;
+        overflow: hidden;
       }
 
       .swiper-pagination {
@@ -97,6 +98,9 @@
 
   &__text {
     color: variables.$white;
+    position: relative;
+    z-index: 2;
+    will-change: transform, opacity;
   }
 
   &__title {
@@ -146,6 +150,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
+    will-change: transform, filter;
 
     &::before {
       content: "";

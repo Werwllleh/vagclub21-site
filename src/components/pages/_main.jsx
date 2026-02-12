@@ -3,24 +3,36 @@ import React from 'react';
 import HeroBlock from "@/components/blocks/hero-block";
 import CooperationForm from "@/components/cooperation-form";
 import Link from "next/link";
-import ProductsTypes from "@/components/pages/products/products";
+import ProductTypes from "@/components/products/products-types";
+import AnimateSection from "@/components/blocks/animate-section";
+
 
 const MainPage = () => {
+
+
   return (
     <div className="page-main">
-      <section className="page-main__hero">
+      <AnimateSection className={"hero"}>
         <HeroBlock />
-      </section>
-      <section className="page-main__products">
+      </AnimateSection>
+      <AnimateSection
+        className={"products"}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
         <div className="container">
           <p className="section-title h1">Атрибутика клуба</p>
-          <ProductsTypes />
+          <ProductTypes />
         </div>
-      </section>
+      </AnimateSection>
       {/*<section className="page-main__cooperation">
         <CooperationForm />
       </section>*/}
-      <section className="about">
+      <AnimateSection
+        className={"about"}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
         <div className="container">
           <div className="about__body">
             <div className="about__image">
@@ -37,7 +49,7 @@ const MainPage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </AnimateSection>
     </div>
   );
 };

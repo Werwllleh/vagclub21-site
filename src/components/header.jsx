@@ -111,6 +111,15 @@ const Header = () => {
 
   }, [mobileMenuIsActive]);
 
+  useEffect(() => {
+    const overlay = document.querySelector('.overlay');
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        setMobileMenuIsActive(false);
+      });
+    }
+  }, []);
+
   return (
     <header ref={header} className={`header ${pathname === '/' ? 'pm' : ''}`}>
       <div className="header__inner">

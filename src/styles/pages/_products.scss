@@ -1,10 +1,41 @@
 @use "../breakpoints";
 @use "../variables";
 
+.products,
+.product-list,
+.product-detail {
+  position: relative;
+  flex: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    background-image: linear-gradient(
+                    135deg,
+                    #2c2928 0,
+                    #2c2928 33%,
+                    #e31e23 33%,
+                    #e31e23 66%,
+                    #fdda02 66%,
+                    #fdda02 100%,
+    );
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background-color: #ffffffe8;
+  }
+}
 
 .products {
 
-  &__title {}
+  &__title {
+  }
 
   &__grid {
     margin: 2rem 0 5rem;
@@ -50,7 +81,8 @@
 
     .products {
 
-      &__list {}
+      &__list {
+      }
 
       &__item {
         flex: 0 1 100%;
@@ -68,18 +100,9 @@
       }
     }
   }
-}
 
-
-.product-list {
-
-  &__body {}
-
-  &__grid {
+  .products-all-list {
     margin-top: 3rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
-    gap: 2rem;
 
     @include breakpoints.mobile {
       margin-top: 5rem;
@@ -89,28 +112,230 @@
       margin-top: 10rem;
     }
   }
+}
 
-  &__empty {}
+
+.product-list {
+
+  &__body {
+  }
+
+  &__grid {
+    margin-top: 3rem;
+    display: grid;
+    align-items: stretch;
+    grid-template-columns: 100%;
+    gap: 2rem;
+
+    @include breakpoints.mobile {
+      margin-top: 5rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include breakpoints.tablet {
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    }
+
+    @include breakpoints.desktop {
+      margin-top: 10rem;
+    }
+  }
+
+  &__empty {
+  }
 }
 
 .product-item {
   position: relative;
+  border-radius: variables.$borderRadius15;
+  padding-block: 0 3rem;
+  background-color: variables.$white;
+  overflow: hidden;
 
-  &__body {}
-
-  &__image {
-
-    img {}
+  @include breakpoints.mobile {
+    padding-block: 0 1.5rem;
   }
 
-  &__info {}
-
-  &__name {}
-
-  &__footer {}
-
-  &__link {
+  /*&::before {
+    content: "";
     position: absolute;
     inset: 0;
+    //background-color: variables.$light-blue;
+    background-color: variables.$white;
+    opacity: .95;
+    //filter: blur(10px);
+  }*/
+
+  &:hover {
+    .product-item__image img {
+      transform: scale(1.025);
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: variables.$borderRadius10;
+    padding: .85rem 1.5rem;
+    font-size: 1.4rem;
+    letter-spacing: -0.08rem;
+    font-weight: 500;
+    line-height: 1.25;
+    min-width: 8rem;
+    z-index: 2;
+    pointer-events: none;
+
+    &.popular {
+      background-color: variables.$positive;
+      color: variables.$white;
+    }
+
+    &.new {
+      background-color: variables.$new;
+      color: variables.$black;
+    }
+
+    &.sale {
+      background-color: variables.$sale;
+      color: variables.$white;
+    }
+  }
+
+  &__body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: variables.$borderRadius15;
+    z-index: 1;
+    height: 100%;
+  }
+
+  &__image {
+    position: relative;
+    border-radius: 0 0 variables.$borderRadius15 variables.$borderRadius15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22rem;
+    padding-block: 1.5rem;
+
+    @include breakpoints.mobile {
+      height: 27rem;
+    }
+
+    img {
+      width: auto;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      transition: transform variables.$transition;
+    }
+
+    a {
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  &__info {
+    padding-inline: 2rem;
+    margin-block: 1rem 2rem;
+
+    @include breakpoints.mobile {
+      margin-block: 2rem;
+    }
+  }
+
+  &__price {
+
+    span {
+      line-height: 1;
+    }
+
+    .current {
+      color: variables.$positive;
+      font-size: 1.8rem;
+      font-weight: 600;
+
+      @include breakpoints.mobile {
+        font-size: 2rem;
+      }
+    }
+
+    .old {
+      margin-left: 1rem;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: variables.$oldPrice;
+      text-decoration: line-through;
+
+      @include breakpoints.mobile {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+    }
+
+    .percent {
+      margin-left: .5rem;
+      color: variables.$positive;
+      font-size: 1.4rem;
+
+      @include breakpoints.mobile {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  &__name {
+    display: block;
+    margin-top: 1rem;
+
+    h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: variables.$black;
+
+      @include breakpoints.mobile {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-inline: 2rem;
+  }
+
+  &__link {
+    width: 100%;
+  }
+}
+
+.products-all-list {
+
+  &__title {
+    font-weight: 500;
+  }
+
+  &__grid {
+    margin-top: 3rem;
+    display: grid;
+    align-items: stretch;
+    grid-template-columns: 100%;
+    gap: 2rem;
+
+    @include breakpoints.mobile {
+      margin-top: 5rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include breakpoints.tablet {
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    }
   }
 }

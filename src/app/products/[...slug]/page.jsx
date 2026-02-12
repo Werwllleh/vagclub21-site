@@ -5,7 +5,7 @@ const Page = async ({ params }) => {
 
   const { slug } = await params;
 
-  console.log(slug);
+  // console.log(slug);
 
   return (
     <>
