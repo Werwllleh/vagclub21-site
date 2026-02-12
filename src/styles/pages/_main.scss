@@ -7,7 +7,7 @@
     will-change: opacity;
   }
 
-  section:not(:first-child) {
+  /*section:not(:first-child, .products) {
     margin-top: 3rem;
 
     @include breakpoints.tablet {
@@ -21,9 +21,24 @@
     @include breakpoints.w1600 {
       margin-top: 12rem;
     }
-  }
+  }*/
 
   .products {
+
+    padding-block: 3rem;
+
+    @include breakpoints.tablet {
+      padding-block: 5rem;
+    }
+
+    @include breakpoints.desktop {
+      padding-block: 8rem;
+    }
+
+    @include breakpoints.w1600 {
+      padding-block: 12rem;
+    }
+
     .section-title {
       margin-bottom: 6rem;
     }
