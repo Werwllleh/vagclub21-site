@@ -17,7 +17,7 @@ export const metadata = {
 export default function RootLayout({children}) {
 
   return (
-    <html lang="ru">
+    <html lang="ru" data-scroll-behavior="smooth">
     <head>
       <link rel="canonical" href="https://vagclub21.ru/"/>
       <meta name="yandex-verification" content="e1783a4d4e4edd5b"/>
@@ -41,7 +41,7 @@ export default function RootLayout({children}) {
       </main>
       <Footer/>
     </Providers>
-    <SnowMode/>
+    {/*<SnowMode/>*/}
     <div className="overlay"/>
     </body>
     </html>

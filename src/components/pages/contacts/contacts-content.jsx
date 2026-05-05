@@ -2,9 +2,9 @@ import React from 'react';
 
 const ContactsContent = () => {
   return (
-    <div className="contacts-page">
+    <div className="contacts-page ppt ppb">
       <div className="container">
-        <h1 className="contacts-page__title">Контакты</h1>
+        <h1 className="contacts-page__title h1">Контакты</h1>
       </div>
     </div>
   );
