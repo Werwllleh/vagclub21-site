@@ -44,6 +44,7 @@ const CarsOthers = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              // noSwipingSelector={'.car-card__image'}
               spaceBetween={20}
               slidesPerView={"auto"}
             >

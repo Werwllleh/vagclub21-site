@@ -15,7 +15,7 @@ import {useRouter} from "next/navigation";
 const CarCard = ({car}) => {
 
   const router = useRouter()
-  const link = `/cars/${car.brand.substring(0,1)}${car.model.substring(0,1)}_${car.id}`;
+  const link = `/cars/${car.brand?.substring(0,1)}${car.model?.substring(0,1)}_${car.id}`;
 
   return (
     <div className="car-card" onClick={() => router.push(link)}>
@@ -30,7 +30,7 @@ const CarCard = ({car}) => {
             }}
             slidesPerView={1}
           >
-            {car.carsImages.map((image) => {
+            {car.carsImages?.map((image) => {
               return (
                 <SwiperSlide key={image.id}>
                   <div className="car-card__image">

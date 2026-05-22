@@ -32,8 +32,8 @@
     "react-inlinesvg": "^4.2.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
-    "swiper": "12.1.2",
-    "zustand": "^5.0.11"
+    "swiper": "12.1.4",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "sass": "^1.97.3"
