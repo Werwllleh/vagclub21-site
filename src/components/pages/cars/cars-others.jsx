@@ -51,7 +51,7 @@ const CarsOthers = () => {
               {otherCarsData.map((car) => {
                 return (
                   <SwiperSlide key={car.id}>
-                    <CarCard car={car}/>
+                    <CarCard car={car} non_gallery={true}/>
                   </SwiperSlide>
                 )
               })}
