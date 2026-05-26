@@ -5,11 +5,11 @@ const AnimateSection = ({ className, children, initial= {opacity: 0}, whileInVie
   return (
     <motion.section
       className={className}
-      // initial={{ opacity: 0, y: 40 }}
-      // whileInView={{ opacity: 1, y: 0 }}
-      initial={initial}
-      whileInView={whileInView}
-      viewport={{ once: false, amount: 0.15 }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      // initial={initial}
+      // whileInView={whileInView}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.85, ease: "easeInOut" }}
     >
       {children}

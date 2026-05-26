@@ -44,13 +44,14 @@ const CarsOthers = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              // noSwipingSelector={'.car-card__image'}
               spaceBetween={20}
               slidesPerView={"auto"}
             >
               {otherCarsData.map((car) => {
                 return (
                   <SwiperSlide key={car.id}>
-                    <CarCard car={car}/>
+                    <CarCard car={car} non_gallery={true}/>
                   </SwiperSlide>
                 )
               })}
