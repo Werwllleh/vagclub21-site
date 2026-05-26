@@ -5,8 +5,6 @@ const Page = async ({ params }) => {
 
   const { slug } = await params;
 
-  // console.log(slug);
-
   return (
     <>
       {slug && slug.length === 1 ? <ProductList type={slug[0]} /> : null}

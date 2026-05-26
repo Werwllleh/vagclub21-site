@@ -9,25 +9,19 @@
   }
 
   &__body {
+
   }
 
   &__top {
+    margin-top: 4rem;
     display: grid;
-    align-items: flex-start;
-    gap: clamp(2rem, 5vw, 4rem);
-    grid-template-columns: auto 1fr;
-
-    @include breakpoints.small {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: 40rem auto;
+    overflow: hidden;
   }
 
   &__images {
-    max-width: clamp(35rem, 30vw, 50rem);
-
-    @include breakpoints.small {
-      margin: 0 auto;
-    }
+    position: relative;
+    max-width: max-content;
 
     .swiper {
 
@@ -36,30 +30,49 @@
       }
 
       .swiper-slide {
-        background-color: variables.$white;
+        position: relative;
         height: auto;
-
         display: flex;
-        justify-content: center;
+        border-radius: variables.$borderRadius7;
+        overflow: hidden;
+
+        &::before {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 12rem;
+          width: 100%;
+          background: linear-gradient(0deg, #000000 0%, #ffffff00 100%);
+        }
 
         img {
-          height: 100%;
-          max-height: 60rem;
-          object-fit: contain;
+          height: 45rem;
+          width: 100%;
+          object-fit: cover;
           pointer-events: none;
           user-select: none;
-          border-radius: variables.$borderRadius7;
-          overflow: hidden;
         }
       }
 
       .swiper-pagination {
-        .swiper-pagination-bullet-active {
-          background-color: variables.$white;
 
-          @include breakpoints.small {
-            background-color: variables.$colorPrimary;
+
+        .swiper-pagination-bullet {
+          border: 1px solid variables.$white;
+          width: 1.2rem;
+          height: 1.2rem;
+          opacity: .7;
+          transition: all variables.$transition;
+
+          &:hover {
+            opacity: 1;
           }
+        }
+
+        .swiper-pagination-bullet-active {
+          opacity: 1;
+          background-color: variables.$white;
         }
       }
     }
@@ -161,6 +174,67 @@
 
       @include breakpoints.desktop {
         max-width: none;
+      }
+    }
+  }
+
+  .product-detail__purchase {
+    background-color: variables.$white;
+    border-radius: variables.$border-radius20;
+    box-shadow: 0 0 .25rem .3rem #adadad0f;
+    max-width: 40rem;
+    padding: 2rem;
+
+    .price {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      width: max-content;
+
+      span {
+        line-height: 1;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      &__old {
+        color: variables.$red;
+        font-size: 2.8rem;
+        text-decoration: line-through variables.$red;
+      }
+
+      &__current {
+        color: variables.$colorPrimaryDark;
+        font-weight: 500;
+        font-size: 6rem;
+      }
+    }
+
+    .availability {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: variables.$borderRadius15;
+      width: max-content;
+      padding: .8rem 1.7rem;
+      background-color: variables.$white;
+      pointer-events: none;
+      user-select: none;
+      box-shadow: 0 0 .25rem .3rem #adadad0f;
+
+      &.available {
+        p {
+          color: variables.$red;
+          opacity: 1;
+        }
+      }
+
+      p {
+        font-size: 1.6rem;
+        line-height: 1;
+        color: variables.$grey;
+        opacity: .4;
       }
     }
   }
