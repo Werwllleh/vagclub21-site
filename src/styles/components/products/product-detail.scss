@@ -12,18 +12,72 @@
 
   }
 
+  .white-block {
+    padding: clamp(1.2rem, 5vw, 2rem);
+    backdrop-filter: blur(1rem);
+    background-color: #ffffffd9;
+    border-radius: variables.$border-radius20;
+    box-shadow: 0 0 1.25rem .5rem #c9c9c929;
+  }
+
   &__top {
-    margin-top: 4rem;
+    margin-top: 2rem;
     display: grid;
-    grid-template-columns: 40rem auto;
-    overflow: hidden;
+    grid-template-columns: 100%;
+    grid-template-areas: "gallery"
+                          "params"
+                          "purchase"
+                          "text";
+    gap: 2rem;
+    align-items: flex-start;
+
+    @include breakpoints.tablet {
+      margin-top: 4rem;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "gallery gallery"
+                          "params purchase"
+                          "text text";
+    }
+
+    @include breakpoints.semiDesktop {
+      grid-template-columns: 40% auto 1fr;
+      grid-template-areas: "gallery params"
+                          "gallery purchase"
+                          "text text";
+    }
+
+    @include breakpoints.laptop {
+      gap: 4rem;
+      grid-template-columns: 30% auto 30%;
+      grid-template-areas: "gallery params purchase"
+                          "gallery text text";
+    }
+
+    h5 {
+      font-weight: 600;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      color: variables.$colorPrimaryDark;
+    }
+
+
   }
 
   &__images {
+    grid-area: gallery;
     position: relative;
-    max-width: max-content;
+    width: 100%;
+
+    @include breakpoints.semiDesktop {
+      height: 100%;
+    }
 
     .swiper {
+      position: sticky;
+      top: 12rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow: unset;
 
       .swiper-wrapper {
         align-items: stretch;
@@ -33,46 +87,89 @@
         position: relative;
         height: auto;
         display: flex;
-        border-radius: variables.$borderRadius7;
+        border-radius: variables.$borderRadius10;
         overflow: hidden;
 
-        &::before {
+        /*&::before {
           content: "";
           position: absolute;
           bottom: 0;
           left: 0;
-          height: 12rem;
+          height: 100%;
           width: 100%;
-          background: linear-gradient(0deg, #000000 0%, #ffffff00 100%);
-        }
+          backdrop-filter: blur(1rem);
+          background-color: #ffffffd9;
+          z-index: -1;
+        }*/
 
         img {
-          height: 45rem;
-          width: 100%;
-          object-fit: cover;
+          max-height: 35rem;
+          height: 100%;
           pointer-events: none;
           user-select: none;
+
+          @include breakpoints.semiDesktop {
+            max-height: 45rem;
+          }
+
+          &:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+
+          &:nth-child(2) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+          }
+        }
+
+        span {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          backdrop-filter: blur(1rem);
+          background-color: rgba(0, 0, 0, 0.09);
         }
       }
 
       .swiper-pagination {
-
+        position: relative;
+        bottom: auto;
+        top: auto;
+        left: auto;
+        right: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
 
         .swiper-pagination-bullet {
-          border: 1px solid variables.$white;
+          border: 1px solid variables.$colorPrimary;
+          background-color: transparent;
           width: 1.2rem;
           height: 1.2rem;
           opacity: .7;
+          margin: 0;
           transition: all variables.$transition;
 
-          &:hover {
+          &:not(.swiper-pagination-bullet-active):hover {
             opacity: 1;
+            background-color: variables.$white;
           }
         }
 
         .swiper-pagination-bullet-active {
           opacity: 1;
-          background-color: variables.$white;
+          background-color: variables.$colorPrimary;
         }
       }
     }
@@ -91,104 +188,84 @@
     }
   }
 
-  &__price {
-    margin: 2rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-
-    &_values {
-      margin: .5rem 0 0 0;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    &_current {
-      font-weight: 600;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      color: variables.$red;
-    }
-
-    &_old {
-      position: relative;
-      font-weight: 400;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      color: variables.$grey;
-      padding: 0 .5rem;
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        margin: auto 0;
-        width: 100%;
-        height: .2rem;
-        background-color: variables.$red;
-      }
-    }
-  }
-
-  &__specifications {
-    margin: 2rem 0 0 0;
-    display: flex;
-    flex-direction: column;
-
-    &_item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-
-      span {
-        line-height: 1;
-      }
-
-
-      @include breakpoints.desktop {
-        flex-direction: column;
-      }
-    }
-
-    &_label {
-      font-weight: 300;
-    }
-
-    &_value {
-      font-weight: 500;
-    }
-
-  }
-
   &__bottom {
     margin-top: clamp(2rem, 5vw, 4rem);
   }
 
   &__description {
+    grid-area: text;
+    height: 100%;
 
-    p {
-      margin: 1rem 0 0 0;
-      display: inline-block;
-      max-width: 70%;
+    .payload-richtext {
+      margin-top: 2rem;
+    }
+  }
 
-      @include breakpoints.desktop {
-        max-width: none;
+  &__charateristics {
+    grid-area: params;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    height: 100%;
+
+    .characteristic {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      &__title {
+
+      }
+
+      &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      &__item {
+        display: flex;
+        align-items: stretch;
+        gap: 0 .5rem;
+
+        p {
+          font-size: clamp(1.4rem, 3vw, 1.6rem);
+        }
+
+        .label {
+          color: variables.$grey;
+          line-height: 1;
+        }
+
+        .separator {
+          flex: 1;
+          display: block;
+          border-bottom: 1px dotted variables.$grey;
+        }
+
+        .value {
+          margin-left: auto;
+          color: variables.$colorPrimaryDark;
+          line-height: 1;
+        }
       }
     }
   }
 
-  .product-detail__purchase {
-    background-color: variables.$white;
-    border-radius: variables.$border-radius20;
-    box-shadow: 0 0 .25rem .3rem #adadad0f;
-    max-width: 40rem;
-    padding: 2rem;
+  &__purchase {
+    grid-area: purchase;
+    margin-left: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 
     .price {
       display: flex;
       align-items: flex-end;
       justify-content: flex-start;
+      gap: .5rem;
       width: max-content;
 
       span {
@@ -199,19 +276,19 @@
 
       &__old {
         color: variables.$red;
-        font-size: 2.8rem;
+        font-size: clamp(1.4rem, 5vw, 2.8rem);
         text-decoration: line-through variables.$red;
       }
 
       &__current {
         color: variables.$colorPrimaryDark;
         font-weight: 500;
-        font-size: 6rem;
+        font-size: clamp(3rem, 5vw, 6rem);
       }
     }
 
     .availability {
-      margin-top: 2rem;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -231,11 +308,16 @@
       }
 
       p {
-        font-size: 1.6rem;
         line-height: 1;
         color: variables.$grey;
         opacity: .4;
+        font-size: clamp(1.4rem, 5vw, 1.6rem);
       }
+    }
+
+    .btn-buy {
+      margin-top: auto;
+      width: 100%;
     }
   }
 }
