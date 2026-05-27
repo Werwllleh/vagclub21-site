@@ -14,6 +14,7 @@ import Loader from "@/components/loader";
 import {useEffect} from "react";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
+import ProductLabel from "@/components/product-label";
 
 const ProductDetail = ({slug}) => {
 
@@ -34,35 +35,38 @@ const ProductDetail = ({slug}) => {
             </div>
             <div className="product-detail__body">
               <div className="product-detail__top">
-                {!!product?.gallery?.length && (
-                  <div className="product-detail__images">
-                    <Swiper
-                      modules={[EffectFade, Autoplay, Pagination]}
-                      effect="fade"
-                      spaceBetween={0}
-                      pagination={{
-                        enabled: true,
-                        clickable: true,
-                      }}
-                      slidesPerView="auto"
-                      // onSlideChange={() => console.log('slide change')}
-                      // onSwiper={(swiper) => console.log(swiper)}
-                    >
-                      <>
-                        <SwiperSlide key={product.mainImage.id}>
-                          <img src={product.mainImage.url} alt={product.mainImage.alt}/>
-                        </SwiperSlide>
-                        {product.gallery.map((image) => {
-                          return (
-                            <SwiperSlide key={image.id}>
-                              <img src={image.url} alt={image.alt}/>
-                              <img src={image.url} alt={image.alt}/>
-                              <span></span>
-                            </SwiperSlide>
-                          )
-                        })}
-                      </>
-                    </Swiper>
+                {product.mainImage && (
+                  <div className="product-detail__gallery">
+                    <div className="product-detail__images">
+                      {product?.mark && <ProductLabel type={product.mark} />}
+                      <Swiper
+                        modules={[EffectFade, Autoplay, Pagination]}
+                        effect="fade"
+                        spaceBetween={0}
+                        pagination={{
+                          enabled: true,
+                          clickable: true,
+                        }}
+                        slidesPerView="auto"
+                        // onSlideChange={() => console.log('slide change')}
+                        // onSwiper={(swiper) => console.log(swiper)}
+                      >
+                        <>
+                          <SwiperSlide key={product.mainImage.id}>
+                            <img src={product.mainImage.url} alt={product.mainImage.alt}/>
+                          </SwiperSlide>
+                          {!!product?.gallery?.length && product.gallery.map((image) => {
+                            return (
+                              <SwiperSlide key={image.id}>
+                                <img src={image.url} alt={image.alt}/>
+                                <img src={image.url} alt={image.alt}/>
+                                <span></span>
+                              </SwiperSlide>
+                            )
+                          })}
+                        </>
+                      </Swiper>
+                    </div>
                   </div>
                 )}
                 {!!product?.characteristics?.length && (

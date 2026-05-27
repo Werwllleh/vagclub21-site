@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import Link from "next/link";
+import ProductLabel from "@/components/product-label";
 
 
 const ProductItem = ({info}) => {
@@ -8,14 +9,8 @@ const ProductItem = ({info}) => {
   const link = `/products/${info?.type}/${info?.slug}` || '/products';
 
   return (
-    <div className="product-item">
-      {info?.mark && info.mark !== 'none' ? (
-        <span className={`product-item__label ${info.mark}`}>
-          {info.mark === 'popular' && 'Хит'}
-          {info.mark === 'new' && 'Новинка'}
-          {info.mark === 'sale' && 'Распродажа'}
-        </span>
-      ) : null}
+    <div className="product-item white-block">
+      {info?.mark && <ProductLabel type={info.mark} />}
       <div className="product-item__body">
         <div className="product-item__image">
           {info?.mainImage?.url ? <img src={info?.mainImage?.url} alt={info.name}/> : null}

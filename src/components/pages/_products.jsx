@@ -15,19 +15,16 @@ const ProductsPage = () => {
         <div className="products__content">
           <ProductTypes/>
         </div>
-        {isLoading && !data?.products?.length < 0 ? <Loading/> : (
-          <>
-            {data.products && !!data.products.length ? (
-              <div className="products-all-list">
-                <p className="products-all-list__title h3">Все товары</p>
-                <div className="products-all-list__grid">
-                  {data?.products?.map((item) => (
-                    <ProductItem key={item.id} info={item}/>
-                  ))}
-                </div>
-              </div>
-            ) : <Loading/>}
-          </>
+        {isLoading && !data?.products?.length && <Loading/>}
+        {!isLoading && !!data.products.length && (
+          <div className="products-all-list">
+            <p className="products-all-list__title h3">Все товары</p>
+            <div className="products-all-list__grid">
+              {data?.products?.map((item) => (
+                <ProductItem key={item.id} info={item}/>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </div>

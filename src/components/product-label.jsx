@@ -1,6 +1,11 @@
 import React from 'react';
 
 const ProductLabel = ({type}) => {
+
+  if (type === 'none') {
+    return;
+  }
+
   return (
     <span className={`product-label ${type}`}>
       {type === 'popular' && 'Хит'}

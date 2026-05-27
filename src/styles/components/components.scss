@@ -13,6 +13,8 @@
 //products
 @use "./products/products-filter";
 @use "./products/product-detail";
+@use "./products/product-label";
+@use "./products/product-empty";
 
 @use "user-form";
 @use "car-form";

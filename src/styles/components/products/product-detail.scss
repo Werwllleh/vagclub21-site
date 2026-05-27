@@ -12,14 +12,6 @@
 
   }
 
-  .white-block {
-    padding: clamp(1.2rem, 5vw, 2rem);
-    backdrop-filter: blur(1rem);
-    background-color: #ffffffd9;
-    border-radius: variables.$border-radius20;
-    box-shadow: 0 0 1.25rem .5rem #c9c9c929;
-  }
-
   &__top {
     margin-top: 2rem;
     display: grid;
@@ -58,22 +50,25 @@
       font-size: clamp(1.6rem, 5vw, 2rem);
       color: variables.$colorPrimaryDark;
     }
+  }
 
-
+  &__gallery {
+    grid-area: gallery;
+    height: 100%;
   }
 
   &__images {
-    grid-area: gallery;
-    position: relative;
     width: 100%;
+    position: sticky;
+    top: 12rem;
 
-    @include breakpoints.semiDesktop {
-      height: 100%;
+    .product-label {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
     }
 
     .swiper {
-      position: sticky;
-      top: 12rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -113,7 +108,8 @@
           }
 
           &:nth-child(1) {
-            width: 100%;
+            width: auto;
+            margin-inline: auto;
             height: 100%;
             object-fit: contain;
           }

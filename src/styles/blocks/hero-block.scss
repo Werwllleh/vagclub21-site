@@ -141,9 +141,16 @@
     }
   }
 
-  &__link {
+  &__footer {
     margin-top: 5rem;
     margin-inline: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__link {
+    width: 100%;
+    max-width: 35rem;
   }
 
   &__background {

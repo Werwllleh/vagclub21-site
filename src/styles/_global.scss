@@ -213,3 +213,11 @@ textarea.ant-input {
     }
   }
 }
+
+.white-block {
+  padding: clamp(1.2rem, 5vw, 2rem);
+  backdrop-filter: blur(1rem);
+  background-color: #ffffffd9;
+  border-radius: variables.$border-radius20;
+  box-shadow: 0 0 1.25rem .5rem #c9c9c929;
+}
