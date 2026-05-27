@@ -13,6 +13,10 @@ class CmsService {
   async fetchProductsTypes(type) {
     return axiosCmsClassic.get(`/products/${type}`)
   }
+
+  async fetchHeroSlider() {
+    return axiosCmsClassic.get(`/hero_slider`)
+  }
 }
 
 export default new CmsService();

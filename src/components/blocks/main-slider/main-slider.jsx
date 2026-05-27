@@ -9,11 +9,11 @@ import 'swiper/css/pagination';
 
 
 import MainSliderCard from "@/components/blocks/main-slider/main-slider-card";
-import {useMainSlider} from "@/hooks/useMainSlider";
+import {useHeroSlider} from "@/hooks/useHeroSlider";
 
 const MainSlider = () => {
 
-  const {isLoading, slides} = useMainSlider();
+  const {isLoading, slider} = useHeroSlider();
 
   return (
     <>

@@ -5,9 +5,12 @@ import {Autoplay, Pagination, Parallax} from 'swiper/modules';
 import 'swiper/css';
 import Link from "next/link";
 import {motion, useScroll, useTransform} from "motion/react"
-import {heroBlockContent} from "@/data/content";
+import {useHeroSlider} from "@/hooks/useHeroSlider";
+import {RichText} from "@payloadcms/richtext-lexical/react";
 
 const HeroBlock = () => {
+
+  const {isLoading, slider} = useHeroSlider();
 
   const heroSection = useRef(null);
 
@@ -34,7 +37,7 @@ const HeroBlock = () => {
         <Swiper
           modules={[Autoplay, Pagination, Parallax]}
           slidesPerView={1}
-          loop={true}
+          loop={slider?.length >= 3}
           speed={1200}
           autoplay={{
             enabled: false,
@@ -49,9 +52,36 @@ const HeroBlock = () => {
             clickable: true,
           }}
         >
-          {heroBlockContent && heroBlockContent.length ? heroBlockContent.map((card, i) => {
+          {isLoading && (
+            <SwiperSlide>
+              <div className="hero-block-card">
+                <div className="hero-block-card__container container">
+                  <div className="hero-block-card__body">
+                    <motion.div
+                      className="hero-block-card__text"
+                      style={{ y: textY, opacity: textOpacity }}
+                    >
+                      <h1
+                        data-swiper-parallax-y="-200"
+                        data-swiper-parallax-opacity="0.5"
+                        data-swiper-parallax-duration="1200"
+                        className="hero-block-card__title h1"
+                      >
+                        Загрузка...
+                      </h1>
+                    </motion.div>
+                  </div>
+                </div>
+                <motion.div
+                  className="hero-block-card__background loading"
+                >
+                </motion.div>
+              </div>
+            </SwiperSlide>
+          )}
+          {!isLoading && !!slider.length && slider?.map((slide, index) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide id={slide.id}>
                 <div className="hero-block-card">
                   <div className="hero-block-card__container container">
                     <div className="hero-block-card__body">
@@ -59,23 +89,28 @@ const HeroBlock = () => {
                         className="hero-block-card__text"
                         style={{ y: textY, opacity: textOpacity }}
                       >
-                        <h1
-                          data-swiper-parallax-y="-200"
-                          data-swiper-parallax-opacity="0.5"
-                          data-swiper-parallax-duration="1200"
-                          className="hero-block-card__title h1"
-                        >
-                          {card.title}
-                        </h1>
-                        <div
-                          data-swiper-parallax-y="-200"
-                          data-swiper-parallax-opacity="0.5"
-                          data-swiper-parallax-duration="1500"
-                          className="hero-block-card__description"
-                        >
-                          {card.text}
-                        </div>
-                        {card?.link && (
+                        {slide?.title && (
+                          <h1
+                            data-swiper-parallax-y="-200"
+                            data-swiper-parallax-opacity="0.5"
+                            data-swiper-parallax-duration="1200"
+                            className="hero-block-card__title h1"
+                          >
+                            {slide.title}
+                          </h1>
+                        )}
+                        {slide?.description && (
+                          <div
+                            data-swiper-parallax-y="-200"
+                            data-swiper-parallax-opacity="0.5"
+                            data-swiper-parallax-duration="1500"
+                            className="hero-block-card__description"
+                          >
+                            <RichText data={slide.description} />
+                          </div>
+                        )}
+
+                        {slide?.detail_link && (
                           <div
                             data-swiper-parallax-y="-200"
                             data-swiper-parallax-opacity="0.5"
@@ -83,7 +118,7 @@ const HeroBlock = () => {
                             className="hero-block-card__footer"
                           >
                             <Link
-                              href={card.link}
+                              href={slide.detail_link}
                               className="btn default l hero-block-card__link"
                             >
                               Подробнее
@@ -93,16 +128,21 @@ const HeroBlock = () => {
                       </motion.div>
                     </div>
                   </div>
-                  <motion.div
-                    className="hero-block-card__background"
-                    style={{ filter: bgFilter, scale: bgScale }}
-                  >
-                    <img src={card.image} alt={card.title}/>
-                  </motion.div>
+                  {slide?.bg_image && slide?.bg_image?.url && (
+                    <motion.div
+                      className="hero-block-card__background"
+                      style={{ filter: bgFilter, scale: bgScale }}
+                    >
+                      <img
+                        src={slide.bg_image.url}
+                        alt={slide.bg_image.alt ? slide.bg_image.alt : `Слайд #${index}`}
+                      />
+                    </motion.div>
+                  )}
                 </div>
               </SwiperSlide>
             )
-          }) : null }
+          })}
         </Swiper>
       </div>
     </motion.div>
