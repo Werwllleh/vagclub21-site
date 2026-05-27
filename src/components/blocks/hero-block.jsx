@@ -79,7 +79,7 @@ const HeroBlock = () => {
               </div>
             </SwiperSlide>
           )}
-          {!isLoading && !!slider.length && slider?.map((slide, index) => {
+          {!isLoading && !!slider?.length && slider?.map((slide, index) => {
             return (
               <SwiperSlide id={slide.id}>
                 <div className="hero-block-card">
