@@ -8,6 +8,7 @@ import {Suspense} from "react";
 import Script from "next/script";
 import YandexMetrica from "@/components/yandex-metrica";
 
+
 export const metadata = {
   title: PUBLIC_PAGES.HOME.SEO_TITLE,
   description: PUBLIC_PAGES.HOME.SEO_DESCRIPTION,

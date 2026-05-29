@@ -17,6 +17,10 @@ class CmsService {
   async fetchHeroSlider() {
     return axiosCmsClassic.get(`/hero_slider`)
   }
+
+  async fetchMeeting() {
+    return axiosCmsClassic.get(`/globals/meet`)
+  }
 }
 
 export default new CmsService();

@@ -21,7 +21,7 @@ const HeroBlock = () => {
 
   // BACKGROUND: blur + scale
   const bgFilter = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(10px)"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
   // TEXT: вверх + fade out
   const textY = useTransform(scrollYProgress, [0, 1], [0, 240]);
@@ -48,7 +48,7 @@ const HeroBlock = () => {
             enabled: true,
           }}
           pagination={{
-            enabled: true,
+            enabled: slider?.length > 1,
             clickable: true,
           }}
         >

@@ -35,6 +35,12 @@ class PublicPages {
     SEO_DESCRIPTION: 'VAGClub21 | О клубе',
     URL: '/about'
   }
+  MEET = {
+    TITLE: 'Встреча клуба',
+    SEO_TITLE: 'VAGClub21 | Встреча',
+    SEO_DESCRIPTION: 'VAGClub21 | Встреча',
+    URL: '/meet'
+  }
   CONTACTS = {
     TITLE: 'Контакты',
     SEO_TITLE: 'VAGClub21 | Контакты',
