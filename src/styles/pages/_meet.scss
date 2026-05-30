@@ -8,20 +8,18 @@
   }
 
   &__wrap {
-    margin-top: clamp(2rem, 4vw, 5rem);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(1.4rem, 4vw, 2rem) clamp(5rem, 4vw, 6rem);
+    margin-top: clamp(4rem, 4vw, 6rem);
     padding-block: clamp(2rem, 4vw, 3rem);
     padding-inline: clamp(1.4rem, 4vw, 2rem);
     border-radius: variables.$border-radius20;
     border: 1px solid variables.$colorPrimaryDark;
-    box-shadow: 0 0 1.5rem 1.5rem #c9c9c92b;;
+    box-shadow: 0 0 1.5rem 1.5rem #c9c9c92b;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4rem, 4vw, 6rem) 0;
   }
 
   &__title {}
-
-
 
   &__not-found {
     margin-top: clamp(2rem, 4vw, 4rem);
@@ -31,6 +29,9 @@
   }
 
   .meet-info {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 4vw, 3rem) 0;
 
     &__title {
       grid-column: span 2;
@@ -38,12 +39,71 @@
       text-align: center;
     }
 
-    &__description {}
+    &__group-title {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+    }
 
-    &__address {}
+    &__description {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem 0;
+
+      .payload-richtext {
+
+        p, li, ol, a {
+          font-weight: 400;
+          font-size: clamp(1.6rem, 4vw, 2.2rem);
+        }
+      }
+    }
+
+    &__address {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem 0;
+
+      a, p {
+        font-weight: 500;
+        font-size: clamp(1.6rem, 4vw, 2.2rem);
+        color: variables.$colorPrimaryDark;
+      }
+
+      a {
+        max-width: max-content;
+      }
+
+      a:hover {
+        color: variables.$colorPrimary;
+      }
+    }
+
+    &__date {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem 0;
+
+      span {
+        font-size: clamp(1.6rem, 4vw, 2.2rem);
+      }
+    }
   }
 
   .meet-map {
+    margin-bottom: clamp(-2rem, 4vw, -3rem);
+    margin-inline: clamp(-1.4rem, 4vw, -2rem);
 
+    &__element {
+      height: 35rem;
+
+      @include breakpoints.tablet {
+        height: 50rem;
+      }
+
+      & > div {
+        border-radius: 0 0 variables.$border-radius20 variables.$border-radius20;
+        overflow: hidden;
+        box-shadow: 0 1.5rem 2rem .5rem #00000042;
+      }
+    }
   }
 }

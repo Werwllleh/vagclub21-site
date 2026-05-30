@@ -1,3 +1,4 @@
+import 'lenis/dist/lenis.css'
 import "@/styles/index.scss";
 import SnowMode from "@/components/snow-mode";
 import Providers from "@/providers/providers";

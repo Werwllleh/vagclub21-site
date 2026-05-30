@@ -7,9 +7,15 @@ import {domAnimation, LazyMotion} from "framer-motion";
 import {Toaster} from "react-hot-toast";
 import {ConfigProvider} from "antd";
 import {theme} from "@/styles/theme";
+import {ReactLenis, useLenis} from "lenis/react";
 
 
 const Providers = ({children}) => {
+
+  const lenis = useLenis((lenis) => {
+    // called every scroll
+    console.log(lenis)
+  })
 
   const [queryClient] = useState(
     () =>
@@ -25,20 +31,23 @@ const Providers = ({children}) => {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <LazyMotion features={domAnimation}>
-        <ConfigProvider theme={theme}>
-          {children}
-        </ConfigProvider>
-      </LazyMotion>
-      <Toaster toastOptions={{
-        style: {
-          fontSize: '1.6rem',
-          padding: '1.2rem',
-        },
-      }}/>
-      <ReactQueryDevtools initialIsOpen={false}/>
-    </QueryClientProvider>
+    <>
+      <ReactLenis root />
+      <QueryClientProvider client={queryClient}>
+        <LazyMotion features={domAnimation}>
+          <ConfigProvider theme={theme}>
+            {children}
+          </ConfigProvider>
+        </LazyMotion>
+        <Toaster toastOptions={{
+          style: {
+            fontSize: '1.6rem',
+            padding: '1.2rem',
+          },
+        }}/>
+        <ReactQueryDevtools initialIsOpen={false}/>
+      </QueryClientProvider>
+    </>
   );
 };
 

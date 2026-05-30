@@ -63,10 +63,20 @@
 
 .payload-richtext {
 
-  p, li {
+  p, li, ol, a {
     font-size: clamp(1.3rem, 5vw, 1.4rem);
     font-weight: 300;
     line-height: 1.5;
+  }
+
+  b, strong {
+    font-weight: 600;
+  }
+
+  hr {
+    width: 100%;
+    margin-block: 2rem;
+    border: 1px solid variables.$grey;
   }
 
   .list-bullet {
@@ -76,8 +86,8 @@
       &::before {
         content: "";
         position: absolute;
-        top: .7rem;
-        left: 0;
+        top: 1.3rem;
+        left: .25rem;
         width: 6px;
         height: 6px;
         border-radius: 100%;
@@ -86,10 +96,6 @@
 
       position: relative;
       padding-left: 1.5rem;
-    }
-
-    li + li {
-      margin-top: .35rem;
     }
   }
 
@@ -103,10 +109,10 @@
         font-weight: 500;
       }
     }
+  }
 
-    li + li {
-      margin-top: .35rem;
-    }
+  li + li {
+    margin-top: .6rem;
   }
 
   blockquote {
