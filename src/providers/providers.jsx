@@ -13,8 +13,7 @@ import {ReactLenis, useLenis} from "lenis/react";
 const Providers = ({children}) => {
 
   const lenis = useLenis((lenis) => {
-    // called every scroll
-    console.log(lenis)
+    // console.log(lenis)
   })
 
   const [queryClient] = useState(
@@ -22,9 +21,9 @@ const Providers = ({children}) => {
       new QueryClient({
         defaultOptions: {
           queries: {
-            // staleTime: 5 * 60 * 1000,
+            staleTime: 30 * 60 * 1000,
             // refetchOnMount: false,
-            // refetchOnWindowFocus: false,
+            refetchOnWindowFocus: false,
           },
         },
       })

@@ -6,7 +6,8 @@ export function useMeet() {
   const { data, isLoading } = useQuery({
     queryKey: ['meet'],
     queryFn: () => CmsService.fetchMeeting(),
-    retry: false,
+    staleTime: 60 * 60 * 1000,
+    retry: 2,
   });
 
   return {

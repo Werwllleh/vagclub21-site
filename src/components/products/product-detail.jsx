@@ -14,22 +14,19 @@ import Loader from "@/components/loader";
 import {useEffect} from "react";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
-import ProductLabel from "@/components/product-label";
+import ProductLabel from "@/components/products/product-label";
+import AnimateSection from "@/components/blocks/animate-section";
 
 const ProductDetail = ({slug}) => {
 
   const {product, isLoading} = useProduct(slug);
-
-  useEffect(() => {
-    console.log(product)
-  }, [product]);
 
   return (
     <div className="product-detail ppt ppb">
       <div className="container">
         {isLoading && <Loader />}
         {product && (
-          <>
+          <AnimateSection>
             <div className="product-detail__head">
               <h1 className="h2">{product.name}</h1>
             </div>
@@ -39,33 +36,37 @@ const ProductDetail = ({slug}) => {
                   <div className="product-detail__gallery">
                     <div className="product-detail__images">
                       {product?.mark && <ProductLabel type={product.mark} />}
-                      <Swiper
-                        modules={[EffectFade, Autoplay, Pagination]}
-                        effect="fade"
-                        spaceBetween={0}
-                        pagination={{
-                          enabled: true,
-                          clickable: true,
-                        }}
-                        slidesPerView="auto"
-                        // onSlideChange={() => console.log('slide change')}
-                        // onSwiper={(swiper) => console.log(swiper)}
-                      >
-                        <>
-                          <SwiperSlide key={product.mainImage.id}>
-                            <img src={product.mainImage.url} alt={product.mainImage.alt}/>
-                          </SwiperSlide>
-                          {!!product?.gallery?.length && product.gallery.map((image) => {
-                            return (
-                              <SwiperSlide key={image.id}>
-                                <img src={image.url} alt={image.alt}/>
-                                <img src={image.url} alt={image.alt}/>
-                                <span></span>
-                              </SwiperSlide>
-                            )
-                          })}
-                        </>
-                      </Swiper>
+                      {!!product?.gallery?.length && (
+                        <Swiper
+                          modules={[EffectFade, Autoplay, Pagination]}
+                          effect="fade"
+                          className="custom-pagination"
+                          loop={product.gallery.length >= 3}
+                          spaceBetween={0}
+                          pagination={{
+                            enabled: true,
+                            clickable: true,
+                          }}
+                          slidesPerView="auto"
+                        >
+                          <>
+                            <SwiperSlide key={product.mainImage.id}>
+                              <img src={product.mainImage.url} alt={product.mainImage.alt}/>
+                              <img src={product.mainImage.url} alt={product.mainImage.alt}/>
+                              <span></span>
+                            </SwiperSlide>
+                            {product.gallery.map((image) => {
+                              return (
+                                <SwiperSlide key={image.id}>
+                                  <img src={image.url} alt={image.alt}/>
+                                  <img src={image.url} alt={image.alt}/>
+                                  <span></span>
+                                </SwiperSlide>
+                              )
+                            })}
+                          </>
+                        </Swiper>
+                      )}
                     </div>
                   </div>
                 )}
@@ -121,7 +122,7 @@ const ProductDetail = ({slug}) => {
 
               </div>
             </div>
-          </>
+          </AnimateSection>
         )}
       </div>
     </div>

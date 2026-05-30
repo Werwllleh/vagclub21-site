@@ -149,6 +149,7 @@
 .product-item {
   position: relative;
   overflow: hidden;
+  padding: 0;
 
   /*&::before {
     content: "";
@@ -176,6 +177,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    gap: clamp(1.2rem, 5vw, 1.4rem) 0;
     border-radius: variables.$borderRadius15;
     z-index: 1;
     height: 100%;
@@ -183,21 +185,21 @@
 
   &__image {
     position: relative;
-    border-radius: 0 0 variables.$borderRadius15 variables.$borderRadius15;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 22rem;
-    padding-block: 1.5rem;
+    height: 30rem;
+    overflow: hidden;
 
     @include breakpoints.mobile {
-      height: 27rem;
+      height: 35rem;
     }
 
     img {
-      width: auto;
+      width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
       pointer-events: none;
       user-select: none;
       transition: transform variables.$transition;
@@ -210,12 +212,10 @@
   }
 
   &__info {
-    padding-inline: 2rem;
-    margin-block: 1rem 2rem;
-
-    @include breakpoints.mobile {
-      margin-block: 2rem;
-    }
+    padding-inline: clamp(1.4rem, 5vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.2rem, 5vw, 1.4rem) 0;
   }
 
   &__price {
@@ -226,12 +226,8 @@
 
     .current {
       color: variables.$positive;
-      font-size: 1.8rem;
-      font-weight: 600;
-
-      @include breakpoints.mobile {
-        font-size: 2rem;
-      }
+      font-size: clamp(1.35rem, 5vw, 1.8rem);
+      font-weight: 500;
     }
 
     .old {
@@ -260,22 +256,18 @@
 
   &__name {
     display: block;
-    margin-top: 1rem;
 
     h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      font-weight: 500;
       color: variables.$black;
-
-      @include breakpoints.mobile {
-        font-size: 1.6rem;
-      }
     }
   }
 
   &__footer {
     margin-top: auto;
-    padding-inline: 2rem;
+    padding-inline: clamp(1.4rem, 5vw, 2rem);
+    padding-bottom: clamp(1.4rem, 5vw, 2rem);
   }
 
   &__link {
@@ -303,6 +295,7 @@
 
     @include breakpoints.tablet {
       grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+      gap: 4rem 2rem;
     }
   }
 }

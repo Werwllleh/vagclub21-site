@@ -10,6 +10,7 @@ export function useCarInfo(carId) {
   } = useQuery({
     queryKey: ['car-info', carId],
     queryFn: async () => await CarService.fetchCarInfo(carId),
+    staleTime: 60 * 60 * 1000,
     enabled: !!carId
   });
 

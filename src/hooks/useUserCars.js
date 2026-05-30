@@ -10,7 +10,7 @@ export function useUserCars({ page = 1, limit = 20, number } = {}) {
           limit,
           number,
         }),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 60 * 60 * 1000,
     placeholderData: (previousData) => previousData,
   });
 

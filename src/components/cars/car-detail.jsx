@@ -17,7 +17,7 @@ import BackButton from "@/components/back-button";
 import {useEffect, useState} from "react";
 import {Image} from "antd";
 import {useCarInfo} from "@/hooks/useCarInfo";
-import CarsOthers from "@/components/pages/cars/cars-others";
+import CarsOthers from "@/components/cars/cars-others";
 import CarService from "@/services/car.service";
 import SvgIcon from "@/components/svg-icon";
 
@@ -49,6 +49,7 @@ const CarDetail = ({carId}) => {
                 <Swiper
                   modules={[EffectFade, Autoplay, Pagination]}
                   effect="fade"
+                  className="custom-pagination"
                   spaceBetween={0}
                   pagination={{
                     enabled: true,
@@ -112,30 +113,6 @@ const CarDetail = ({carId}) => {
                   </div>
                 )}
               </div>
-              {/*<div className="car-detail__info">
-                <h1 className="car-detail__title h2">{`${carData.brand} ${carData.model} ${carData.year}`}</h1>
-                <span className="car-detail__info_row">
-                <p className="car-detail__info_number h2">
-                  {carData.number}
-                </p>
-                  {carData.user.instagram && (
-                    <Link href={`https://www.instagram.com/${carData.user.instagram}`} target="_blank"
-                          className="car-detail__info_instagram">
-                      <InstagramIcon/>
-                    </Link>
-                  )}
-              </span>
-                {carData?.drive2 && (
-                  <span className="car-detail__info_drive2">
-                  <Drive2Icon url={carData.drive2}/>
-                </span>
-                )}
-                {carData?.note && (
-                  <p className="car-detail__info_note">
-                    {carData.note}
-                  </p>
-                )}
-              </div>*/}
             </div>
           </div>
         )}

@@ -6,6 +6,9 @@
 @use "page-404";
 @use "meet";
 
+//blog
+@use "blog";
+
 //cars
 @use "./cars/cars-content";
 @use "./cars/car-card";

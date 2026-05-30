@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import Link from "next/link";
-import ProductLabel from "@/components/product-label";
+import ProductLabel from "@/components/products/product-label";
 
 
 const ProductItem = ({info}) => {
@@ -17,24 +17,25 @@ const ProductItem = ({info}) => {
           <Link href={link}/>
         </div>
         <div className="product-item__info">
+          <Link href={link} className="product-item__name">
+            <h3>{info.name}</h3>
+          </Link>
           {info?.pricing ? (
             <div className="product-item__price">
               <span className="current">{info.pricing?.price}₽</span>
               {info.pricing?.oldPrice ? (
                 <>
                   <span className="old">{info.pricing.oldPrice}₽</span>
-                  <span
-                    className="percent">-{Math.ceil(100 - (info.pricing.price / info.pricing.oldPrice) * 100)}%</span>
+                  <span className="percent">
+                    -{Math.ceil(100 - (info.pricing.price / info.pricing.oldPrice) * 100)}%
+                  </span>
                 </>
               ) : null}
             </div>
           ) : null}
-          <Link href={link} className="product-item__name">
-            <h3>{info.name}</h3>
-          </Link>
         </div>
         <div className="product-item__footer">
-          <Link className="btn primary m product-item__link" href={link}>
+          <Link className="btn default m product-item__link" href={link}>
             Подробнее
           </Link>
         </div>

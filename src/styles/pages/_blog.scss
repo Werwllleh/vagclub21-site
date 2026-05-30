@@ -1,0 +1,15 @@
+@use "../variables";
+@use "../breakpoints";
+
+.blog {
+
+  &__title {}
+
+  &__soon {
+    margin-top: clamp(2rem, 4vw, 4rem);
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+    }
+  }
+}

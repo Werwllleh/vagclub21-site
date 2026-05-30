@@ -18,6 +18,7 @@ import {RichText} from "@payloadcms/richtext-lexical/react";
 import Loading from "../../app/loading";
 import Link from "next/link";
 import YandexMap from "@/components/yandex-map";
+import AnimateSection from "@/components/blocks/animate-section";
 
 const Meet = () => {
 
@@ -33,7 +34,7 @@ const Meet = () => {
     }
   }, [meet]);
   return (
-    <div className="meet ppt ppb">
+    <AnimateSection className={"meet ppt ppb"}>
       <div className="container">
         <h1 className="meet__title h1">Встреча клуба</h1>
         <div className="meet__body">
@@ -92,7 +93,10 @@ const Meet = () => {
           )}
         </div>
       </div>
-    </div>
+    </AnimateSection>
+    /*<div className="meet ppt ppb">
+
+    </div>*/
   );
 };
 

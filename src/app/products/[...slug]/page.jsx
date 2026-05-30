@@ -1,5 +1,5 @@
 import ProductList from "@/components/products/product-list";
-import ProductDetail from "@/components/pages/products/product-detail";
+import ProductDetail from "@/components/products/product-detail";
 
 const Page = async ({ params }) => {
 

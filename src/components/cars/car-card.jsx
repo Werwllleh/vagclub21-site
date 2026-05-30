@@ -25,6 +25,8 @@ const CarCard = ({car, non_gallery = false}) => {
             <Swiper
               modules={[Pagination]}
               spaceBetween={0}
+              className="custom-pagination"
+              speed={1200}
               pagination={{
                 enabled: true,
                 clickable: true,

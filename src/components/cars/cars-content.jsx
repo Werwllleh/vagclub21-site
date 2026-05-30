@@ -1,8 +1,8 @@
 'use client'
 
 import Loader from "@/components/loader";
-import CarCard from "@/components/pages/cars/car-card";
-import CarSearch from '@/components/pages/cars/car-search';
+import CarCard from "@/components/cars/car-card";
+import CarSearch from '@/components/cars/car-search';
 import {useCarsStore} from "@/store/cars.store";
 import {useUserCars} from "@/hooks/useUserCars";
 import {useCallback, useEffect, useMemo} from "react";

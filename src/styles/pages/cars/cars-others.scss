@@ -51,20 +51,27 @@
 
       &:first-child {
         transform: rotate(180deg);
+
+        @include breakpoints.tablet {
+          &:hover {
+            transform: rotate(180deg) translateX(.5rem);
+          }
+        }
+      }
+
+      &:nth-child(2) {
+
+        @include breakpoints.tablet {
+          &:hover {
+            transform: translateX(.5rem);
+          }
+        }
       }
     }
   }
 
   &__cars {
-    margin-top: 3rem;
-
-    @include breakpoints.mobile {
-      margin-top: 5rem;
-    }
-
-    @include breakpoints.desktop {
-      margin-top: 10rem;
-    }
+    margin-top: clamp(3rem, 5vw, 10rem);
 
     .swiper{
       overflow: unset;

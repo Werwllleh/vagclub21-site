@@ -1,5 +1,6 @@
 import React from 'react';
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
+import Blog from "@/components/pages/_blog";
 
 export const metadata = {
   title: PUBLIC_PAGES.BLOG.SEO_TITLE,
@@ -7,11 +8,7 @@ export const metadata = {
 };
 
 const Page = () => {
-  return (
-    <div className="page">
-      <div className="container">BLOG</div>
-    </div>
-  );
+  return <Blog />;
 };
 
 export default Page;

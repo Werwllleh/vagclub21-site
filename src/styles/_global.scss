@@ -221,3 +221,47 @@ textarea.ant-input {
   border-radius: variables.$border-radius20;
   box-shadow: 0 0 1.25rem .5rem #c9c9c929;
 }
+
+.swiper {
+
+  &.custom-pagination {
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 4rem;
+      width: 100%;
+      background: linear-gradient(0deg, #00000033 0%, #80808000 100%);
+      z-index: 2;
+    }
+
+    .swiper-pagination {
+      display: flex;
+      justify-content: center;
+      gap: .75rem;
+      width: 90%;
+      margin-inline: auto;
+      left: 0;
+      right: 0;
+
+      .swiper-pagination-bullet {
+        flex: 1;
+        border-radius: 0;
+        margin: 0;
+        height: 2px;
+        transition: background-color variables.$transition, opacity variables.$transition;
+
+        &:not(.swiper-pagination-bullet-active):hover {
+          background-color: variables.$white;
+          opacity: .85;
+        }
+
+        &.swiper-pagination-bullet-active {
+          background-color: variables.$colorPrimary;
+        }
+      }
+    }
+  }
+}

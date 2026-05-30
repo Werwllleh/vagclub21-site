@@ -1,6 +1,6 @@
 "use client"
 
-import CarCard from "@/components/pages/cars/car-card";
+import CarCard from "@/components/cars/car-card";
 
 // Import Swiper React components
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
