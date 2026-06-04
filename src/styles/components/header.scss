@@ -1,19 +1,28 @@
 @use "../variables";
 @use "../breakpoints";
 
+
 .header {
   position: fixed;
   top: 1rem;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   transform: translateY(-150%);
+  max-width: 95%;
   opacity: 0;
   width: 100%;
   z-index: 6;
-  will-change: transform;
-  transition: background-color variables.$transition,
-  box-shadow variables.$transition, opacity variables.$transition, transform variables.$transition;
+  background-color: #ffffffa1;
+  backdrop-filter: blur(1rem);
+  border-radius: variables.$border-radius20;
+  box-shadow: 0 0 .5rem .5rem #0000000f;
+  will-change: transform, opacity;
+  transition: opacity variables.$transition2, transform variables.$transition2;
 
-  &.pm {
-    background-color: transparent;
+  &.shown {
+    transform: translateY(2rem);
+    opacity: 1;
   }
 
   &.fixed {
@@ -21,14 +30,8 @@
   }
 
   &__inner {
-    max-width: 95%;
-    margin: 0 auto;
     padding-block: 1.4rem;
     padding-inline: 1.6rem;
-    background-color: #ffffffa3;
-    backdrop-filter: blur(1rem);
-    border-radius: variables.$borderRadius15;
-    box-shadow: 0 0 1.5rem .5rem #969696a1;
 
     @include breakpoints.tablet {
       padding-block: 1.6rem;

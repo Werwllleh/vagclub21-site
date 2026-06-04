@@ -34,6 +34,11 @@ const menuList = [
     path: '',
     children: [
       {
+        label: 'Партнеры',
+        key: 'partners',
+        path: '/partners',
+      },
+      {
         label: 'О нас',
         key: 'about',
         path: '/about',

@@ -4,12 +4,13 @@ import PartnersSearch from "@/components/pages/partners/partners-search";
 const PartnersContent = () => {
 
   return (
-    <div className="partner-page">
+    <div className="partners ppt ppb">
       <div className="container">
-        <h1 className="partner-page__title">Партнеры клуба</h1>
-        <div className="partner-page__content">
-          <PartnersSearch />
-          <PartnersList />
+        <h1 className="partners__title h1">Партнеры клуба</h1>
+        <div className="partners__content">
+          Здесь будут карточки партнеров клуба
+          {/*<PartnersSearch />
+          <PartnersList />*/}
         </div>
       </div>
     </div>

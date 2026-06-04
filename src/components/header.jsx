@@ -6,62 +6,36 @@ import Link from "next/link";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import NavMenu from "@/components/nav-menu";
 import Burger from "@/components/burger";
-import {useUser} from "@/hooks/useUser";
 import {useBlackout} from "@/hooks/useBlackout";
-import AuthButton from "@/components/auth-button";
-import {usePathname} from "next/navigation";
-import {checkUrl} from "@/utils/utils";
 import Logo from "@/components/logo";
 import {useBlockWrap} from "@/hooks/useBlockWrap";
+import {useLenis} from "lenis/react";
 
 
 const Header = () => {
 
   gsap.registerPlugin(useGSAP);
 
-  const pathname = usePathname();
-  const header = useRef(null);
+  const [headerIsVisible, setHeaderIsVisible] = useState(false);
   const mobileMenu = useRef(null);
 
-  const {isLoadingUser, user} = useUser();
-
-  const [photoAvailable, setPhotoAvailable] = useState(null);
   const [mobileMenuIsActive, setMobileMenuIsActive] = useState(false);
 
-  useEffect(() => {
-    gsap.to(header.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.2,
-      ease: "none",
-    });
-  }, [header]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function check() {
-      if (!user?.userPhoto) {
-        setPhotoAvailable(false);
-        return;
+  useLenis((lenis) => {
+    if (lenis.animatedScroll >= 300) {
+      if (lenis.direction === 1) {
+        setHeaderIsVisible(false);
+      } else if (lenis.direction === -1) {
+        setHeaderIsVisible(true);
       }
-
-      const exists = await checkUrl(user.userPhoto);
-      if (!cancelled) setPhotoAvailable(exists);
+    } else {
+      setHeaderIsVisible(true)
     }
+  })
 
-    check();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [user?.userPhoto]);
-
-  const headerAvatarAuth = (
-    <div className="header__auth">
-      <AuthButton/>
-    </div>
-  )
+  useEffect(() => {
+    setHeaderIsVisible(true)
+  }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuIsActive(!mobileMenuIsActive);
@@ -121,7 +95,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header ref={header} className={`header ${pathname === '/' ? 'pm' : ''}`}>
+    <header className={`header ${headerIsVisible ? 'shown' : ''}`}>
       <div className="header__inner">
         <div className="header__container">
           <div className="header__body">

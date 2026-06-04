@@ -1,6 +1,6 @@
 "use client"
 import React, {useEffect, useState} from 'react';
-import {useMeet} from "../../hooks/useMeet";
+import {useMeet} from "@/hooks/useMeet";
 
 //dayjs plugins
 import dayjs from "dayjs";
@@ -27,10 +27,8 @@ const Meet = () => {
   const [currentDate, setCurrentDate] = useState(false);
 
   useEffect(() => {
-    console.log(meet)
     if (meet?.date && meet?.date_tz) {
       setCurrentDate(dayjs().isBefore(dayjs(meet?.date, 'h').tz(meet?.date_tz, true)))
-      // console.log(dayjs(meet?.date).tz(meet?.date_tz, true).locale('ru').format('DD MMMM YYYY'))
     }
   }, [meet]);
   return (
@@ -94,9 +92,6 @@ const Meet = () => {
         </div>
       </div>
     </AnimateSection>
-    /*<div className="meet ppt ppb">
-
-    </div>*/
   );
 };
 
