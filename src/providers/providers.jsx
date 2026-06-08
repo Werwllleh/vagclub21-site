@@ -8,6 +8,7 @@ import {Toaster} from "react-hot-toast";
 import {ConfigProvider} from "antd";
 import {theme} from "@/styles/theme";
 import {ReactLenis} from "lenis/react";
+import Marquee from "@/components/marquee/marquee";
 
 
 const Providers = ({children}) => {
@@ -42,6 +43,7 @@ const Providers = ({children}) => {
             padding: '1.2rem',
           },
         }}/>
+        <Marquee />
         <ReactQueryDevtools initialIsOpen={false}/>
       </QueryClientProvider>
     </>

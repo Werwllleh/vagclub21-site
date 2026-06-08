@@ -1,36 +1,18 @@
 "use client"
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useMeet} from "@/hooks/useMeet";
-
-//dayjs plugins
-import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.extend(localizedFormat);
-
-//dayjs plugins
-import 'dayjs/locale/ru'
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import Loading from "../../app/loading";
 import Link from "next/link";
 import YandexMap from "@/components/yandex-map";
 import AnimateSection from "@/components/blocks/animate-section";
+import dayjs from "dayjs";
+import 'dayjs/locale/ru'
 
 const Meet = () => {
 
-  const {meet, isLoading} = useMeet();
+  const {meet, isLoading, currentDate} = useMeet();
 
-  const [currentDate, setCurrentDate] = useState(false);
-
-  useEffect(() => {
-    if (meet?.date && meet?.date_tz) {
-      setCurrentDate(dayjs().isBefore(dayjs(meet?.date, 'h').tz(meet?.date_tz, true)))
-    }
-  }, [meet]);
   return (
     <AnimateSection className={"meet ppt ppb"}>
       <div className="container">
