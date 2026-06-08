@@ -1,28 +1,49 @@
 "use client"
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useMeet} from "@/hooks/useMeet";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import Loading from "../../app/loading";
 import Link from "next/link";
 import YandexMap from "@/components/yandex-map";
 import AnimateSection from "@/components/blocks/animate-section";
+
 import dayjs from "dayjs";
-import 'dayjs/locale/ru'
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 
 const Meet = () => {
 
-  const {meet, isLoading, currentDate} = useMeet();
+  const { meet, isLoading, meetDate, meetTimezone } = useMeet();
+
+  const [isCurrent, setIsCurrent] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    if (meetDate) {
+      const now = dayjs();
+      const eventDate = dayjs(meetDate).tz(meetTimezone, true);
+      setIsCurrent(now.isBefore(eventDate));
+    }
+  }, [meetDate, meetTimezone]);
+
+  if (isLoading || !isMounted) {
+    return <Loading/>;
+  }
 
   return (
     <AnimateSection className={"meet ppt ppb"}>
       <div className="container">
         <h1 className="meet__title h1">Встреча клуба</h1>
         <div className="meet__body">
-          {isLoading ? (
-            <Loading/>
-          ) : meet && currentDate ? (
+          {meet && isCurrent ? (
             <div className="meet__wrap">
-              {meet?.title && <h2 className="meet-info__title">{meet?.title}</h2>}
+              {meet?.title && <h2 className="meet-info__title">{meet.title}</h2>}
               <div className="meet-info">
                 {meet?.description && (
                   <div className="meet-info__description">
@@ -43,13 +64,12 @@ const Meet = () => {
                     )}
                   </div>
                 )}
-                {meet?.description && (
+                {meet?.date && (
                   <div className="meet-info__date">
                     <h4 className="meet-info__group-title">Дата встречи:</h4>
                     <span>
                       {dayjs(meet?.date)
                         .tz(meet?.date_tz, true)
-                        .locale('ru')
                         .format('DD MMMM YYYY HH:mm')
                       }
                     </span>
@@ -62,7 +82,6 @@ const Meet = () => {
                     <YandexMap
                       coordinates={Object.values(meet.coordinates)}
                       zoom={17}
-
                     />
                   </div>
                 </div>

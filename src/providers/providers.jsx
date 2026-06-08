@@ -9,6 +9,12 @@ import {ConfigProvider} from "antd";
 import {theme} from "@/styles/theme";
 import {ReactLenis} from "lenis/react";
 import Marquee from "@/components/marquee/marquee";
+import 'dayjs/locale/ru';
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(timezone);
+dayjs.locale('ru');
 
 
 const Providers = ({children}) => {

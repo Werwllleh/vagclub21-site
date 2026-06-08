@@ -29,7 +29,7 @@ const YandexMap = ({
   const yandexMapRef = useRef(null);
 
   useEffect(() => {
-    if (yandexMapRef.current) {
+    if (typeof window !== 'undefined' && yandexMapRef.current) {
 
       console.log(yandexMapRef.current);
       // Отключаем зум колесиком мыши

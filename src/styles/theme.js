@@ -37,3 +37,47 @@ export const theme = {
     }
   }
 }
+
+export const customTheme = {
+  color: {
+    primary: '#004c9d',
+    primaryDark: '#182232',
+    secondary: '#f8f8f8',
+    white: '#fff',
+    black: '#20252C',
+    greyLight: '#f9f9f9',
+    grey: '#737373',
+    red: '#ff4646',
+    positive: '#10C44CFF',
+    oldPrice: '#99A3AEFF',
+    sale: '#f1117e',
+    new: '#f1cc11',
+    blue: '#004c9d',
+    lightBlue: '#f4f7fb',
+  },
+  font: {
+    primary: 'Martian Mono, monospace',
+    secondary: 'Montserrat, sans-serif',
+  },
+  radius: {
+    r7: '.7rem',
+    r10: '1rem',
+    r15: '1.5rem',
+    r20: '2rem',
+  },
+  transition: {
+    small: '.3s ease-in-out',
+    medium: '.5s ease-in-out',
+    large: '.7s ease-in-out',
+  },
+  breakpoint: {
+    small: '480px',
+    mobile: '550px',
+    tablet: '768px',
+    semiDesktop: '992px',
+    desktop: '1024px',
+    w1250: '1250px',
+    laptop: '1440px',
+    w1600: '1600px'
+  }
+}

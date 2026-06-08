@@ -1,18 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import CmsService from "@/services/cms.service";
-
-//dayjs plugins
 import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.extend(localizedFormat);
-
 
 export function useMeet() {
-
   const { data, isLoading } = useQuery({
     queryKey: ['meet'],
     queryFn: () => CmsService.fetchMeeting(),
@@ -20,9 +15,12 @@ export function useMeet() {
     retry: 2,
   });
 
+  const meetData = data?.data?.meet ?? null;
+
   return {
     isLoading,
-    meet: data?.data?.meet ?? null,
-    currentDate: data?.data?.meet && data?.data?.meet.date ? dayjs().isBefore(dayjs(data.data.meet.date, 'h').tz(data.data.meet?.date_tz, true)) : false,
+    meet: meetData,
+    meetDate: meetData?.date || null,
+    meetTimezone: meetData?.date_tz || 'UTC'
   };
 }

@@ -1,27 +1,96 @@
 'use client'
-import React from 'react';
-import styled from 'styled-components';
-import {useMeet} from "../../hooks/useMeet";
+import React, {useEffect, useState} from 'react';
+import styled, {keyframes} from 'styled-components';
+import {useMeet} from "@/hooks/useMeet";
 
 import dayjs from "dayjs";
-import 'dayjs/locale/ru'
+import {customTheme} from "@/styles/theme";
+import {usePathname, useRouter} from "next/navigation";
 
-const Marquee = ({content}) => {
+const marqueeAnimate = keyframes`
+  from {
+    transform: translateX(0);
+  }
 
-  const {meet, isLoading, currentDate} = useMeet();
+  to {
+    transform: translateX(-50%);
+  }
+`;
 
-  if (!meet || !currentDate) return;
+const MarqueeContainer = styled.div`
+    background-color: #b90000;
+    position: fixed;
+    z-index: 4;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    cursor: pointer;
+`;
+
+const MarqueeTrack = styled.div`
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 5rem);
+  padding-block: clamp(1rem, 4vw, 1.6rem);
+  width: max-content;
+  animation: ${marqueeAnimate} 40s linear infinite;
+  will-change: transform;
+  
+  &:hover {
+    animation-play-state: paused;
+  }
+`;
+
+const MarqueeItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 600;
+    color: ${customTheme.color.white};
+    white-space: nowrap;
+`
+
+const Marquee = () => {
+
+  const { meet, isLoading, meetDate, meetTimezone } = useMeet();
+  const [isCurrent, setIsCurrent] = useState(false);
+
+  useEffect(() => {
+
+    if (meetDate) {
+      const now = dayjs();
+      const eventDate = dayjs(meetDate).tz(meetTimezone, true);
+      setIsCurrent(now.isBefore(eventDate));
+    }
+  }, [meetDate, meetTimezone]);
+
+  const path = usePathname();
+  const navigate = useRouter();
+
+  if (isLoading || !meet || !isCurrent) return null;
+  if (path === '/meet') return null;
+
+  const formattedDate = dayjs(meet?.date)
+    .tz(meet?.date_tz, true)
+    .format('DD MMMM YYYY HH:mm');
+
+  const items = Array.from({ length: 10 }, (_, index) => (
+    <MarqueeItem key={index}>
+      {formattedDate}
+    </MarqueeItem>
+  ));
 
   return (
-    <div>
-      {Array.from({ length: 10 }).map(() => {
-        {dayjs(meet?.date)
-          .tz(meet?.date_tz, true)
-          .locale('ru')
-          .format('DD MMMM YYYY HH:mm')
-        }
-      })}
-    </div>
+    <MarqueeContainer onClick={() => navigate.push('/meet', {
+      scroll: true
+    })}>
+      <MarqueeTrack>
+        {items}
+        {items}
+      </MarqueeTrack>
+    </MarqueeContainer>
   );
 };
 
