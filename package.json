@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.5.3",
+    "next": "16.2.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "sass": "^1.83.0"
+    "sass": "^1.100.0"
   }
 }

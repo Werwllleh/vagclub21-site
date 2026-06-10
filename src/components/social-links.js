@@ -36,7 +36,7 @@ const SocialLinks = () => {
           </div>
         </div>
       </Link>
-      <Link onClick={() => ymReach(YM_METHOD.REACH_GOAL, 'bot')}
+      {/*<Link onClick={() => ymReach(YM_METHOD.REACH_GOAL, 'bot')}
             target="_blank"
             href="https://t.me/VW21ClubBot"
             className="page-soon__link"
@@ -49,7 +49,7 @@ const SocialLinks = () => {
             Телеграм Бот
           </div>
         </div>
-      </Link>
+      </Link>*/}
     </div>
   );
 };
