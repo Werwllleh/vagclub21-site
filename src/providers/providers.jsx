@@ -2,17 +2,17 @@
 
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
-import {useReducer, useState} from "react";
+import {useState} from "react";
 import {domAnimation, LazyMotion} from "framer-motion";
 import {Toaster} from "react-hot-toast";
 import {ConfigProvider} from "antd";
 import {theme} from "@/styles/theme";
 import {ReactLenis} from "lenis/react";
-import Marquee from "@/components/marquee/marquee";
 import 'dayjs/locale/ru';
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import Overlay from "@/components/overlay";
+import AppContent from "@/components/app-content";
 
 dayjs.extend(timezone);
 dayjs.locale('ru');
@@ -41,7 +41,9 @@ const Providers = ({children}) => {
       <QueryClientProvider client={queryClient}>
         <LazyMotion features={domAnimation}>
           <ConfigProvider theme={theme}>
-            {children}
+            <AppContent>
+              {children}
+            </AppContent>
           </ConfigProvider>
         </LazyMotion>
         <Toaster toastOptions={{
@@ -50,7 +52,6 @@ const Providers = ({children}) => {
             padding: '1.2rem',
           },
         }}/>
-        <Marquee />
         <ReactQueryDevtools initialIsOpen={false}/>
       </QueryClientProvider>
       <Overlay />

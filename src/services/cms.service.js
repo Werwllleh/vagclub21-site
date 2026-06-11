@@ -2,6 +2,10 @@ import {axiosCmsClassic} from "@/api/axios";
 
 class CmsService {
 
+  async fetchTechnicalWorkStatus() {
+    return axiosCmsClassic.get(`/globals/technical_work`)
+  }
+
   async fetchProducts() {
     return axiosCmsClassic.get(`/products/list`)
   }

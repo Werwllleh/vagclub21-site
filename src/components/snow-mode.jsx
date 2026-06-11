@@ -1,12 +1,28 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
+import dayjs from "dayjs";
+import styled from "styled-components";
+
+const SnowCanvas = styled.canvas`
+    position: fixed;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+`
 
 const SnowMode = () => {
+
+  const isWinterPeriod = [12, 1, 2].includes(dayjs().month() + 1)
+
+  if (!isWinterPeriod) return;
+
   const canvasRef = useRef(null);
 
-  const baseSnowCount = 120; // Default number of snowflakes
+  const baseSnowCount = 120;
   const snowColor = 'rgba(0,128,255,0.5)';
-  const horizontalDrift = 0.8; // Maximum horizontal drift per frame
+  const horizontalDrift = 0.8;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -127,10 +143,10 @@ const SnowMode = () => {
   }, []);
 
   return (
-    <canvas
+    <SnowCanvas
       ref={canvasRef}
       className="snow-mode"
-    ></canvas>
+    ></SnowCanvas>
   );
 };
 
