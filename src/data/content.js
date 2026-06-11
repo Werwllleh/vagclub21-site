@@ -1,41 +1,3 @@
-import React from "react";
-
-export const heroBlockContent = [
-  {
-    id: 1,
-    title: 'Встреча клуба 21.02.2026',
-    text: <>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid corporis cupiditate
-        deleniti dolor earum explicabo mollitia officia placeat quaerat quidem, quod soluta suscipit
-        temporibus velit vitae, voluptas, voluptatem voluptatum!</p>
-    </>,
-    link: '/',
-    image: '/images/hero-block/1.webp',
-  },
-  {
-    id: 2,
-    title: 'Встреча клуба 21.02.2026',
-    text: <>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid corporis cupiditate
-        deleniti dolor earum explicabo mollitia officia placeat quaerat quidem, quod soluta suscipit
-        temporibus velit vitae, voluptas, voluptatem voluptatum!</p>
-    </>,
-    link: '/',
-    image: '/images/hero-block/2.webp',
-  },
-  {
-    id: 3,
-    title: 'Встреча клуба 21.02.2026',
-    text: <>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquid corporis cupiditate
-        deleniti dolor earum explicabo mollitia officia placeat quaerat quidem, quod soluta suscipit
-        temporibus velit vitae, voluptas, voluptatem voluptatum!</p>
-    </>,
-    link: '/',
-    image: '/images/hero-block/3.webp',
-  },
-]
-
 export const productsTypes = [
   {
     title: 'Наклейки',
@@ -64,5 +26,67 @@ export const productsTypes = [
     image: 'number-frames.jpg',
     active: false,
     label: 'Скоро'
+  },
+]
+
+export const menuList = [
+  {
+    label: 'Авто',
+    key: 'cars',
+    path: '/cars',
+  },
+  {
+    label: 'Атрибутика',
+    key: 'products',
+    path: '/products',
+    children: [
+      {
+        label: 'Наклейки',
+        key: 'stickers',
+        path: '/products/stickers',
+      },
+      {
+        label: 'Ароматизаторы',
+        key: 'flavours',
+        path: '/products/flavours',
+      },
+    ]
+  },
+  {
+    label: 'Клуб',
+    key: 'club',
+    path: '',
+    children: [
+      {
+        label: 'Партнеры',
+        key: 'partners',
+        path: '/partners',
+      },
+      {
+        label: 'О нас',
+        key: 'about',
+        path: '/about',
+      },
+      {
+        label: 'Блог',
+        key: 'blog',
+        path: '/blog',
+      },
+      {
+        label: 'Встречи',
+        key: 'meet',
+        path: '/meet',
+      },
+      {
+        label: 'Контакты',
+        key: 'contacts',
+        path: '/contacts',
+      },
+    ]
+  },
+  {
+    label: 'Профиль',
+    key: 'profile',
+    path: '/profile',
   },
 ]

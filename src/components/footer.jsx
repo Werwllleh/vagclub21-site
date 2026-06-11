@@ -16,9 +16,7 @@ const FooterContainer = styled.footer`
   padding-top: clamp(1.8rem, 4vw, 2.4rem);
   padding-bottom: ${({ $hasMeet }) => (
     $hasMeet ? '7rem' : 'clamp(1.8rem, 4vw, 2.4rem)'
-  )
-  
-};
+  )};
   background-color: ${customTheme.color.primaryDark};
 `;
 

@@ -44,7 +44,6 @@ export default function RootLayout({children}) {
       <Footer/>
     </Providers>
     {/*<SnowMode/>*/}
-    <div className="overlay"/>
     </body>
     </html>
   );

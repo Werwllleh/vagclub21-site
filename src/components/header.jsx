@@ -1,25 +1,121 @@
 'use client'
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import {gsap} from "gsap";
+import {useGSAP} from "@gsap/react";
 import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import NavMenu from "@/components/nav-menu";
 import Burger from "@/components/burger";
-import {useBlackout} from "@/hooks/useBlackout";
-import Logo from "@/components/logo";
 import {useBlockWrap} from "@/hooks/useBlockWrap";
 import {useLenis} from "lenis/react";
+import {useUiStore} from "../store/ui.store";
+import styled from "styled-components";
+import {customTheme} from "../styles/theme";
+import Logo from "./logo";
 
+
+const HeaderContainer = styled.header`
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    transform: ${({$headerIsVisible}) => ($headerIsVisible ? 'translateY(1rem)' : 'translateY(calc(-100% - 2rem))')};
+    max-width: 95%;
+    opacity: ${({$headerIsVisible}) => ($headerIsVisible ? 1 : 0)};
+    visibility: ${({$headerIsVisible}) => ($headerIsVisible ? 'visible' : 'hidden')};
+    width: 100%;
+    z-index: 6;
+    background-color: #ffffffa1;
+    backdrop-filter: blur(1rem);
+    border-radius: ${customTheme.radius.r15};
+    box-shadow: 0 0 .5rem .5rem #0000000f;
+    will-change: transform, opacity;
+    transition: opacity ${customTheme.transition.medium},
+    visibility ${customTheme.transition.medium},
+    transform ${customTheme.transition.medium};
+    transition: ${({$mounted}) => $mounted ? ` opacity ${customTheme.transition.medium}, visibility ${customTheme.transition.medium}, transform ${customTheme.transition.medium}` : 'none'};
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        transform: ${({$headerIsVisible}) => ($headerIsVisible ? 'translateY(2rem)' : 'translateY(calc(-100% - 2rem))')};
+    }
+`
+
+const HeaderInner = styled.div`
+    padding-block: 1.4rem;
+    padding-inline: 1.6rem;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        padding-block: 1.6rem;
+        padding-inline: 2rem;
+    }
+
+    @media (min-width: ${customTheme.breakpoint.w1250}) {
+        padding-block: 2rem;
+        padding-inline: 3rem;
+    }
+`
+
+const HeaderBody = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0 2rem;
+`
+
+const HeaderLogo = styled(Link)`
+    display: flex;
+    align-items: center;
+    max-width: max-content;
+`
+
+const HeaderDesktopNavWrap = styled.div`
+    margin-left: auto;
+    display: none;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: block;
+    }
+`
+
+const HeaderBurgerWrap = styled.div`
+    margin-left: auto;
+    display: block;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: none;
+    }
+`
+
+const HeaderMobileWrap = styled.div`
+    opacity: ${({$mobileMenuIsActive}) => ($mobileMenuIsActive ? 1 : 0)};
+    visibility: ${({$mobileMenuIsActive}) => ($mobileMenuIsActive ? 'visible' : 'hidden')};
+    pointer-events: ${({$mobileMenuIsActive}) => ($mobileMenuIsActive ? 'auto' : 'none')};
+    max-height: ${({$height}) => $height}px;
+    overflow: hidden;
+
+    transition: max-height ${customTheme.transition.small},
+    opacity ${customTheme.transition.small},
+    visibility ${customTheme.transition.small};
+`
+
+const HeaderMobileInner = styled.div`
+    padding-block: 1rem 0;
+`
 
 const Header = () => {
 
   gsap.registerPlugin(useGSAP);
 
+  const setOverlayActive = useUiStore((state) => state.setOverlayActive)
+
+  const [mounted, setMounted] = useState(false)
   const [headerIsVisible, setHeaderIsVisible] = useState(false);
+
   const mobileMenu = useRef(null);
 
+  const mobileMenuInnerRef = useRef(null)
   const [mobileMenuIsActive, setMobileMenuIsActive] = useState(false);
+  const [mobileMenuHeight, setMobileMenuHeight] = useState(0)
 
   useLenis((lenis) => {
     if (lenis.animatedScroll >= 300) {
@@ -31,96 +127,92 @@ const Header = () => {
     } else {
       setHeaderIsVisible(true)
     }
+
+    lenis._isLocked = mobileMenuIsActive
   })
 
   useEffect(() => {
-    setHeaderIsVisible(true)
-  }, []);
+    requestAnimationFrame(() => {
+      setMounted(true)
+      setHeaderIsVisible(true)
+    })
+  }, [])
+
+  const closeMobileMenu = () => {
+    setMobileMenuIsActive(false)
+  }
 
   const toggleMobileMenu = () => {
-    setMobileMenuIsActive(!mobileMenuIsActive);
+    setMobileMenuIsActive((prev) => !prev)
   }
 
   useBlockWrap(mobileMenuIsActive)
-  useBlackout(mobileMenuIsActive)
 
   useEffect(() => {
-    const mobileMenuTarget = mobileMenu.current;
-    const inner = mobileMenuTarget.querySelector('.header-mobile__inner');
+    // setOverlayActive(mobileMenuIsActive)
 
-    if (mobileMenuIsActive) {
-      mobileMenuTarget.style.maxHeight = `${inner.offsetHeight}px`;
-    } else {
-      mobileMenuTarget.style.maxHeight = '';
+    if (!mobileMenuIsActive) {
+      setMobileMenuHeight(0)
+      return
     }
 
-    const navLinks = mobileMenuTarget.querySelectorAll('a.link');
-    if (navLinks.length) {
-      navLinks.forEach((link) => {
-        link.addEventListener("click", (e) => {
-          setMobileMenuIsActive(false);
-        })
-      })
+    const updateHeight = () => {
+      if (!mobileMenuInnerRef.current) return
+      setMobileMenuHeight(mobileMenuInnerRef.current.offsetHeight)
     }
 
-    const checkMobileMenu = () => {
-      const mobileMenuTarget = mobileMenu.current;
-      const inner = mobileMenuTarget.querySelector('.header-mobile__inner');
+    updateHeight()
 
+    window.addEventListener('resize', updateHeight)
+
+    return () => {
+      window.removeEventListener('resize', updateHeight)
+    }
+  }, [mobileMenuIsActive])
+
+  useEffect(() => {
+    const handleResize = () => {
       if (window.innerWidth > 768) {
-        mobileMenuTarget.style.maxHeight = '';
-        setMobileMenuIsActive(false);
-      } else {
-        if (mobileMenuIsActive) {
-          mobileMenuTarget.style.maxHeight = `${inner.offsetHeight}px`;
-        }
+        setMobileMenuIsActive(false)
       }
     }
 
-    window.addEventListener("resize", checkMobileMenu);
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener("resize", checkMobileMenu);
-    };
-
-  }, [mobileMenuIsActive]);
-
-  useEffect(() => {
-    const overlay = document.querySelector('.overlay');
-    if (overlay) {
-      overlay.addEventListener('click', () => {
-        setMobileMenuIsActive(false);
-      });
+      window.removeEventListener('resize', handleResize)
     }
-  }, []);
+  }, [])
 
   return (
-    <header className={`header ${headerIsVisible ? 'shown' : ''}`}>
-      <div className="header__inner">
-        <div className="header__container">
-          <div className="header__body">
-            <Link href={PUBLIC_PAGES.HOME.URL} className="header__logo">
-              <Logo />
-            </Link>
-            <div className="header__nav">
-              <NavMenu />
-            </div>
-            <div className="header__burger">
-              <Burger onClick={toggleMobileMenu} status={mobileMenuIsActive}/>
-            </div>
-          </div>
-        </div>
-        <div className={`header-mobile ${mobileMenuIsActive ? 'is-open' : ''}`}
-             ref={mobileMenu}
+    <HeaderContainer
+      $mounted={mounted}
+      $headerIsVisible={headerIsVisible}
+    >
+      <HeaderInner>
+        <HeaderBody>
+          <HeaderLogo href={PUBLIC_PAGES.HOME.URL}>
+            <Logo/>
+          </HeaderLogo>
+          <HeaderDesktopNavWrap>
+            <NavMenu onLinkClick={closeMobileMenu}/>
+          </HeaderDesktopNavWrap>
+          <HeaderBurgerWrap>
+            <Burger onClick={toggleMobileMenu} status={mobileMenuIsActive}/>
+          </HeaderBurgerWrap>
+        </HeaderBody>
+        <HeaderMobileWrap
+          $mobileMenuIsActive={mobileMenuIsActive}
+          $height={mobileMenuHeight}
+          ref={mobileMenu}
+          data-lenis-prevent
         >
-          <div className="header-mobile__inner">
-            <nav className="header-mobile__nav">
-              <NavMenu />
-            </nav>
-          </div>
-        </div>
-      </div>
-    </header>
+          <HeaderMobileInner ref={mobileMenuInnerRef}>
+            <NavMenu mobile onLinkClick={closeMobileMenu}/>
+          </HeaderMobileInner>
+        </HeaderMobileWrap>
+      </HeaderInner>
+    </HeaderContainer>
   );
 };
 
