@@ -1,10 +1,13 @@
-import React from 'react';
+import {useUiStore} from "../store/ui.store";
 
-const Burger = ({status, ...props}) => {
+const Burger = ({...props}) => {
+
+  const mobileMenuActive = useUiStore((state) => state.mobileMenuActive)
+
   return (
     <button
       {...props}
-      className={`burger ${status ? "active" : ""}`}
+      className={`burger ${mobileMenuActive ? "active" : ""}`}
     >
       <span></span>
     </button>

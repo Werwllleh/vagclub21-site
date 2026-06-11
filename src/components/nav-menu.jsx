@@ -20,12 +20,18 @@ const NavMenuItem = styled.li`
 const NavLink = styled(Link)`
     display: flex;
     align-items: center;
-    font-size: clamp(1.6rem, 5vw, 2rem);
+    font-size: 1.6rem;
     color: ${customTheme.color.black};
-    padding-block: .7rem;
-    padding-inline: clamp(.7rem, 5vw, 1.2rem);
+    padding-block: .5rem;
+    padding-inline: .7rem;
     white-space: nowrap;
     cursor: pointer;
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        font-size: clamp(1.6rem, 3vw, 2rem);
+        padding-inline: clamp(.7rem, 5vw, 1.2rem);
+        padding-block: .7rem;
+    }
 
     @media (hover: hover) {
         &:hover {
@@ -45,7 +51,7 @@ const NavSubMenu = styled.ul`
     display: flex;
     flex-direction: column;
     gap: .5rem 0;
-    padding-block: 1rem;
+    padding-block: ${({$mobile}) => $mobile ? "0" : "1rem"};
     padding-inline: 1.5rem;
     border-radius: ${customTheme.radius.r15};
     overflow: hidden;

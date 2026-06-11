@@ -87,9 +87,9 @@ const HeaderBurgerWrap = styled.div`
 `
 
 const HeaderMobileWrap = styled.div`
-    opacity: ${({$mobileMenuIsActive}) => ($mobileMenuIsActive ? 1 : 0)};
-    visibility: ${({$mobileMenuIsActive}) => ($mobileMenuIsActive ? 'visible' : 'hidden')};
-    pointer-events: ${({$mobileMenuIsActive}) => ($mobileMenuIsActive ? 'auto' : 'none')};
+    opacity: ${({$mobileMenuActive}) => ($mobileMenuActive ? 1 : 0)};
+    visibility: ${({$mobileMenuActive}) => ($mobileMenuActive ? 'visible' : 'hidden')};
+    pointer-events: ${({$mobileMenuActive}) => ($mobileMenuActive ? 'auto' : 'none')};
     max-height: ${({$height}) => $height}px;
     overflow: hidden;
 
@@ -106,7 +106,8 @@ const Header = () => {
 
   gsap.registerPlugin(useGSAP);
 
-  const setOverlayActive = useUiStore((state) => state.setOverlayActive)
+  const mobileMenuActive = useUiStore((state) => state.mobileMenuActive)
+  const setMobileMenuActive = useUiStore((state) => state.setMobileMenuActive)
 
   const [mounted, setMounted] = useState(false)
   const [headerIsVisible, setHeaderIsVisible] = useState(false);
@@ -114,7 +115,6 @@ const Header = () => {
   const mobileMenu = useRef(null);
 
   const mobileMenuInnerRef = useRef(null)
-  const [mobileMenuIsActive, setMobileMenuIsActive] = useState(false);
   const [mobileMenuHeight, setMobileMenuHeight] = useState(0)
 
   useLenis((lenis) => {
@@ -128,7 +128,7 @@ const Header = () => {
       setHeaderIsVisible(true)
     }
 
-    lenis._isLocked = mobileMenuIsActive
+    lenis._isLocked = mobileMenuActive
   })
 
   useEffect(() => {
@@ -139,19 +139,18 @@ const Header = () => {
   }, [])
 
   const closeMobileMenu = () => {
-    setMobileMenuIsActive(false)
+    setMobileMenuActive(false)
   }
 
   const toggleMobileMenu = () => {
-    setMobileMenuIsActive((prev) => !prev)
+    setMobileMenuActive(!mobileMenuActive)
   }
 
-  useBlockWrap(mobileMenuIsActive)
+  useBlockWrap(mobileMenuActive)
 
   useEffect(() => {
-    // setOverlayActive(mobileMenuIsActive)
 
-    if (!mobileMenuIsActive) {
+    if (!mobileMenuActive) {
       setMobileMenuHeight(0)
       return
     }
@@ -168,12 +167,12 @@ const Header = () => {
     return () => {
       window.removeEventListener('resize', updateHeight)
     }
-  }, [mobileMenuIsActive])
+  }, [mobileMenuActive])
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setMobileMenuIsActive(false)
+        setMobileMenuActive(false)
       }
     }
 
@@ -198,11 +197,11 @@ const Header = () => {
             <NavMenu onLinkClick={closeMobileMenu}/>
           </HeaderDesktopNavWrap>
           <HeaderBurgerWrap>
-            <Burger onClick={toggleMobileMenu} status={mobileMenuIsActive}/>
+            <Burger onClick={toggleMobileMenu} />
           </HeaderBurgerWrap>
         </HeaderBody>
         <HeaderMobileWrap
-          $mobileMenuIsActive={mobileMenuIsActive}
+          $mobileMenuActive={mobileMenuActive}
           $height={mobileMenuHeight}
           ref={mobileMenu}
           data-lenis-prevent
