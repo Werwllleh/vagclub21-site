@@ -22,7 +22,6 @@ function randomColor() {
 }
 
 const AnimateCursor = () => {
-  const [isMobile, setIsMobile] = useState(false);
   const canvasRef = useRef(null);
   const pointsRef = useRef([]);
   const mouseRef = useRef(null);
@@ -33,16 +32,7 @@ const AnimateCursor = () => {
   const animationRef = useRef(null);
 
   useEffect(() => {
-    setIsMobile(
-      window.innerWidth <= customTheme.breakpoint.tablet
-    );
-  }, []);
-
-  if (isMobile) {
-    return null;
-  }
-
-  useEffect(() => {
+    if (window.innerWidth <= customTheme.breakpoint.tablet) return;
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');

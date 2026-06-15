@@ -36,6 +36,7 @@ const TWSocials = styled.div`
     justify-content: center;
     gap: 0 clamp(3rem, 5vw, 10rem);
 `
+
 const TWSocialItem = styled(Link)`
     display: flex;
     flex-direction: column;
