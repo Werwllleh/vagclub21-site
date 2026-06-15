@@ -1,12 +1,10 @@
 import 'lenis/dist/lenis.css'
 import "@/styles/index.scss";
-import SnowMode from "@/components/snow-mode";
 import Providers from "@/providers/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {Suspense} from "react";
-import Script from "next/script";
 import YandexMetrica from "@/components/yandex-metrica";
 
 

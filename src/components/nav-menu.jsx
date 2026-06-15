@@ -1,3 +1,4 @@
+"use client"
 import {useEffect, useRef, useState} from 'react'
 import {menuList} from '@/data/content'
 import styled from "styled-components";
@@ -16,29 +17,31 @@ const NavMenuList = styled.ul`
 `
 const NavMenuItem = styled.li`
     position: relative;
-`
-const NavLink = styled(Link)`
-    display: flex;
-    align-items: center;
-    font-size: 1.6rem;
-    color: ${customTheme.color.black};
-    padding-block: .5rem;
-    padding-inline: .7rem;
-    white-space: nowrap;
-    cursor: pointer;
+    
+    a, span {
+        display: flex;
+        align-items: center;
+        font-size: 1.6rem;
+        color: ${customTheme.color.black};
+        padding-block: .5rem;
+        padding-inline: .7rem;
+        white-space: nowrap;
+        cursor: pointer;
 
-    @media (min-width: ${customTheme.breakpoint.mobile}) {
-        font-size: clamp(1.6rem, 3vw, 2rem);
-        padding-inline: clamp(.7rem, 5vw, 1.2rem);
-        padding-block: .7rem;
-    }
+        @media (min-width: ${customTheme.breakpoint.mobile}) {
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            padding-inline: clamp(.7rem, 5vw, 1.2rem);
+            padding-block: .7rem;
+        }
 
-    @media (hover: hover) {
-        &:hover {
-            color: ${customTheme.color.primary};
+        @media (hover: hover) {
+            &:hover {
+                color: ${customTheme.color.primary};
+            }
         }
     }
 `
+
 const NavSubMenu = styled.ul`
     position: ${({$mobile}) => $mobile ? "relative" : "absolute"};
     top: 100%;
@@ -135,15 +138,24 @@ const NavMenu = ({mobile, onLinkClick}) => {
                 }
               }}
             >
-              <NavLink
-                as={item.path ? 'a' : 'span'}
-                href={item.path || undefined}
-                aria-haspopup={hasChildren ? 'menu' : undefined}
-                aria-expanded={hasChildren ? isOpen : undefined}
-                onClick={() => item.path && onLinkClick()}
-              >
-                {item.label}
-              </NavLink>
+              {item.path ? (
+                <Link
+                  href={item.path}
+                  aria-haspopup={hasChildren ? 'menu' : undefined}
+                  aria-expanded={hasChildren ? isOpen : undefined}
+                  onClick={() => item.path && onLinkClick()}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <span
+                  aria-haspopup={hasChildren ? 'menu' : undefined}
+                  aria-expanded={hasChildren ? isOpen : undefined}
+                >
+                  {item.label}
+                </span>
+              )}
+
 
               {hasChildren && (
                 <NavSubMenu
@@ -159,7 +171,7 @@ const NavMenu = ({mobile, onLinkClick}) => {
                       key={subItem.key}
                       role="none"
                     >
-                      <NavLink
+                      <Link
                         href={subItem.path}
                         role="menuitem"
                         tabIndex={isOpen ? 0 : -1}
@@ -169,7 +181,7 @@ const NavMenu = ({mobile, onLinkClick}) => {
                         }}
                       >
                         {subItem.label}
-                      </NavLink>
+                      </Link>
                     </NavMenuItem>
                   ))}
                 </NavSubMenu>
