@@ -1,16 +1,22 @@
-import PartnersList from "@/components/pages/partners/partners-list";
-import PartnersSearch from "@/components/pages/partners/partners-search";
+'use client'
+import H1 from "../../UI/h1";
+import {usePartners} from "../../../hooks/usePartners";
+import {useEffect} from "react";
 
 const PartnersContent = () => {
+
+  const {partners, isLoading} = usePartners()
+
+  useEffect(() => {
+    console.log(partners)
+  }, []);
 
   return (
     <div className="partners ppt ppb">
       <div className="container">
-        <h1 className="partners__title h1">Партнеры клуба</h1>
+        <H1 className="partners__title pageTitle">Партнеры клуба</H1>
         <div className="partners__content">
           Здесь будут карточки партнеров клуба
-          {/*<PartnersSearch />
-          <PartnersList />*/}
         </div>
       </div>
     </div>

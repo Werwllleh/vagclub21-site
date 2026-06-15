@@ -25,6 +25,14 @@ class CmsService {
   async fetchMeeting() {
     return axiosCmsClassic.get(`/globals/meet`)
   }
+
+  async fetchPartners(params) {
+    if (params) {
+      return axiosCmsClassic.get(`/partner/c/${params}`)
+    } else {
+      return axiosCmsClassic.get(`/partner/c/`)
+    }
+  }
 }
 
 export default new CmsService();

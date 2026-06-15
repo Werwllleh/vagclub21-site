@@ -1,21 +1,17 @@
 import {useQuery} from "@tanstack/react-query";
-import PartnersService from "@/services/partners.service";
+import cmsService from "@/services/cms.service";
 
 export function usePartners() {
 
-  const { data, isLoading: partnersLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['partners'],
-    queryFn: async () => await PartnersService.fetchPartners(),
-  });
-
-  const { data: partnersCategories, isLoading: partnersCategoriesLoading } = useQuery({
-    queryKey: ['partners-categories'],
-    queryFn: async () => await PartnersService.fetchPartnersCategories(),
+    queryFn: () => cmsService.fetchPartners(),
+    staleTime: 60 * 60 * 1000,
+    placeholderData: (previousData) => previousData,
   });
 
   return {
-    isLoading: partnersLoading || partnersCategoriesLoading,
+    isLoading,
     partners: data?.data ? data.data : null,
-    categories: partnersCategories?.data ? partnersCategories.data : null,
   };
 }

@@ -20,12 +20,12 @@ const ProductList = ({type}) => {
         {!isLoading && data?.items && (
           <AnimateSection>
             <div className="product-list__body">
-              <h1 className="product-list__title h1">
+              <pageTitle className="product-list__title pageTitle">
                 {data.type === PRODUCT_TYPE.STICKERS && 'Наклейки'}
                 {data.type === PRODUCT_TYPE.FLAVOURS && 'Ароматизаторы'}
                 {data.type === PRODUCT_TYPE.MERCH && 'Одежда'}
                 {data.type === PRODUCT_TYPE.FRAMES && 'Номерные рамки'}
-              </h1>
+              </pageTitle>
               {!!data.items?.length ? (
                 <div className="product-list__grid">
                   {data.items.map((item) => <ProductItem key={item.id} info={item}/>)}

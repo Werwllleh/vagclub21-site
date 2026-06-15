@@ -21,7 +21,7 @@ const MainPage = () => {
         whileInView={{ opacity: 1, y: 0 }}
       >
         <div className="container">
-          <p className="section-title h1">Атрибутика клуба</p>
+          <p className="section-title pageTitle">Атрибутика клуба</p>
           <ProductTypes />
         </div>
       </AnimateSection>
@@ -39,7 +39,7 @@ const MainPage = () => {
               <img src={"/images/sections/about/cars.jpg"} alt="cars"/>
             </div>
             <div className="about__description">
-              <p className="section-title h1">Авто сообщество VAGCLUB21</p>
+              <p className="section-title pageTitle">Авто сообщество VAGCLUB21</p>
               <div className="text">
                 <p>
                   VAG_CLUB21&nbsp;&mdash; автомобильное сообщество, базирующееся в&nbsp;Чувашской Республике, в&nbsp;частности в&nbsp;Чебоксарах. Клуб объединяет владельцев и&nbsp;любителей автомобилей марок Volkswagen, Audi, Skoda, Seat и&nbsp;других брендов концерна VAG.

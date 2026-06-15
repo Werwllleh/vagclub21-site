@@ -10,6 +10,7 @@ import AnimateSection from "@/components/blocks/animate-section";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import H1 from "@/components/UI/h1";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,7 +40,7 @@ const Meet = () => {
   return (
     <AnimateSection className={"meet ppt ppb"}>
       <div className="container">
-        <h1 className="meet__title h1">Встреча клуба</h1>
+        <H1 className="meet__title pageTitle">Встреча клуба</H1>
         <div className="meet__body">
           {meet && isCurrent ? (
             <div className="meet__wrap">

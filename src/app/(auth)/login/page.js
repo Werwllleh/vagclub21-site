@@ -6,7 +6,7 @@ const Page = () => {
     <div className="page ppt ppb">
       <div className="container">
         <div className="login-page">
-          <h1 className="login-page__title h1">Авторизация</h1>
+          <pageTitle className="login-page__title pageTitle">Авторизация</pageTitle>
           <div className="login-page__auth-button">
             <AuthButton />
           </div>

@@ -77,11 +77,11 @@ export const menuList = [
         key: 'meet',
         path: '/meet',
       },
-      {
+      /*{
         label: 'Контакты',
         key: 'contacts',
         path: '/contacts',
-      },
+      },*/
     ]
   },
   {

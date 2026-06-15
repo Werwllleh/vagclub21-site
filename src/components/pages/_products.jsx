@@ -4,6 +4,7 @@ import {useProducts} from "@/hooks/useProducts";
 import Loading from "@/app/loading";
 import ProductItem from "@/components/products/product-item";
 import AnimateSection from "@/components/blocks/animate-section";
+import H1 from "@/components/UI/h1";
 
 const ProductsPage = () => {
 
@@ -12,7 +13,7 @@ const ProductsPage = () => {
   return (
     <div className="products ppt ppb">
       <div className="container">
-        <h1 className="products__title h1">Атрибутика</h1>
+        <H1 className="products__title pageTitle">Атрибутика</H1>
         {isLoading && !data?.products?.length && <Loading/>}
         {!isLoading && (
           <AnimateSection>

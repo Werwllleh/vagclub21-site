@@ -8,7 +8,7 @@ const NotFoundPage = () => {
       <div className="container">
         <div className="page-404">
           <div className="page-404__left">
-            <h1 className="page-404__title h1">Кажется, <br/> Вы&nbsp;потерялись в&nbsp;дороге</h1>
+            <pageTitle className="page-404__title pageTitle">Кажется, <br/> Вы&nbsp;потерялись в&nbsp;дороге</pageTitle>
             <p className="page-404__description">
               Этой страницы нет в&nbsp;нашем гараже. Но&nbsp;у&nbsp;нас есть много других интересных
               материалов.

@@ -61,14 +61,14 @@ const HeroBlock = () => {
                       className="hero-block-card__text"
                       style={{ y: textY, opacity: textOpacity }}
                     >
-                      <h1
+                      <pageTitle
                         data-swiper-parallax-y="-200"
                         data-swiper-parallax-opacity="0.5"
                         data-swiper-parallax-duration="1200"
-                        className="hero-block-card__title h1"
+                        className="hero-block-card__title pageTitle"
                       >
                         Загрузка...
-                      </h1>
+                      </pageTitle>
                     </motion.div>
                   </div>
                 </div>
@@ -90,14 +90,14 @@ const HeroBlock = () => {
                         style={{ y: textY, opacity: textOpacity }}
                       >
                         {slide?.title && (
-                          <h1
+                          <pageTitle
                             data-swiper-parallax-y="-200"
                             data-swiper-parallax-opacity="0.5"
                             data-swiper-parallax-duration="1200"
-                            className="hero-block-card__title h1"
+                            className="hero-block-card__title pageTitle"
                           >
                             {slide.title}
-                          </h1>
+                          </pageTitle>
                         )}
                         {slide?.description && (
                           <div

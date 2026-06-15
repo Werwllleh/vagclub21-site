@@ -43,7 +43,7 @@ const CarsContent = () => {
   return (
     <div className="cars-page ppt ppb">
       <div className="container">
-        <h1 className="cars-page__title h1">Список автомобилей</h1>
+        <pageTitle className="cars-page__title pageTitle">Список автомобилей</pageTitle>
 
         {isDataLoading && <Loader/>}
 

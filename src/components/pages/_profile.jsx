@@ -8,6 +8,7 @@ import CarForm from "@/components/car-form";
 import {PlusOutlined} from "@ant-design/icons";
 import ProfileCarCard from "@/components/profile-car-card";
 import {checkUrl} from "@/utils/utils";
+import H1 from "@/components/UI/h1";
 
 
 const _profile = () => {
@@ -66,7 +67,7 @@ const _profile = () => {
     <>
       <div className="profile">
         <div className="container">
-          <h1 className="profile__title h1">Профиль</h1>
+          <H1 className="profile__title pageTitle">Профиль</H1>
           {isLoading && <Loader/>}
           {!isLoading && user && Object.values(user).length && (
             <div className="profile__body">
