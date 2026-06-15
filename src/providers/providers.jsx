@@ -13,6 +13,7 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import Overlay from "@/components/overlay";
 import AppContent from "@/components/app-content";
+import AnimateCursor from "@/components/animate-cursor";
 
 dayjs.extend(timezone);
 dayjs.locale('ru');
@@ -43,6 +44,7 @@ const Providers = ({children}) => {
           <ConfigProvider theme={theme}>
             <AppContent>
               {children}
+              <AnimateCursor />
             </AppContent>
           </ConfigProvider>
         </LazyMotion>
