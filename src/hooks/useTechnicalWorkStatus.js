@@ -11,7 +11,7 @@ export function useTechnicalWorkStatus() {
   const { data, isLoading } = useQuery({
     queryKey: ['technical_work'],
     queryFn: () => CmsService.fetchTechnicalWorkStatus(),
-    retry: 2,
+    retry: 1,
   });
 
   return {

@@ -118,12 +118,8 @@
     font-weight: 500;
     line-height: 1.5;
     color: variables.$white;
-    width: max-content;
     overflow: hidden;
-
-    @include breakpoints.tablet {
-      max-width: 90%;
-    }
+    max-width: max-content;
 
     &::before {
       content: "";

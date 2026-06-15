@@ -6,6 +6,7 @@ import SvgIcon from "@/components/svg-icon";
 import Link from "next/link";
 import {ymReach} from "@/utils/ym";
 import {SOCIAL, YM_ACTION, YM_METHOD} from "@/constants";
+import {placeholderBlur} from "@/data/content";
 
 
 const TWContainer = styled.div`
@@ -98,11 +99,20 @@ const TWImage = styled(Image)`
     filter: blur(5px);
 `
 
-const placeholderBlur = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+
 
 const TechnicalWork = () => {
   return (
     <TWContainer>
+      <div style={{
+        width: '50px',
+        height: '50px',
+        backgroundImage: `url(${placeholderBlur})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+
+      </div>
       <TWInfo>
         <Container>
           <TWTitle>ТЕХНИЧЕСКИЕ РАБОТЫ</TWTitle>
