@@ -1,6 +1,7 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
+import {customTheme} from "@/styles/theme";
 
 
 const Canvas = styled.canvas`
@@ -9,7 +10,11 @@ const Canvas = styled.canvas`
     left: 0;
     width: 100%;
     height: 100%;
-    display: block;
+    display: none;
+
+    @media (min-width: ${({ theme }) => customTheme.breakpoint.tablet}) {
+        display: block;
+    }
 `;
 
 function randomColor() {
@@ -17,13 +22,28 @@ function randomColor() {
 }
 
 const AnimateCursor = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const canvasRef = useRef(null);
   const pointsRef = useRef([]);
-  const lastPointRef = useRef(null);
+  const mouseRef = useRef(null);
+  const smoothRef = useRef(null);
+  const lastDrawPointRef = useRef(null);
   const lastMoveTimeRef = useRef(0);
   const colorRef = useRef(randomColor());
+  const animationRef = useRef(null);
 
   useEffect(() => {
+    setIsMobile(
+      window.innerWidth <= customTheme.breakpoint.tablet
+    );
+  }, []);
+
+  if (isMobile) {
+    return null;
+  }
+
+  useEffect(() => {
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
@@ -36,35 +56,42 @@ const AnimateCursor = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const addPoint = point => {
-      const lastPoint = lastPointRef.current;
+    const pushPoint = point => {
+      pointsRef.current.push({
+        x: point.x,
+        y: point.y,
+        life: 1,
+        color: colorRef.current,
+      });
 
-      if (!lastPoint) {
-        pointsRef.current.push({
-          ...point,
-          life: 1,
-          color: colorRef.current,
-        });
+      lastDrawPointRef.current = {
+        x: point.x,
+        y: point.y,
+      };
+    };
 
-        lastPointRef.current = point;
+    const addInterpolatedPoint = point => {
+      const last = lastDrawPointRef.current;
+
+      if (!last) {
+        pushPoint(point);
         return;
       }
 
-      const dx = point.x - lastPoint.x;
-      const dy = point.y - lastPoint.y;
+      const dx = point.x - last.x;
+      const dy = point.y - last.y;
       const distance = Math.hypot(dx, dy);
-      const steps = Math.max(1, Math.ceil(distance / 4));
+
+      if (distance < 1) return;
+
+      const steps = Math.max(1, Math.ceil(distance / 3));
 
       for (let i = 1; i <= steps; i++) {
-        pointsRef.current.push({
-          x: lastPoint.x + (dx * i) / steps,
-          y: lastPoint.y + (dy * i) / steps,
-          life: 1,
-          color: colorRef.current,
+        pushPoint({
+          x: last.x + (dx * i) / steps,
+          y: last.y + (dy * i) / steps,
         });
       }
-
-      lastPointRef.current = point;
     };
 
     const handleMouseMove = event => {
@@ -72,22 +99,42 @@ const AnimateCursor = () => {
 
       if (now - lastMoveTimeRef.current > 220) {
         colorRef.current = randomColor();
-        lastPointRef.current = null;
+        smoothRef.current = null;
+        lastDrawPointRef.current = null;
       }
 
-      addPoint({
+      mouseRef.current = {
         x: event.clientX,
         y: event.clientY,
-      });
+      };
+
+      if (!smoothRef.current) {
+        smoothRef.current = {
+          x: event.clientX,
+          y: event.clientY,
+        };
+
+        addInterpolatedPoint(smoothRef.current);
+      }
 
       lastMoveTimeRef.current = now;
     };
 
-    const draw = () => {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    const updateSmoothPoint = () => {
+      const mouse = mouseRef.current;
+      const smooth = smoothRef.current;
 
-      const points = pointsRef.current;
+      if (!mouse || !smooth) return;
 
+      const easing = 0.1;
+
+      smooth.x += (mouse.x - smooth.x) * easing;
+      smooth.y += (mouse.y - smooth.y) * easing;
+
+      addInterpolatedPoint(smooth);
+    };
+
+    const drawGlowLine = points => {
       for (let i = 1; i < points.length - 1; i++) {
         const p0 = points[i - 1];
         const p1 = points[i];
@@ -107,27 +154,35 @@ const AnimateCursor = () => {
         ctx.quadraticCurveTo(p1.x, p1.y, xc, yc);
 
         ctx.strokeStyle = p1.color;
-        ctx.globalAlpha = alpha * 0.35;
-        ctx.lineWidth = 0.25;
+        ctx.globalAlpha = alpha * 0.22;
+        ctx.lineWidth = 1.5;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        ctx.shadowBlur = 1;
+        ctx.shadowBlur = 10;
         ctx.shadowColor = p1.color;
 
         ctx.stroke();
       }
+    };
+
+    const draw = () => {
+      updateSmoothPoint();
+
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      drawGlowLine(pointsRef.current);
+
+      pointsRef.current = pointsRef.current
+        .map(point => ({
+          ...point,
+          life: point.life - 0.008,
+        }))
+        .filter(point => point.life > 0);
 
       ctx.globalAlpha = 1;
       ctx.shadowBlur = 0;
 
-      pointsRef.current = points
-        .map(point => ({
-          ...point,
-          life: point.life - 0.01,
-        }))
-        .filter(point => point.life > 0);
-
-      requestAnimationFrame(draw);
+      animationRef.current = requestAnimationFrame(draw);
     };
 
     resize();
@@ -139,6 +194,10 @@ const AnimateCursor = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', resize);
+
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
   }, []);
 
