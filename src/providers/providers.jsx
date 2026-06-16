@@ -44,7 +44,7 @@ const Providers = ({children}) => {
           <ConfigProvider theme={theme}>
             <AppContent>
               {children}
-              <AnimateCursor />
+              {/*<AnimateCursor />*/}
             </AppContent>
           </ConfigProvider>
         </LazyMotion>

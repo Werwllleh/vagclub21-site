@@ -7,6 +7,17 @@ import Link from "next/link";
 import {motion, useScroll, useTransform} from "motion/react"
 import {useHeroSlider} from "@/hooks/useHeroSlider";
 import {RichText} from "@payloadcms/richtext-lexical/react";
+import {H1Element} from "@/components/UI/h1";
+import styled from "styled-components";
+import {customTheme} from "@/styles/theme";
+
+const SlideTitle = styled(H1Element)`
+    text-align: center;
+    font-weight: 600;
+    font-family: ${customTheme.font.secondary};
+    max-width: 90rem;
+    margin-inline: auto;
+`
 
 const HeroBlock = () => {
 
@@ -61,14 +72,13 @@ const HeroBlock = () => {
                       className="hero-block-card__text"
                       style={{ y: textY, opacity: textOpacity }}
                     >
-                      <pageTitle
+                      <SlideTitle
                         data-swiper-parallax-y="-200"
                         data-swiper-parallax-opacity="0.5"
                         data-swiper-parallax-duration="1200"
-                        className="hero-block-card__title pageTitle"
                       >
                         Загрузка...
-                      </pageTitle>
+                      </SlideTitle>
                     </motion.div>
                   </div>
                 </div>
@@ -90,14 +100,13 @@ const HeroBlock = () => {
                         style={{ y: textY, opacity: textOpacity }}
                       >
                         {slide?.title && (
-                          <pageTitle
+                          <SlideTitle
                             data-swiper-parallax-y="-200"
                             data-swiper-parallax-opacity="0.5"
                             data-swiper-parallax-duration="1200"
-                            className="hero-block-card__title pageTitle"
                           >
                             {slide.title}
-                          </pageTitle>
+                          </SlideTitle>
                         )}
                         {slide?.description && (
                           <div

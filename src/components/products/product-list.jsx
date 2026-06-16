@@ -6,6 +6,7 @@ import {PRODUCT_TYPE} from "@/constants";
 import ProductItem from "@/components/products/product-item";
 import ProductsEmpty from "@/components/products/products-empty";
 import AnimateSection from "@/components/blocks/animate-section";
+import H1 from "@/components/UI/h1";
 
 const ProductList = ({type}) => {
 
@@ -20,12 +21,12 @@ const ProductList = ({type}) => {
         {!isLoading && data?.items && (
           <AnimateSection>
             <div className="product-list__body">
-              <pageTitle className="product-list__title pageTitle">
+              <H1>
                 {data.type === PRODUCT_TYPE.STICKERS && 'Наклейки'}
                 {data.type === PRODUCT_TYPE.FLAVOURS && 'Ароматизаторы'}
                 {data.type === PRODUCT_TYPE.MERCH && 'Одежда'}
                 {data.type === PRODUCT_TYPE.FRAMES && 'Номерные рамки'}
-              </pageTitle>
+              </H1>
               {!!data.items?.length ? (
                 <div className="product-list__grid">
                   {data.items.map((item) => <ProductItem key={item.id} info={item}/>)}

@@ -105,15 +105,6 @@ const TWImage = styled(Image)`
 const TechnicalWork = () => {
   return (
     <TWContainer>
-      <div style={{
-        width: '50px',
-        height: '50px',
-        backgroundImage: `url(${placeholderBlur})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
-
-      </div>
       <TWInfo>
         <Container>
           <TWTitle>ТЕХНИЧЕСКИЕ РАБОТЫ</TWTitle>

@@ -5,7 +5,22 @@ import CooperationForm from "@/components/cooperation-form";
 import Link from "next/link";
 import ProductTypes from "@/components/products/products-types";
 import AnimateSection from "@/components/blocks/animate-section";
+import styled from "styled-components";
+import {H1Element} from "@/components/UI/h1";
+import {customTheme} from "@/styles/theme";
 
+
+const SectionTitle = styled(H1Element)`
+    font-weight: 600;
+
+    @media (min-width: ${({ theme }) => customTheme.breakpoint.semiDesktop}) {
+        font-size: 3.2rem;
+    }
+    
+    & + .product-types {
+        margin-top: 3rem;
+    }
+`
 
 const MainPage = () => {
 
@@ -21,7 +36,7 @@ const MainPage = () => {
         whileInView={{ opacity: 1, y: 0 }}
       >
         <div className="container">
-          <p className="section-title pageTitle">Атрибутика клуба</p>
+          <SectionTitle as="p">Атрибутика клуба</SectionTitle>
           <ProductTypes />
         </div>
       </AnimateSection>
@@ -39,7 +54,7 @@ const MainPage = () => {
               <img src={"/images/sections/about/cars.jpg"} alt="cars"/>
             </div>
             <div className="about__description">
-              <p className="section-title pageTitle">Авто сообщество VAGCLUB21</p>
+              <SectionTitle as="p">Авто сообщество VAGCLUB21</SectionTitle>
               <div className="text">
                 <p>
                   VAG_CLUB21&nbsp;&mdash; автомобильное сообщество, базирующееся в&nbsp;Чувашской Республике, в&nbsp;частности в&nbsp;Чебоксарах. Клуб объединяет владельцев и&nbsp;любителей автомобилей марок Volkswagen, Audi, Skoda, Seat и&nbsp;других брендов концерна VAG.

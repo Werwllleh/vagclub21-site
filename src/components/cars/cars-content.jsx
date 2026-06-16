@@ -8,6 +8,7 @@ import {useUserCars} from "@/hooks/useUserCars";
 import {useCallback, useEffect, useMemo} from "react";
 import {Pagination} from 'antd';
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import H1 from "@/components/UI/h1";
 
 const CarsContent = () => {
   const router = useRouter();
@@ -43,7 +44,7 @@ const CarsContent = () => {
   return (
     <div className="cars-page ppt ppb">
       <div className="container">
-        <pageTitle className="cars-page__title pageTitle">Список автомобилей</pageTitle>
+        <H1 className="cars-page__title pageTitle">Список автомобилей</H1>
 
         {isDataLoading && <Loader/>}
 
