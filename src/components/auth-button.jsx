@@ -26,7 +26,7 @@ const AuthButton = () => {
     onSuccess: async (response) => {
       if (response.status === 200) {
         toast.success('Успешная авторизация!');
-        await queryClient.invalidateQueries(['user']);
+        await queryClient.refetchQueries(['user']);
         router.push(PUBLIC_PAGES.HOME.URL);
       } else {
         toast.error('Ошибка авторизации');
