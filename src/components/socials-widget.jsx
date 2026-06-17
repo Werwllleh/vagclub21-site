@@ -82,6 +82,7 @@ const SocialsWidget = () => {
   const [active, isActive] = useState(false);
 
   useLenis((lenis) => {
+    console.log(lenis)
     if (lenis.animatedScroll >= 150) {
       isActive(true)
     } else {

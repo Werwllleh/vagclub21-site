@@ -1,7 +1,6 @@
 import {useTechnicalWorkStatus} from "@/hooks/useTechnicalWorkStatus";
 import TechnicalWork from "./pages/_technical-work";
 import Loading from "../app/loading";
-import Marquee from "./marquee/marquee";
 import SnowMode from "./snow-mode";
 
 const AppContent = ({children}) => {
@@ -18,7 +17,6 @@ const AppContent = ({children}) => {
   return (
     <>
       {children}
-      <Marquee/>
       <SnowMode/>
     </>
   )

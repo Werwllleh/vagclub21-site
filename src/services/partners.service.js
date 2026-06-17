@@ -15,10 +15,6 @@ class PartnersService {
 
   }
 
-  async fetchPartnersCategories() {
-    return axiosClassic.get(`/get-partners-categories`)
-  }
-
   async fetchPartnerInfo(slug) {
     return axiosClassic.post(`/partner`, {
       slug: slug

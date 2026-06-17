@@ -9,15 +9,17 @@ import {customTheme} from "@/styles/theme";
 import Container from "@/components/container";
 import {useMeet} from "@/hooks/useMeet";
 import {usePathname} from "next/navigation";
+import Marquee from "@/components/marquee/marquee";
 
 
 const FooterContainer = styled.footer`
-  margin: auto 0 0 0;
-  padding-top: clamp(1.8rem, 4vw, 2.4rem);
-  padding-bottom: ${({ $hasMeet }) => (
-    $hasMeet ? '7rem' : 'clamp(1.8rem, 4vw, 2.4rem)'
-  )};
-  background-color: ${customTheme.color.primaryDark};
+    margin: auto 0 0 0;
+    padding-top: clamp(1.8rem, 4vw, 2.4rem);
+    //padding-bottom: clamp(1.8rem, 4vw, 2.4rem);
+    padding-bottom: ${({$hasMeet}) => (
+            $hasMeet ? '7rem' : 'clamp(1.8rem, 4vw, 2.4rem)'
+    )};
+    background-color: ${customTheme.color.primaryDark};
 `;
 
 const FooterBody = styled.div`
@@ -39,7 +41,7 @@ const FooterDate = styled.div`
 
 const Footer = () => {
 
-  const { meetDate, meetTimezone } = useMeet();
+  const {meetDate, meetTimezone} = useMeet();
   const [isCurrent, setIsCurrent] = useState(false);
 
   useEffect(() => {
@@ -53,18 +55,21 @@ const Footer = () => {
   const path = usePathname();
 
   return (
-    <FooterContainer $hasMeet={!!isCurrent && path !== '/meet'}>
-      <Container>
-        <FooterBody>
-          <Link href={PUBLIC_PAGES.HOME.URL}>
-            <Logo inversion={true}/>
-          </Link>
-          <FooterDate>
-            {dayjs().year()}
-          </FooterDate>
-        </FooterBody>
-      </Container>
-    </FooterContainer>
+    <>
+      <Marquee/>
+      <FooterContainer $hasMeet={!!isCurrent && path !== '/meet'}>
+        <Container>
+          <FooterBody>
+            <Link href={PUBLIC_PAGES.HOME.URL}>
+              <Logo inversion={true}/>
+            </Link>
+            <FooterDate>
+              {dayjs().year()}
+            </FooterDate>
+          </FooterBody>
+        </Container>
+      </FooterContainer>
+    </>
   );
 };
 
