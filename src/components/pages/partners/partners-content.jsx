@@ -1,54 +1,98 @@
 'use client'
 import H1 from "../../UI/h1";
 import {usePartners} from "@/hooks/usePartners";
-import {useEffect} from "react";
 import styled from "styled-components";
-import Container from "@/components/container";
-import PartnerCategories from "@/components/partner-categories";
+import PartnerCategories, {PCList} from "@/components/partner-categories";
 import Loading from "@/app/loading";
 import PartnerCard from "@/components/partner-card";
+import {customTheme} from "@/styles/theme";
+import {usePartnersStore} from "@/store/partners.store";
+import {useEffect} from "react";
 
 const PartnersWrap = styled.div`
-  flex: 1;
+    flex: 1;
 `
 
 const PartnersGrid = styled.div`
     margin-top: clamp(2rem, 5vw, 5rem);
     display: grid;
-    grid-template-columns: 45rem 1fr;
-    gap: 0 4rem;
+    grid-template-columns: 100%;
+    gap: 4rem 0;
+
+    @media (min-width: ${customTheme.breakpoint.w1250}) {
+        grid-template-columns: 40rem 1fr;
+        gap: 0 4rem;
+        align-items: stretch;
+    }
 `
 
 const PartnersCategoriesContainer = styled.div`
+
+    ${PCList} {
+        flex-wrap: nowrap;
+        gap: 0 2rem;
+        overflow-x: auto;
+        margin-inline: -1.5rem;
+        padding-inline: 1.5rem;
+
+        @media (min-width: ${customTheme.breakpoint.w1250}) {
+            flex-wrap: wrap;
+            gap: 1rem 3rem;
+        }
+    }
 `
 
 const PartnersList = styled.div`
+
+    & > ul {
+        display: grid;
+        grid-template-columns: 100%;
+        gap: 3rem;
+
+        @media (min-width: ${customTheme.breakpoint.mobile}) {
+            grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+            gap: 4rem 2rem;
+        }
+    }
 `
 
 const PartnersContent = () => {
 
-  const {partnerData, isLoading} = usePartners()
+  const {partnerData, isLoading} = usePartners();
+
+  const {filteredPartners, filterPartnersLoading} = usePartnersStore();
 
   useEffect(() => {
-    console.log(partnerData)
-  }, [partnerData]);
+    console.log(filteredPartners)
+  }, [filteredPartners])
 
   return (
-    <PartnersWrap className="ppt ppb">
-      <Container>
-        <H1>Партнеры клуба</H1>
-        <PartnersGrid>
-          <PartnersCategoriesContainer>
-            <PartnerCategories />
-          </PartnersCategoriesContainer>
-          <PartnersList>
-            {isLoading && <Loading />}
-            {!isLoading && partnerData?.partners?.map((partner) => {
-              return <PartnerCard partner={partner} key={partner.id} />
-            })}
-          </PartnersList>
-        </PartnersGrid>
-      </Container>
+    <PartnersWrap>
+      <H1>Партнеры клуба</H1>
+      <PartnersGrid>
+        <PartnersCategoriesContainer>
+          <PartnerCategories/>
+        </PartnersCategoriesContainer>
+        <PartnersList>
+          {isLoading || filterPartnersLoading ? <Loading/> : (
+            filteredPartners.length ? (
+              <ul>
+                {filteredPartners.map((partner) => {
+                  return <li key={partner.id}><PartnerCard partner={partner}/></li>
+                })}
+              </ul>
+            ) : (
+              partnerData?.partners?.length && (
+                <ul>
+                  {partnerData.partners.map((partner) => {
+                    return <li key={partner.id}><PartnerCard partner={partner}/></li>
+                  })}
+                </ul>
+              )
+            )
+          )}
+        </PartnersList>
+      </PartnersGrid>
     </PartnersWrap>
   );
 };

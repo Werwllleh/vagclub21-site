@@ -48,6 +48,7 @@ export const customTheme = {
     greyLight: '#f9f9f9',
     grey: '#737373',
     red: '#ff4646',
+    red_rich: '#b90000',
     positive: '#10C44CFF',
     oldPrice: '#99A3AEFF',
     sale: '#f1117e',

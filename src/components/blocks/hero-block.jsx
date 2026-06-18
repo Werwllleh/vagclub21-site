@@ -119,7 +119,7 @@ const HeroBlock = () => {
                           </div>
                         )}
 
-                        {slide?.detail_link && (
+                        {slide?.detail_link && slide.detail_link?.url && slide.detail_link?.title && (
                           <div
                             data-swiper-parallax-y="-200"
                             data-swiper-parallax-opacity="0.5"
@@ -127,10 +127,10 @@ const HeroBlock = () => {
                             className="hero-block-card__footer"
                           >
                             <Link
-                              href={slide.detail_link}
+                              href={slide.detail_link.url}
                               className="btn default l hero-block-card__link"
                             >
-                              Подробнее
+                              {slide.detail_link.title}
                             </Link>
                           </div>
                         )}

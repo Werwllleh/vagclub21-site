@@ -28,9 +28,13 @@ class CmsService {
 
   async fetchPartners(params) {
     if (params) {
-      return axiosCmsClassic.get(`/partner/c`, {
-        params: params
-      })
+      if (typeof params === "string") {
+        return axiosCmsClassic.get(`/partner/c${params}`)
+      } else {
+        return axiosCmsClassic.get(`/partner/c`, {
+          params: params
+        })
+      }
     } else {
       return axiosCmsClassic.get(`/partner/c`)
     }

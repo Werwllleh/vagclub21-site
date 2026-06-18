@@ -1,6 +1,9 @@
+'use client'
 import React from 'react';
 import Link from "next/link";
 import SvgIcon from "../components/svg-icon";
+import H1 from "@/components/UI/h1";
+import Image from "next/image";
 
 const NotFoundPage = () => {
   return (
@@ -8,7 +11,7 @@ const NotFoundPage = () => {
       <div className="container">
         <div className="page-404">
           <div className="page-404__left">
-            <pageTitle className="page-404__title pageTitle">Кажется, <br/> Вы&nbsp;потерялись в&nbsp;дороге</pageTitle>
+            <H1 className="page-404__title pageTitle">Кажется, <br/> Вы&nbsp;потерялись в&nbsp;дороге</H1>
             <p className="page-404__description">
               Этой страницы нет в&nbsp;нашем гараже. Но&nbsp;у&nbsp;нас есть много других интересных
               материалов.
@@ -30,7 +33,7 @@ const NotFoundPage = () => {
           </div>
           <div className="page-404__right">
             <div className="page-404__bg">
-              <img src="/images/404.webp" alt="404"/>
+              <Image src={"/images/404.webp"} alt={"404"} width={700} height={400} />
             </div>
             <div className="page-404__actions">
               <Link className="btn default l" href="/">Главная</Link>

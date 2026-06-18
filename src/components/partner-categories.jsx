@@ -1,16 +1,26 @@
-import React, {useEffect} from 'react';
+'use client'
+import React, {useEffect, useState} from 'react';
 import {usePartnerCategories} from "@/hooks/usePartnerCategories";
 import styled, {css} from "styled-components";
 import Link from "next/link";
 import {customTheme} from "@/styles/theme";
+import {useSearchParams} from "next/navigation";
+import Loading from "@/app/loading";
+import {usePartnersStore} from "@/store/partners.store";
+import CmsService from "@/services/cms.service";
+import {debounce} from "@/functions/debounce";
 
 const PCWrapper = styled.div`
 `
 
-const PCList = styled.ul`
+export const PCList = styled.ul`
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 3rem;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `
 
 const PCItem = styled(Link)`
@@ -18,6 +28,7 @@ const PCItem = styled(Link)`
     align-items: center;
     justify-content: center;
     max-width: max-content;
+    white-space: nowrap;
     border-radius: ${customTheme.radius.r7};
     border-width: 1px;
     border-style: solid;
@@ -35,10 +46,14 @@ const PCItem = styled(Link)`
     )};
     line-height: 1;
 
+    ${({$active}) => $active && css`
+        background-color: ${customTheme.color.primary};
+        color: ${customTheme.color.white};
+    `}
     ${({$loading}) => $loading && css`
         position: relative;
         overflow: hidden;
-        
+
         &::before {
             content: '';
             position: absolute;
@@ -47,14 +62,14 @@ const PCItem = styled(Link)`
             width: 100%;
             height: 100%;
             background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.8),
-                transparent
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.8),
+                    transparent
             );
             animation: shimmer 1.5s infinite;
         }
-        
+
         @keyframes shimmer {
             0% {
                 left: -100%;
@@ -64,7 +79,6 @@ const PCItem = styled(Link)`
             }
         }
     `}
-
     &:hover {
         background-color: ${({$loading}) => (
                 $loading ? customTheme.color.greyLight : customTheme.color.primary
@@ -77,7 +91,51 @@ const PCItem = styled(Link)`
 
 const PartnerCategories = () => {
 
+  const {
+    filteredPartners,
+    setFilteredPartners,
+    setFilterPartnersLoading
+  } = usePartnersStore();
+
   const {partnerCategories, isLoading} = usePartnerCategories();
+
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, []);
+
+  const searchParams = useSearchParams();
+  const searchValue = searchParams.get('category');
+
+  const searchSelectedCategoryPartners = async (searchValue) => {
+    if (!searchValue) {
+      return setFilteredPartners([]);
+    }
+
+    setFilterPartnersLoading(true);
+
+    try {
+      const response = await CmsService.fetchPartners(`?category=${searchValue}`);
+      const partners = response?.data?.partners || [];
+
+      setFilterPartnersLoading(false);
+      setFilteredPartners(partners);
+    } catch (error) {
+      console.error("Ошибка при поиске партнеров определенной категории:", error);
+    } finally {
+      setFilterPartnersLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    debounce(searchSelectedCategoryPartners(searchValue), 300);
+  }, [searchValue]);
+
+  if (!isMounted) {
+    return <Loading/>;
+  }
 
   return (
     <PCWrapper>
@@ -91,11 +149,27 @@ const PartnerCategories = () => {
         ))}
         {!isLoading && partnerCategories.map((category) => (
           <li key={category.id}>
-            <PCItem href={`/partners?category=${category.slug}`}>
+            <PCItem
+              $active={category.slug === searchValue}
+              href={`/partners?category=${category.slug}`}
+              scroll={false}
+            >
               {category.title}
             </PCItem>
           </li>
         ))}
+        {!!filteredPartners.length && (
+          <li >
+            <PCItem
+              as="button"
+              onClick={() => {
+                setFilteredPartners([])
+              }}
+            >
+              Сбросить
+            </PCItem>
+          </li>
+        )}
       </PCList>
     </PCWrapper>
   );

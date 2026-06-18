@@ -5,7 +5,7 @@ import CarCard from "@/components/cars/car-card";
 import CarSearch from '@/components/cars/car-search';
 import {useCarsStore} from "@/store/cars.store";
 import {useUserCars} from "@/hooks/useUserCars";
-import {useCallback, useEffect, useMemo} from "react";
+import {useCallback, useMemo} from "react";
 import {Pagination} from 'antd';
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import H1 from "@/components/UI/h1";
