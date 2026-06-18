@@ -4,7 +4,7 @@ import {usePartnerCategories} from "@/hooks/usePartnerCategories";
 import styled, {css} from "styled-components";
 import Link from "next/link";
 import {customTheme} from "@/styles/theme";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import Loading from "@/app/loading";
 import {usePartnersStore} from "@/store/partners.store";
 import CmsService from "@/services/cms.service";
@@ -46,6 +46,11 @@ const PCItem = styled(Link)`
     )};
     line-height: 1;
 
+    &[data-reset] {
+        background-color: ${customTheme.color.primary};
+        color: ${customTheme.color.white};
+    }
+
     ${({$active}) => $active && css`
         background-color: ${customTheme.color.primary};
         color: ${customTheme.color.white};
@@ -79,6 +84,7 @@ const PCItem = styled(Link)`
             }
         }
     `}
+    
     &:hover {
         background-color: ${({$loading}) => (
                 $loading ? customTheme.color.greyLight : customTheme.color.primary
@@ -92,7 +98,9 @@ const PCItem = styled(Link)`
 const PartnerCategories = () => {
 
   const {
+    filterPartnersActive,
     filteredPartners,
+    setFilterPartnersActive,
     setFilteredPartners,
     setFilterPartnersLoading
   } = usePartnersStore();
@@ -106,12 +114,16 @@ const PartnerCategories = () => {
     setIsMounted(true)
   }, []);
 
+  const router = useRouter();
+
   const searchParams = useSearchParams();
   const searchValue = searchParams.get('category');
 
   const searchSelectedCategoryPartners = async (searchValue) => {
     if (!searchValue) {
-      return setFilteredPartners([]);
+      setFilterPartnersActive(false);
+      setFilteredPartners([])
+      return;
     }
 
     setFilterPartnersLoading(true);
@@ -120,6 +132,7 @@ const PartnerCategories = () => {
       const response = await CmsService.fetchPartners(`?category=${searchValue}`);
       const partners = response?.data?.partners || [];
 
+      setFilterPartnersActive(true);
       setFilterPartnersLoading(false);
       setFilteredPartners(partners);
     } catch (error) {
@@ -152,18 +165,24 @@ const PartnerCategories = () => {
             <PCItem
               $active={category.slug === searchValue}
               href={`/partners?category=${category.slug}`}
+              onClick={(e) => {
+                e.target.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"})
+              }}
               scroll={false}
             >
               {category.title}
             </PCItem>
           </li>
         ))}
-        {!!filteredPartners.length && (
+        {filterPartnersActive && (
           <li >
             <PCItem
               as="button"
+              data-reset
               onClick={() => {
                 setFilteredPartners([])
+                setFilterPartnersActive(false)
+                router.push("/partners", {scroll: false})
               }}
             >
               Сбросить

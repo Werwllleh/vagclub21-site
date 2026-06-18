@@ -8,6 +8,7 @@ import PartnerCard from "@/components/partner-card";
 import {customTheme} from "@/styles/theme";
 import {usePartnersStore} from "@/store/partners.store";
 import {useEffect} from "react";
+import Image from "next/image";
 
 const PartnersWrap = styled.div`
     flex: 1;
@@ -56,11 +57,25 @@ const PartnersList = styled.div`
     }
 `
 
+const PartnersEmpty = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    
+    img {}
+    
+    p {
+        font-weight: 500;
+        font-size: clamp(1.4rem, 5vw, 4rem);
+    }
+`
+
 const PartnersContent = () => {
 
   const {partnerData, isLoading} = usePartners();
 
-  const {filteredPartners, filterPartnersLoading} = usePartnersStore();
+  const {filterPartnersActive, filteredPartners, filterPartnersLoading} = usePartnersStore();
 
   useEffect(() => {
     console.log(filteredPartners)
@@ -75,12 +90,25 @@ const PartnersContent = () => {
         </PartnersCategoriesContainer>
         <PartnersList>
           {isLoading || filterPartnersLoading ? <Loading/> : (
-            filteredPartners.length ? (
-              <ul>
-                {filteredPartners.map((partner) => {
-                  return <li key={partner.id}><PartnerCard partner={partner}/></li>
-                })}
-              </ul>
+            filterPartnersActive ? (
+              !!filteredPartners.length ? (
+                <ul>
+                  {filteredPartners.map((partner) => {
+                    return <li key={partner.id}><PartnerCard partner={partner}/></li>
+                  })}
+                </ul>
+              ) : (
+                <PartnersEmpty>
+                  <Image
+                    loading="eager"
+                    src={"/images/company-not-found.webp"}
+                    width={600}
+                    height={400}
+                    alt="Компании не найдены"
+                  />
+                  <p>Компании не найдены</p>
+                </PartnersEmpty>
+              )
             ) : (
               partnerData?.partners?.length && (
                 <ul>

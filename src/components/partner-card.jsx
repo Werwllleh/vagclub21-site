@@ -62,6 +62,7 @@ const PartnerCardItem = styled(Link)`
     min-height: 35rem;
     border: 1px solid ${customTheme.color.primary};
     border-radius: ${customTheme.radius.r15};
+    height: 100%;
 
     @media (min-width: ${customTheme.breakpoint.tablet}) {
         min-height: 40rem;
