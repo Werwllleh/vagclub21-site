@@ -2,8 +2,9 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 
-const PartnerCardItem = styled.div`
+const PartnerCardItem = styled(Link)`
 `
 
 const PartnerCardInner = styled.div`
@@ -21,7 +22,7 @@ const PartnerCard = ({partner}) => {
   }, [partner]);
 
   return (
-    <PartnerCardItem>
+    <PartnerCardItem href={partner?.slug || '#'}>
       <PartnerCardInner>
         <PartnerCardLogo>
           <Image

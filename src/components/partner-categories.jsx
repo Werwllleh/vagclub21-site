@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {usePartnerCategories} from "@/hooks/usePartnerCategories";
 import styled, {css} from "styled-components";
 import Link from "next/link";
