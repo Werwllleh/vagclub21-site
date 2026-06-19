@@ -69,7 +69,11 @@ const PartnersEmpty = styled.div`
     align-items: center;
     gap: 4rem;
     
-    img {}
+    img {
+        width: auto;
+        height: auto;
+        max-height: 30rem;
+    }
     
     p {
         font-weight: 500;
@@ -94,7 +98,7 @@ const PartnersContent = () => {
     setIsMounted(true);
   }, []);
 
-  if (!isMounted) {
+  if (isLoading || !isMounted) {
     return null;
   }
 
@@ -119,8 +123,8 @@ const PartnersContent = () => {
                   <Image
                     loading="eager"
                     src={"/images/company-not-found.webp"}
-                    width={600}
-                    height={400}
+                    width={400}
+                    height={200}
                     alt="Компании не найдены"
                   />
                   <p>Компании не найдены</p>
@@ -130,7 +134,10 @@ const PartnersContent = () => {
               partnerData?.partners?.length && (
                 <ul>
                   {partnerData.partners.map((partner) => {
-                    return <li key={partner.id}><PartnerCard partner={partner}/></li>
+                    return (
+                      <li key={partner.id}>
+                        <PartnerCard partner={partner}/>
+                      </li>)
                   })}
                 </ul>
               )

@@ -146,7 +146,7 @@ const PartnerCategories = () => {
     debounce(searchSelectedCategoryPartners(searchValue), 300);
   }, [searchValue]);
 
-  if (!isMounted) {
+  if (isLoading || !isMounted) {
     return <Loading/>;
   }
 

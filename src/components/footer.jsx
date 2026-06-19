@@ -1,5 +1,4 @@
 'use client'
-import React, {useEffect, useState} from 'react';
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import Link from "next/link";
 import dayjs from "dayjs";
@@ -7,12 +6,9 @@ import Logo from "@/components/logo";
 import styled from "styled-components";
 import {customTheme} from "@/styles/theme";
 import Container from "@/components/container";
-import {useMeet} from "@/hooks/useMeet";
-import {usePathname} from "next/navigation";
 import Marquee from "@/components/marquee/marquee";
 import {footerMenuList} from "@/data/content";
 import SvgIcon from "@/components/svg-icon";
-
 
 const FooterContainer = styled.footer`
     margin: auto 0 0 0;

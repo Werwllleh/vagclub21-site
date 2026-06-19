@@ -184,9 +184,9 @@ const PartnerCard = ({partner}) => {
 
   if (!partner) return null;
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(partner)
-  }, [partner]);
+  }, [partner]);*/
 
   return (
     <PartnerCardItem href={`/partner/${partner?.slug}` || '#'}>

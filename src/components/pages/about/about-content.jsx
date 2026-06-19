@@ -7,6 +7,7 @@ import H1 from "@/components/UI/h1";
 import SocialsWidget from "@/components/socials-widget";
 import AnimateSection from "@/components/blocks/animate-section";
 import Container from "@/components/container";
+import Image from "next/image"
 
 const AboutContent = () => {
 
@@ -114,7 +115,13 @@ const AboutContent = () => {
             <div className="about-list-item">
               <div className="about-list-item__body">
                 <div className="about-list-item__image">
-                  <img src="./images/about/1.webp" alt=""/>
+                  <Image
+                    src={"/images/about/1.webp"}
+                    alt=""
+                    width={700}
+                    height={500}
+                    loading="eager"
+                  />
                 </div>
                 <div className="about-list-item__text">
                   <h5>Встречи</h5>
@@ -129,7 +136,13 @@ const AboutContent = () => {
             <div className="about-list-item">
               <div className="about-list-item__body">
                 <div className="about-list-item__image">
-                  <img src="./images/about/2.webp" alt=""/>
+                  <Image
+                    src={"/images/about/2.webp"}
+                    alt=""
+                    width={700}
+                    height={500}
+                    loading="eager"
+                  />
                 </div>
                 <div className="about-list-item__text">
                   <h5>Эксклюзивные мероприятия</h5>
@@ -156,7 +169,13 @@ const AboutContent = () => {
             <div className="about-list-item">
               <div className="about-list-item__body">
                 <div className="about-list-item__image">
-                  <img src="./images/about/3.webp" alt=""/>
+                  <Image
+                    src={"/images/about/3.webp"}
+                    alt=""
+                    width={700}
+                    height={500}
+                    loading="eager"
+                  />
                 </div>
                 <div className="about-list-item__text">
                   <h5>Квесты</h5>
