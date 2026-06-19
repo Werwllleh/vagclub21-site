@@ -9,7 +9,7 @@ import {SOCIAL} from "../constants";
 import {useMeet} from "../hooks/useMeet";
 
 const SocialsWidgetElement = styled.div`
-    position: fixed;
+    position: sticky;
     bottom: ${({$isMeetActive}) => ($isMeetActive ? '7rem' : '2rem')};
     left: 0;
     right: 0;
@@ -23,7 +23,7 @@ const SocialsWidgetElement = styled.div`
     box-shadow: ${({$active}) => ($active ? '0 0 2rem 1rem rgb(12 12 12 / 15%' : 'none')});
     opacity: ${({$active}) => ($active ? 1 : 0)};
     visibility: ${({$active}) => ($active ? 'visible' : 'hidden')};
-    transform: ${({$active}) => ($active ? 'translateY(0)' : 'translateY(110%)')};
+    transform: ${({$active}) => ($active ? 'translateY(-20%)' : 'translateY(110%)')};
     transition: 
             opacity ${customTheme.transition.medium}, 
             visibility ${customTheme.transition.medium}, 

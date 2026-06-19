@@ -49,7 +49,7 @@ const PartnerCardLabel = styled.label`
 `
 
 const PartnerCardButton = styled.button`
-    margin-block: 1rem 2rem;
+    margin-block: 1rem 0;
     margin-inline: auto;
     border-radius: ${customTheme.radius.r7};
     width: 90%;
@@ -131,6 +131,7 @@ const PartnerCardTitle = styled.h3`
 `
 
 const PartnerCardText = styled.div`
+    height: 5.5rem;
     
     p {
         font-size: clamp(1.1rem, 5vw, 1.4rem);
@@ -198,6 +199,7 @@ const PartnerCard = ({partner}) => {
         <PartnerCardLogo>
           {partner?.logo?.url ? (
             <Image
+              loading="eager"
               src={partner?.logo.url}
               alt={partner?.logo?.alt || 'logo'}
               width={partner?.logo?.width || 200}

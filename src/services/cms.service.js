@@ -26,6 +26,10 @@ class CmsService {
     return axiosCmsClassic.get(`/globals/meet`)
   }
 
+  async fetchPolicy() {
+    return axiosCmsClassic.get(`/globals/policy`)
+  }
+
   async fetchPartners(params) {
     if (params) {
       if (typeof params === "string") {

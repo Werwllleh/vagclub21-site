@@ -143,4 +143,12 @@
       z-index: -1;
     }
   }
+
+  a {
+    color: variables.$colorPrimary;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

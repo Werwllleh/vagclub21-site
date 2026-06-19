@@ -1,3 +1,5 @@
+import {SOCIAL} from "@/constants";
+
 export const productsTypes = [
   {
     title: 'Наклейки',
@@ -73,7 +75,7 @@ export const menuList = [
         path: '/blog',
       },
       {
-        label: 'Встречи',
+        label: 'Встреча',
         key: 'meet',
         path: '/meet',
       },
@@ -88,6 +90,58 @@ export const menuList = [
     label: 'Профиль',
     key: 'profile',
     path: '/profile',
+  },
+]
+
+export const footerMenuList = [
+  {
+    groupName: 'Клуб',
+    list: [
+      {
+        label: 'Авто',
+        path: '/cars'
+      },
+      {
+        label: 'Атрибутика',
+        path: '/products'
+      },
+      {
+        label: 'Партнеры',
+        path: '/partners'
+      },
+      {
+        label: 'Встреча',
+        path: '/meet'
+      },
+    ]
+  },
+  {
+    groupName: 'Информация',
+    list: [
+      {
+        label: 'О клубе',
+        path: '/about'
+      },
+      {
+        label: 'Политика конфиденциальности',
+        path: '/policy'
+      },
+    ]
+  },
+  {
+    groupName: 'Социальные сети',
+    list: [
+      {
+        icon: 'telegram',
+        openOnOtherWindow: true,
+        path: SOCIAL.TELEGRAM
+      },
+      {
+        icon: 'instagram',
+        openOnOtherWindow: true,
+        path: SOCIAL.INSTAGRAM
+      },
+    ]
   },
 ]
 

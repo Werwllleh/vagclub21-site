@@ -19,7 +19,7 @@ const marqueeAnimate = keyframes`
 
 const MarqueeContainer = styled.div`
     background-color: #b90000;
-    position: fixed;
+    position: sticky;
     z-index: 4;
     bottom: 0;
     left: 0;

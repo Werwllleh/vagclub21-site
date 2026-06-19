@@ -5,6 +5,8 @@ import {useGSAP} from "@gsap/react";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import H1 from "@/components/UI/h1";
 import SocialsWidget from "@/components/socials-widget";
+import AnimateSection from "@/components/blocks/animate-section";
+import Container from "@/components/container";
 
 const AboutContent = () => {
 
@@ -94,8 +96,8 @@ const AboutContent = () => {
 
   return (
     <>
-      <div className="page-about ppt ppb">
-        <div className="container">
+      <AnimateSection className="page-about ppt ppb">
+        <Container>
           <H1 className="page-about__title pageTitle">О клубе</H1>
           <div ref={description} className="page-about__description">
             <p>
@@ -175,8 +177,8 @@ const AboutContent = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </Container>
+      </AnimateSection>
       <SocialsWidget />
       {/*<AnimateCursor />*/}
     </>

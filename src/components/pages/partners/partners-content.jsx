@@ -7,10 +7,11 @@ import Loading from "@/app/loading";
 import PartnerCard from "@/components/partner-card";
 import {customTheme} from "@/styles/theme";
 import {usePartnersStore} from "@/store/partners.store";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Image from "next/image";
+import AnimateSection from "@/components/blocks/animate-section";
 
-const PartnersWrap = styled.div`
+const PartnersWrap = styled(AnimateSection)`
     flex: 1;
 `
 
@@ -44,6 +45,11 @@ const PartnersCategoriesContainer = styled.div`
 `
 
 const PartnersList = styled.div`
+    position: relative;
+    
+    .loader {
+        position: absolute;
+    }
 
     & > ul {
         display: grid;
@@ -73,13 +79,24 @@ const PartnersEmpty = styled.div`
 
 const PartnersContent = () => {
 
+  const [isMounted, setIsMounted] = useState(false);
+
+
   const {partnerData, isLoading} = usePartners();
 
   const {filterPartnersActive, filteredPartners, filterPartnersLoading} = usePartnersStore();
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log(filteredPartners)
-  }, [filteredPartners])
+  }, [filteredPartners])*/
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <PartnersWrap>
