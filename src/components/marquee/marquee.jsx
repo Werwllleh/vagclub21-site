@@ -36,10 +36,6 @@ const MarqueeTrack = styled.div`
   width: max-content;
   animation: ${marqueeAnimate} 40s linear infinite;
   will-change: transform;
-  
-  &:hover {
-    animation-play-state: paused;
-  }
 `;
 
 const MarqueeItem = styled.div`
@@ -50,6 +46,11 @@ const MarqueeItem = styled.div`
     font-weight: 600;
     color: ${customTheme.color.white};
     white-space: nowrap;
+    transition: transform ${customTheme.transition.small};
+
+    &:hover {
+        transform: scale(1.05);
+    }
 `
 
 const Marquee = () => {
@@ -67,7 +68,7 @@ const Marquee = () => {
   }, [meetDate, meetTimezone]);
 
   const path = usePathname();
-  const navigate = useRouter();
+  const router = useRouter();
 
   if (isLoading || !meet || !isCurrent) return null;
   if (path === '/meet') return null;
@@ -83,7 +84,7 @@ const Marquee = () => {
   ));
 
   return (
-    <MarqueeContainer onClick={() => navigate.push('/meet', {
+    <MarqueeContainer onClick={() => router.push('/meet', {
       scroll: true
     })}>
       <MarqueeTrack>

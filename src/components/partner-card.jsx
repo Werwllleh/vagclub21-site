@@ -184,10 +184,6 @@ const PartnerCard = ({partner}) => {
 
   if (!partner) return null;
 
-  /*useEffect(() => {
-    console.log(partner)
-  }, [partner]);*/
-
   return (
     <PartnerCardItem href={`/partner/${partner?.slug}` || '#'}>
       {partner?.verified && (

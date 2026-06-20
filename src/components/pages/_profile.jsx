@@ -11,7 +11,7 @@ import {checkUrl} from "@/utils/utils";
 import H1 from "@/components/UI/h1";
 
 
-const _profile = () => {
+const Profile = () => {
 
   const {isLoading, user} = useUser();
 
@@ -65,74 +65,76 @@ const _profile = () => {
 
   return (
     <>
-      <div className="profile">
-        <div className="container">
-          <H1 className="profile__title pageTitle">Профиль</H1>
-          {isLoading && <Loader/>}
-          {!isLoading && user && Object.values(user).length && (
-            <div className="profile__body">
-              <div className="profile__top">
-                <div className="profile__avatar">
-                  {photoAvailable === true && (
-                    <Avatar
-                      src={user.userPhoto}
-                      style={{backgroundColor: user?.data.user_color}}
-                    />
-                  )}
-                  {photoAvailable === false && (
-                    <span
-                      className="profile__avatar--not"
-                      style={{ backgroundColor: user.data.color}}
-                    >
+      <div className="page ppt ppb">
+        <div className="profile">
+          <div className="container">
+            <H1 className="profile__title pageTitle">Профиль</H1>
+            {isLoading && <Loader/>}
+            {!isLoading && user && Object.values(user).length && (
+              <div className="profile__body">
+                <div className="profile__top">
+                  <div className="profile__avatar">
+                    {photoAvailable === true && (
+                      <Avatar
+                        src={user.userPhoto}
+                        style={{backgroundColor: user?.data.user_color}}
+                      />
+                    )}
+                    {photoAvailable === false && (
+                      <span
+                        className="profile__avatar--not"
+                        style={{backgroundColor: user.data.color}}
+                      >
                       <span>{user.data.name.substring(0, 2).toUpperCase()}</span>
                     </span>
+                    )}
+                  </div>
+                  <div className="profile__user">
+                    <UserForm type={'update'} initialValues={{
+                      name: user?.data?.name,
+                      instagram: user?.data?.instagram,
+                    }}/>
+                  </div>
+                </div>
+                <div className="profile__bottom">
+                  {isLoading && !user.data.cars && <Loader/>}
+                  {user.data.cars && user.data.cars.length ? (
+                    <div className="profile__cars">
+                      <h3 className="h2">Ваши авто</h3>
+                      <div className="profile__cars--list">
+                        <>
+                          {user.data.cars.map((car) => {
+                            return (
+                              <ProfileCarCard key={car.id} carId={car.id} data={car}/>
+                            )
+                          })}
+                          <Button
+                            onClick={openAddCarModal}
+                            type="primary"
+                            className="btn default l"
+                          >
+                            <PlusOutlined/>
+                            Добавить авто
+                          </Button>
+                        </>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="profile__cars--empty">
+                      <p>Сейчас нет добавленных автомобилей</p>
+                      <Button
+                        onClick={openAddCarModal}
+                        type="primary"
+                        className="style-btn style-btn-primary"
+                      >
+                        Добавить авто
+                      </Button>
+                    </div>
                   )}
                 </div>
-                <div className="profile__user">
-                  <UserForm type={'update'} initialValues={{
-                    name: user?.data?.name,
-                    instagram: user?.data?.instagram,
-                  }}/>
-                </div>
               </div>
-              <div className="profile__bottom">
-                {isLoading && !user.data.cars && <Loader/>}
-                {user.data.cars && user.data.cars.length ? (
-                  <div className="profile__cars">
-                    <h3 className="h2">Ваши авто</h3>
-                    <div className="profile__cars--list">
-                      <>
-                        {user.data.cars.map((car) => {
-                          return (
-                            <ProfileCarCard key={car.id} carId={car.id} data={car}/>
-                          )
-                        })}
-                        <Button
-                          onClick={openAddCarModal}
-                          type="primary"
-                          className="btn default l"
-                        >
-                          <PlusOutlined />
-                          Добавить авто
-                        </Button>
-                      </>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="profile__cars--empty">
-                    <p>Сейчас нет добавленных автомобилей</p>
-                    <Button
-                      onClick={openAddCarModal}
-                      type="primary"
-                      className="style-btn style-btn-primary"
-                    >
-                      Добавить авто
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
       <Modal open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
@@ -142,4 +144,4 @@ const _profile = () => {
   );
 };
 
-export default _profile;
+export default Profile;

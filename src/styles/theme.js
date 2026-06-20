@@ -68,6 +68,8 @@ export const customTheme = {
     r10: '1rem',
     r15: '1.5rem',
     r20: '2rem',
+    r25: '2.5rem',
+    r30: '3rem',
   },
   transition: {
     small: '.3s ease-in-out',

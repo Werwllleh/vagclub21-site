@@ -44,6 +44,10 @@ class CmsService {
     }
   }
 
+  async fetchPartnerInfo(slug) {
+    return axiosCmsClassic.get(`/partner/c/${slug}`)
+  }
+
   async fetchPartnerCategories() {
     return axiosCmsClassic.get(`/partner_category/c`)
   }
