@@ -29,7 +29,7 @@ const PartnerHero = styled.section`
     flex-direction: column;
     justify-content: flex-end;
 
-    @media (min-width: ${customTheme.breakpoint.mobile}) {
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
         min-height: 100dvh;
     }
 `
@@ -79,11 +79,15 @@ const PartnerInfo = styled.div`
     height: 100%;
     user-select: none;
     pointer-events: none;
-    padding-block: 12rem 8rem;
+    padding-block: 7rem 3rem;
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        padding-block: 12rem 8rem;
+    }
 `
 
 const PartnerInfoBody = styled.div`
