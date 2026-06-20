@@ -19,7 +19,7 @@ const PartnerWrap = styled(AnimateSection)`
   background-color: ${customTheme.color.greyLight};
 `
 
-const PartnerHero = styled.div`
+const PartnerHero = styled.section`
     position: relative;
     min-height: 100dvh;
     overflow: hidden;
@@ -123,8 +123,11 @@ const PartnerTag = styled.span`
     white-space: nowrap;
 `
 
-const PartnerMain = styled.div`
+const PartnerMain = styled.section`
   padding-block: clamp(3rem, 5vw, 5rem) clamp(5rem, 5vw, 10rem);
+`
+
+const PartnerContacts = styled.div`
 `
 
 const PartnerDetail = ({partnerData}) => {
@@ -132,7 +135,7 @@ const PartnerDetail = ({partnerData}) => {
   console.log(partnerData);
 
   return (
-    <PartnerWrap>
+    <PartnerWrap as="div">
       <PartnerHero>
         {partnerData?.gallery ? (
           <PartnerSwiper>
@@ -172,15 +175,20 @@ const PartnerDetail = ({partnerData}) => {
           </Container>
         </PartnerInfo>
       </PartnerHero>
-      <Container>
-        <PartnerMain>
+      <PartnerMain>
+        <Container>
           {partnerData?.description && (
             <PartnerInfoDescription>
               <p>{partnerData.description}</p>
             </PartnerInfoDescription>
           )}
-        </PartnerMain>
-      </Container>
+          {partnerData?.contacts?.length && (
+            <PartnerContacts>
+              h3
+            </PartnerContacts>
+          )}
+        </Container>
+      </PartnerMain>
     </PartnerWrap>
   );
 };
