@@ -98,8 +98,12 @@ const PartnerInfoBody = styled.div`
 
 const PartnerInfoDescription = styled.div`
     max-width: 105rem;
-    font-size: clamp(1.4rem, 5vw, 1.8rem);
+    font-size: clamp(1.35rem, 5vw, 1.8rem);
     white-space: pre-wrap;
+    
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        font-size: clamp(1.4rem, 5vw, 1.8rem);
+    }
 `
 
 const PartnerTagList = styled.ul`
