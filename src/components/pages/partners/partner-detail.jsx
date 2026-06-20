@@ -23,11 +23,15 @@ const PartnerWrap = styled(AnimateSection)`
 
 const PartnerHero = styled.section`
     position: relative;
-    min-height: 100dvh;
+    min-height: 50dvh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        min-height: 100dvh;
+    }
 `
 
 const PartnerSwiper = styled.div`
