@@ -1,25 +1,47 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {usePartnerCategories} from "@/hooks/usePartnerCategories";
 import styled, {css} from "styled-components";
 import Link from "next/link";
 import {customTheme} from "@/styles/theme";
-import {useRouter, useSearchParams} from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Loading from "@/app/loading";
 import {usePartnersStore} from "@/store/partners.store";
 import CmsService from "@/services/cms.service";
 import {debounce} from "@/functions/debounce";
 
-const PCWrapper = styled.div`
+export const PCWrapper = styled.div`
 `
 
 export const PCList = styled.ul`
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem 3rem;
+    gap: 0 1.6rem;
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        gap: 1rem 2rem;
+    }
 
     &::-webkit-scrollbar {
         display: none;
+    }
+
+    li[data-reset] {
+        order: 0;
+
+        button {
+            background-color: ${customTheme.color.grey};
+            border-color: ${customTheme.color.grey};
+            color: ${customTheme.color.white};
+        }
+
+        @media (min-width: ${customTheme.breakpoint.mobile}) {
+            order: 1;
+        }
+    }
+    
+    li {
+        order: 1;
     }
 `
 
@@ -38,18 +60,13 @@ const PCItem = styled(Link)`
     background-color: ${({$loading}) => (
             $loading ? customTheme.color.greyLight : customTheme.color.white
     )};
-    padding-block: 1.45rem;
-    padding-inline: 2.2rem;
-    font-size: clamp(1.4rem, 5vw, 1.6rem);
+    padding-block: 1.25rem;
+    padding-inline: 2rem;
+    font-size: clamp(1.3rem, 5vw, 1.6rem);
     color: ${({$loading}) => (
             $loading ? customTheme.color.grey : customTheme.color.primaryDark
     )};
     line-height: 1;
-
-    &[data-reset] {
-        background-color: ${customTheme.color.primary};
-        color: ${customTheme.color.white};
-    }
 
     ${({$active}) => $active && css`
         background-color: ${customTheme.color.primary};
@@ -84,7 +101,6 @@ const PCItem = styled(Link)`
             }
         }
     `}
-    
     &:hover {
         background-color: ${({$loading}) => (
                 $loading ? customTheme.color.greyLight : customTheme.color.primary
@@ -93,13 +109,18 @@ const PCItem = styled(Link)`
                 $loading ? customTheme.color.grey : customTheme.color.white
         )};
     }
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        font-size: clamp(1.4rem, 5vw, 1.6rem);
+        padding-block: 1.45rem;
+        padding-inline: 2.2rem;
+    }
 `
 
 const PartnerCategories = () => {
 
   const {
     filterPartnersActive,
-    filteredPartners,
     setFilterPartnersActive,
     setFilteredPartners,
     setFilterPartnersLoading
@@ -115,7 +136,7 @@ const PartnerCategories = () => {
   }, []);
 
   const router = useRouter();
-
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchValue = searchParams.get('category');
 
@@ -146,6 +167,12 @@ const PartnerCategories = () => {
     debounce(searchSelectedCategoryPartners(searchValue), 300);
   }, [searchValue]);
 
+  const handleClearFilter = () => {
+    router.push(pathname, {scroll: false})
+    setFilteredPartners([])
+    setFilterPartnersActive(false)
+  }
+
   if (isLoading || !isMounted) {
     return <Loading/>;
   }
@@ -175,15 +202,10 @@ const PartnerCategories = () => {
           </li>
         ))}
         {filterPartnersActive && (
-          <li >
+          <li data-reset>
             <PCItem
               as="button"
-              data-reset
-              onClick={() => {
-                setFilteredPartners([])
-                setFilterPartnersActive(false)
-                router.push("/partners", {scroll: false})
-              }}
+              onClick={handleClearFilter}
             >
               Сбросить
             </PCItem>

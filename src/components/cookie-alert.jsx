@@ -14,11 +14,11 @@ const CookieElement = styled.div`
     background-color: #ffffffd6;
     backdrop-filter: blur(1rem);
     border-radius: ${customTheme.radius.r10};
-    max-width: 57rem;
+    max-width: 90%;
     margin-inline: auto;
     width: 100%;
     padding-block: 2rem;
-    padding-inline: 3rem;
+    padding-inline: 1.5rem;
     box-shadow: ${({$active}) => (
             $active ? '0 .3rem .9rem -.25rem #000' : 'none'
     )};
@@ -29,12 +29,27 @@ const CookieElement = styled.div`
             $active ? 'visible' : 'hidden'
     )};
     transform: ${({$active}) => (
-            $active ? 'translateY(-10%)' : 'translateY(110%)'
+            $active ? 'translateY(-5.5rem)' : 'translateY(110%)'
     )};
     transition: 
             opacity ${customTheme.transition.medium},
             visibility ${customTheme.transition.medium},
             transform ${customTheme.transition.medium};
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        padding-block: 2rem;
+        padding-inline: 3rem;
+        transform: ${({$active}) => (
+                $active ? 'translateY(-5.5rem)' : 'translateY(110%)'
+        )};
+    }
+    
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        max-width: 57rem;
+        transform: ${({$active}) => (
+                $active ? 'translateY(-7.5rem)' : 'translateY(110%)'
+        )};
+    }
 `
 
 const CookieBody = styled.div`
@@ -50,13 +65,21 @@ const CookieInfo = styled.div`
 
 const CookieTitle = styled.h3`
     font-weight: 500;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        font-size: 1.6rem;
+    }
 `
 
 const CookieText = styled.div`
     margin-top: 1rem;
     font-weight: 300;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        font-size: 1.3rem;
+    }
 `
 
 const CookieActions = styled.div`
@@ -102,11 +125,11 @@ const CookieAlert = () => {
         </CookieIcon>
         <CookieInfo>
           <CookieTitle>
-            Да, мы используем cookies
+            Да, мы&nbsp;используем cookies
           </CookieTitle>
           <CookieText>
             <p>
-              Cookies помогают сайту работать стабильно, сохранять настройки и улучшать качество сервиса.
+              Cookies помогают сайту работать стабильно, сохранять настройки и&nbsp;улучшать качество сервиса.
             </p>
           </CookieText>
           <CookieActions>

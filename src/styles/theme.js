@@ -1,7 +1,7 @@
 export const theme = {
   token: {
     colorPrimary: '#004c9d',
-    fontFamily: "Montserrat, sans-serif",
+    fontFamily: 'Martian Mono, monospace',
   },
   components: {
     Button: {
@@ -34,6 +34,9 @@ export const theme = {
     },
     Checkbox: {
       lineHeight: '1.3',
+    },
+    Pagination: {
+      fontFamily: 'Martian Mono, monospace'
     }
   }
 }

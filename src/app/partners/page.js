@@ -9,13 +9,7 @@ export const metadata = {
 };
 
 const Page = () => {
-  return (
-    <div className="page ppt ppb">
-      <Container>
-        <PartnersContent />
-      </Container>
-    </div>
-  );
+  return <PartnersContent />;
 };
 
 export default Page;

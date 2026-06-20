@@ -190,7 +190,7 @@ const Header = () => {
     >
       <HeaderInner>
         <HeaderBody>
-          <HeaderLogo href={PUBLIC_PAGES.HOME.URL}>
+          <HeaderLogo href={PUBLIC_PAGES.HOME.URL} onClick={closeMobileMenu}>
             <Logo/>
           </HeaderLogo>
           <HeaderDesktopNavWrap>
