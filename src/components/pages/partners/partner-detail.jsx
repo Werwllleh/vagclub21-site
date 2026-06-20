@@ -14,6 +14,8 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 import {customTheme} from "@/styles/theme";
 import AnimateSection from "@/components/blocks/animate-section";
+import SvgIcon from "@/components/svg-icon";
+import Link from "next/link";
 
 const PartnerWrap = styled(AnimateSection)`
   background-color: ${customTheme.color.greyLight};
@@ -128,6 +130,99 @@ const PartnerMain = styled.section`
 `
 
 const PartnerContacts = styled.div`
+    margin-top: 3rem;
+    padding-block: 2rem;
+    padding-inline: 2rem;
+    background-color: ${customTheme.color.white};
+    border-radius: ${customTheme.radius.r15};
+
+    & > h3 {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        font-weight: 500;
+    }
+`
+
+const PartnerContactsColumns = styled.div`
+    margin-top: clamp(2rem, 5vw, 4rem);
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 3rem;
+`
+
+const PartnerContactsColumn = styled.div`
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    
+    & > h4 {
+        font-size: clamp(1.4rem, 5vw, 1.6rem);
+        color: ${customTheme.color.black};
+        opacity: .8;
+    }
+    
+    & > ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+        
+        li {
+            
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                max-width: max-content;
+                color: ${customTheme.color.primaryDark};
+                font-size: clamp(1.25rem, 5vw, 1.5rem);
+
+                span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 3rem;
+                    height: 3rem;
+                    
+                    
+                    svg {
+                        width: 100%;
+                        height: 100%;
+                        color: ${customTheme.color.primary};
+                    }
+                }
+                
+                &:hover {
+                    color: ${customTheme.color.primary};
+                }
+            }
+        }
+    }
+    
+    &.socials {
+        & > ul {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1.6rem 1rem;
+            
+            li {
+                
+                a {
+                    padding: 1rem;
+                    border: 1px solid ${customTheme.color.greyLight};
+                    background-color: ${customTheme.color.greyLight};
+                    border-radius: ${customTheme.radius.r10};
+                    
+                    &:hover {
+                        svg {
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+            }
+        }
+    }
 `
 
 const PartnerDetail = ({partnerData}) => {
@@ -182,9 +277,97 @@ const PartnerDetail = ({partnerData}) => {
               <p>{partnerData.description}</p>
             </PartnerInfoDescription>
           )}
-          {partnerData?.contacts?.length && (
+          {partnerData?.contacts && (
             <PartnerContacts>
-              h3
+              <h3>Контакты</h3>
+              <PartnerContactsColumns>
+                {!!partnerData.contacts?.phones?.length && (
+                  <PartnerContactsColumn>
+                    <h4>Позвонить</h4>
+                    <ul>
+                      {partnerData.contacts.phones.map((phone) => (
+                        <li key={phone.id}>
+                          <Link href={`tel:${phone.phone}`}>
+                            <span>
+                              <SvgIcon name="phone" />
+                            </span>
+                            {phone.phone}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </PartnerContactsColumn>
+                )}
+                {(partnerData.contacts?.telegram || partnerData.contacts?.instagram || partnerData.contacts?.max || partnerData.contacts?.vk || partnerData.contacts?.avito || partnerData.contacts?.site) && (
+                  <PartnerContactsColumn className="socials">
+                    <h4>Всегда на связи</h4>
+                    <ul>
+                      {partnerData.contacts?.telegram && (
+                        <li>
+                          <Link href={partnerData.contacts.telegram} target={`_blank`}>
+                            <span>
+                              <SvgIcon name="telegram" />
+                            </span>
+                          </Link>
+                        </li>
+                      )}
+                      {partnerData.contacts?.instagram && (
+                        <li>
+                          <Link href={partnerData.contacts.instagram} target={`_blank`}>
+                            <span>
+                              <SvgIcon name="instagram" />
+                            </span>
+                          </Link>
+                        </li>
+                      )}
+                      {partnerData.contacts?.max && (
+                        <li>
+                          <Link href={partnerData.contacts.max} target={`_blank`}>
+                            <span>
+                              <SvgIcon name="max_messenger" />
+                            </span>
+                          </Link>
+                        </li>
+                      )}
+                      {partnerData.contacts?.avito && (
+                        <li>
+                          <Link href={partnerData.contacts.avito} target={`_blank`}>
+                            <span>
+                              <SvgIcon name="avito" />
+                            </span>
+                          </Link>
+                        </li>
+                      )}
+                      {partnerData.contacts?.site && (
+                        <li>
+                          <Link href={partnerData.contacts.site} target={`_blank`}>
+                            <span>
+                              <SvgIcon name="site" />
+                            </span>
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
+                  </PartnerContactsColumn>
+                )}
+                {!!partnerData.contacts?.emails?.length && (
+                  <PartnerContactsColumn>
+                    <h4>Написать на почту</h4>
+                    <ul>
+                      {partnerData.contacts.emails.map((email) => (
+                        <li key={email.id}>
+                          <Link href={`mailto:${email.email}`}>
+                            <span>
+                              <SvgIcon name="email" />
+                            </span>
+                            {email.email}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </PartnerContactsColumn>
+                )}
+              </PartnerContactsColumns>
             </PartnerContacts>
           )}
         </Container>
