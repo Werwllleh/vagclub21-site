@@ -39,6 +39,7 @@ const PartnerSwiper = styled.div`
     inset: 0;
 
     .swiper {
+        height: 100%;
 
         .swiper-wrapper {
             align-items: stretch;
