@@ -8,7 +8,8 @@ import {
   TrafficControl,
   YMaps,
   Map,
-  ZoomControl
+  ZoomControl,
+  useYMaps
 } from "@iminside/react-yandex-maps";
 
 const defaultMapOptions = {
@@ -19,11 +20,87 @@ const defaultMapOptions = {
   geolocationControl: false,
 };
 
+const styles = `
+    .custom-marker {
+      position: absolute;
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: all;
+      user-select: all;
+    }
+    .custom-marker__icon {
+      
+      svg {
+        width: 100%;
+        height: 100%;
+        color: red;
+      }
+    }
+  `;
+
+const CustomPlacemark = ({ coordinates, markerText, placemarkOptions }) => {
+  const ymaps = useYMaps(['templateLayoutFactory']);
+
+  const customLayout = useMemo(() => {
+    if (!ymaps) return null;
+
+    const svgPath = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+        <path d="M256,0C159.969,0,82.109,77.859,82.109,173.906c0,100.719,80.016,163.688,123.297,238.719 C246.813,484.406,246.781,512,256,512s9.188-27.594,50.594-99.375c43.297-75.031,123.297-138,123.297-238.719 C429.891,77.859,352.031,0,256,0z M256,240.406c-36.734,0-66.516-29.781-66.516-66.5c0-36.75,29.781-66.531,66.516-66.531 s66.516,29.781,66.516,66.531C322.516,210.625,292.734,240.406,256,240.406z"/>
+      </svg>
+    `;
+
+    return ymaps.templateLayoutFactory.createClass(`
+      <div class="custom-marker">
+        <span class="custom-marker__icon">${svgPath}</span>
+      </div>
+    `);
+  }, [ymaps]);
+
+  if (!customLayout) return null;
+
+  const handleClick = () => {
+    if (placemarkOptions?.link) {
+      window.open(placemarkOptions.link, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    placemarkOptions?.handler?.();
+  };
+
+  return (
+    <Placemark
+      geometry={coordinates}
+      onClick={handleClick}
+      properties={{
+        hintContent: markerText || 'Метка',
+        balloonContent: markerText || `Координаты: ${coordinates.join(', ')}`,
+      }}
+      options={{
+        iconLayout: customLayout,
+        iconOffset: [-32, -64],
+        iconShape: {
+          type: 'Rectangle',
+          coordinates: [
+            [0, 0],
+            [64, 64],
+          ],
+        },
+        hideIconOnBalloonOpen: false,
+      }}
+    />
+  );
+};
+
 const YandexMap = ({
                      coordinates,
                      zoom = 15,
                      markerText,
                      mapOptions = {},
+                     placemarkOptions = {},
                    }) => {
 
   const yandexMapRef = useRef(null);
@@ -79,7 +156,6 @@ const YandexMap = ({
     []
   );
 
-
   return (
     <YMaps
       query={{
@@ -88,22 +164,17 @@ const YandexMap = ({
         load: modules.join(','),
       }}
     >
+      <style>{styles}</style>
       <Map
         state={mapState}
         options={mapOptionsConfig}
         width="100%"
         height="100%"
       >
-        <Placemark
-          geometry={coordinates}
-          properties={{
-            hintContent: markerText || 'Метка',
-            balloonContent: markerText || 'Координаты: ' + coordinates.join(', '),
-          }}
-          options={{
-            preset: 'islands#blackAutoIcon',
-
-          }}
+        <CustomPlacemark
+          placemarkOptions={placemarkOptions}
+          coordinates={coordinates}
+          markerText={markerText}
         />
 
         {mergedOptions.zoomControl && (

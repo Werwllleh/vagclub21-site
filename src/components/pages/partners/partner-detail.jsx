@@ -16,6 +16,9 @@ import {customTheme} from "@/styles/theme";
 import AnimateSection from "@/components/blocks/animate-section";
 import SvgIcon from "@/components/svg-icon";
 import Link from "next/link";
+import YandexMap from "@/components/yandex-map";
+import React from "react";
+import {useRouter} from "next/navigation";
 
 const PartnerWrap = styled(AnimateSection)`
   background-color: ${customTheme.color.greyLight};
@@ -107,11 +110,11 @@ const PartnerInfoBody = styled.div`
 
 const PartnerInfoDescription = styled.div`
     max-width: 105rem;
-    font-size: clamp(1.35rem, 5vw, 1.8rem);
+    font-size: 1.4rem;
     white-space: pre-wrap;
     
     @media (min-width: ${customTheme.breakpoint.mobile}) {
-        font-size: clamp(1.4rem, 5vw, 1.8rem);
+        font-size: clamp(1.4rem, 5vw, 1.6rem);
     }
 `
 
@@ -147,7 +150,7 @@ const PartnerContacts = styled.div`
     padding-block: 2rem;
     padding-inline: 2rem;
     background-color: ${customTheme.color.white};
-    border-radius: ${customTheme.radius.r15};
+    border-radius: ${customTheme.radius.r15} ${customTheme.radius.r15} 0 0;
 
     & > h3 {
         font-size: clamp(1.5rem, 5vw, 2rem);
@@ -235,6 +238,20 @@ const PartnerContactsColumn = styled.div`
                 }
             }
         }
+    }
+`
+
+const PartnerMap = styled.div`
+    
+`
+
+const PartnerMapInner = styled.div`
+    height: 35rem;
+    border-radius: 0 0 ${customTheme.radius.r15} ${customTheme.radius.r15};
+    overflow: hidden;
+    
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        height: 40rem;
     }
 `
 
@@ -382,6 +399,19 @@ const PartnerDetail = ({partnerData}) => {
                 )}
               </PartnerContactsColumns>
             </PartnerContacts>
+          )}
+          {partnerData?.coordinates && (
+            <PartnerMap>
+              <PartnerMapInner>
+                <YandexMap
+                  coordinates={Object.values(partnerData.coordinates)}
+                  zoom={17}
+                  placemarkOptions={{
+                    link: partnerData?.contacts?.yandexMaps,
+                  }}
+                />
+              </PartnerMapInner>
+            </PartnerMap>
           )}
         </Container>
       </PartnerMain>
