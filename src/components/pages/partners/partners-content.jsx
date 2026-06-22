@@ -96,6 +96,16 @@ const PartnersEmpty = styled.div`
     }
 `
 
+const PartnersLoaderContainer = styled.div`
+    position: relative;
+    padding-block: clamp(2rem, 5vw, 5rem);
+    
+    .loader {
+        position: relative;
+        transform: none;
+    }
+`
+
 const SHOW_DATA_PARTNERS_LIMIT = 10
 
 const PartnersContent = () => {
@@ -145,7 +155,7 @@ const PartnersContent = () => {
           </PartnersCategoriesContainer>
           <PartnersMain>
             <PartnersList>
-              {isLoading || filterPartnersLoading ? <Loading/> : (
+              {isLoading || filterPartnersLoading ? <PartnersLoaderContainer><Loading/></PartnersLoaderContainer> : (
                 filterPartnersActive ? (
                   !!filteredPartners.length ? (
                     <ul>

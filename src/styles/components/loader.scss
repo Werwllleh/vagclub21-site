@@ -1,6 +1,18 @@
 @use "sass:color";
 @use "../variables";
 
+
+.page-loader {
+  flex: 1;
+  padding-block: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loader {
+    position: relative;
+  }
+}
 .loader {
   position: fixed;
   margin-inline: auto;

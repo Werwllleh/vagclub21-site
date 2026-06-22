@@ -21,7 +21,7 @@ import React from "react";
 import {useRouter} from "next/navigation";
 
 const PartnerWrap = styled(AnimateSection)`
-  background-color: ${customTheme.color.greyLight};
+    background-color: ${customTheme.color.greyLight};
 `
 
 const PartnerHero = styled.section`
@@ -112,7 +112,7 @@ const PartnerInfoDescription = styled.div`
     max-width: 105rem;
     font-size: 1.4rem;
     white-space: pre-wrap;
-    
+
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         font-size: clamp(1.4rem, 5vw, 1.6rem);
     }
@@ -142,15 +142,13 @@ const PartnerTag = styled.span`
 `
 
 const PartnerMain = styled.section`
-  padding-block: clamp(3rem, 5vw, 5rem) clamp(5rem, 5vw, 10rem);
+    padding-block: clamp(3rem, 5vw, 5rem) clamp(5rem, 5vw, 10rem);
 `
 
 const PartnerContacts = styled.div`
-    margin-top: 3rem;
     padding-block: 2rem;
     padding-inline: 2rem;
     background-color: ${customTheme.color.white};
-    border-radius: ${customTheme.radius.r15} ${customTheme.radius.r15} 0 0;
 
     & > h3 {
         font-size: clamp(1.5rem, 5vw, 2rem);
@@ -171,20 +169,20 @@ const PartnerContactsColumn = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    
+
     & > h4 {
         font-size: clamp(1.4rem, 5vw, 1.6rem);
         color: ${customTheme.color.black};
         opacity: .8;
     }
-    
+
     & > ul {
         display: flex;
         flex-direction: column;
         gap: 1.6rem;
-        
+
         li {
-            
+
             a {
                 display: flex;
                 align-items: center;
@@ -200,36 +198,36 @@ const PartnerContactsColumn = styled.div`
                     justify-content: center;
                     width: 3rem;
                     height: 3rem;
-                    
-                    
+
+
                     svg {
                         width: 100%;
                         height: 100%;
                         color: ${customTheme.color.primary};
                     }
                 }
-                
+
                 &:hover {
                     color: ${customTheme.color.primary};
                 }
             }
         }
     }
-    
+
     &.socials {
         & > ul {
             flex-direction: row;
             flex-wrap: wrap;
             gap: 1.6rem 1rem;
-            
+
             li {
-                
+
                 a {
                     padding: 1rem;
                     border: 1px solid ${customTheme.color.greyLight};
                     background-color: ${customTheme.color.greyLight};
                     border-radius: ${customTheme.radius.r10};
-                    
+
                     &:hover {
                         svg {
                             transform: scale(1.1);
@@ -242,14 +240,19 @@ const PartnerContactsColumn = styled.div`
 `
 
 const PartnerMap = styled.div`
-    
+
+`
+
+const PartnerFooter = styled.div`
+    margin-top: 3rem;
+    border-radius: ${customTheme.radius.r15};
+    overflow: hidden;
 `
 
 const PartnerMapInner = styled.div`
     height: 35rem;
-    border-radius: 0 0 ${customTheme.radius.r15} ${customTheme.radius.r15};
     overflow: hidden;
-    
+
     @media (min-width: ${customTheme.breakpoint.tablet}) {
         height: 40rem;
     }
@@ -307,112 +310,114 @@ const PartnerDetail = ({partnerData}) => {
               <p>{partnerData.description}</p>
             </PartnerInfoDescription>
           )}
-          {partnerData?.contacts && (
-            <PartnerContacts>
-              <h3>Контакты</h3>
-              <PartnerContactsColumns>
-                {!!partnerData.contacts?.phones?.length && (
-                  <PartnerContactsColumn>
-                    <h4>Позвонить</h4>
-                    <ul>
-                      {partnerData.contacts.phones.map((phone) => (
-                        <li key={phone.id}>
-                          <Link href={`tel:${phone.phone}`}>
+          <PartnerFooter>
+            {partnerData?.contacts && (
+              <PartnerContacts>
+                <h3>Контакты</h3>
+                <PartnerContactsColumns>
+                  {!!partnerData.contacts?.phones?.length && (
+                    <PartnerContactsColumn>
+                      <h4>Позвонить</h4>
+                      <ul>
+                        {partnerData.contacts.phones.map((phone) => (
+                          <li key={phone.id}>
+                            <Link href={`tel:${phone.phone}`}>
                             <span>
-                              <SvgIcon name="phone" />
+                              <SvgIcon name="phone"/>
                             </span>
-                            {phone.phone}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </PartnerContactsColumn>
-                )}
-                {(partnerData.contacts?.telegram || partnerData.contacts?.instagram || partnerData.contacts?.max || partnerData.contacts?.vk || partnerData.contacts?.avito || partnerData.contacts?.site) && (
-                  <PartnerContactsColumn className="socials">
-                    <h4>Всегда на связи</h4>
-                    <ul>
-                      {partnerData.contacts?.telegram && (
-                        <li>
-                          <Link href={partnerData.contacts.telegram} target={`_blank`}>
+                              {phone.phone}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </PartnerContactsColumn>
+                  )}
+                  {(partnerData.contacts?.telegram || partnerData.contacts?.instagram || partnerData.contacts?.max || partnerData.contacts?.vk || partnerData.contacts?.avito || partnerData.contacts?.site) && (
+                    <PartnerContactsColumn className="socials">
+                      <h4>Всегда на связи</h4>
+                      <ul>
+                        {partnerData.contacts?.telegram && (
+                          <li>
+                            <Link href={partnerData.contacts.telegram} target={`_blank`}>
                             <span>
-                              <SvgIcon name="telegram" />
+                              <SvgIcon name="telegram"/>
                             </span>
-                          </Link>
-                        </li>
-                      )}
-                      {partnerData.contacts?.instagram && (
-                        <li>
-                          <Link href={partnerData.contacts.instagram} target={`_blank`}>
+                            </Link>
+                          </li>
+                        )}
+                        {partnerData.contacts?.instagram && (
+                          <li>
+                            <Link href={partnerData.contacts.instagram} target={`_blank`}>
                             <span>
-                              <SvgIcon name="instagram" />
+                              <SvgIcon name="instagram"/>
                             </span>
-                          </Link>
-                        </li>
-                      )}
-                      {partnerData.contacts?.max && (
-                        <li>
-                          <Link href={partnerData.contacts.max} target={`_blank`}>
+                            </Link>
+                          </li>
+                        )}
+                        {partnerData.contacts?.max && (
+                          <li>
+                            <Link href={partnerData.contacts.max} target={`_blank`}>
                             <span>
-                              <SvgIcon name="max_messenger" />
+                              <SvgIcon name="max_messenger"/>
                             </span>
-                          </Link>
-                        </li>
-                      )}
-                      {partnerData.contacts?.avito && (
-                        <li>
-                          <Link href={partnerData.contacts.avito} target={`_blank`}>
+                            </Link>
+                          </li>
+                        )}
+                        {partnerData.contacts?.avito && (
+                          <li>
+                            <Link href={partnerData.contacts.avito} target={`_blank`}>
                             <span>
-                              <SvgIcon name="avito" />
+                              <SvgIcon name="avito"/>
                             </span>
-                          </Link>
-                        </li>
-                      )}
-                      {partnerData.contacts?.site && (
-                        <li>
-                          <Link href={partnerData.contacts.site} target={`_blank`}>
+                            </Link>
+                          </li>
+                        )}
+                        {partnerData.contacts?.site && (
+                          <li>
+                            <Link href={partnerData.contacts.site} target={`_blank`}>
                             <span>
-                              <SvgIcon name="site" />
+                              <SvgIcon name="site"/>
                             </span>
-                          </Link>
-                        </li>
-                      )}
-                    </ul>
-                  </PartnerContactsColumn>
-                )}
-                {!!partnerData.contacts?.emails?.length && (
-                  <PartnerContactsColumn>
-                    <h4>Написать на почту</h4>
-                    <ul>
-                      {partnerData.contacts.emails.map((email) => (
-                        <li key={email.id}>
-                          <Link href={`mailto:${email.email}`}>
+                            </Link>
+                          </li>
+                        )}
+                      </ul>
+                    </PartnerContactsColumn>
+                  )}
+                  {!!partnerData.contacts?.emails?.length && (
+                    <PartnerContactsColumn>
+                      <h4>Написать на почту</h4>
+                      <ul>
+                        {partnerData.contacts.emails.map((email) => (
+                          <li key={email.id}>
+                            <Link href={`mailto:${email.email}`}>
                             <span>
-                              <SvgIcon name="email" />
+                              <SvgIcon name="email"/>
                             </span>
-                            {email.email}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </PartnerContactsColumn>
-                )}
-              </PartnerContactsColumns>
-            </PartnerContacts>
-          )}
-          {partnerData?.coordinates && (
-            <PartnerMap>
-              <PartnerMapInner>
-                <YandexMap
-                  coordinates={Object.values(partnerData.coordinates)}
-                  zoom={17}
-                  placemarkOptions={{
-                    link: partnerData?.contacts?.yandexMaps,
-                  }}
-                />
-              </PartnerMapInner>
-            </PartnerMap>
-          )}
+                              {email.email}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </PartnerContactsColumn>
+                  )}
+                </PartnerContactsColumns>
+              </PartnerContacts>
+            )}
+            {partnerData?.coordinates && (partnerData.coordinates?.lat && partnerData.coordinates?.lng) && (
+              <PartnerMap>
+                <PartnerMapInner>
+                  <YandexMap
+                    coordinates={Object.values(partnerData.coordinates)}
+                    zoom={17}
+                    placemarkOptions={{
+                      link: partnerData?.contacts?.yandexMaps,
+                    }}
+                  />
+                </PartnerMapInner>
+              </PartnerMap>
+            )}
+          </PartnerFooter>
         </Container>
       </PartnerMain>
     </PartnerWrap>
