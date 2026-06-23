@@ -20,6 +20,11 @@ export const PRODUCT_TYPE = {
   FRAMES: 'frames',
 }
 
+export const SOCIAL = {
+  TELEGRAM: 'https://t.me/+A6S11dagaDA2OWMy',
+  INSTAGRAM: 'https://www.instagram.com/vag_club21',
+}
+
 /* === YANDEX METRIKA === */
 
 export const YM_METHOD = {
@@ -30,11 +35,6 @@ export const YM_METHOD = {
 export const YM_ACTION = {
   TELEGRAM_GROUP: 'Telegram',
   INSTAGRAM: 'Instagram',
-}
-
-export const SOCIAL = {
-  TELEGRAM: 'https://t.me/+A6S11dagaDA2OWMy',
-  INSTAGRAM: 'https://www.instagram.com/vag_club21',
 }
 
 /* === /YANDEX METRIKA === */
