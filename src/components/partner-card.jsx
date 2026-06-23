@@ -8,7 +8,7 @@ import SvgIcon from "@/components/svg-icon";
 
 const PartnerCardLabel = styled.label`
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     top: -1.25rem;
     right: -.1rem;
     color: ${customTheme.color.white};
@@ -48,6 +48,45 @@ const PartnerCardLabel = styled.label`
     }
 `
 
+const PartnerCardLogo = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 4rem;
+    background-color: ${customTheme.color.greyLight};
+    border-radius: ${customTheme.radius.r15} ${customTheme.radius.r15} 0 0;
+    overflow: hidden;
+    
+    &:after {
+        background: #fff;
+        content: "";
+        height: 150%;
+        left: -120%;
+        opacity: .4;
+        position: absolute;
+        top: -50px;
+        transform: rotate(35deg);
+        transition: all 1.5s cubic-bezier(.19, 1, .19, 1);
+        width: 6rem;
+        z-index: 1;
+    }
+
+    img {
+        object-fit: contain;
+        width: 100%;
+        height: 10rem;
+        max-width: 20rem;
+        transition: transform ${customTheme.transition.small};
+    }
+
+    svg {
+        width: 10rem;
+        height: 10rem;
+        color: ${customTheme.color.grey};
+    }
+`
+
 const PartnerCardButton = styled.button`
     margin-block: 1rem 0;
     margin-inline: auto;
@@ -67,11 +106,23 @@ const PartnerCardItem = styled(Link)`
     @media (min-width: ${customTheme.breakpoint.tablet}) {
         min-height: 40rem;
     }
-    
+
     &:hover {
 
         @media (min-width: ${customTheme.breakpoint.tablet}) {
-            
+            box-shadow: 0 .7rem 1rem .5rem rgba(0, 0, 0, 0.23);
+
+            ${PartnerCardLogo} {
+                &:after {
+                    left: 120%;
+                    transition: all 2s cubic-bezier(.19, 1, .22, 1);
+                }
+                
+                img {
+                    transform: scale(1.025);
+                }
+            }
+
             ${PartnerCardButton} {
                 background-color: ${customTheme.color.primary};
                 color: ${customTheme.color.white};
@@ -90,29 +141,6 @@ const PartnerCardInner = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-`
-
-const PartnerCardLogo = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-block: 4rem;
-    background-color: ${customTheme.color.greyLight};
-    border-radius: ${customTheme.radius.r15} ${customTheme.radius.r15} 0 0;
-    overflow: hidden;
-
-    img {
-        object-fit: contain;
-        width: 100%;
-        height: 10rem;
-        max-width: 20rem;
-    }
-
-    svg {
-        width: 10rem;
-        height: 10rem;
-        color: ${customTheme.color.grey};
-    }
 `
 
 const PartnerCardInfo = styled.div`
@@ -151,7 +179,7 @@ const PartnerCardCategory = styled.span`
     color: ${customTheme.color.grey};
     font-weight: 300;
     line-height: 1;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 `
 
 const PartnerCardCategories = styled.ul`

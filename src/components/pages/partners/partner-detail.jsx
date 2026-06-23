@@ -18,7 +18,6 @@ import SvgIcon from "@/components/svg-icon";
 import Link from "next/link";
 import YandexMap from "@/components/yandex-map";
 import React from "react";
-import {useRouter} from "next/navigation";
 
 const PartnerWrap = styled(AnimateSection)`
     background-color: ${customTheme.color.greyLight};
@@ -110,11 +109,71 @@ const PartnerInfoBody = styled.div`
 
 const PartnerInfoDescription = styled.div`
     max-width: 105rem;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     white-space: pre-wrap;
+    line-height: 1.55;
 
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         font-size: clamp(1.4rem, 5vw, 1.6rem);
+    }
+`
+
+const PartnerInfoAddress = styled.div`
+    margin-top: 2rem;
+    font-weight: 500;
+    color: ${customTheme.color.primaryDark};
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        margin-top: 3rem;
+    }
+    
+    a {
+        color: inherit;
+        
+        &:hover {
+            color: ${customTheme.color.primary};
+        }
+    }
+`
+
+const PartnerDiscount = styled.div`
+    position: relative;
+    margin-top: 2rem;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: ${customTheme.color.white};
+    padding-block: 1.6rem;
+    line-height: 1.5;
+    padding-inline: 2rem;
+    z-index: 1;
+    border-radius: ${customTheme.radius.r10};
+    overflow: hidden;
+    max-width: max-content;
+    
+    b {
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        margin-top: 3rem;
+        padding-block: 2rem;
+        font-size: 1.5rem;
+
+        b {
+            font-size: 1.8rem;
+        }
+    }
+    
+    &:after {
+        content: "";
+        z-index: -1;
+        background-image: linear-gradient(135deg, #2c2928 0 33%, #e31e23 33% 66%, #eccb00 66% 100%);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 `
 
@@ -171,9 +230,13 @@ const PartnerContactsColumn = styled.div`
     gap: 1.6rem;
 
     & > h4 {
-        font-size: clamp(1.4rem, 5vw, 1.6rem);
+        font-size: 1.3rem;
         color: ${customTheme.color.black};
         opacity: .8;
+
+        @media (min-width: ${customTheme.breakpoint.mobile}) {
+            font-size: clamp(1.4rem, 5vw, 1.6rem);
+        }
     }
 
     & > ul {
@@ -190,14 +253,23 @@ const PartnerContactsColumn = styled.div`
                 gap: 1rem;
                 max-width: max-content;
                 color: ${customTheme.color.primaryDark};
-                font-size: clamp(1.25rem, 5vw, 1.5rem);
+                font-size: 1.25rem;
+
+                @media (min-width: ${customTheme.breakpoint.mobile}) {
+                    font-size: clamp(1.25rem, 5vw, 1.5rem);
+                }
 
                 span {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 3rem;
-                    height: 3rem;
+                    width: 2rem;
+                    height: 2rem;
+
+                    @media (min-width: ${customTheme.breakpoint.mobile}) {
+                        width: 2.4rem;
+                        height: 2.4rem;
+                    }
 
 
                     svg {
@@ -258,6 +330,27 @@ const PartnerMapInner = styled.div`
     }
 `
 
+const PartnerNote = styled.p`
+    margin-top: 2rem;
+    padding-block: 2rem;
+    padding-inline: 2rem;
+    color: ${customTheme.color.grey};
+    background-color: ${customTheme.color.white};
+    border-radius: ${customTheme.radius.r15};
+    font-size: 1.1rem;
+    line-height: 1.5;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        font-size: 1.3rem;
+    }
+    
+    a {
+        color: ${customTheme.color.primary};
+        text-decoration: underline;
+        text-underline-offset: .5rem;
+    }
+`
+
 const PartnerDetail = ({partnerData}) => {
 
   console.log(partnerData);
@@ -265,7 +358,7 @@ const PartnerDetail = ({partnerData}) => {
   return (
     <PartnerWrap as="div">
       <PartnerHero>
-        {partnerData?.gallery ? (
+        {!!partnerData?.gallery?.length ? (
           <PartnerSwiper>
             <Swiper
               modules={[Autoplay]}
@@ -308,6 +401,22 @@ const PartnerDetail = ({partnerData}) => {
           {partnerData?.description && (
             <PartnerInfoDescription>
               <p>{partnerData.description}</p>
+              {partnerData?.discount && (
+                <PartnerDiscount>
+                  Компания предоставляет клубную скидку в&nbsp;<b>{partnerData?.discount}%</b>
+                </PartnerDiscount>
+              )}
+              {partnerData?.address && (
+                <PartnerInfoAddress>
+                  {partnerData?.contacts?.yandexMaps ? (
+                    <Link href={partnerData?.contacts?.yandexMaps} target={"_blank"}>
+                      | {partnerData.address}
+                    </Link>) : (
+                    <p>
+                      | {partnerData.address}
+                    </p>
+                  )}
+                </PartnerInfoAddress>)}
             </PartnerInfoDescription>
           )}
           <PartnerFooter>
@@ -418,6 +527,9 @@ const PartnerDetail = ({partnerData}) => {
               </PartnerMap>
             )}
           </PartnerFooter>
+          <PartnerNote>
+            Администрация автоклуба не&nbsp;отвечает напрямую за&nbsp;услуги партнеров клуба, но&nbsp;всегда готовы помочь разобраться в&nbsp;сложных ситуациях. Если вопрос не&nbsp;удалось решить на&nbsp;месте, пожалуйста, свяжитесь с&nbsp;<Link href={"#"} target={"_blank"}>главным администратором</Link>&nbsp;&mdash; мы&nbsp;найдем решение.
+          </PartnerNote>
         </Container>
       </PartnerMain>
     </PartnerWrap>

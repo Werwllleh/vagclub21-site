@@ -98,11 +98,10 @@ const PartnersEmpty = styled.div`
 
 const PartnersLoaderContainer = styled.div`
     position: relative;
-    padding-block: clamp(2rem, 5vw, 5rem);
+    //padding-block: clamp(2rem, 5vw, 5rem);
     
     .loader {
         position: relative;
-        transform: none;
     }
 `
 
