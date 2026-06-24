@@ -60,6 +60,10 @@ const PartnersLabelsItem = styled(Link)`
 const PartnersLabels = () => {
   const { isLoading, partnerLabelsData } = usePartnersLabels();
 
+  if (isLoading || !partnerLabelsData.length) {
+    return null;
+  }
+
   const duplicatedLabels = partnerLabelsData
     ? Array.from({ length: 10 }).flatMap(() => partnerLabelsData)
     : [];
