@@ -11,7 +11,6 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/pagination';
 import Loader from "@/components/loader";
-import {useEffect} from "react";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
 import ProductLabel from "@/components/products/product-label";

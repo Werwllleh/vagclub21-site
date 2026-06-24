@@ -13,6 +13,9 @@ import AnimateSection from "@/components/blocks/animate-section";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {Pagination} from "antd";
 import Container from "@/components/container";
+import SvgIcon from "@/components/svg-icon";
+import {useLenis} from "lenis/react";
+import {pluralize} from "@/utils/utils";
 
 const PartnersWrap = styled(AnimateSection)`
     flex: 1;
@@ -25,28 +28,135 @@ const PartnersGrid = styled.div`
     gap: 4rem 0;
 
     @media (min-width: ${customTheme.breakpoint.w1250}) {
-        grid-template-columns: 40rem 1fr;
-        gap: 0 4rem;
-        align-items: stretch;
+        grid-template-columns: 100%;
+        gap: 5rem 0;
+    }
+`
+
+const PartnersCategoriesButton = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: max-content;
+    gap: 0 .7rem;
+    font-size: 1.6rem;
+    line-height: 1;
+    border-radius: ${customTheme.radius.r7};
+    padding-block: .2rem;
+    padding-inline: 1rem;
+    background-color: ${customTheme.color.white};
+    border: 1px solid ${customTheme.color.primary};
+
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.2rem;
+        height: 3.2rem;
+
+        svg {
+            width: 100%;
+            height: 100%;
+            color: ${customTheme.color.primary};
+        }
+    }
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: none;
     }
 `
 
 const PartnersCategoriesContainer = styled.div`
 
-    ${PCWrapper} {
-        position: sticky;
-        top: 15rem;
+    @media (max-width: ${customTheme.breakpoint.tablet}) {
+        position: fixed;
+        padding-block: 7rem 12rem;
+        padding-inline: 1.5rem;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        z-index: 6;
+        background-color: ${customTheme.color.white};
+        opacity: ${({$active}) => ($active ? 1 : 0)};
+        visibility: ${({$active}) => ($active ? 'visible' : 'hidden')};
+        transform: ${({$active}) => ($active ? 'translateX(0)' : 'translateX(-120%)')};
+        transition: opacity ${customTheme.transition.small}, visibility ${customTheme.transition.small}, transform ${customTheme.transition.medium};
+    }
+`
+
+const PartnersCategoriesContainerClose = styled.button`
+    position: absolute;
+    top: 1.5rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+
+    svg {
+        width: 100%;
+        height: 100%;
     }
 
-    ${PCList} {
-        flex-wrap: nowrap;
-        overflow-x: auto;
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: none;
+    }
+`
+
+const PartnerCategoriesTagsContainer = styled.div`
+    
+    @media (max-width: ${customTheme.breakpoint.tablet}) {
+        overflow-y: auto;
+        height: 100%;
+        max-height: calc(100dvh - 16rem);
         margin-inline: -1.5rem;
         padding-inline: 1.5rem;
-
-        @media (min-width: ${customTheme.breakpoint.w1250}) {
-            flex-wrap: wrap;
+        
+        ${PCList} {
+            
+            li {
+                flex: 1 1 calc(50% - 1.6rem);
+                
+                a {
+                    width: 100%;
+                    max-width: none;
+                }
+                
+                &[data-reset] {
+                    width: 100%;
+                    position: absolute;
+                    bottom: 5rem;
+                    inset-inline-start: 50%;
+                    transform: translateX(-50%);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    
+                    button {
+                        width: 100%;
+                        max-width: 30rem;
+                        
+                    }
+                }
+            }
         }
+    }
+`
+
+const PartnersCategoriesNote = styled.span`
+    position: absolute;
+    bottom: 2rem;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: ${customTheme.color.grey};
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: none;
     }
 `
 
@@ -98,8 +208,7 @@ const PartnersEmpty = styled.div`
 
 const PartnersLoaderContainer = styled.div`
     position: relative;
-    //padding-block: clamp(2rem, 5vw, 5rem);
-    
+
     .loader {
         position: relative;
     }
@@ -114,10 +223,15 @@ const PartnersContent = () => {
   const searchParams = useSearchParams();
 
   const [isMounted, setIsMounted] = useState(false);
+  const [isFiltersActive, setIsFiltersActive] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  useLenis((lenis) => {
+    lenis._isLocked = isFiltersActive
+  })
 
   const page = useMemo(() => {
     const p = Number(searchParams.get("page") ?? 1);
@@ -149,8 +263,27 @@ const PartnersContent = () => {
       <Container>
         <H1>Партнеры клуба</H1>
         <PartnersGrid>
-          <PartnersCategoriesContainer>
-            <PartnerCategories/>
+          <PartnersCategoriesButton
+            onClick={() => setIsFiltersActive(true)}
+          >
+              <span>
+                <SvgIcon name="filters"/>
+              </span>
+              Фильтр
+          </PartnersCategoriesButton>
+          <PartnersCategoriesContainer $active={isFiltersActive}>
+            <PartnersCategoriesContainerClose
+              onClick={() => setIsFiltersActive(false)}
+            >
+              <SvgIcon name="close"/>
+            </PartnersCategoriesContainerClose>
+            <PartnerCategoriesTagsContainer data-lenis-prevent>
+              <PartnerCategories/>
+            </PartnerCategoriesTagsContainer>
+            {!!filteredPartners.length && (
+              <PartnersCategoriesNote>
+                {pluralize(filteredPartners.length, ['Найдена', 'Найдено', 'Найдены'])} {filteredPartners.length} {pluralize(filteredPartners.length, ['компания', 'компании', 'компаний'])}
+              </PartnersCategoriesNote>)}
           </PartnersCategoriesContainer>
           <PartnersMain>
             <PartnersList>

@@ -16,7 +16,7 @@ export const PCWrapper = styled.div`
 export const PCList = styled.ul`
     display: flex;
     flex-wrap: wrap;
-    gap: 0 1.6rem;
+    gap: 1.6rem;
 
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         gap: 1rem 2rem;
@@ -60,8 +60,8 @@ const PCItem = styled(Link)`
     background-color: ${({$loading}) => (
             $loading ? customTheme.color.greyLight : customTheme.color.white
     )};
-    padding-block: 1.25rem;
-    padding-inline: 2rem;
+    padding-block: 1rem;
+    padding-inline: 1.4rem;
     font-size: clamp(1.3rem, 5vw, 1.6rem);
     color: ${({$loading}) => (
             $loading ? customTheme.color.grey : customTheme.color.primaryDark
@@ -112,8 +112,8 @@ const PCItem = styled(Link)`
 
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         font-size: clamp(1.4rem, 5vw, 1.6rem);
-        padding-block: 1.45rem;
-        padding-inline: 2.2rem;
+        padding-block: 1.2rem;
+        padding-inline: 1.6rem;
     }
 `
 
