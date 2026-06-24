@@ -2,9 +2,9 @@
 import H1 from "../../UI/h1";
 import {usePartners} from "@/hooks/usePartners";
 import styled from "styled-components";
-import PartnerCategories, {PCList, PCWrapper} from "@/components/partner-categories";
+import PartnerCategories, {PCList, PCWrapper} from "@/components/partners/partner-categories";
 import Loading from "@/app/loading";
-import PartnerCard from "@/components/partner-card";
+import PartnerCard from "@/components/partners/partner-card";
 import {customTheme} from "@/styles/theme";
 import {usePartnersStore} from "@/store/partners.store";
 import {useCallback, useEffect, useMemo, useState} from "react";

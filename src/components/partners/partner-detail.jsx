@@ -18,6 +18,7 @@ import SvgIcon from "@/components/svg-icon";
 import Link from "next/link";
 import YandexMap from "@/components/yandex-map";
 import React from "react";
+import PartnersLabels, {PartnersLabelsWrapper} from "@/components/partners/partners-labels";
 
 const PartnerWrap = styled(AnimateSection)`
     background-color: ${customTheme.color.greyLight};
@@ -202,6 +203,10 @@ const PartnerTag = styled.span`
 
 const PartnerMain = styled.section`
     padding-block: clamp(3rem, 5vw, 5rem) clamp(5rem, 5vw, 10rem);
+    
+    ${PartnersLabelsWrapper} {
+        padding-top: clamp(5rem, 5vw, 10rem);
+    }
 `
 
 const PartnerContacts = styled.div`
@@ -531,6 +536,7 @@ const PartnerDetail = ({partnerData}) => {
             Администрация автоклуба не&nbsp;отвечает напрямую за&nbsp;услуги партнеров клуба, но&nbsp;всегда готовы помочь разобраться в&nbsp;сложных ситуациях. Если вопрос не&nbsp;удалось решить на&nbsp;месте, пожалуйста, свяжитесь с&nbsp;<Link href={"#"} target={"_blank"}>главным администратором</Link>&nbsp;&mdash; мы&nbsp;найдем решение.
           </PartnerNote>
         </Container>
+        <PartnersLabels />
       </PartnerMain>
     </PartnerWrap>
   );

@@ -18,3 +18,18 @@ export function usePartners({ page = 1, limit = 20 } = {}) {
     partnerData: data?.data ? data.data : null,
   };
 }
+
+export function usePartnersLabels() {
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['partners_lebels'],
+    queryFn: () => cmsService.fetchPartnersLabels(),
+    staleTime: 60 * 60 * 1000,
+    placeholderData: (previousData) => previousData,
+  });
+
+  return {
+    isLoading,
+    partnerLabelsData: data?.data ? data.data : null,
+  };
+}

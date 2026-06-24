@@ -2,6 +2,8 @@
 @use "../breakpoints";
 
 .page-main {
+  background-color: variables.$colorSecondary;
+  padding-bottom: clamp(5rem, 5vw, 12rem);
 
   section {
     will-change: opacity;
@@ -46,16 +48,8 @@
   }
 
   .about {
-    padding-block: 5rem;
-    background-color: variables.$colorSecondary;
+    margin-top: 3rem;
 
-    @include breakpoints.desktop {
-      padding-block: 8rem;
-    }
-
-    @include breakpoints.w1600 {
-      padding-block: 12rem;
-    }
 
     &__body {
       display: grid;

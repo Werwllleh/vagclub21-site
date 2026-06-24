@@ -8,6 +8,7 @@ import AnimateSection from "@/components/blocks/animate-section";
 import styled from "styled-components";
 import {H1Element} from "@/components/UI/h1";
 import {customTheme} from "@/styles/theme";
+import PartnersLabels from "@/components/partners/partners-labels";
 
 
 const SectionTitle = styled(H1Element)`
@@ -43,6 +44,9 @@ const MainPage = () => {
       {/*<section className="page-main__cooperation">
         <CooperationForm />
       </section>*/}
+      <AnimateSection>
+        <PartnersLabels />
+      </AnimateSection>
       <AnimateSection
         className={"about"}
         initial={{ opacity: 0, y: 40 }}

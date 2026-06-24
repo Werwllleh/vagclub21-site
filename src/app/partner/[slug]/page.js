@@ -1,4 +1,4 @@
-import PartnerDetail from "@/components/pages/partners/partner-detail";
+import PartnerDetail from "@/components/partners/partner-detail";
 import PartnersContent from "@/components/pages/partners/partners-content";
 import CmsService from "@/services/cms.service";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
