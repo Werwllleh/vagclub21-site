@@ -44,9 +44,7 @@ const MainPage = () => {
       {/*<section className="page-main__cooperation">
         <CooperationForm />
       </section>*/}
-      <AnimateSection>
-        <PartnersLabels />
-      </AnimateSection>
+      <PartnersLabels />
       <AnimateSection
         className={"about"}
         initial={{ opacity: 0, y: 40 }}
