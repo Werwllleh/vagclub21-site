@@ -19,6 +19,7 @@
     "@telegram-auth/server": "^1.0.4",
     "antd": "^6.4.3",
     "antd-mask-input": "^2.0.7",
+    "antd-style": "^4.1.0",
     "axios": "1.17.0",
     "dayjs": "^1.11.21",
     "framer-motion": "^12.40.0",

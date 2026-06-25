@@ -214,7 +214,7 @@ const PartnersLoaderContainer = styled.div`
     }
 `
 
-const SHOW_DATA_PARTNERS_LIMIT = 10
+const SHOW_DATA_PARTNERS_LIMIT = 8
 
 const PartnersContent = () => {
 
@@ -247,7 +247,7 @@ const PartnersContent = () => {
       else params.delete("page");
 
       const qs = params.toString();
-      router.replace(qs ? `${pathname}?${qs}` : pathname, {scroll: false});
+      router.replace(qs ? `${pathname}?${qs}` : pathname, {scroll: true});
     },
     [router, pathname, searchParams]
   );

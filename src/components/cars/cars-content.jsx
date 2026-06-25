@@ -9,6 +9,9 @@ import {useCallback, useMemo} from "react";
 import {Pagination} from 'antd';
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import H1 from "@/components/UI/h1";
+import { createStaticStyles } from 'antd-style';
+
+const SHOW_DATA_PARTNERS_LIMIT = 12;
 
 const CarsContent = () => {
   const router = useRouter();
@@ -22,7 +25,7 @@ const CarsContent = () => {
     return Number.isFinite(p) && p > 0 ? p : 1;
   }, [searchParams]);
 
-  const {userCars, isLoading} = useUserCars({page, limit: 20});
+  const {userCars, isLoading} = useUserCars({page, limit: SHOW_DATA_PARTNERS_LIMIT});
 
   const handlePageChange = useCallback(
     (nextPage) => {
@@ -31,7 +34,7 @@ const CarsContent = () => {
       else params.delete("page");
 
       const qs = params.toString();
-      router.replace(qs ? `${pathname}?${qs}` : pathname, {scroll: false});
+      router.replace(qs ? `${pathname}?${qs}` : pathname, {scroll: true});
     },
     [router, pathname, searchParams]
   );
@@ -72,9 +75,10 @@ const CarsContent = () => {
                     {userCars?.data?.total > 0 && (
                       <div className="cars-page__pagination">
                         <Pagination
+                          responsive={true}
                           current={page}
                           total={userCars.data.total}
-                          pageSize={20}
+                          pageSize={SHOW_DATA_PARTNERS_LIMIT}
                           onChange={handlePageChange}
                           showSizeChanger={false}
                         />

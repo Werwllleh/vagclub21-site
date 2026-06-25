@@ -358,8 +358,6 @@ const PartnerNote = styled.p`
 
 const PartnerDetail = ({partnerData}) => {
 
-  console.log(partnerData);
-
   return (
     <PartnerWrap as="div">
       <PartnerHero>
@@ -464,6 +462,15 @@ const PartnerDetail = ({partnerData}) => {
                             <Link href={partnerData.contacts.instagram} target={`_blank`}>
                             <span>
                               <SvgIcon name="instagram"/>
+                            </span>
+                            </Link>
+                          </li>
+                        )}
+                        {partnerData.contacts?.vk && (
+                          <li>
+                            <Link href={partnerData.contacts.vk} target={`_blank`}>
+                            <span>
+                              <SvgIcon name="vk"/>
                             </span>
                             </Link>
                           </li>

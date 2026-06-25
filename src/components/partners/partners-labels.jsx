@@ -26,6 +26,9 @@ export const PartnersLabelsWrapper = styled.div`
         .swiper-slide {
             width: auto;
             height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 `
@@ -39,7 +42,7 @@ const PartnersLabelsItem = styled(Link)`
 
     img {
         object-fit: contain;
-        height: 12rem;
+        height: auto;
         width: 15rem;
         mix-blend-mode: hard-light;
         opacity: .8;

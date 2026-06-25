@@ -36,7 +36,7 @@ export const theme = {
       lineHeight: '1.3',
     },
     Pagination: {
-      fontFamily: 'Martian Mono, monospace'
+      fontFamily: 'Martian Mono, monospace',
     }
   }
 }
