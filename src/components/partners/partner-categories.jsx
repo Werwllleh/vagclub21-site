@@ -227,9 +227,9 @@ const PartnerCategories = ({closeHandler}) => {
   useEffect(() => {
 
     if (selectedCategories.length) {
-      router.push(`${pathname}?${createQueryString('categories', selectedCategories.join(','))}`);
+      router.push(`${pathname}?${createQueryString('categories', selectedCategories.join(','))}`, {scroll: false});
     } else {
-      router.push(pathname);
+      router.push(pathname, {scroll: false});
     }
 
   }, [selectedCategories])
