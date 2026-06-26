@@ -185,7 +185,7 @@ const PartnerCategories = ({closeHandler}) => {
     const update = () => {
       element.toggleAttribute(
         'data-lenis-prevent',
-        window.innerWidth <= Number(customTheme.breakpoint.tablet),
+        window.innerWidth <= Number(customTheme.breakpoint.tablet.replace('px', '')),
       );
     };
 
