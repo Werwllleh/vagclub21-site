@@ -179,21 +179,27 @@ const PartnerCategories = ({closeHandler}) => {
     setIsMounted(true)
 
     const element = listRef.current;
-
     if (!element) return;
 
-    const update = () => {
-      element.toggleAttribute(
-        'data-lenis-prevent',
-        window.innerWidth <= Number(customTheme.breakpoint.tablet.replace('px', '')),
-      );
+    const tablet = 768;
+
+    const updateLenisPrevent = () => {
+      const isMobile = window.innerWidth <= tablet;
+
+      if (isMobile) {
+        element.setAttribute('data-lenis-prevent', 'true');
+      } else {
+        element.removeAttribute('data-lenis-prevent');
+      }
     };
 
-    update();
+    updateLenisPrevent();
 
-    window.addEventListener('resize', update);
+    window.addEventListener('resize', updateLenisPrevent);
 
-    return () => window.removeEventListener('resize', update);
+    return () => {
+      window.removeEventListener('resize', updateLenisPrevent);
+    };
   }, []);
 
   const router = useRouter();
