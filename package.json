@@ -34,6 +34,7 @@
     "react-dom": "^19.2.7",
     "react-hot-toast": "^2.6.0",
     "react-inlinesvg": "^4.4.1",
+    "react-responsive": "^10.0.1",
     "styled-components": "^6.4.2",
     "swiper": "12.2.0",
     "zustand": "^5.0.14"

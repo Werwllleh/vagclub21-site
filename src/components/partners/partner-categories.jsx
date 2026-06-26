@@ -1,8 +1,7 @@
 'use client'
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {usePartnerCategories} from "@/hooks/usePartnerCategories";
 import styled, {css} from "styled-components";
-import Link from "next/link";
 import {customTheme} from "@/styles/theme";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Loading from "@/app/loading";
@@ -10,6 +9,7 @@ import {usePartnersStore} from "@/store/partners.store";
 import CmsService from "@/services/cms.service";
 import {debounce} from "@/functions/debounce";
 import {pluralize} from "@/utils/utils";
+import { useMediaQuery } from 'react-responsive';
 
 export const PCWrapper = styled.div`
     display: flex;
@@ -171,35 +171,10 @@ const PartnerCategories = ({closeHandler}) => {
 
   const {partnerCategories, isLoading} = usePartnerCategories();
 
-  const listRef = useRef(null);
-
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true)
-
-    const element = listRef.current;
-    if (!element) return;
-
-    const tablet = 768;
-
-    const updateLenisPrevent = () => {
-      const isMobile = window.innerWidth <= tablet;
-
-      if (isMobile) {
-        element.setAttribute('data-lenis-prevent', 'true');
-      } else {
-        element.removeAttribute('data-lenis-prevent');
-      }
-    };
-
-    updateLenisPrevent();
-
-    window.addEventListener('resize', updateLenisPrevent);
-
-    return () => {
-      window.removeEventListener('resize', updateLenisPrevent);
-    };
   }, []);
 
   const router = useRouter();
@@ -207,8 +182,7 @@ const PartnerCategories = ({closeHandler}) => {
   const searchParams = useSearchParams();
   const searchValue = searchParams.get('categories');
 
-
-
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   const [selectedCategories, setSelectedCategories] = useState([]);
 
@@ -284,7 +258,7 @@ const PartnerCategories = ({closeHandler}) => {
 
   return (
     <PCWrapper>
-      <PCList ref={listRef}>
+      <PCList data-lenis-prevent={isMobile ? true : undefined}>
         {isLoading && Array.from({length: 10}).map((_, index) => (
           <li key={index}>
             <PCItem as="button" $loading={true}>
