@@ -70,7 +70,7 @@ const PartnersCategoriesContainer = styled.div`
 
     @media (max-width: ${customTheme.breakpoint.tablet}) {
         position: fixed;
-        padding-block: 7rem 12rem;
+        padding-block: 7rem;
         padding-inline: 1.5rem;
         width: 100%;
         height: 100%;
@@ -105,60 +105,18 @@ const PartnersCategoriesContainerClose = styled.button`
 `
 
 const PartnerCategoriesTagsContainer = styled.div`
+    height: 100%;
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
     
-    @media (max-width: ${customTheme.breakpoint.tablet}) {
+    /*@media (max-width: ${customTheme.breakpoint.tablet}) {
         overflow-y: auto;
         height: 100%;
-        max-height: calc(100dvh - 16rem);
-        margin-inline: -1.5rem;
-        padding-inline: 1.5rem;
+        max-height: calc(100dvh - 14rem);
         
-        ${PCList} {
-            
-            li {
-                flex: 1 1 calc(50% - 1.6rem);
-                
-                a {
-                    width: 100%;
-                    max-width: none;
-                }
-                
-                &[data-reset] {
-                    width: 100%;
-                    position: absolute;
-                    bottom: 5rem;
-                    inset-inline-start: 50%;
-                    transform: translateX(-50%);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    
-                    button {
-                        width: 100%;
-                        max-width: 30rem;
-                        
-                    }
-                }
-            }
-        }
-    }
+    }*/
 `
 
-const PartnersCategoriesNote = styled.span`
-    position: absolute;
-    bottom: 2rem;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    color: ${customTheme.color.grey};
-
-    @media (min-width: ${customTheme.breakpoint.tablet}) {
-        display: none;
-    }
-`
 
 const PartnersMain = styled.div`
 `
@@ -208,6 +166,7 @@ const PartnersEmpty = styled.div`
 
 const PartnersLoaderContainer = styled.div`
     position: relative;
+    display: flex;
 
     .loader {
         position: relative;
@@ -277,13 +236,9 @@ const PartnersContent = () => {
             >
               <SvgIcon name="close"/>
             </PartnersCategoriesContainerClose>
-            <PartnerCategoriesTagsContainer data-lenis-prevent>
-              <PartnerCategories/>
+            <PartnerCategoriesTagsContainer>
+              <PartnerCategories closeHandler={() => setIsFiltersActive(false)}/>
             </PartnerCategoriesTagsContainer>
-            {!!filteredPartners.length && (
-              <PartnersCategoriesNote>
-                {pluralize(filteredPartners.length, ['Найдена', 'Найдено', 'Найдены'])} {filteredPartners.length} {pluralize(filteredPartners.length, ['компания', 'компании', 'компаний'])}
-              </PartnersCategoriesNote>)}
           </PartnersCategoriesContainer>
           <PartnersMain>
             <PartnersList>

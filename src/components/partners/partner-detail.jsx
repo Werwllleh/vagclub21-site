@@ -26,7 +26,7 @@ const PartnerWrap = styled(AnimateSection)`
 
 const PartnerHero = styled.section`
     position: relative;
-    min-height: 50dvh;
+    min-height: 70dvh;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -81,14 +81,14 @@ const PartnerSwiper = styled.div`
 const PartnerInfo = styled.div`
     height: 100%;
     user-select: none;
-    pointer-events: none;
-    padding-block: 7rem 3rem;
+    padding-block: 0 3rem;
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
 
     @media (min-width: ${customTheme.breakpoint.tablet}) {
+        pointer-events: none;
         padding-block: 12rem 8rem;
     }
 `
@@ -98,13 +98,18 @@ const PartnerInfoBody = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 3rem;
+    gap: 1.6rem;
     color: ${customTheme.color.white};
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        gap: 3rem;
+    }
 
     h1 {
         font-weight: 500;
         text-transform: uppercase;
         max-width: 72rem;
+        pointer-events: none;
     }
 `
 
@@ -181,9 +186,22 @@ const PartnerDiscount = styled.div`
 const PartnerTagList = styled.ul`
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    max-width: 72rem;
-    gap: 1rem 2rem;
+    gap: 0 1rem;
+    overflow-x: auto;
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        gap: 1.6rem 1rem;
+        margin-inline: 0;
+        padding-inline: 0;
+        flex-wrap: wrap;
+        max-width: 72rem;
+    }
 `
 
 const PartnerTag = styled.span`
@@ -194,11 +212,17 @@ const PartnerTag = styled.span`
     border: 1px solid ${customTheme.color.white};
     background-color: ${customTheme.color.white};
     color: ${customTheme.color.primaryDark};
-    padding-block: 1.2rem;
-    padding-inline: 2rem;
-    font-size: clamp(1.1rem, 5vw, 1.4rem);
+    padding-block: 1rem;
+    padding-inline: 1.6rem;
+    font-size: 1.2rem;
     max-width: max-content;
     white-space: nowrap;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        font-size: clamp(1.2rem, 5vw, 1.4rem);
+        padding-block: 1.2rem;
+        padding-inline: 2rem;
+    }
 `
 
 const PartnerMain = styled.section`
@@ -381,7 +405,7 @@ const PartnerDetail = ({partnerData}) => {
               ))}
             </Swiper>
           </PartnerSwiper>
-        ) : null}
+        ) : <div style={{backgroundColor: customTheme.color.greyLight, height: '100%'}}></div>}
         <PartnerInfo>
           <Container>
             <PartnerInfoBody>
@@ -406,7 +430,7 @@ const PartnerDetail = ({partnerData}) => {
               <p>{partnerData.description}</p>
               {partnerData?.discount && (
                 <PartnerDiscount>
-                  Компания предоставляет клубную скидку в&nbsp;<b>{partnerData?.discount}%</b>
+                  Компания предоставляет клубную скидку до&nbsp;<b>{partnerData?.discount}%</b>
                 </PartnerDiscount>
               )}
               {partnerData?.address && (

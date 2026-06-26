@@ -37,17 +37,25 @@ const PartnersLabelsItem = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20rem;
+    padding-inline: 2rem;
     border-radius: ${customTheme.radius.r10};
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        padding-inline: 3rem;
+    }
 
     img {
         object-fit: contain;
         height: auto;
-        width: 15rem;
+        width: 10rem;
         mix-blend-mode: hard-light;
         opacity: .8;
         filter: grayscale(1);
         transition: opacity ${customTheme.transition.small}, filter ${customTheme.transition.small};
+        
+        @media (min-width: ${customTheme.breakpoint.tablet}) {
+            width: 15rem;
+        }
     }
     
     &:hover {
@@ -77,7 +85,6 @@ const PartnersLabels = () => {
         <Swiper
           modules={[Autoplay, FreeMode]}
           slidesPerView="auto"
-          spaceBetween={20}
           loop={duplicatedLabels.length > 0}
           speed={3000}
           autoplay={{

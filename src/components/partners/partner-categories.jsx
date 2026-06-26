@@ -9,14 +9,21 @@ import Loading from "@/app/loading";
 import {usePartnersStore} from "@/store/partners.store";
 import CmsService from "@/services/cms.service";
 import {debounce} from "@/functions/debounce";
+import {pluralize} from "@/utils/utils";
 
 export const PCWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 4rem 0;
 `
 
 export const PCList = styled.ul`
     display: flex;
     flex-wrap: wrap;
     gap: 1.6rem;
+    max-height: calc(100vh - 18rem);
+    overflow-y: auto;
 
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         gap: 1rem 2rem;
@@ -27,25 +34,15 @@ export const PCList = styled.ul`
     }
 
     li[data-reset] {
-        order: 0;
+        display: none;
 
-        button {
-            background-color: ${customTheme.color.grey};
-            border-color: ${customTheme.color.grey};
-            color: ${customTheme.color.white};
+        @media (min-width: ${customTheme.breakpoint.tablet}) {
+            display: block;
         }
-
-        @media (min-width: ${customTheme.breakpoint.mobile}) {
-            order: 1;
-        }
-    }
-    
-    li {
-        order: 1;
     }
 `
 
-const PCItem = styled(Link)`
+const PCItem = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,13 +112,56 @@ const PCItem = styled(Link)`
         padding-block: 1.2rem;
         padding-inline: 1.6rem;
     }
+
+    &[data-reset] {
+        background-color: ${customTheme.color.grey};
+        border-color: ${customTheme.color.grey};
+        color: ${customTheme.color.white};
+    }
+    
+    &[data-show] {
+        background-color: ${customTheme.color.primary};
+        color: ${customTheme.color.white};
+    }
 `
 
-const PartnerCategories = () => {
+const PCFooter = styled.div`
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 0;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: none;
+    }
+`
+
+const PCActions = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0 3rem;
+
+    button {
+        flex: 1;
+        width: 100%;
+        max-width: none;
+    }
+`
+
+const PCFindInfo = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: ${customTheme.color.grey};
+`
+
+const PartnerCategories = ({closeHandler}) => {
 
   const {
     filterPartnersActive,
     setFilterPartnersActive,
+    filteredPartners,
     setFilteredPartners,
     setFilterPartnersLoading
   } = usePartnersStore();
@@ -138,7 +178,20 @@ const PartnerCategories = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const searchValue = searchParams.get('category');
+  const searchValue = searchParams.get('categories');
+
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams)
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [searchParams]
+  )
 
   const searchSelectedCategoryPartners = async (searchValue) => {
     if (!searchValue) {
@@ -150,7 +203,7 @@ const PartnerCategories = () => {
     setFilterPartnersLoading(true);
 
     try {
-      const response = await CmsService.fetchPartners(`?category=${searchValue}`);
+      const response = await CmsService.fetchPartners(`?categories=${searchValue}`);
       const partners = response?.data?.partners || [];
 
       setFilterPartnersActive(true);
@@ -164,13 +217,36 @@ const PartnerCategories = () => {
   }
 
   useEffect(() => {
+    if (searchValue?.length) {
+      setSelectedCategories(searchValue.split(','))
+    }
+
     debounce(searchSelectedCategoryPartners(searchValue), 300);
   }, [searchValue]);
+
+  useEffect(() => {
+
+    if (selectedCategories.length) {
+      router.push(`${pathname}?${createQueryString('categories', selectedCategories.join(','))}`);
+    } else {
+      router.push(pathname);
+    }
+
+  }, [selectedCategories])
+
+  const selectCategory = (slug) => {
+    if (selectedCategories.includes(slug)) {
+      setSelectedCategories(selectedCategories.filter((item) => item !== slug));
+    } else {
+      setSelectedCategories([...selectedCategories, slug]);
+    }
+  }
 
   const handleClearFilter = () => {
     router.push(pathname, {scroll: false})
     setFilteredPartners([])
     setFilterPartnersActive(false)
+    setSelectedCategories([]);
   }
 
   if (isLoading || !isMounted) {
@@ -179,7 +255,7 @@ const PartnerCategories = () => {
 
   return (
     <PCWrapper>
-      <PCList>
+      <PCList data-lenis-prevent>
         {isLoading && Array.from({length: 10}).map((_, index) => (
           <li key={index}>
             <PCItem as="button" $loading={true}>
@@ -190,12 +266,8 @@ const PartnerCategories = () => {
         {!isLoading && partnerCategories.map((category) => (
           <li key={category.id}>
             <PCItem
-              $active={category.slug === searchValue}
-              href={`/partners?category=${category.slug}`}
-              onClick={(e) => {
-                e.target.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"})
-              }}
-              scroll={false}
+              $active={selectedCategories.includes(category.slug)}
+              onClick={() => selectCategory(category.slug)}
             >
               {category.title}
             </PCItem>
@@ -204,6 +276,7 @@ const PartnerCategories = () => {
         {filterPartnersActive && (
           <li data-reset>
             <PCItem
+              data-reset
               as="button"
               onClick={handleClearFilter}
             >
@@ -212,6 +285,31 @@ const PartnerCategories = () => {
           </li>
         )}
       </PCList>
+      {filterPartnersActive && (
+        <PCFooter>
+          <PCActions>
+            <PCItem
+              data-reset
+              as="button"
+              onClick={handleClearFilter}
+            >
+              Сбросить
+            </PCItem>
+            {!!filteredPartners.length && (
+              <PCItem
+                data-show
+                as="button"
+                onClick={closeHandler}
+              >
+                Показать
+              </PCItem>
+            )}
+          </PCActions>
+          <PCFindInfo>
+            {pluralize(filteredPartners.length, ['Найдена', 'Найдены', 'Найдено'])} {filteredPartners.length} {pluralize(filteredPartners.length, ['компания', 'компании', 'компаний'])}
+          </PCFindInfo>
+        </PCFooter>
+      )}
     </PCWrapper>
   );
 };

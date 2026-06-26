@@ -48,7 +48,7 @@ export const customTheme = {
     secondary: '#f8f8f8',
     white: '#fff',
     black: '#20252C',
-    greyLight: '#f9f9f9',
+    greyLight: '#f3f3f3',
     grey: '#737373',
     red: '#ff4646',
     red_rich: '#b90000',
