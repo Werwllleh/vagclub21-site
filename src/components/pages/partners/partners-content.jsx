@@ -108,13 +108,6 @@ const PartnerCategoriesTagsContainer = styled.div`
     height: 100%;
     margin-inline: -1.5rem;
     padding-inline: 1.5rem;
-    
-    /*@media (max-width: ${customTheme.breakpoint.tablet}) {
-        overflow-y: auto;
-        height: 100%;
-        max-height: calc(100dvh - 14rem);
-        
-    }*/
 `
 
 

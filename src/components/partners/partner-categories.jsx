@@ -1,5 +1,5 @@
 'use client'
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {usePartnerCategories} from "@/hooks/usePartnerCategories";
 import styled, {css} from "styled-components";
 import Link from "next/link";
@@ -22,11 +22,14 @@ export const PCList = styled.ul`
     display: flex;
     flex-wrap: wrap;
     gap: 1.6rem;
-    max-height: calc(100vh - 18rem);
-    overflow-y: auto;
 
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         gap: 1rem 2rem;
+    }
+
+    @media (max-width: ${customTheme.breakpoint.tablet}) {
+        max-height: calc(100vh - 18rem);
+        overflow-y: auto;
     }
 
     &::-webkit-scrollbar {
@@ -168,17 +171,37 @@ const PartnerCategories = ({closeHandler}) => {
 
   const {partnerCategories, isLoading} = usePartnerCategories();
 
+  const listRef = useRef(null);
 
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true)
+
+    const element = listRef.current;
+
+    if (!element) return;
+
+    const update = () => {
+      element.toggleAttribute(
+        'data-lenis-prevent',
+        window.innerWidth <= Number(customTheme.breakpoint.tablet),
+      );
+    };
+
+    update();
+
+    window.addEventListener('resize', update);
+
+    return () => window.removeEventListener('resize', update);
   }, []);
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchValue = searchParams.get('categories');
+
+
 
 
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -255,7 +278,7 @@ const PartnerCategories = ({closeHandler}) => {
 
   return (
     <PCWrapper>
-      <PCList data-lenis-prevent>
+      <PCList ref={listRef}>
         {isLoading && Array.from({length: 10}).map((_, index) => (
           <li key={index}>
             <PCItem as="button" $loading={true}>
