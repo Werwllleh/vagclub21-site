@@ -8,6 +8,7 @@ import SocialsWidget from "@/components/socials-widget";
 import AnimateSection from "@/components/blocks/animate-section";
 import Container from "@/components/container";
 import Image from "next/image"
+import PartnerBanner from "@/components/partners/partner-banner";
 
 const AboutContent = () => {
 
@@ -195,6 +196,9 @@ const AboutContent = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="page-about__partner-banner">
+            <PartnerBanner />
           </div>
         </Container>
       </AnimateSection>

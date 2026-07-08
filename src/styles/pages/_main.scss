@@ -9,22 +9,6 @@
     will-change: opacity;
   }
 
-  /*section:not(:first-child, .products) {
-    margin-top: 3rem;
-
-    @include breakpoints.tablet {
-      margin-top: 5rem;
-    }
-
-    @include breakpoints.desktop {
-      margin-top: 8rem;
-    }
-
-    @include breakpoints.w1600 {
-      margin-top: 12rem;
-    }
-  }*/
-
   .products {
 
     padding-block: 3rem;
@@ -45,6 +29,17 @@
       margin-bottom: 6rem;
     }
 
+  }
+
+  .partner-block {
+    margin-top: clamp(5rem, 5vw, 12rem);
+    margin-bottom: 3rem;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+    }
   }
 
   .about {

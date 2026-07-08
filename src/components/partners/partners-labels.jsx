@@ -37,24 +37,33 @@ const PartnersLabelsItem = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-inline: 2rem;
+    padding-inline: 3rem;
+    padding-block: 2rem;
     border-radius: ${customTheme.radius.r10};
+    //background-color: ${customTheme.color.white};
+    box-shadow: 0 0 .5rem .5rem #0000000f;
+    background-color: #ffffffa1;
+    backdrop-filter: blur(1rem);
+    
+    height: 100%;
 
     @media (min-width: ${customTheme.breakpoint.tablet}) {
-        padding-inline: 3rem;
+        padding-inline: 5rem;
     }
 
     img {
         object-fit: contain;
-        height: auto;
-        width: 10rem;
-        mix-blend-mode: hard-light;
+        height: 10rem;
+        width: 14rem;
+        //width: 10rem;
+        //mix-blend-mode: hard-light;
         opacity: .8;
         filter: grayscale(1);
         transition: opacity ${customTheme.transition.small}, filter ${customTheme.transition.small};
         
         @media (min-width: ${customTheme.breakpoint.tablet}) {
-            width: 15rem;
+            height: 13rem;
+            width: 20rem;
         }
     }
     
@@ -85,6 +94,7 @@ const PartnersLabels = () => {
         <Swiper
           modules={[Autoplay, FreeMode]}
           slidesPerView="auto"
+          spaceBetween="30"
           loop={duplicatedLabels.length > 0}
           speed={3000}
           autoplay={{

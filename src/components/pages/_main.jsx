@@ -9,6 +9,10 @@ import styled from "styled-components";
 import {H1Element} from "@/components/UI/h1";
 import {customTheme} from "@/styles/theme";
 import PartnersLabels from "@/components/partners/partners-labels";
+import PartnerBanner from "@/components/partners/partner-banner";
+import PartnersContent from "@/components/pages/partners/partners-content";
+import PartnerAdvantages from "@/components/partners/partner-advantages";
+import Container from "@/components/container";
 
 
 const SectionTitle = styled(H1Element)`
@@ -44,7 +48,24 @@ const MainPage = () => {
       {/*<section className="page-main__cooperation">
         <CooperationForm />
       </section>*/}
-      <PartnersLabels />
+      <AnimateSection
+        className={"partner-block"}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <Container>
+          <div className="partner-block__body">
+            <PartnerAdvantages />
+            <PartnerBanner />
+          </div>
+        </Container>
+      </AnimateSection>
+      <AnimateSection
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+      >
+        <PartnersLabels />
+      </AnimateSection>
       <AnimateSection
         className={"about"}
         initial={{ opacity: 0, y: 40 }}

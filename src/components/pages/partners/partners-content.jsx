@@ -16,9 +16,11 @@ import Container from "@/components/container";
 import SvgIcon from "@/components/svg-icon";
 import {useLenis} from "lenis/react";
 import {pluralize} from "@/utils/utils";
+import PartnerBanner from "@/components/partners/partner-banner";
 
 const PartnersWrap = styled(AnimateSection)`
     flex: 1;
+    //padding-bottom: 10rem;
 `
 
 const PartnersGrid = styled.div`
@@ -166,6 +168,10 @@ const PartnersLoaderContainer = styled.div`
     }
 `
 
+const PartnersBanner = styled.div`
+  margin-top: clamp(4rem, 5vw, 7rem);
+`
+
 const SHOW_DATA_PARTNERS_LIMIT = 8
 
 const PartnersContent = () => {
@@ -284,6 +290,9 @@ const PartnersContent = () => {
           </PartnersMain>
         </PartnersGrid>
       </Container>
+      <PartnersBanner>
+        <PartnerBanner />
+      </PartnersBanner>
     </PartnersWrap>
   );
 };
