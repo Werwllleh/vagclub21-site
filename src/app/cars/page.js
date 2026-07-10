@@ -1,6 +1,7 @@
-import React from 'react';
+import {Suspense} from 'react';
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import CarsContent from "@/components/cars/cars-content";
+import Loading from "@/app/loading";
 
 export const metadata = {
   title: PUBLIC_PAGES.CARS.SEO_TITLE,
@@ -10,9 +11,9 @@ export const metadata = {
 const Page = async () => {
 
   return (
-    <div className="page">
-      <CarsContent />
-    </div>
+    <Suspense fallback={<Loading/>}>
+      <CarsContent/>
+    </Suspense>
   );
 };
 

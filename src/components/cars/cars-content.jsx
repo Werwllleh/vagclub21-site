@@ -49,7 +49,7 @@ const CarsContent = () => {
   const hasFilteredCars = filteredCars?.length > 0;
 
   return (
-    <div className="cars-page ppt ppb">
+    <div className="page cars-page ppt ppb">
       <div className="container">
         <H1 className="cars-page__title pageTitle">Список автомобилей</H1>
 
