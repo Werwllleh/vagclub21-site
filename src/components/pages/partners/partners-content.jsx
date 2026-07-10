@@ -145,7 +145,6 @@ const PartnersEmpty = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
 
     img {
         width: auto;
@@ -154,8 +153,14 @@ const PartnersEmpty = styled.div`
     }
 
     p {
+        margin-top: 4rem;
         font-weight: 500;
         font-size: clamp(1.4rem, 5vw, 4rem);
+    }
+    
+    button {
+        margin-top: 2rem;
+        border-radius: ${customTheme.radius.r7};
     }
 `
 
@@ -169,7 +174,7 @@ const PartnersLoaderContainer = styled.div`
 `
 
 const PartnersBanner = styled.div`
-  margin-top: clamp(4rem, 5vw, 7rem);
+    margin-top: clamp(4rem, 5vw, 7rem);
 `
 
 const SHOW_DATA_PARTNERS_LIMIT = 8
@@ -180,12 +185,7 @@ const PartnersContent = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [isMounted, setIsMounted] = useState(false);
   const [isFiltersActive, setIsFiltersActive] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   useLenis((lenis) => {
     lenis._isLocked = isFiltersActive
@@ -212,8 +212,8 @@ const PartnersContent = () => {
 
   const {filterPartnersActive, filteredPartners, filterPartnersLoading} = usePartnersStore();
 
-  if (isLoading || !isMounted) {
-    return null;
+  if (isLoading) {
+    return <Loading/>;
   }
 
   return (
@@ -227,7 +227,7 @@ const PartnersContent = () => {
               <span>
                 <SvgIcon name="filters"/>
               </span>
-              Фильтр
+            Фильтр
           </PartnersCategoriesButton>
           <PartnersCategoriesContainer $active={isFiltersActive}>
             <PartnersCategoriesContainerClose
@@ -259,6 +259,9 @@ const PartnersContent = () => {
                         alt="Компании не найдены"
                       />
                       <p>Компании не найдены</p>
+                      <button className="btn m default" type="button" onClick={() => {
+                        router.push('/partners', {scroll: false});
+                      }}>Сбросить фильтр</button>
                     </PartnersEmpty>
                   )
                 ) : (
@@ -291,7 +294,7 @@ const PartnersContent = () => {
         </PartnersGrid>
       </Container>
       <PartnersBanner>
-        <PartnerBanner />
+        <PartnerBanner/>
       </PartnersBanner>
     </PartnersWrap>
   );

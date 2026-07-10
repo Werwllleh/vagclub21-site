@@ -1,22 +1,30 @@
-'use client'
-import React, {useCallback, useEffect, useState} from 'react';
-import {usePartnerCategories} from "@/hooks/usePartnerCategories";
-import styled, {css} from "styled-components";
-import {customTheme} from "@/styles/theme";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import Loading from "@/app/loading";
-import {usePartnersStore} from "@/store/partners.store";
-import CmsService from "@/services/cms.service";
-import {debounce} from "@/functions/debounce";
-import {pluralize} from "@/utils/utils";
-import { useMediaQuery } from 'react-responsive';
+'use client';
+
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {usePartnerCategories} from '@/hooks/usePartnerCategories';
+import styled, {css} from 'styled-components';
+import {customTheme} from '@/styles/theme';
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
+import Loading from '@/app/loading';
+import {usePartnersStore} from '@/store/partners.store';
+import CmsService from '@/services/cms.service';
+import {pluralize} from '@/utils/utils';
+import {useMediaQuery} from 'react-responsive';
 
 export const PCWrapper = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
     gap: 4rem 0;
-`
+`;
 
 export const PCList = styled.ul`
     display: flex;
@@ -43,7 +51,7 @@ export const PCList = styled.ul`
             display: block;
         }
     }
-`
+`;
 
 const PCItem = styled.button`
     display: flex;
@@ -55,16 +63,22 @@ const PCItem = styled.button`
     border-width: 1px;
     border-style: solid;
     border-color: ${({$loading}) => (
-            $loading ? customTheme.color.greyLight : customTheme.color.primary
+            $loading
+                    ? customTheme.color.greyLight
+                    : customTheme.color.primary
     )};
     background-color: ${({$loading}) => (
-            $loading ? customTheme.color.greyLight : customTheme.color.white
+            $loading
+                    ? customTheme.color.greyLight
+                    : customTheme.color.white
     )};
     padding-block: 1rem;
     padding-inline: 1.4rem;
     font-size: clamp(1.3rem, 5vw, 1.6rem);
     color: ${({$loading}) => (
-            $loading ? customTheme.color.grey : customTheme.color.primaryDark
+            $loading
+                    ? customTheme.color.grey
+                    : customTheme.color.primaryDark
     )};
     line-height: 1;
 
@@ -96,6 +110,7 @@ const PCItem = styled.button`
             0% {
                 left: -100%;
             }
+
             100% {
                 left: 100%;
             }
@@ -103,10 +118,15 @@ const PCItem = styled.button`
     `}
     &:hover {
         background-color: ${({$loading}) => (
-                $loading ? customTheme.color.greyLight : customTheme.color.primary
+                $loading
+                        ? customTheme.color.greyLight
+                        : customTheme.color.primary
         )};
+
         color: ${({$loading}) => (
-                $loading ? customTheme.color.grey : customTheme.color.white
+                $loading
+                        ? customTheme.color.grey
+                        : customTheme.color.white
         )};
     }
 
@@ -121,12 +141,12 @@ const PCItem = styled.button`
         border-color: ${customTheme.color.grey};
         color: ${customTheme.color.white};
     }
-    
+
     &[data-show] {
         background-color: ${customTheme.color.primary};
         color: ${customTheme.color.white};
     }
-`
+`;
 
 const PCFooter = styled.div`
     margin-top: auto;
@@ -137,7 +157,7 @@ const PCFooter = styled.div`
     @media (min-width: ${customTheme.breakpoint.tablet}) {
         display: none;
     }
-`
+`;
 
 const PCActions = styled.div`
     display: flex;
@@ -149,7 +169,7 @@ const PCActions = styled.div`
         width: 100%;
         max-width: none;
     }
-`
+`;
 
 const PCFindInfo = styled.div`
     display: flex;
@@ -157,100 +177,182 @@ const PCFindInfo = styled.div`
     justify-content: center;
     font-size: 1.1rem;
     color: ${customTheme.color.grey};
-`
+`;
 
 const PartnerCategories = ({closeHandler}) => {
-
   const {
     filterPartnersActive,
     setFilterPartnersActive,
     filteredPartners,
     setFilteredPartners,
-    setFilterPartnersLoading
+    setFilterPartnersLoading,
   } = usePartnersStore();
 
-  const {partnerCategories, isLoading} = usePartnerCategories();
-
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, []);
+  const {
+    partnerCategories,
+    isLoading,
+  } = usePartnerCategories();
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
   const searchValue = searchParams.get('categories');
 
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
+  const isMobile = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
 
+  const [isMounted, setIsMounted] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const createQueryString = useCallback(
-    (name, value) => {
-      const params = new URLSearchParams(searchParams)
-      params.set(name, value)
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-      return params.toString()
+  const searchSelectedCategoryPartners = useCallback(
+    async (categoriesValue) => {
+      if (!categoriesValue) {
+        setFilterPartnersActive(false);
+        setFilteredPartners([]);
+        setFilterPartnersLoading(false);
+
+        return;
+      }
+
+      setFilterPartnersLoading(true);
+
+      try {
+        const response = await CmsService.fetchPartners(
+          `?categories=${encodeURIComponent(categoriesValue)}`
+        );
+
+        const partners = response?.data?.partners || [];
+
+        setFilteredPartners(partners);
+        setFilterPartnersActive(true);
+      } catch (error) {
+        console.error(
+          'Ошибка при поиске партнеров определенной категории:',
+          error
+        );
+
+        setFilteredPartners([]);
+        setFilterPartnersActive(true);
+      } finally {
+        setFilterPartnersLoading(false);
+      }
     },
-    [searchParams]
-  )
-
-  const searchSelectedCategoryPartners = async (searchValue) => {
-    if (!searchValue) {
-      setFilterPartnersActive(false);
-      setFilteredPartners([])
-      return;
-    }
-
-    setFilterPartnersLoading(true);
-
-    try {
-      const response = await CmsService.fetchPartners(`?categories=${searchValue}`);
-      const partners = response?.data?.partners || [];
-
-      setFilterPartnersActive(true);
-      setFilterPartnersLoading(false);
-      setFilteredPartners(partners);
-    } catch (error) {
-      console.error("Ошибка при поиске партнеров определенной категории:", error);
-    } finally {
-      setFilterPartnersLoading(false);
-    }
-  }
+    [
+      setFilteredPartners,
+      setFilterPartnersActive,
+      setFilterPartnersLoading,
+    ]
+  );
 
   useEffect(() => {
-    if (searchValue?.length) {
-      setSelectedCategories(searchValue.split(','))
-    }
+    const categories = searchValue
+      ? searchValue.split(',').filter(Boolean)
+      : [];
 
-    debounce(searchSelectedCategoryPartners(searchValue), 300);
-  }, [searchValue]);
+    setSelectedCategories(categories);
 
-  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      searchSelectedCategoryPartners(searchValue);
+    }, 300);
 
-    if (selectedCategories.length) {
-      router.push(`${pathname}?${createQueryString('categories', selectedCategories.join(','))}`, {scroll: false});
-    } else {
-      router.push(pathname, {scroll: false});
-    }
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [
+    searchValue,
+    searchSelectedCategoryPartners,
+  ]);
 
-  }, [selectedCategories])
+  const updateCategoriesQuery = useCallback(
+    (categories) => {
+      const params = new URLSearchParams(
+        searchParams.toString()
+      );
 
-  const selectCategory = (slug) => {
-    if (selectedCategories.includes(slug)) {
-      setSelectedCategories(selectedCategories.filter((item) => item !== slug));
-    } else {
-      setSelectedCategories([...selectedCategories, slug]);
-    }
-  }
+      if (categories.length > 0) {
+        params.set(
+          'categories',
+          categories.join(',')
+        );
+      } else {
+        params.delete('categories');
+      }
 
-  const handleClearFilter = () => {
-    router.push(pathname, {scroll: false})
-    setFilteredPartners([])
-    setFilterPartnersActive(false)
+      /*
+       * При изменении фильтра переходим на первую страницу.
+       * Поэтому параметр page удаляем.
+       */
+      params.delete('page');
+
+      const queryString = params.toString();
+
+      router.replace(
+        queryString
+          ? `${pathname}?${queryString}`
+          : pathname,
+        {
+          scroll: false,
+        }
+      );
+    },
+    [
+      pathname,
+      router,
+      searchParams,
+    ]
+  );
+
+  const selectCategory = useCallback(
+    (slug) => {
+      const nextCategories = selectedCategories.includes(slug)
+        ? selectedCategories.filter(
+          (categorySlug) => categorySlug !== slug
+        )
+        : [...selectedCategories, slug];
+
+      setSelectedCategories(nextCategories);
+      updateCategoriesQuery(nextCategories);
+    },
+    [selectedCategories, updateCategoriesQuery]
+  );
+
+  const handleClearFilter = useCallback(() => {
+    const params = new URLSearchParams(
+      searchParams.toString()
+    );
+
+    params.delete('categories');
+    params.delete('page');
+
+    const queryString = params.toString();
+
+    router.replace(
+      queryString
+        ? `${pathname}?${queryString}`
+        : pathname,
+      {
+        scroll: false,
+      }
+    );
+
     setSelectedCategories([]);
-  }
+    setFilteredPartners([]);
+    setFilterPartnersActive(false);
+    setFilterPartnersLoading(false);
+  }, [
+    pathname,
+    router,
+    searchParams,
+    setFilteredPartners,
+    setFilterPartnersActive,
+    setFilterPartnersLoading,
+  ]);
 
   if (isLoading || !isMounted) {
     return <Loading/>;
@@ -258,29 +360,32 @@ const PartnerCategories = ({closeHandler}) => {
 
   return (
     <PCWrapper>
-      <PCList data-lenis-prevent={isMobile ? true : undefined}>
-        {isLoading && Array.from({length: 10}).map((_, index) => (
-          <li key={index}>
-            <PCItem as="button" $loading={true}>
-              Загрузка...
-            </PCItem>
-          </li>
-        ))}
-        {!isLoading && partnerCategories.map((category) => (
+      <PCList
+        data-lenis-prevent={
+          isMobile ? true : undefined
+        }
+      >
+        {partnerCategories.map((category) => (
           <li key={category.id}>
             <PCItem
-              $active={selectedCategories.includes(category.slug)}
-              onClick={() => selectCategory(category.slug)}
+              type="button"
+              $active={selectedCategories.includes(
+                category.slug
+              )}
+              onClick={() => {
+                selectCategory(category.slug);
+              }}
             >
               {category.title}
             </PCItem>
           </li>
         ))}
+
         {filterPartnersActive && (
           <li data-reset>
             <PCItem
+              type="button"
               data-reset
-              as="button"
               onClick={handleClearFilter}
             >
               Сбросить
@@ -288,28 +393,49 @@ const PartnerCategories = ({closeHandler}) => {
           </li>
         )}
       </PCList>
+
       {filterPartnersActive && (
         <PCFooter>
           <PCActions>
             <PCItem
+              type="button"
               data-reset
-              as="button"
               onClick={handleClearFilter}
             >
               Сбросить
             </PCItem>
+
             {!!filteredPartners.length && (
               <PCItem
+                type="button"
                 data-show
-                as="button"
                 onClick={closeHandler}
               >
                 Показать
               </PCItem>
             )}
           </PCActions>
+
           <PCFindInfo>
-            {pluralize(filteredPartners.length, ['Найдена', 'Найдены', 'Найдено'])} {filteredPartners.length} {pluralize(filteredPartners.length, ['компания', 'компании', 'компаний'])}
+            {pluralize(
+              filteredPartners.length,
+              [
+                'Найдена',
+                'Найдены',
+                'Найдено',
+              ]
+            )}{' '}
+
+            {filteredPartners.length}{' '}
+
+            {pluralize(
+              filteredPartners.length,
+              [
+                'компания',
+                'компании',
+                'компаний',
+              ]
+            )}
           </PCFindInfo>
         </PCFooter>
       )}

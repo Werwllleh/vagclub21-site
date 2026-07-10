@@ -65,11 +65,14 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    box-shadow: none;
-    transition: box-shadow ${customTheme.transition.small};
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .3);
+    will-change: transform, box-shadow;
+    transition: box-shadow ${customTheme.transition.small}, transform ${customTheme.transition.small};
     
     &:hover {
-        box-shadow: 0 0 10px 6px rgb(0 52 180 / 42%);
+        //box-shadow: 0 0 10px 6px rgb(0 52 180 / 42%);
+        transform: translateY(-10px);
+        box-shadow: 0 10px 15px 0 rgb(0 0 0 / 47%);
     }
 `
 

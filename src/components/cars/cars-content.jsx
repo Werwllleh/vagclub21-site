@@ -11,7 +11,7 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import H1 from "@/components/UI/h1";
 import { createStaticStyles } from 'antd-style';
 
-const SHOW_DATA_PARTNERS_LIMIT = 12;
+const SHOW_DATA_CARS_LIMIT = 12;
 
 const CarsContent = () => {
   const router = useRouter();
@@ -30,8 +30,12 @@ const CarsContent = () => {
   const handlePageChange = useCallback(
     (nextPage) => {
       const params = new URLSearchParams(searchParams.toString());
-      if (nextPage > 1) params.set("page", String(nextPage));
-      else params.delete("page");
+
+      if (nextPage > 1) {
+        params.set("page", String(nextPage));
+      } else {
+        params.delete("page");
+      }
 
       const qs = params.toString();
       router.replace(qs ? `${pathname}?${qs}` : pathname, {scroll: true});
@@ -78,7 +82,7 @@ const CarsContent = () => {
                           responsive={true}
                           current={page}
                           total={userCars.data.total}
-                          pageSize={SHOW_DATA_PARTNERS_LIMIT}
+                          pageSize={SHOW_DATA_CARS_LIMIT}
                           onChange={handlePageChange}
                           showSizeChanger={false}
                         />
