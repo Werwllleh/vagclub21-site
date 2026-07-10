@@ -25,7 +25,7 @@ const CarsContent = () => {
     return Number.isFinite(p) && p > 0 ? p : 1;
   }, [searchParams]);
 
-  const {userCars, isLoading} = useUserCars({page, limit: SHOW_DATA_PARTNERS_LIMIT});
+  const {userCars, isLoading} = useUserCars({page, limit: SHOW_DATA_CARS_LIMIT});
 
   const handlePageChange = useCallback(
     (nextPage) => {
