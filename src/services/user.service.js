@@ -27,7 +27,7 @@ class UserService {
   }
 
   async updateUser(values) {
-    console.log(values)
+    // console.log(values)
     return instance.post(`/update-user`, {
       data: values
     })

@@ -89,9 +89,9 @@ class CmsService {
     return instanceCms.delete(`/media_partners/remove/${mediaId}`);
   }
 
-  async attachCompany(data) {
+  async attachUserCompany(data) {
     const response = await instance.post(
-      '/attach-company',
+      '/attach-user-company',
       data,
     );
 

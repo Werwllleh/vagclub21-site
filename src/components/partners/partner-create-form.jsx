@@ -373,7 +373,7 @@ const PartnerCreateForm = ({onSuccess}) => {
       };
 
       const response =
-        await CmsService.attachCompany(payload);
+        await CmsService.attachUserCompany(payload);
 
       toast.success(
         'Компания успешно создана и отправлена на проверку',
