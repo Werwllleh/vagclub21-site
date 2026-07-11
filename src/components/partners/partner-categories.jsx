@@ -284,10 +284,6 @@ const PartnerCategories = ({closeHandler}) => {
         params.delete('categories');
       }
 
-      /*
-       * При изменении фильтра переходим на первую страницу.
-       * Поэтому параметр page удаляем.
-       */
       params.delete('page');
 
       const queryString = params.toString();

@@ -26,22 +26,22 @@ const BannerInfo = styled.div`
     gap: 2rem;
     font-family: ${customTheme.font.secondary};
 
-    @media (min-width: ${({ theme }) => customTheme.breakpoint.mobile}) {
+    @media (min-width: ${({theme}) => customTheme.breakpoint.mobile}) {
         padding-inline: 1.5rem;
     }
 
-    @media (min-width: ${({ theme }) => customTheme.breakpoint.tablet}) {
+    @media (min-width: ${({theme}) => customTheme.breakpoint.tablet}) {
         padding-inline: 3rem;
     }
-    
-    
+
+
     h5 {
         color: ${customTheme.color.white};
         font-size: clamp(2.2rem, 3vw, 3.2rem);
         font-weight: 600;
         line-height: 1.55;
     }
-    
+
     p {
         max-width: 70rem;
         font-size: clamp(1.5rem, 3vw, 2rem);
@@ -61,7 +61,7 @@ const BannerBg = styled.div`
         inset: 0;
         background-color: rgba(12, 12, 12, 0.8);
 
-        @media (min-width: ${({ theme }) => customTheme.breakpoint.tablet}) {
+        @media (min-width: ${({theme}) => customTheme.breakpoint.tablet}) {
             background-color: rgba(12, 12, 12, 0.65);
         }
     }
@@ -75,18 +75,25 @@ const BannerBg = styled.div`
 `
 
 const PartnerBanner = () => {
+
+
+
   return (
-    <BannerWrapper>
-      <Container>
-        <BannerInfo>
-          <h5>Присоединяйтесь к&nbsp;партнерам VAGCLUB21</h5>
-          <p>Присоединяйтесь к&nbsp;программе партнёрства: размещайте информацию о&nbsp;вашем автосервисе, магазине запчастей, автомойке и&nbsp;других услугах, получайте новых клиентов от&nbsp;автовладельцев сообщества.</p>
-        </BannerInfo>
-      </Container>
-      <BannerBg>
-        <Image src={'/images/partner-banner.webp'} alt="Баннер партнерство" width={1920} height={300} />
-      </BannerBg>
-    </BannerWrapper>
+    <>
+      <BannerWrapper>
+        <Container>
+          <BannerInfo>
+            <h5>Присоединяйтесь к&nbsp;партнерам VAGCLUB21</h5>
+            <p>Присоединяйтесь к&nbsp;программе партнёрства: размещайте информацию о&nbsp;вашем автосервисе, магазине
+              запчастей, автомойке и&nbsp;других услугах, получайте новых клиентов от&nbsp;автовладельцев
+              сообщества.</p>
+          </BannerInfo>
+        </Container>
+        <BannerBg>
+          <Image src={'/images/partner-banner.webp'} alt="Баннер партнерство" width={1920} height={300}/>
+        </BannerBg>
+      </BannerWrapper>
+    </>
   );
 };
 

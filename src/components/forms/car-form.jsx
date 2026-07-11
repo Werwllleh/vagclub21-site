@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import CarService from "@/services/car.service";
 
-const ProfileCarForm = ({car, onClose}) => {
+const CarForm = ({car, onClose}) => {
 
 
   const [form] = Form.useForm();
@@ -148,4 +148,4 @@ const ProfileCarForm = ({car, onClose}) => {
   );
 };
 
-export default ProfileCarForm;
+export default CarForm;

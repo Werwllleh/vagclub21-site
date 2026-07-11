@@ -25,12 +25,14 @@ export const theme = {
       borderRadius: 5,
       paddingInline: 5,
       controlHeight: 44,
+      fontFamily: 'Martian Mono, monospace',
     },
     Select: {
       activeOutlineColor: 'none',
       activeShadow: 'none',
       fontSize: 16,
       controlHeight: 44,
+      fontFamily: 'Martian Mono, monospace',
     },
     Checkbox: {
       lineHeight: '1.3',
@@ -46,6 +48,7 @@ export const customTheme = {
     primary: '#004c9d',
     primaryDark: '#182232',
     secondary: '#f8f8f8',
+    primaryLight: '#004c9d',
     white: '#fff',
     black: '#20252C',
     greyLight: '#f3f3f3',

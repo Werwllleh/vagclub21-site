@@ -14,6 +14,7 @@ import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import CarService from "@/services/car.service";
 import toast from "react-hot-toast";
 import {useQueryClient} from "@tanstack/react-query";
+import {useLenis} from "lenis/react";
 
 const profileCarCard = ({carId, data}) => {
 
@@ -53,6 +54,10 @@ const profileCarCard = ({carId, data}) => {
   }
 
 
+  useLenis((lenis) => {
+    lenis._isLocked = isModalUpdateCarActive || isModalDeleteCarActive
+  })
+
   return (
     <>
       <div className="profile-car-card">
@@ -63,6 +68,8 @@ const profileCarCard = ({carId, data}) => {
                 <Swiper
                   modules={[Pagination]}
                   spaceBetween={0}
+                  className="custom-pagination"
+                  speed={1200}
                   pagination={{
                     enabled: true,
                     clickable: true,
@@ -88,7 +95,7 @@ const profileCarCard = ({carId, data}) => {
             <div className="profile-car-card__no-photo">
               <Button
                 onClick={openUpdateCarModal}
-                className="style-btn"
+                className="btn l default"
                 size="medium"
               >
                 Добавить фото
@@ -135,21 +142,19 @@ const profileCarCard = ({carId, data}) => {
             note: data?.note,
           }}/>
       </Modal>
-      <Modal open={isModalDeleteCarActive} onCancel={closeDeleteCarModal} footer={false}>
+      <Modal className="confirm-delete-car-modal" centered={true} open={isModalDeleteCarActive} onCancel={closeDeleteCarModal} footer={false}>
         <div className="confirm-delete-car">
           <h3 className="confirm-delete-car__title">Удалить автомобиль из вашего профиля?</h3>
           <div className="confirm-delete-car__actions">
             <Button
               onClick={() => deleteCar(carId)}
-              className="style-btn agree"
-              size="small"
+              className="btn m agree"
             >
               Да
             </Button>
             <Button
               onClick={closeDeleteCarModal}
-              className="style-btn disagree"
-              size="small"
+              className="btn m disagree"
             >
               Нет
             </Button>

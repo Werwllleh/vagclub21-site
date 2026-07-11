@@ -37,6 +37,12 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
   const [carId, setCarId] = useState(null)
   const [carRegisterStep, setCarRegisterStep] = useState(step)
 
+  const closeFormModal = () => {
+    onClose?.();
+    setCarRegisterStep(1);
+    initialValues.reset();
+  }
+
   useEffect(() => {
     if (carIndex) {
       setCarId(carIndex);
@@ -131,7 +137,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
       if (response.status === 200) {
         toast.success("Файлы успешно загружены!");
-        onClose();
+        closeFormModal()
         await queryClient.invalidateQueries(['user-cars']);
         setFileList([])
 
@@ -233,7 +239,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
     if (carRegisterStep === 2) {
       if (!fileList.length) {
-        onClose()
+        closeFormModal()
         setTimeout(() => {
           setCarRegisterStep(1)
         }, 100)

@@ -64,6 +64,10 @@
     border-left: 1px solid variables.$colorSecondary;
     border-right: 1px solid variables.$colorSecondary;
     min-height: 20rem;
+
+    button {
+      padding-block: 2rem;
+    }
   }
 
   &__info {
@@ -119,6 +123,10 @@
       }
     }
   }
+}
+
+.confirm-delete-car-modal {
+  //margin-block: auto;
 }
 
 .confirm-delete-car {

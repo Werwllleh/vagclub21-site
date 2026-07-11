@@ -1,4 +1,4 @@
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import UserService from "@/services/user.service";
 
 export function useUserCars({ page = 1, limit = 20, number } = {}) {
