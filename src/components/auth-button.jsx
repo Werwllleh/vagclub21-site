@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {useEffect, useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {PROTECTED_PAGES} from "@/config/pages/protected.config";
 
 const AuthButton = () => {
 
@@ -22,12 +23,12 @@ const AuthButton = () => {
   }, []);
 
   const loginMutation = useMutation({
-    mutationFn: async (data) => await AuthService.login(data),
+    mutationFn: async (data) => AuthService.login(data),
     onSuccess: async (response) => {
       if (response.status === 200) {
-        toast.success('Успешная авторизация!');
         await queryClient.refetchQueries(['user']);
-        router.push(PUBLIC_PAGES.HOME.URL);
+        toast.success('Успешная авторизация!');
+        router.push(PROTECTED_PAGES.PROFILE);
       } else {
         toast.error('Ошибка авторизации');
       }

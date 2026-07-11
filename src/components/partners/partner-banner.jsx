@@ -1,8 +1,15 @@
-import React from 'react';
+'use client'
+import React, {useState} from 'react';
 import styled from "styled-components";
 import Image from "next/image";
 import Container from "@/components/container";
 import {customTheme} from "@/styles/theme";
+import {Modal} from "antd";
+import PartnerCreateForm from "@/components/partners/partner-create-form";
+import {useUser} from "@/hooks/useUser";
+import {useLenis} from "lenis/react";
+import AuthForm from "@/components/forms/auth-form";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 const BannerWrapper = styled.div`
     position: relative;
@@ -18,7 +25,6 @@ const BannerWrapper = styled.div`
     justify-content: center;
 `
 
-
 const BannerInfo = styled.div`
     display: flex;
     flex-direction: column;
@@ -26,11 +32,11 @@ const BannerInfo = styled.div`
     gap: 2rem;
     font-family: ${customTheme.font.secondary};
 
-    @media (min-width: ${({theme}) => customTheme.breakpoint.mobile}) {
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
         padding-inline: 1.5rem;
     }
 
-    @media (min-width: ${({theme}) => customTheme.breakpoint.tablet}) {
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
         padding-inline: 3rem;
     }
 
@@ -47,6 +53,23 @@ const BannerInfo = styled.div`
         font-size: clamp(1.5rem, 3vw, 2rem);
         line-height: 1.55;
         color: ${customTheme.color.white};
+    }
+    
+    button {
+        color: ${customTheme.color.primaryLight};
+        background-color: ${customTheme.color.white};
+        padding-block: 1.2rem;
+        padding-inline: 2rem;
+        font-size: 1.5rem;
+        font-weight: 500;
+        
+        @media(min-width: ${customTheme.breakpoint.tablet}) {
+            
+            &:hover {
+                background-color: ${customTheme.color.primaryLight};
+                color: ${customTheme.color.white};
+            }
+        }
     }
 `
 
@@ -74,9 +97,41 @@ const BannerBg = styled.div`
     }
 `
 
+
+
 const PartnerBanner = () => {
 
+  const router = useRouter();
+  const pathname = usePathname();
 
+  const {user, isLoading} = useUser();
+
+  const [isCompanyFormModalActive, setIsCompanyFormModalActive] = useState(false);
+  const [isAuthModalActive, setIsAuthModalActive] = useState(false);
+
+  useLenis((lenis) => {
+    lenis._isLocked = isCompanyFormModalActive || isAuthModalActive
+  })
+
+  const openCompanyFormModal = () => {
+    setIsCompanyFormModalActive(true)
+  }
+
+  const closeCompanyFormModal = () => {
+    setIsCompanyFormModalActive(false)
+  }
+
+  const openAuthModal = () => {
+    if (user && user?.data) {
+      router.push('/profile?section=companies', {scroll: true})
+    } else {
+      setIsAuthModalActive(true)
+    }
+  }
+
+  const closeAuthModal = () => {
+    setIsAuthModalActive(false)
+  }
 
   return (
     <>
@@ -87,12 +142,40 @@ const PartnerBanner = () => {
             <p>Присоединяйтесь к&nbsp;программе партнёрства: размещайте информацию о&nbsp;вашем автосервисе, магазине
               запчастей, автомойке и&nbsp;других услугах, получайте новых клиентов от&nbsp;автовладельцев
               сообщества.</p>
+            {pathname.includes('/profile') ? (
+              <button className="btn" type="button" onClick={openCompanyFormModal}>
+                Добавить компанию
+              </button>
+            ) : (
+              <button className="btn" type="button" onClick={openAuthModal}>
+                Стать партнером VAGCLUB21
+              </button>
+            )}
           </BannerInfo>
         </Container>
         <BannerBg>
           <Image src={'/images/partner-banner.webp'} alt="Баннер партнерство" width={1920} height={300}/>
         </BannerBg>
       </BannerWrapper>
+      <Modal
+        className="custom-modal"
+        centered={true}
+        open={isCompanyFormModalActive}
+        onCancel={closeCompanyFormModal}
+        footer={false}
+        width={'auto'}
+      >
+        <PartnerCreateForm />
+      </Modal>
+      <Modal
+        className="custom-modal"
+        centered={true}
+        open={isAuthModalActive}
+        onCancel={closeAuthModal}
+        footer={false}
+      >
+        <AuthForm onClose={closeAuthModal} />
+      </Modal>
     </>
   );
 };

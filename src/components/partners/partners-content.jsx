@@ -1,5 +1,5 @@
 'use client'
-import H1 from "../../UI/h1";
+import H1 from "../UI/h1";
 import {usePartners} from "@/hooks/usePartners";
 import styled from "styled-components";
 import PartnerCategories, {PCList, PCWrapper} from "@/components/partners/partner-categories";

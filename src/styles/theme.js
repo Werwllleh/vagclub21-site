@@ -48,7 +48,7 @@ export const customTheme = {
     primary: '#004c9d',
     primaryDark: '#182232',
     secondary: '#f8f8f8',
-    primaryLight: '#004c9d',
+    primaryLight: '#0064cc',
     white: '#fff',
     black: '#20252C',
     greyLight: '#f3f3f3',

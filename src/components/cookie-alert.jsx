@@ -125,11 +125,11 @@ const CookieAlert = () => {
         </CookieIcon>
         <CookieInfo>
           <CookieTitle>
-            Да, мы&nbsp;используем cookies
+            Да, мы&nbsp;используем куки-файлы
           </CookieTitle>
           <CookieText>
             <p>
-              Cookies помогают сайту работать стабильно, сохранять настройки и&nbsp;улучшать качество сервиса.
+              Куки-файлы помогают сайту работать стабильно, сохранять настройки и&nbsp;улучшать качество сервиса.
             </p>
           </CookieText>
           <CookieActions>

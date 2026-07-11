@@ -10,7 +10,7 @@ import {H1Element} from "@/components/UI/h1";
 import {customTheme} from "@/styles/theme";
 import PartnersLabels from "@/components/partners/partners-labels";
 import PartnerBanner from "@/components/partners/partner-banner";
-import PartnersContent from "@/components/pages/partners/partners-content";
+import PartnersContent from "@/components/partners/partners-content";
 import PartnerAdvantages from "@/components/partners/partner-advantages";
 import Container from "@/components/container";
 

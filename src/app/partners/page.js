@@ -1,5 +1,5 @@
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
-import PartnersContent from "@/components/pages/partners/partners-content";
+import PartnersContent from "@/components/partners/partners-content";
 import {Suspense} from "react";
 import Loading from "@/app/loading";
 

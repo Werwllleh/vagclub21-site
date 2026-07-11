@@ -17,6 +17,7 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Loading from "@/app/loading";
 import AnimateSection from "@/components/blocks/animate-section";
 import PartnerBanner from "@/components/partners/partner-banner";
+import scrollIntoView from "scroll-into-view-if-needed";
 
 const profileTabs = [
   {
@@ -101,9 +102,22 @@ const TabButton = styled.button`
 
 const ProfileTabs = styled.div`
 
+    display: flex;
+    //justify-content: center;
     margin-top: 2rem;
     max-width: max-content;
-    margin-inline: auto;
+    overflow-x: auto;
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        margin-inline: 0;
+        padding-inline: 0;
+    }
 
     ul {
         display: flex;
@@ -240,11 +254,22 @@ const ProfileContent = ({activeSection}) => {
                   const param = item.link.replace('?section=', '')
                   const active = selectedSection ? selectedSection === param : index === 0;
 
+                  if (active) {
+
+                  }
+
                   return (
                     <li key={index}>
                       <TabButton
                         $active={active}
-                        onClick={() => router.push(item.link, {scroll: false})}
+                        onClick={(e) => {
+                          router.push(item.link, {scroll: false})
+                          e.currentTarget.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                            inline: "center",
+                          })
+                        }}
                         className="btn"
                       >
                         {item.title}

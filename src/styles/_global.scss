@@ -169,8 +169,23 @@ textarea.ant-input {
     inset-inline-end: 5px;
   }
 
-  .ant-modal-content {
+  .ant-modal-container {
     padding: 4rem 2rem 2rem;
+  }
+}
+
+.custom-modal {
+  width: auto;
+
+  .ant-modal-close {
+    top: 5px;
+    inset-inline-end: 5px;
+  }
+  .ant-modal-container {
+    padding-top: 4rem;
+  }
+  .ant-modal-footer {
+    margin-top: 0;
   }
 }
 

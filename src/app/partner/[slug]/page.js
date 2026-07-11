@@ -1,5 +1,5 @@
 import PartnerDetail from "@/components/partners/partner-detail";
-import PartnersContent from "@/components/pages/partners/partners-content";
+import PartnersContent from "@/components/partners/partners-content";
 import CmsService from "@/services/cms.service";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {cache} from "react";

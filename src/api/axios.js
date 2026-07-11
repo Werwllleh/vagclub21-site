@@ -14,7 +14,6 @@ const axiosOptions = {
 
 const axiosOptionsCms = {
   baseURL: API_CMS_URL,
-  headers: getContentType(),
   withCredentials: true
 }
 
@@ -23,6 +22,8 @@ export const axiosClassic = axios.create(axiosOptions)
 export const axiosCmsClassic = axios.create(axiosOptionsCms)
 
 export const instance = axios.create(axiosOptions)
+
+export const instanceCms = axios.create(axiosOptionsCms)
 
 instance.interceptors.request.use(config => {
   const accessToken = AuthTokenService.getAccessToken();
@@ -38,7 +39,7 @@ instance.interceptors.response.use(
   (config) => config,
   async (error) => {
 
-    console.log(error)
+    // console.log(error)
 
     const originalRequest = error.config;
 

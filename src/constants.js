@@ -38,3 +38,14 @@ export const YM_ACTION = {
 }
 
 /* === /YANDEX METRIKA === */
+
+export const PAGE = {
+  MAIN: '/',
+  CARS: 'cars',
+  PRODUCTS: 'products',
+  PARTNERS: 'partners',
+  ABOUT: 'about',
+  BLOG: 'blog',
+  MEET: 'meet',
+  PROFILE: 'profile',
+}

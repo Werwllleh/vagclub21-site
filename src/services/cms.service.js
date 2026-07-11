@@ -1,4 +1,4 @@
-import {axiosCmsClassic} from "@/api/axios";
+import {axiosCmsClassic, instanceCms} from "@/api/axios";
 
 class CmsService {
 
@@ -54,6 +54,35 @@ class CmsService {
 
   async fetchPartnersLabels() {
     return axiosCmsClassic.get(`/partner/labels`)
+  }
+
+  async uploadPartnerMedia(file) {
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    formData.append(
+      '_payload',
+      JSON.stringify({
+        alt: file.name,
+      }),
+    );
+
+    const response = await instanceCms.post(
+      '/media_partners',
+      formData,
+    );
+
+    return response.data;
+  }
+
+  async createPartner(data) {
+    const response = await instanceCms.post(
+      '/partner',
+      data,
+    );
+
+    return response.data;
   }
 }
 
