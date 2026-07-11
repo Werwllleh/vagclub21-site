@@ -103,7 +103,6 @@ const TabButton = styled.button`
 const ProfileTabs = styled.div`
 
     display: flex;
-    //justify-content: center;
     margin-top: 2rem;
     max-width: max-content;
     overflow-x: auto;
@@ -115,7 +114,7 @@ const ProfileTabs = styled.div`
     }
     
     @media (min-width: ${customTheme.breakpoint.tablet}) {
-        margin-inline: 0;
+        margin-inline: auto;
         padding-inline: 0;
     }
 

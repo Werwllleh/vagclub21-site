@@ -4,7 +4,6 @@ import {useMemo, useState} from 'react';
 import styled from 'styled-components';
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
@@ -12,7 +11,6 @@ import {
   message,
   Row,
   Select,
-  Switch,
   Upload,
 } from 'antd';
 import {
@@ -24,6 +22,7 @@ import {
 import {usePartnerCategories} from '@/hooks/usePartnerCategories';
 import TextArea from "antd/lib/input/TextArea";
 import CmsService from "@/services/cms.service";
+import toast from "react-hot-toast";
 
 const Wrapper = styled.div`
     min-width: 65rem;
@@ -148,64 +147,6 @@ const DISCOUNT_OPTIONS = Array.from(
   },
 );
 
-/**
- * Загружает изображение в upload-коллекцию Payload.
- *
- * Для upload collection Payload ожидает multipart/form-data:
- * - поле file — сам файл;
- * - поле _payload — JSON дополнительных данных документа.
- */
-const uploadPartnerMedia = async (file) => {
-  const body = new FormData();
-
-  body.append('file', file);
-
-  body.append(
-    '_payload',
-    JSON.stringify({
-      alt: file.name,
-    }),
-  );
-
-  const response = await CmsService.uploadPartnerMedia(body);
-
-  const result = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    throw new Error(
-      result?.errors?.[0]?.message ||
-      result?.message ||
-      'Не удалось загрузить изображение',
-    );
-  }
-
-  const document = result?.doc ?? result;
-
-  if (!document?.id) {
-    throw new Error(
-      'API загрузки не вернул ID изображения',
-    );
-  }
-
-  return document;
-};
-
-const createPartner = async (data) => {
-  const response = await CmsService.createPartner(JSON.stringify(data))
-
-  const result = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    throw new Error(
-      result?.errors?.[0]?.message ||
-      result?.message ||
-      'Не удалось создать компанию',
-    );
-  }
-
-  return result?.doc ?? result;
-};
-
 const PartnerCreateForm = ({onSuccess}) => {
   const [form] = Form.useForm();
 
@@ -215,9 +156,11 @@ const PartnerCreateForm = ({onSuccess}) => {
 
   const [logo, setLogo] = useState(null);
   const [logoUploading, setLogoUploading] = useState(false);
+  const [logoDeleting, setLogoDeleting] = useState(false);
 
   const [gallery, setGallery] = useState([]);
   const [galleryUploading, setGalleryUploading] = useState(false);
+  const [deletingMediaIds, setDeletingMediaIds] = useState([]);
 
   const categoryOptions = useMemo(
     () => partnerCategories?.map((category) => ({
@@ -227,100 +170,142 @@ const PartnerCreateForm = ({onSuccess}) => {
     [partnerCategories],
   );
 
-  const handleLogoUpload = async (file) => {
+  const handleLogoUpload = async (uploadFile) => {
     setLogoUploading(true);
 
     try {
-      const response = await CmsService.uploadPartnerMedia(file);
-
-      const uploadedMedia = response?.doc ?? response;
+      const uploadedMedia =
+        await CmsService.uploadPartnerMedia(uploadFile);
 
       if (!uploadedMedia?.id) {
-        throw new Error('API не вернул ID логотипа');
+        throw new Error(
+          'Сервер не вернул ID логотипа',
+        );
       }
 
       setLogo(uploadedMedia);
-      form.setFieldValue('logo', uploadedMedia.id);
 
-      message.success('Логотип загружен');
+      toast.success('Логотип загружен');
     } catch (error) {
-      console.error('Ошибка загрузки логотипа:', error);
-
-      message.error(
-        error?.response?.data?.errors?.[0]?.message ||
-        error?.message ||
-        'Не удалось загрузить логотип',
+      console.error(
+        'Ошибка загрузки логотипа:',
+        error?.response?.data ?? error,
       );
+
+      toast.error('Не удалось загрузить логотип');
     } finally {
       setLogoUploading(false);
     }
 
-    return false;
+    return Upload.LIST_IGNORE;
   };
 
-  const handleGalleryUpload = async (file) => {
+  const handleGalleryUpload = async (uploadFile) => {
     setGalleryUploading(true);
 
     try {
-      const response = await CmsService.uploadPartnerMedia(file);
-
-      const uploadedMedia = response?.doc ?? response;
+      const uploadedMedia =
+        await CmsService.uploadPartnerMedia(uploadFile);
 
       if (!uploadedMedia?.id) {
-        throw new Error('API не вернул ID изображения');
+        throw new Error(
+          'Сервер не вернул ID фотографии',
+        );
       }
 
-      setGallery((currentGallery) => {
-        const nextGallery = [
-          ...currentGallery,
-          uploadedMedia,
-        ];
+      setGallery((currentGallery) => [
+        ...currentGallery,
+        uploadedMedia,
+      ]);
 
-        form.setFieldValue(
-          'gallery',
-          nextGallery.map((item) => item.id),
-        );
-
-        return nextGallery;
-      });
-
-      message.success('Изображение добавлено в галерею');
+      toast.success('Фотография загружена');
     } catch (error) {
-      console.error('Ошибка загрузки изображения:', error);
+      console.error(
+        'Ошибка загрузки фотографии:',
+        error,
+      );
 
-      message.error(
-        error?.response?.data?.errors?.[0]?.message ||
-        error?.message ||
-        'Не удалось загрузить изображение',
+      toast.error(
+        'Не удалось загрузить фотографию',
       );
     } finally {
       setGalleryUploading(false);
     }
 
-    return false;
+    return Upload.LIST_IGNORE;
   };
 
-  const handleRemoveLogo = () => {
-    setLogo(null);
-    form.setFieldValue('logo', undefined);
+  const handleRemoveLogo = async () => {
+    if (!logo?.id || logoDeleting) {
+      return;
+    }
+
+    setLogoDeleting(true);
+
+    try {
+      await CmsService.deletePartnerMedia(logo.id);
+
+      setLogo(null);
+
+      toast.success('Логотип удалён');
+    } catch (error) {
+      console.error(
+        'Ошибка удаления логотипа:',
+        error?.response?.data ?? error,
+      );
+
+      toast.error(
+        'Не удалось удалить логотип',
+      );
+    } finally {
+      setLogoDeleting(false);
+    }
   };
 
-  const handleRemoveGalleryItem = (mediaId) => {
-    setGallery((currentGallery) => {
-      const nextGallery = currentGallery.filter(
-        (item) => item.id !== mediaId,
+  const handleRemoveGalleryItem = async (mediaId) => {
+    if (
+      !mediaId ||
+      deletingMediaIds.includes(mediaId)
+    ) {
+      return;
+    }
+
+    setDeletingMediaIds((current) => [
+      ...current,
+      mediaId,
+    ]);
+
+    try {
+      await CmsService.deletePartnerMedia(mediaId);
+
+      setGallery((currentGallery) =>
+        currentGallery.filter(
+          (item) => item.id !== mediaId,
+        ),
       );
 
-      form.setFieldValue(
-        'gallery',
-        nextGallery.map((item) => item.id),
+      toast.success('Фотография удалена');
+    } catch (error) {
+      console.error(
+        'Ошибка удаления фотографии:',
+        error?.response?.data ?? error,
       );
 
-      return nextGallery;
-    });
+      toast.error(
+        'Не удалось удалить фотографию',
+      );
+    } finally {
+      setDeletingMediaIds((current) =>
+        current.filter((id) => id !== mediaId),
+      );
+    }
   };
 
   const onSubmit = async (values) => {
+    if (submitting) {
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -328,17 +313,18 @@ const PartnerCreateForm = ({onSuccess}) => {
         title: values.title.trim(),
         description: values.description.trim(),
         categories: values.categories,
-        sort: 100,
 
-        logo: values.logo || undefined,
+        logo: logo?.id ?? undefined,
 
-        gallery: values.gallery?.length
-          ? values.gallery
+        gallery: gallery.length
+          ? gallery.map((item) => item.id)
           : undefined,
 
-        address: values.address?.trim() || undefined,
+        address:
+          values.address?.trim() || undefined,
 
-        discount: values.discount || undefined,
+        discount:
+          values.discount || undefined,
 
         contacts: {
           instagram:
@@ -378,46 +364,36 @@ const PartnerCreateForm = ({onSuccess}) => {
         },
 
         coordinates: {
-          lat: values.coordinates?.lat ?? undefined,
-          lng: values.coordinates?.lng ?? undefined,
+          lat:
+            values.coordinates?.lat ?? undefined,
+
+          lng:
+            values.coordinates?.lng ?? undefined,
         },
       };
 
-      console.log('Partner payload:', payload);
+      const response =
+        await CmsService.attachCompany(payload);
 
-      const response = await CmsService.createPartner(payload);
-
-      const createdPartner = response?.doc ?? response;
-
-      message.success('Компания успешно создана');
+      toast.success(
+        'Компания успешно создана и отправлена на проверку',
+      );
 
       form.resetFields();
-
       setLogo(null);
       setGallery([]);
 
-      onSuccess?.(createdPartner);
+      if (typeof onSuccess === 'function') {
+        onSuccess(response.company);
+      }
     } catch (error) {
       console.error(
         'Ошибка создания компании:',
-        error?.response?.data || error,
+        error?.response?.data ?? error,
       );
 
-      const validationErrors =
-        error?.response?.data?.errors?.[0]?.data?.errors;
-
-      if (validationErrors?.length) {
-        const errorMessage = validationErrors
-          .map((item) => item.message)
-          .join('\n');
-
-        message.error(errorMessage);
-
-        return;
-      }
-
-      message.error(
-        error?.response?.data?.errors?.[0]?.message ||
+      toast.error(
+        error?.response?.data?.message ||
         error?.message ||
         'Не удалось создать компанию',
       );
@@ -523,13 +499,6 @@ const PartnerCreateForm = ({onSuccess}) => {
               Логотип
             </FormSectionTitle>
 
-            <Form.Item
-              name="logo"
-              hidden
-            >
-              <Input/>
-            </Form.Item>
-
             {logo ? (
               <UploadPreview>
                 <img
@@ -569,13 +538,6 @@ const PartnerCreateForm = ({onSuccess}) => {
             <FormSectionTitle>
               Галерея
             </FormSectionTitle>
-
-            <Form.Item
-              name="gallery"
-              hidden
-            >
-              <Input/>
-            </Form.Item>
 
             <UploadList>
               {gallery.map((media) => (

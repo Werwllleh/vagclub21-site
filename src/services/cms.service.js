@@ -1,4 +1,4 @@
-import {axiosCmsClassic, instanceCms} from "@/api/axios";
+import {axiosCmsClassic, instance, instanceCms} from "@/api/axios";
 
 class CmsService {
 
@@ -56,10 +56,19 @@ class CmsService {
     return axiosCmsClassic.get(`/partner/labels`)
   }
 
-  async uploadPartnerMedia(file) {
+  async uploadPartnerMedia(uploadFile) {
+    const file =
+      uploadFile?.originFileObj instanceof File
+        ? uploadFile.originFileObj
+        : uploadFile;
+
+    if (!(file instanceof File)) {
+      throw new Error('Передан некорректный файл');
+    }
+
     const formData = new FormData();
 
-    formData.append('file', file);
+    formData.append('file', file, file.name);
 
     formData.append(
       '_payload',
@@ -73,12 +82,16 @@ class CmsService {
       formData,
     );
 
-    return response.data;
+    return response.data?.doc ?? response.data;
   }
 
-  async createPartner(data) {
-    const response = await instanceCms.post(
-      '/partner',
+  async deletePartnerMedia(mediaId) {
+    return instanceCms.delete(`/media_partners/remove/${mediaId}`);
+  }
+
+  async attachCompany(data) {
+    const response = await instance.post(
+      '/attach-company',
       data,
     );
 
