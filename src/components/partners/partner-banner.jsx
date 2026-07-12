@@ -5,7 +5,7 @@ import Image from "next/image";
 import Container from "@/components/container";
 import {customTheme} from "@/styles/theme";
 import {Modal} from "antd";
-import PartnerCreateForm from "@/components/partners/partner-create-form";
+import PartnerForm from "@/components/forms/partner-form";
 import {useUser} from "@/hooks/useUser";
 import {useLenis} from "lenis/react";
 import AuthForm from "@/components/forms/auth-form";
@@ -165,7 +165,7 @@ const PartnerBanner = () => {
         footer={false}
         width={'auto'}
       >
-        <PartnerCreateForm />
+        <PartnerForm onClose={closeCompanyFormModal} />
       </Modal>
       <Modal
         className="custom-modal"

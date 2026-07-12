@@ -32,11 +32,17 @@ const AuthFormTg = styled.div`
 `
 
 const AuthFormInner = styled.div`
+    min-height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .loader__text {
+        display: none;
+    }
 `
 
 const AuthForm = ({onClose}) => {
-
-  const router = useRouter();
 
   const {user, isLoading} = useUser();
 

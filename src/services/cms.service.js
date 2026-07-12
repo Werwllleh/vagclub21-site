@@ -97,6 +97,18 @@ class CmsService {
 
     return response.data;
   }
+
+  async updateUserCompany(companyId, payload) {
+    const response = await instance.patch(
+      '/attach-user-company',
+      {
+        id: companyId,
+        data: payload,
+      },
+    );
+
+    return response.data;
+  }
 }
 
 export default new CmsService();

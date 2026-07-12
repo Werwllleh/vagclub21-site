@@ -1,6 +1,6 @@
 'use client';
 
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import styled from 'styled-components';
 import {
   Button,
@@ -23,6 +23,7 @@ import {usePartnerCategories} from '@/hooks/usePartnerCategories';
 import TextArea from "antd/lib/input/TextArea";
 import CmsService from "@/services/cms.service";
 import toast from "react-hot-toast";
+import {TYPE} from "@/constants";
 
 const Wrapper = styled.div`
     min-width: 65rem;
@@ -54,9 +55,13 @@ const FormSection = styled.section`
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    
+
     & > .ant-row {
         gap: 1.6rem 0;
+    }
+    
+    button.remove {
+        padding: 0;
     }
 `;
 
@@ -147,8 +152,137 @@ const DISCOUNT_OPTIONS = Array.from(
   },
 );
 
-const PartnerCreateForm = ({onSuccess}) => {
+const PartnerForm = ({type, onSuccess, onClose, values}) => {
+  const DEFAULT_FORM_VALUES = {
+    contacts: {
+      phones: [],
+      emails: [],
+    },
+  };
+
   const [form] = Form.useForm();
+
+  const isUpdate = type === TYPE.UPDATE;
+
+  useEffect(() => {
+    if (!isUpdate || !values) {
+      form.resetFields();
+
+      setLogo(null);
+      setGallery([]);
+
+      return;
+    }
+
+    form.resetFields();
+
+    form.setFieldsValue({
+      title:
+        values.title ?? '',
+
+      description:
+        values.description ?? '',
+
+      categories: Array.isArray(values.categories)
+        ? values.categories
+          .map((category) => {
+            if (
+              typeof category === 'object' &&
+              category !== null
+            ) {
+              return category.id;
+            }
+
+            return category;
+          })
+          .filter(
+            (categoryId) =>
+              categoryId !== null &&
+              categoryId !== undefined,
+          )
+        : [],
+
+      address:
+        values.address ?? undefined,
+
+      discount:
+        values.discount ?? undefined,
+
+      contacts: {
+        instagram:
+          values.contacts?.instagram ??
+          undefined,
+
+        telegram:
+          values.contacts?.telegram ??
+          undefined,
+
+        max:
+          values.contacts?.max ??
+          undefined,
+
+        vk:
+          values.contacts?.vk ??
+          undefined,
+
+        avito:
+          values.contacts?.avito ??
+          undefined,
+
+        site:
+          values.contacts?.site ??
+          undefined,
+
+        yandexMaps:
+          values.contacts?.yandexMaps ??
+          undefined,
+
+        phones: Array.isArray(
+          values.contacts?.phones,
+        )
+          ? values.contacts.phones.map(
+            (item) => ({
+              id: item.id,
+              phone: item.phone ?? '',
+            }),
+          )
+          : [],
+
+        emails: Array.isArray(
+          values.contacts?.emails,
+        )
+          ? values.contacts.emails.map(
+            (item) => ({
+              id: item.id,
+              email: item.email ?? '',
+            }),
+          )
+          : [],
+      },
+
+      coordinates: {
+        lat:
+          values.coordinates?.lat ??
+          undefined,
+
+        lng:
+          values.coordinates?.lng ??
+          undefined,
+      },
+    });
+
+    setLogo(values.logo ?? null);
+
+    setGallery(
+      Array.isArray(values.gallery)
+        ? values.gallery
+        : [],
+    );
+  }, [
+    form,
+    isUpdate,
+    values,
+  ]);
 
   const {partnerCategories = [], isLoading: categoriesLoading} = usePartnerCategories();
 
@@ -169,6 +303,98 @@ const PartnerCreateForm = ({onSuccess}) => {
     })),
     [partnerCategories],
   );
+
+  useEffect(() => {
+    form.resetFields();
+
+    setDeletingMediaIds([]);
+
+    if (isUpdate && values) {
+      form.setFieldsValue(
+        mapCompanyToFormValues(values),
+      );
+
+      setLogo(values.logo ?? null);
+
+      setGallery(
+        Array.isArray(values.gallery)
+          ? [...values.gallery]
+          : [],
+      );
+
+      return;
+    }
+
+    setLogo(null);
+    setGallery([]);
+  }, [values, form, isUpdate]);
+
+
+  const mapCompanyToFormValues = (values) => ({
+    title: values?.title ?? '',
+    description: values?.description ?? '',
+
+    categories: Array.isArray(values?.categories)
+      ? values.categories
+        .map((category) => (
+          typeof category === 'object' && category !== null
+            ? category.id
+            : category
+        ))
+        .filter((id) => id !== null && id !== undefined)
+      : [],
+
+    address: values?.address ?? undefined,
+    discount: values?.discount ?? undefined,
+
+    contacts: {
+      instagram:
+        values?.contacts?.instagram ?? undefined,
+
+      telegram:
+        values?.contacts?.telegram ?? undefined,
+
+      max:
+        values?.contacts?.max ?? undefined,
+
+      vk:
+        values?.contacts?.vk ?? undefined,
+
+      avito:
+        values?.contacts?.avito ?? undefined,
+
+      site:
+        values?.contacts?.site ?? undefined,
+
+      yandexMaps:
+        values?.contacts?.yandexMaps ?? undefined,
+
+      phones: Array.isArray(values?.contacts?.phones)
+        ? values.contacts.phones.map((item) => ({
+          ...(item?.id !== null &&
+          item?.id !== undefined
+            ? {id: item.id}
+            : {}),
+          phone: item?.phone ?? '',
+        }))
+        : [],
+
+      emails: Array.isArray(values?.contacts?.emails)
+        ? values.contacts.emails.map((item) => ({
+          ...(item?.id !== null &&
+          item?.id !== undefined
+            ? {id: item.id}
+            : {}),
+          email: item?.email ?? '',
+        }))
+        : [],
+    },
+
+    coordinates: {
+      lat: values?.coordinates?.lat ?? undefined,
+      lng: values?.coordinates?.lng ?? undefined,
+    },
+  });
 
   const handleLogoUpload = async (uploadFile) => {
     setLogoUploading(true);
@@ -301,101 +527,243 @@ const PartnerCreateForm = ({onSuccess}) => {
     }
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (formValues) => {
     if (submitting) {
+      return;
+    }
+
+    if (isUpdate && !values?.id) {
+      toast.error(
+        'Не удалось определить ID компании',
+      );
+
       return;
     }
 
     setSubmitting(true);
 
     try {
+      /*
+       * При создании пустые значения отправляем
+       * как undefined.
+       *
+       * При обновлении пустые значения отправляем
+       * как null, чтобы Payload очистил старые данные.
+       */
+      const emptyValue = isUpdate
+        ? null
+        : undefined;
+
+      const normalizeOptionalString = (
+        value,
+      ) => {
+        if (typeof value !== 'string') {
+          return emptyValue;
+        }
+
+        const normalizedValue = value.trim();
+
+        return normalizedValue || emptyValue;
+      };
+
+      const galleryIds = gallery
+        .map((item) => item?.id)
+        .filter(
+          (id) =>
+            id !== null &&
+            id !== undefined,
+        );
+
+      const phones = Array.isArray(
+        formValues.contacts?.phones,
+      )
+        ? formValues.contacts.phones
+          .filter((item) =>
+            item?.phone?.trim(),
+          )
+          .map((item) => ({
+            ...(
+              item.id !== undefined &&
+              item.id !== null &&
+              item.id !== ''
+                ? {
+                  id: item.id,
+                }
+                : {}
+            ),
+
+            phone: item.phone.trim(),
+          }))
+        : [];
+
+      const emails = Array.isArray(
+        formValues.contacts?.emails,
+      )
+        ? formValues.contacts.emails
+          .filter((item) =>
+            item?.email?.trim(),
+          )
+          .map((item) => ({
+            ...(
+              item.id !== undefined &&
+              item.id !== null &&
+              item.id !== ''
+                ? {
+                  id: item.id,
+                }
+                : {}
+            ),
+
+            email: item.email.trim(),
+          }))
+        : [];
+
       const payload = {
-        title: values.title.trim(),
-        description: values.description.trim(),
-        categories: values.categories,
+        title:
+          formValues.title.trim(),
 
-        logo: logo?.id ?? undefined,
+        description:
+          formValues.description.trim(),
 
-        gallery: gallery.length
-          ? gallery.map((item) => item.id)
-          : undefined,
+        categories:
+          formValues.categories ?? [],
 
-        address:
-          values.address?.trim() || undefined,
+        /*
+         * UPDATE:
+         * null удалит логотип.
+         *
+         * CREATE:
+         * undefined не отправит поле.
+         */
+        logo:
+          logo?.id ?? emptyValue,
+
+        /*
+         * UPDATE:
+         * [] очистит галерею.
+         *
+         * CREATE:
+         * пустая галерея не отправляется.
+         */
+        gallery: isUpdate
+          ? galleryIds
+          : galleryIds.length
+            ? galleryIds
+            : undefined,
+
+        address: normalizeOptionalString(
+          formValues.address,
+        ),
 
         discount:
-          values.discount || undefined,
+          formValues.discount === undefined ||
+          formValues.discount === null ||
+          formValues.discount === ''
+            ? emptyValue
+            : formValues.discount,
 
         contacts: {
           instagram:
-            values.contacts?.instagram?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.instagram,
+            ),
 
           telegram:
-            values.contacts?.telegram?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.telegram,
+            ),
 
           max:
-            values.contacts?.max?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.max,
+            ),
 
           vk:
-            values.contacts?.vk?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.vk,
+            ),
 
           avito:
-            values.contacts?.avito?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.avito,
+            ),
 
           site:
-            values.contacts?.site?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.site,
+            ),
 
           yandexMaps:
-            values.contacts?.yandexMaps?.trim() || undefined,
+            normalizeOptionalString(
+              formValues.contacts?.yandexMaps,
+            ),
 
-          phones:
-            values.contacts?.phones
-              ?.filter((item) => item?.phone?.trim())
-              .map((item) => ({
-                phone: item.phone.trim(),
-              })) || [],
+          phones,
 
-          emails:
-            values.contacts?.emails
-              ?.filter((item) => item?.email?.trim())
-              .map((item) => ({
-                email: item.email.trim(),
-              })) || [],
+          emails,
         },
 
         coordinates: {
           lat:
-            values.coordinates?.lat ?? undefined,
+            formValues.coordinates?.lat ??
+            emptyValue,
 
           lng:
-            values.coordinates?.lng ?? undefined,
+            formValues.coordinates?.lng ??
+            emptyValue,
         },
       };
 
-      const response =
-        await CmsService.attachUserCompany(payload);
+      let response;
+
+      if (isUpdate) {
+        response =
+          await CmsService.updateUserCompany(
+            values.id,
+            payload,
+          );
+      } else {
+        response =
+          await CmsService.attachUserCompany(
+            payload,
+          );
+      }
 
       toast.success(
-        'Компания успешно создана и отправлена на проверку',
+        isUpdate
+          ? 'Компания успешно обновлена'
+          : 'Компания успешно создана и отправлена на проверку',
       );
 
-      form.resetFields();
-      setLogo(null);
-      setGallery([]);
-
       if (typeof onSuccess === 'function') {
-        onSuccess(response.company);
+        onSuccess(response.values);
+      }
+
+      if (!isUpdate) {
+        form.resetFields();
+
+        setLogo(null);
+        setGallery([]);
+      }
+
+      if (typeof onClose === 'function') {
+        onClose();
       }
     } catch (error) {
       console.error(
-        'Ошибка создания компании:',
+        isUpdate
+          ? 'Ошибка обновления компании:'
+          : 'Ошибка создания компании:',
         error?.response?.data ?? error,
       );
 
       toast.error(
         error?.response?.data?.message ||
-        error?.message ||
-        'Не удалось создать компанию',
+        (
+          isUpdate
+            ? 'Не удалось обновить компанию'
+            : 'Не удалось создать компанию'
+        ),
       );
     } finally {
       setSubmitting(false);
@@ -407,12 +775,7 @@ const PartnerCreateForm = ({onSuccess}) => {
       <FormWrap
         form={form}
         layout="vertical"
-        initialValues={{
-          contacts: {
-            phones: [],
-            emails: [],
-          },
-        }}
+        initialValues={DEFAULT_FORM_VALUES}
         onFinish={onSubmit}
         scrollToFirstError
       >
@@ -508,9 +871,10 @@ const PartnerCreateForm = ({onSuccess}) => {
 
                 <button
                   type="button"
-                  className="btn m default"
+                  className="btn default remove"
                   aria-label="Удалить логотип"
                   onClick={handleRemoveLogo}
+                  disabled={logoDeleting}
                 >
                   <DeleteOutlined/>
                 </button>
@@ -553,11 +917,12 @@ const PartnerCreateForm = ({onSuccess}) => {
 
                   <button
                     type="button"
-                    className="btn m default"
+                    className="btn default remove"
                     aria-label="Удалить изображение"
                     onClick={() => {
                       handleRemoveGalleryItem(media.id);
                     }}
+                    disabled={deletingMediaIds.includes(media.id)}
                   >
                     <DeleteOutlined/>
                   </button>
@@ -601,7 +966,7 @@ const PartnerCreateForm = ({onSuccess}) => {
                     },
                   ]}
                 >
-                  <Input placeholder="https://company.ru"/>
+                  <Input placeholder="https://values.ru"/>
                 </Form.Item>
               </Col>
 
@@ -610,7 +975,7 @@ const PartnerCreateForm = ({onSuccess}) => {
                   name={['contacts', 'telegram']}
                   label="Telegram"
                 >
-                  <Input placeholder="https://t.me/company"/>
+                  <Input placeholder="https://t.me/values"/>
                 </Form.Item>
               </Col>
 
@@ -619,7 +984,7 @@ const PartnerCreateForm = ({onSuccess}) => {
                   name={['contacts', 'instagram']}
                   label="Instagram"
                 >
-                  <Input placeholder="https://instagram.com/company"/>
+                  <Input placeholder="https://instagram.com/values"/>
                 </Form.Item>
               </Col>
 
@@ -628,7 +993,7 @@ const PartnerCreateForm = ({onSuccess}) => {
                   name={['contacts', 'vk']}
                   label="VK"
                 >
-                  <Input placeholder="https://vk.com/company"/>
+                  <Input placeholder="https://vk.com/values"/>
                 </Form.Item>
               </Col>
 
@@ -663,38 +1028,47 @@ const PartnerCreateForm = ({onSuccess}) => {
             <Form.List name={['contacts', 'phones']}>
               {(fields, {add, remove}) => (
                 <>
-                  {fields.map(({key, name, ...restField}) => (
-                    <Row
-                      key={key}
-                      gutter={12}
-                      align="middle"
-                    >
-                      <Col flex="auto">
+                  {fields.map(
+                    ({key, name, ...restField}) => (
+                      <Row
+                        key={key}
+                        gutter={12}
+                        align="middle"
+                      >
                         <Form.Item
-                          {...restField}
-                          name={[name, 'phone']}
-                          label="Телефон"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Укажи телефон',
-                            },
-                          ]}
+                          name={[name, 'id']}
+                          hidden
                         >
-                          <Input placeholder="+7 999 999-99-99"/>
+                          <Input/>
                         </Form.Item>
-                      </Col>
 
-                      <Col>
-                        <Button
-                          danger
-                          type="text"
-                          icon={<DeleteOutlined/>}
-                          onClick={() => remove(name)}
-                        />
-                      </Col>
-                    </Row>
-                  ))}
+                        <Col flex="auto">
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'phone']}
+                            label="Телефон"
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Укажи телефон',
+                              },
+                            ]}
+                          >
+                            <Input placeholder="+7 999 999-99-99"/>
+                          </Form.Item>
+                        </Col>
+
+                        <Col>
+                          <Button
+                            danger
+                            type="text"
+                            icon={<DeleteOutlined/>}
+                            onClick={() => remove(name)}
+                          />
+                        </Col>
+                      </Row>
+                    ),
+                  )}
 
                   <AddArrayButton
                     type="dashed"
@@ -711,43 +1085,52 @@ const PartnerCreateForm = ({onSuccess}) => {
             <Form.List name={['contacts', 'emails']}>
               {(fields, {add, remove}) => (
                 <>
-                  {fields.map(({key, name, ...restField}) => (
-                    <Row
-                      key={key}
-                      gutter={12}
-                      align="middle"
-                    >
-                      <Col flex="auto">
+                  {fields.map(
+                    ({key, name, ...restField}) => (
+                      <Row
+                        key={key}
+                        gutter={12}
+                        align="middle"
+                      >
                         <Form.Item
-                          {...restField}
-                          name={[name, 'email']}
-                          label="Email"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Укажи email',
-                            },
-                            {
-                              type: 'email',
-                              message: 'Некорректный email',
-                            },
-                          ]}
+                          name={[name, 'id']}
+                          hidden
                         >
-                          <Input placeholder="info@company.ru"/>
+                          <Input/>
                         </Form.Item>
-                      </Col>
 
-                      <Col>
-                        <Button
-                          className="btn m default"
-                          danger
-                          type="text"
-                          icon={<DeleteOutlined/>}
-                          onClick={() => remove(name)}
-                        />
-                      </Col>
-                    </Row>
-                  ))}
+                        <Col flex="auto">
+                          <Form.Item
+                            {...restField}
+                            name={[name, 'email']}
+                            label="Email"
+                            rules={[
+                              {
+                                required: true,
+                                message: 'Укажи email',
+                              },
+                              {
+                                type: 'email',
+                                message: 'Некорректный email',
+                              },
+                            ]}
+                          >
+                            <Input placeholder="info@values.ru"/>
+                          </Form.Item>
+                        </Col>
+
+                        <Col>
+                          <Button
+                            className="btn m default"
+                            danger
+                            type="text"
+                            icon={<DeleteOutlined/>}
+                            onClick={() => remove(name)}
+                          />
+                        </Col>
+                      </Row>
+                    ),
+                  )}
 
                   <AddArrayButton
                     className="btn m default"
@@ -811,10 +1194,14 @@ const PartnerCreateForm = ({onSuccess}) => {
             loading={submitting}
             disabled={
               logoUploading ||
-              galleryUploading
+              galleryUploading ||
+              logoDeleting ||
+              deletingMediaIds.length > 0
             }
           >
-            Добавить компанию
+            {isUpdate
+              ? 'Обновить компанию'
+              : 'Добавить компанию'}
           </Button>
         </FormFooter>
       </FormWrap>
@@ -822,4 +1209,4 @@ const PartnerCreateForm = ({onSuccess}) => {
   );
 };
 
-export default PartnerCreateForm;
+export default PartnerForm;

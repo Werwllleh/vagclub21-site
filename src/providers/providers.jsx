@@ -50,8 +50,11 @@ const Providers = ({children}) => {
         </LazyMotion>
         <Toaster toastOptions={{
           style: {
-            fontSize: '1.6rem',
+            fontSize: '1.4rem',
+            textAlign: 'center',
             padding: '1.2rem',
+            width: '100%',
+            maxWidth: '40rem',
           },
         }}/>
         <ReactQueryDevtools initialIsOpen={false}/>

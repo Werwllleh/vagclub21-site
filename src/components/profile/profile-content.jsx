@@ -14,10 +14,10 @@ import Image from "next/image";
 import {customTheme} from "@/styles/theme";
 import Container from "@/components/container";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import Loading from "@/app/loading";
 import AnimateSection from "@/components/blocks/animate-section";
 import PartnerBanner from "@/components/partners/partner-banner";
 import scrollIntoView from "scroll-into-view-if-needed";
+import ProfileCompanyCard from "@/components/profile/profile-company-card";
 
 const profileTabs = [
   {
@@ -41,9 +41,13 @@ const ProfileHeader = styled.div`
 `
 
 const ProfileHeaderBg = styled.div`
-    height: 40rem;
+    height: 25rem;
     pointer-events: none;
     user-select: none;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        height: 40rem;
+    }
 
     img {
         width: 100%;
@@ -60,23 +64,41 @@ const ProfileAvatar = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 12rem;
-    height: 12rem;
+    width: 9rem;
+    height: 9rem;
     overflow: hidden;
-    margin-top: -6.5rem;
+    margin-top: -4.5rem;
     margin-inline: auto;
     pointer-events: none;
     user-select: none;
 
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        width: 12rem;
+        height: 12rem;
+        margin-top: -6.5rem;
+    }
+
     span {
         border-radius: 100%;
         border: .75rem solid ${customTheme.color.white};
+        background-color: ${customTheme.color.white};
     }
 
     img {
         border-radius: 100%;
         object-fit: cover;
         object-position: center;
+    }
+
+    & .loader {
+
+        &__text {
+            display: none;
+        }
+
+        &__icon {
+                //background-color: ${customTheme.color.white};
+        }
     }
 `
 
@@ -108,11 +130,11 @@ const ProfileTabs = styled.div`
     overflow-x: auto;
     margin-inline: -1.5rem;
     padding-inline: 1.5rem;
-    
+
     &::-webkit-scrollbar {
         display: none;
     }
-    
+
     @media (min-width: ${customTheme.breakpoint.tablet}) {
         margin-inline: auto;
         padding-inline: 0;
@@ -133,23 +155,37 @@ const ProfileTabs = styled.div`
     }
 `
 
-const ProfileSection = styled.section`
+const ProfileSection = styled.div`
     margin-top: 5rem;
+`
 
+const ProfileSectionInner = styled(AnimateSection)`
     h1 {
         margin-bottom: 5rem;
+
+        sup {
+            color: ${customTheme.color.primary};
+            font-size: 3.2rem;
+            pointer-events: none;
+            user-select: none;
+        }
     }
 `
 
-const UserProfile = styled(AnimateSection)``
+const ProfileSectionDescription = styled.div`
+    font-size: 2.4rem;
+    margin-bottom: 3rem;
+`
 
-const UserCars = styled(AnimateSection)``
+const UserProfile = styled.div``
+
+const UserCars = styled.div``
 
 const CarsList = styled.ul`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     gap: 3rem 2rem;
-    
+
     & + button {
         margin-top: 5rem;
         margin-inline: auto;
@@ -160,14 +196,19 @@ const CarsList = styled.ul`
     }
 `
 
-const UserCompanies = styled(AnimateSection)``
+const UserCompanies = styled.div``
 
-const UserCompaniesEmpty = styled.div`
-  
-  h2 {
-      font-size: 2.4rem;
-      margin-bottom: 3rem;
-  }
+const UserCompaniesList = styled.div`
+    margin-bottom: 5rem;
+
+    & > ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+
+        li {
+
+        }
+    }
 `
 
 
@@ -180,6 +221,10 @@ const ProfileContent = ({activeSection}) => {
   const selectedSection = searchParams.get('section');
 
   const {isLoading, user} = useUser();
+
+  useEffect(() => {
+    console.log(user)
+  }, [user]);
 
 
   const [mounted, setMounted] = useState(false);
@@ -225,10 +270,13 @@ const ProfileContent = ({activeSection}) => {
               loading="eager"
             />
           </ProfileHeaderBg>
-          {user && (
-            <ProfileAvatar>
-              {user?.userPhoto ? (
-                <span>
+          <ProfileAvatar>
+            {(isLoading && !user) ? (
+              <Loader/>
+            ) : (
+              <>
+                {user?.userPhoto ? (
+                  <span>
                   <Image
                     src={user.userPhoto}
                     alt={"avatar"}
@@ -236,13 +284,14 @@ const ProfileContent = ({activeSection}) => {
                     height={120}
                   />
                 </span>
-              ) : (
-                <span style={{backgroundColor: user.data.color}}>
+                ) : (
+                  <span style={{backgroundColor: user.data.color}}>
                   {user.data.name.substring(0, 2).toUpperCase()}
                 </span>
-              )}
-            </ProfileAvatar>
-          )}
+                )}
+              </>
+            )}
+          </ProfileAvatar>
         </ProfileHeader>
         <Container>
           <ProfileBody>
@@ -280,7 +329,7 @@ const ProfileContent = ({activeSection}) => {
             </ProfileTabs>
             <ProfileSection>
               {(activeSection === null || activeSection === 'main') && (
-                <>
+                <ProfileSectionInner>
                   <H1>Профиль</H1>
                   <UserProfile>
                     {user && user?.data && (
@@ -290,10 +339,10 @@ const ProfileContent = ({activeSection}) => {
                       }}/>
                     )}
                   </UserProfile>
-                </>
+                </ProfileSectionInner>
               )}
               {activeSection === 'cars' && (
-                <>
+                <ProfileSectionInner>
                   <H1>Ваши авто</H1>
                   {user?.data?.cars && !!user.data.cars.length && (
                     <UserCars>
@@ -316,23 +365,40 @@ const ProfileContent = ({activeSection}) => {
                       </Button>
                     </UserCars>
                   )}
-                </>
+                </ProfileSectionInner>
               )}
               {activeSection === 'companies' && (
-                <>
-                  <H1>Компании</H1>
-                  <UserCompanies>
-                    <UserCompaniesEmpty>
+                <ProfileSectionInner>
+                  <H1>Компании{!!user?.companies.length ? <sup>{user.companies.length}</sup> : ''}</H1>
+                  {!user?.companies.length && (
+                    <ProfileSectionDescription>
                       <h2>Еще нет добавленных компаний</h2>
-                      <PartnerBanner/>
-                    </UserCompaniesEmpty>
+                    </ProfileSectionDescription>
+                  )}
+                  <UserCompanies>
+                    {!!user?.companies.length && (
+                      <UserCompaniesList>
+                        <ul>
+                          {user.companies.map((company) => {
+
+                            console.log(company)
+
+                            return (
+                              <li key={company.id}>
+                                <ProfileCompanyCard company={company} />
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      </UserCompaniesList>
+                    )}
+                    <PartnerBanner/>
                   </UserCompanies>
-                </>
+                </ProfileSectionInner>
               )}
             </ProfileSection>
           </ProfileBody>
         </Container>
-
         <div className="profile">
           <div className="container">
             {isLoading && <Loader/>}

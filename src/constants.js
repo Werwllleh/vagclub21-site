@@ -49,3 +49,9 @@ export const PAGE = {
   MEET: 'meet',
   PROFILE: 'profile',
 }
+
+export const TYPE = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+}

@@ -8,7 +8,7 @@ import {customTheme} from "@/styles/theme";
 
 
 import {Swiper, SwiperSlide} from "swiper/react";
-import { Autoplay, FreeMode } from 'swiper/modules';
+import {Autoplay, FreeMode} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
@@ -40,11 +40,11 @@ const PartnersLabelsItem = styled(Link)`
     padding-inline: 3rem;
     padding-block: 2rem;
     border-radius: ${customTheme.radius.r10};
-    //background-color: ${customTheme.color.white};
+        //background-color: ${customTheme.color.white};
     box-shadow: 0 0 .5rem .5rem #0000000f;
     background-color: #ffffffa1;
     backdrop-filter: blur(1rem);
-    
+
     height: 100%;
 
     @media (min-width: ${customTheme.breakpoint.tablet}) {
@@ -60,15 +60,15 @@ const PartnersLabelsItem = styled(Link)`
         opacity: .8;
         filter: grayscale(1);
         transition: opacity ${customTheme.transition.small}, filter ${customTheme.transition.small};
-        
+
         @media (min-width: ${customTheme.breakpoint.tablet}) {
             height: 13rem;
             width: 20rem;
         }
     }
-    
+
     &:hover {
-        
+
         img {
             opacity: 1;
             filter: grayscale(0);
@@ -78,14 +78,14 @@ const PartnersLabelsItem = styled(Link)`
 
 
 const PartnersLabels = () => {
-  const { isLoading, partnerLabelsData } = usePartnersLabels();
+  const {isLoading, partnerLabelsData} = usePartnersLabels();
 
   if (isLoading || !partnerLabelsData?.length) {
     return null;
   }
 
   const duplicatedLabels = partnerLabelsData
-    ? Array.from({ length: 10 }).flatMap(() => partnerLabelsData)
+    ? Array.from({length: 10}).flatMap(() => partnerLabelsData)
     : [];
 
   return (
@@ -109,6 +109,7 @@ const PartnersLabels = () => {
               <PartnersLabelsItem href={`/partner/${item.slug}`} scroll={true}>
                 {item?.logo?.url && (
                   <Image
+                    loading="eager"
                     src={item.logo.url}
                     alt={item.logo.alt || ''}
                     width={item.logo.width}

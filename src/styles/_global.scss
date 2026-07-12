@@ -153,15 +153,6 @@ textarea.ant-input {
   font-size: clamp(1.4rem, 3vw, 1.6rem);
 }
 
-.ant-avatar {
-  border: none;
-
-  img {
-    user-select: none;
-    pointer-events: none;
-  }
-}
-
 .ant-modal {
 
   .ant-modal-close {
