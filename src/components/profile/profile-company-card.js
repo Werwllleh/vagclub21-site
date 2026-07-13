@@ -7,6 +7,7 @@ import {Modal} from "antd";
 import PartnerForm from "@/components/forms/partner-form";
 import {TYPE} from "@/constants";
 import {useLenis} from "lenis/react";
+import SvgIcon from "@/components/svg-icon";
 
 
 const CompanyCard = styled.div`
@@ -31,6 +32,12 @@ const CompanyCardLogo = styled.div`
     img {
         pointer-events: none;
         user-select: none;
+    }
+    
+    svg {
+        width: 7rem;
+        height: 7rem;
+        color: ${customTheme.color.primary};
     }
 `
 
@@ -109,7 +116,7 @@ const ProfileCompanyCard = ({company}) => {
             {company.logo && company.logo?.url ? (
               <Image src={company.logo.url} alt={company.title} width={70} height={70}/>
             ) : (
-              <Image src={company.logo.url} alt={company.title}/>
+              <SvgIcon name="no_photo" />
             )}
           </CompanyCardLogo>
           <CompanyCardInfo>
