@@ -1,6 +1,7 @@
 'use client';
 
 import {useEffect, useMemo, useState} from 'react';
+import Image from 'next/image'
 import styled from 'styled-components';
 import {
   Button,
@@ -8,7 +9,6 @@ import {
   Form,
   Input,
   InputNumber,
-  message,
   Row,
   Select,
   Upload,
@@ -867,11 +867,13 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
               Логотип
             </FormSectionTitle>
 
-            {logo ? (
+            {logo && logo?.url ? (
               <UploadPreview>
-                <img
+                <Image
                   src={logo.url}
-                  alt={logo.alt || logo.filename || 'Логотип'}
+                  alt={logo?.alt || logo?.filename || 'Логотип'}
+                  width={150}
+                  height={150}
                 />
 
                 <button
@@ -909,15 +911,17 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
             </FormSectionTitle>
 
             <UploadList>
-              {gallery.map((media) => (
+              {gallery.length && gallery.map((media) => (
                 <UploadPreview key={media.id}>
-                  <img
+                  <Image
                     src={media.url}
                     alt={
                       media.alt ||
                       media.filename ||
                       'Изображение галереи'
                     }
+                    width={150}
+                    height={150}
                   />
 
                   <button
