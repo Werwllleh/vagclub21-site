@@ -911,7 +911,7 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
             </FormSectionTitle>
 
             <UploadList>
-              {gallery.length && gallery.map((media) => (
+              {!!gallery.length && gallery.map((media) => (
                 <UploadPreview key={media.id}>
                   <Image
                     src={media.url}
