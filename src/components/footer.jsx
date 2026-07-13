@@ -9,6 +9,7 @@ import Container from "@/components/container";
 import Marquee from "@/components/marquee/marquee";
 import {footerMenuList} from "@/data/content";
 import SvgIcon from "@/components/svg-icon";
+import {SOCIAL} from "@/constants";
 
 const FooterContainer = styled.footer`
     margin: auto 0 0 0;
@@ -145,6 +146,21 @@ const FooterCopyright = styled.div`
     text-align: center;
 `
 
+const FooterEmail = styled.div`
+    text-align: center;
+    color: ${customTheme.color.grey};
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    
+    a {
+        font-weight: 500;
+        color: ${customTheme.color.primaryLight};
+        
+        &:hover {
+            color: ${customTheme.color.white};
+        }
+    }
+`
+
 const FooterDate = styled.span`
     color: ${customTheme.color.white};
     opacity: .4;
@@ -202,6 +218,9 @@ const Footer = () => {
               <FooterCopyright>
                 ©<FooterDate>{dayjs().year()}</FooterDate>vagclub21. Все права защищены.
               </FooterCopyright>
+              <FooterEmail>
+                По всем вопросам: <Link href={`mailto:${SOCIAL.EMAIL}`}>{SOCIAL.EMAIL}</Link>
+              </FooterEmail>
             </FooterBottom>
           </FooterBody>
         </Container>

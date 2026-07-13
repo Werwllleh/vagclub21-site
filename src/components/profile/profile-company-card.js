@@ -6,6 +6,7 @@ import {useState} from "react";
 import {Modal} from "antd";
 import PartnerForm from "@/components/forms/partner-form";
 import {TYPE} from "@/constants";
+import {useLenis} from "lenis/react";
 
 
 const CompanyCard = styled.div`
@@ -87,6 +88,8 @@ const CompanyCardTags = styled.div`
 const ProfileCompanyCard = ({company}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useLenis()._isLocked = isModalOpen;
 
   const openModal = () => {
     setIsModalOpen(true);

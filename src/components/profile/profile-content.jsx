@@ -222,11 +222,6 @@ const ProfileContent = ({activeSection}) => {
 
   const {isLoading, user} = useUser();
 
-  useEffect(() => {
-    console.log(user)
-  }, [user]);
-
-
   const [mounted, setMounted] = useState(false);
 
   const [isModalActive, setIsModalActive] = useState(false);
@@ -380,9 +375,6 @@ const ProfileContent = ({activeSection}) => {
                       <UserCompaniesList>
                         <ul>
                           {user.companies.map((company) => {
-
-                            console.log(company)
-
                             return (
                               <li key={company.id}>
                                 <ProfileCompanyCard company={company} />

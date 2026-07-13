@@ -23,6 +23,7 @@ export const PRODUCT_TYPE = {
 export const SOCIAL = {
   TELEGRAM: 'https://t.me/+A6S11dagaDA2OWMy',
   INSTAGRAM: 'https://www.instagram.com/vag_club21',
+  EMAIL: 'connect@vagclub21.ru'
 }
 
 /* === YANDEX METRIKA === */

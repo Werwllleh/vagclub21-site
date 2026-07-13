@@ -1,5 +1,5 @@
 'use client'
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {useLenis} from "lenis/react";
 import SvgIcon from "./svg-icon";
@@ -7,6 +7,7 @@ import {customTheme} from "../styles/theme";
 import Link from "next/link";
 import {SOCIAL} from "../constants";
 import {useMeet} from "../hooks/useMeet";
+import dayjs from "dayjs";
 
 const SocialsWidgetElement = styled.div`
     position: sticky;
@@ -36,7 +37,7 @@ const SocialsWidgetBody = styled.div`
 
 const SocialsWidgetGrid = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
 `
 
@@ -77,9 +78,21 @@ const SocialsWidgetItem = styled(Link)`
 
 const SocialsWidget = () => {
 
-  const {meet} = useMeet();
+  const {meetDate, meetTimezone} = useMeet();
 
+  const [isCurrent, setIsCurrent] = useState(false);
   const [active, isActive] = useState(false);
+
+  useEffect(() => {
+
+    if (meetDate) {
+      const now = dayjs();
+      const eventDate = dayjs(meetDate).tz(meetTimezone, true);
+      setIsCurrent(now.isBefore(eventDate));
+    }
+  }, [meetDate, meetTimezone]);
+
+
 
   useLenis((lenis) => {
     if (lenis.animatedScroll >= 150) {
@@ -90,13 +103,14 @@ const SocialsWidget = () => {
   })
 
   return (
-    <SocialsWidgetElement $active={active} $isMeetActive={meet}>
+    <SocialsWidgetElement $active={active} $isMeetActive={isCurrent}>
       <SocialsWidgetBody>
         <SocialsWidgetGrid>
           <SocialsWidgetItem
             href={SOCIAL.TELEGRAM}
             target="_blank"
             rel="noopener norefferer"
+            title="Сообщество в Telegram"
           >
             <span>
               <SvgIcon name="telegram"/>
@@ -106,9 +120,18 @@ const SocialsWidget = () => {
             href={SOCIAL.INSTAGRAM}
             target="_blank"
             rel="noopener norefferer"
+            title="Профиль Instagram"
           >
             <span>
               <SvgIcon name="instagram"/>
+            </span>
+          </SocialsWidgetItem>
+          <SocialsWidgetItem
+            href={`mailto:${SOCIAL.EMAIL}`}
+            title="Написать на почту"
+          >
+            <span>
+              <SvgIcon name="email"/>
             </span>
           </SocialsWidgetItem>
         </SocialsWidgetGrid>

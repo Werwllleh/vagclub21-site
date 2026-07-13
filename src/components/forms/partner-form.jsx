@@ -24,6 +24,7 @@ import TextArea from "antd/lib/input/TextArea";
 import CmsService from "@/services/cms.service";
 import toast from "react-hot-toast";
 import {TYPE} from "@/constants";
+import {useQueryClient} from "@tanstack/react-query";
 
 const Wrapper = styled.div`
     min-width: 65rem;
@@ -716,12 +717,16 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
 
       let response;
 
+      // const queryClient = useQueryClient();
+
       if (isUpdate) {
         response =
           await CmsService.updateUserCompany(
             values.id,
             payload,
           );
+        // await queryClient.refetchQueries(['user'])
+        console.log(response)
       } else {
         response =
           await CmsService.attachUserCompany(
