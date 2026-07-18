@@ -3,7 +3,7 @@
 const nextConfig = {
   // cacheComponents: process.env.START_MODE === 'production',
   images: {
-    unoptimized: process.env.START_MODE === 'development',
+    // unoptimized: process.env.START_MODE === 'development',
     remotePatterns: [
       {
         protocol: 'http',
