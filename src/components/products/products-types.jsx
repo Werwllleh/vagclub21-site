@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import {productsTypes} from "@/data/content";
+import Image from "next/image";
 
 const ProductTypes = () => {
 
@@ -17,7 +18,7 @@ const ProductTypes = () => {
               >
                 {product.image ? (
                   <div className="product-types__image">
-                    <img src={`/images/products/${product.image}`} alt=""/>
+                    <Image loading="lazy" width={300} height={300} src={`/images/products/${product.image}`} alt=""/>
                   </div>
                 ) : (
                   <div className="product-types__noimage">

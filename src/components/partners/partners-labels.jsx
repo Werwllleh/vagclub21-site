@@ -109,7 +109,7 @@ const PartnersLabels = () => {
               <PartnersLabelsItem href={`/partner/${item.slug}`} scroll={true}>
                 {item?.logo?.url && (
                   <Image
-                    loading="eager"
+                    loading="lazy"
                     src={item.logo.url}
                     alt={item.logo.alt || ''}
                     width={item.logo.width}

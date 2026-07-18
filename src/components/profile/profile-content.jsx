@@ -206,13 +206,13 @@ const UserCompaniesList = styled.div`
     & > ul {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+        align-items: stretch;
 
         li {
-
+            height: 100%;
         }
     }
 `
-
 
 const ProfileContent = ({activeSection}) => {
 

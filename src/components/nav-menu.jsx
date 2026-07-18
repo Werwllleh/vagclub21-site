@@ -5,6 +5,8 @@ import styled from "styled-components";
 import {customTheme} from "@/styles/theme";
 import {useUiStore} from "@/store/ui.store";
 import Link from "next/link";
+import {useUser} from "@/hooks/useUser";
+import {usePathname} from "next/navigation";
 
 const CLOSE_DELAY = 140
 
@@ -17,7 +19,7 @@ const NavMenuList = styled.ul`
 `
 const NavMenuItem = styled.li`
     position: relative;
-    
+
     a, span {
         display: flex;
         align-items: center;
@@ -155,7 +157,6 @@ const NavMenu = ({mobile, onLinkClick}) => {
                   {item.label}
                 </span>
               )}
-
 
               {hasChildren && (
                 <NavSubMenu

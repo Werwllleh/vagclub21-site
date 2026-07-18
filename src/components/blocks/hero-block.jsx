@@ -10,6 +10,7 @@ import {RichText} from "@payloadcms/richtext-lexical/react";
 import {H1Element} from "@/components/UI/h1";
 import styled from "styled-components";
 import {customTheme} from "@/styles/theme";
+import Image from "next/image";
 
 const SlideTitle = styled(H1Element)`
     text-align: center;
@@ -142,7 +143,10 @@ const HeroBlock = () => {
                       className="hero-block-card__background"
                       style={{ filter: bgFilter, scale: bgScale }}
                     >
-                      <img
+                      <Image
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        width={1920}
+                        height={1080}
                         src={slide.bg_image.url}
                         alt={slide.bg_image.alt ? slide.bg_image.alt : `Слайд #${index}`}
                       />

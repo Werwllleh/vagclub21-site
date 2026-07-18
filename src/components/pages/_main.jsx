@@ -13,6 +13,7 @@ import PartnerBanner from "@/components/partners/partner-banner";
 import PartnersContent from "@/components/partners/partners-content";
 import PartnerAdvantages from "@/components/partners/partner-advantages";
 import Container from "@/components/container";
+import Image from "next/image";
 
 
 const SectionTitle = styled(H1Element)`
@@ -74,7 +75,7 @@ const MainPage = () => {
         <div className="container">
           <div className="about__body">
             <div className="about__image">
-              <img src={"/images/sections/about/cars.jpg"} alt="cars"/>
+              <Image loading="lazy" width={600} height={400} src={"/images/sections/about/cars.jpg"} alt="cars" />
             </div>
             <div className="about__description">
               <SectionTitle as="p">Авто сообщество VAGCLUB21</SectionTitle>

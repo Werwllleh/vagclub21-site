@@ -223,7 +223,7 @@ const PartnerCard = ({partner}) => {
         <PartnerCardLogo>
           {partner?.logo?.url ? (
             <Image
-              loading="eager"
+              loading="lazy"
               src={partner?.logo.url}
               alt={partner?.logo?.alt || 'logo'}
               width={partner?.logo?.width || 200}

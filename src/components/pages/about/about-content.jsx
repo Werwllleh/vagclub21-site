@@ -121,7 +121,7 @@ const AboutContent = () => {
                     alt=""
                     width={700}
                     height={500}
-                    loading="eager"
+                    loading="lazy"
                   />
                 </div>
                 <div className="about-list-item__text">
@@ -142,7 +142,7 @@ const AboutContent = () => {
                     alt=""
                     width={700}
                     height={500}
-                    loading="eager"
+                    loading="lazy"
                   />
                 </div>
                 <div className="about-list-item__text">
@@ -175,7 +175,7 @@ const AboutContent = () => {
                     alt=""
                     width={700}
                     height={500}
-                    loading="eager"
+                    loading="lazy"
                   />
                 </div>
                 <div className="about-list-item__text">

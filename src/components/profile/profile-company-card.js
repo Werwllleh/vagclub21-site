@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import {customTheme} from "@/styles/theme";
 import Image from "next/image";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Modal} from "antd";
 import PartnerForm from "@/components/forms/partner-form";
 import {TYPE} from "@/constants";
@@ -11,12 +11,17 @@ import SvgIcon from "@/components/svg-icon";
 
 
 const CompanyCard = styled.div`
+    position: relative;
     border-radius: ${customTheme.radius.r10};
     border: 1px solid ${customTheme.color.greyLight};
     cursor: pointer;
+    aspect-ratio: 0.8;
+    display: flex;
+    flex-direction: column;
 `
 
 const CompanyCardInner = styled.div`
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -27,7 +32,8 @@ const CompanyCardLogo = styled.div`
     align-items: center;
     justify-content: center;
     padding-inline: 1rem;
-    padding-block: 2rem 0;
+    height: 20rem;
+    flex: 0 0 auto;
 
     img {
         pointer-events: none;
@@ -42,6 +48,7 @@ const CompanyCardLogo = styled.div`
 `
 
 const CompanyCardInfo = styled.div`
+    flex: 1;
     padding-inline: 1rem;
     display: flex;
     flex-direction: column;
@@ -92,6 +99,24 @@ const CompanyCardTags = styled.div`
     }
 `
 
+const CompanyLabel = styled.span`
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    
+    span {
+        border-radius: ${customTheme.radius.r15};
+        padding-block: .75rem;
+        padding-inline: 1.25rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: ${customTheme.color.white};
+    }
+`
+
+
 const ProfileCompanyCard = ({company}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,18 +124,29 @@ const ProfileCompanyCard = ({company}) => {
   useLenis()._isLocked = isModalOpen;
 
   const openModal = () => {
-    setIsModalOpen(true);
+    if (!company.blacklist) {
+      setIsModalOpen(true);
+    }
   }
 
   const closeModal = () => {
     setIsModalOpen(false);
   }
 
+  useEffect(() => {
+    console.log(company)
+  }, [company]);
+
   if (!company) return null;
 
   return (
     <>
       <CompanyCard onClick={openModal}>
+        <CompanyLabel>
+          {company.active && <span style={{backgroundColor: customTheme.color.positive}}>Опубликована</span>}
+          {company.blacklist && <span style={{backgroundColor: customTheme.color.red}}>Заблокирована</span>}
+          {company.on_check && <span style={{backgroundColor: customTheme.color.new}}>На проверке</span>}
+        </CompanyLabel>
         <CompanyCardInner>
           <CompanyCardLogo>
             {company.logo && company.logo?.url ? (

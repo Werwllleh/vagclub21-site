@@ -398,9 +398,9 @@ const PartnerDetail = ({partnerData}) => {
                 delay: 20000,
               }}
             >
-              {partnerData.gallery.map(slide => (
+              {partnerData.gallery.map((slide, index) => (
                 <SwiperSlide key={slide?.id}>
-                  <Image src={slide?.url} alt={slide?.alt} width={1920} height={500} loading="eager"/>
+                  <Image loading={index === 0 ? "eager" : "lazy"} src={slide?.url} alt={slide?.alt} width={1920} height={500} />
                 </SwiperSlide>
               ))}
             </Swiper>

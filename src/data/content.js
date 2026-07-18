@@ -90,6 +90,18 @@ export const menuList = [
     label: 'Профиль',
     key: 'profile',
     path: '/profile',
+    children: [
+      {
+        label: 'Авто',
+        key: 'profile-cars',
+        path: '/profile?section=cars',
+      },
+      {
+        label: 'Компании',
+        key: 'profile-companies',
+        path: '/profile?section=companies',
+      },
+    ]
   },
 ]
 

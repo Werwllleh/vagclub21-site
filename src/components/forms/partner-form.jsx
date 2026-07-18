@@ -25,6 +25,7 @@ import CmsService from "@/services/cms.service";
 import toast from "react-hot-toast";
 import {TYPE} from "@/constants";
 import {useQueryClient} from "@tanstack/react-query";
+import {MaskedInput} from "antd-mask-input";
 
 const Wrapper = styled.div`
     min-width: 65rem;
@@ -161,6 +162,7 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
     },
   };
 
+  const queryClient = useQueryClient();
   const [form] = Form.useForm();
 
   const isUpdate = type === TYPE.UPDATE;
@@ -717,22 +719,20 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
 
       let response;
 
-      // const queryClient = useQueryClient();
-
       if (isUpdate) {
         response =
           await CmsService.updateUserCompany(
             values.id,
             payload,
           );
-        // await queryClient.refetchQueries(['user'])
-        console.log(response)
       } else {
         response =
           await CmsService.attachUserCompany(
             payload,
           );
       }
+
+      await queryClient.refetchQueries(['user'])
 
       toast.success(
         isUpdate
@@ -1059,16 +1059,21 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
                             rules={[
                               {
                                 required: true,
-                                message: 'Укажи телефон',
+                                message: 'Укажите номер телефона',
+                              },
+                              {
+                                pattern: /^\+7 \(\d{3}\)-\d{3}-\d{2}-\d{2}$/,
+                                message: 'Укажите номер телефона полностью',
                               },
                             ]}
                           >
-                            <Input placeholder="+7 999 999-99-99"/>
+                            <MaskedInput mask="+7 (000)-000-00-00" placeholder="+7 999 999-99-99"/>
                           </Form.Item>
                         </Col>
 
                         <Col>
                           <Button
+                            className="btn m default"
                             danger
                             type="text"
                             icon={<DeleteOutlined/>}
