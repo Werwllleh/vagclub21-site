@@ -6,6 +6,8 @@ import Footer from "@/components/footer";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {Suspense} from "react";
 import YandexMetrica from "@/components/yandex-metrica";
+import Loading from "@/app/loading";
+import Loader from "@/components/loader";
 
 
 export const metadata = {
@@ -27,7 +29,7 @@ export default function RootLayout({children}) {
       <Header/>
       <main>
         <div className="page">
-          <Suspense fallback={null}>
+          <Suspense fallback={<Loader />}>
             {children}
             {process.env.START_MODE === "production" && <YandexMetrica/>}
           </Suspense>
