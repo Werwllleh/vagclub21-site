@@ -13,7 +13,7 @@ import React from "react";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
 
-const CarCard = ({car, non_gallery = false}) => {
+const CarCard = ({car, non_gallery = false, cardIndex}) => {
 
   const router = useRouter()
   const link = `/cars/${car.brand?.substring(0, 1)}${car.model?.substring(0, 1)}_${car.id}`;
@@ -39,16 +39,18 @@ const CarCard = ({car, non_gallery = false}) => {
                   <SwiperSlide key={image.id}>
                     <div className="car-card__image">
                       <Image
-                        width={345}
-                        height={300}
-                        loading={index === 0 ? "eager" : "lazy"}
+                        width={400}
+                        height={400}
+                        style={{width: '100%', height: 'auto'}}
+                        loading={cardIndex < 3 ? "eager" : "lazy"}
                         className="car-card__image--main"
                         src={`${API_URL}/image/${image.source}`}
                         alt=""
                       />
                       <Image
-                        width={345}
-                        height={300}
+                        width={400}
+                        height={400}
+                        style={{width: "100%", height: "100%"}}
                         loading="lazy"
                         className="car-card__image--bg"
                         src={`${API_URL}/image/${image.source}`}
@@ -62,19 +64,19 @@ const CarCard = ({car, non_gallery = false}) => {
           ) : (
             <div className="car-card__image">
               <Image
-                width={345}
-                height={300}
-                loading="eager"
+                width={400}
+                height={400}
+                loading={cardIndex < 3 ? "eager" : "lazy"}
                 className="car-card__image--main"
-                src={`${API_URL}/image/${car.carsImages[0].source}`}
+                src={`${API_URL}/image/${car?.carsImages[0].source}`}
                 alt=""
               />
               <Image
-                width={345}
-                height={300}
+                width={400}
+                height={400}
                 loading="lazy"
                 className="car-card__image--bg"
-                src={`${API_URL}/image/${car.carsImages[0].source}`}
+                src={`${API_URL}/image/${car?.carsImages[0].source}`}
                 alt=""
               />
             </div>

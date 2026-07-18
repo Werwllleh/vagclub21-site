@@ -65,15 +65,15 @@ const CarsContent = () => {
               <>
                 {hasFilteredCars ? (
                   <div className="cars-page__grid">
-                    {filteredCars.map((car) => (
-                      <CarCard key={car.id} car={car}/>
+                    {filteredCars.map((car, index) => (
+                      <CarCard key={car.id} car={car} cardIndex={index} />
                     ))}
                   </div>
                 ) : (
                   <>
                     <div className="cars-page__grid">
-                      {serverCarsList?.map((car) => (
-                        <CarCard key={car.id} car={car}/>
+                      {serverCarsList?.map((car, index) => (
+                        <CarCard key={car.id} car={car} cardIndex={index}/>
                       ))}
                     </div>
                     {userCars?.data?.total > 0 && (

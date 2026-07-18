@@ -282,8 +282,8 @@ const ProfileContent = ({activeSection}) => {
                   />
                 </span>
                 ) : (
-                  <span style={{backgroundColor: user.data.color}}>
-                  {user.data.name.substring(0, 2).toUpperCase()}
+                  <span style={{backgroundColor: user?.data?.color}}>
+                  {user?.data?.name.substring(0, 2).toUpperCase()}
                 </span>
                 )}
               </>

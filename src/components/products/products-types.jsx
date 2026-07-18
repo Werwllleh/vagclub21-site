@@ -18,7 +18,7 @@ const ProductTypes = () => {
               >
                 {product.image ? (
                   <div className="product-types__image">
-                    <Image loading="lazy" width={300} height={300} src={`/images/products/${product.image}`} alt=""/>
+                    <Image fetchPriority="high" loading="eager" width={300} height={300} src={`/images/products/${product.image}`} alt=""/>
                   </div>
                 ) : (
                   <div className="product-types__noimage">

@@ -265,9 +265,13 @@ const CarDetail = ({carData}) => {
                           items={carImages}
                         >
                           <Image
-                            loading={"lazy"}
+                            loading={"eager"}
+                            fetchPriority="high"
                             key={index}
                             src={image}
+                            width={345}
+                            height={300}
+                            style={{width: "100%"}}
                             preview={{
                               mask: false,
                               movable: false
