@@ -1,13 +1,9 @@
 
-const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build';
 
 export const SERVER_URL = typeof window === 'undefined' ? String(process.env.LOCAL_URL_SERVER) : String(process.env.NEXT_PUBLIC_URL_SERVER);
 export const API_URL = `${SERVER_URL}/api`;
 
-export const CMS_URL =
-  (isBuildTime || typeof window !== 'undefined')
-    ? process.env.NEXT_PUBLIC_URL_CMS
-    : process.env.LOCAL_URL_CMS;
+export const CMS_URL = typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_URL_CMS : process.env.LOCAL_URL_CMS;
 
 export const API_CMS_URL = `${CMS_URL}/api`;
 

@@ -265,6 +265,7 @@ const CarDetail = ({carData}) => {
                           items={carImages}
                         >
                           <Image
+                            loading={"lazy"}
                             key={index}
                             src={image}
                             preview={{
