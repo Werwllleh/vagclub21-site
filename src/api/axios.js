@@ -13,13 +13,19 @@ const axiosOptions = {
 }
 
 const axiosOptionsCms = {
-  baseURL: typeof window === 'undefined' ? API_CMS_URL : '',
+  baseURL: API_CMS_URL,
   withCredentials: true
 }
 
-export const axiosClassic = axios.create(axiosOptions)
+export const axiosClassic = axios.create({
+  baseURL: API_URL,
+  headers: getContentType(),
+})
 
-export const axiosCmsClassic = axios.create(axiosOptionsCms)
+export const axiosCmsClassic = axios.create({
+  baseURL: API_CMS_URL,
+  withCredentials: true
+})
 
 export const instance = axios.create(axiosOptions)
 
