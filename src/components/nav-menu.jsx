@@ -143,17 +143,12 @@ const NavMenu = ({mobile, onLinkClick}) => {
               {item.path ? (
                 <Link
                   href={item.path}
-                  aria-haspopup={hasChildren ? 'menu' : undefined}
-                  aria-expanded={hasChildren ? isOpen : undefined}
                   onClick={() => item.path && onLinkClick()}
                 >
                   {item.label}
                 </Link>
               ) : (
-                <span
-                  aria-haspopup={hasChildren ? 'menu' : undefined}
-                  aria-expanded={hasChildren ? isOpen : undefined}
-                >
+                <span>
                   {item.label}
                 </span>
               )}

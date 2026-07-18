@@ -41,7 +41,7 @@ const CarCard = ({car, non_gallery = false, cardIndex}) => {
                       <Image
                         width={400}
                         height={400}
-                        style={{width: '100%', height: 'auto'}}
+                        style={{width: '100%', height: '100%'}}
                         loading={cardIndex < 3 ? "eager" : "lazy"}
                         className="car-card__image--main"
                         src={`${API_URL}/image/${image.source}`}
@@ -65,18 +65,20 @@ const CarCard = ({car, non_gallery = false, cardIndex}) => {
             <div className="car-card__image">
               <Image
                 width={400}
-                height={400}
+                height={250}
+                // style={{width: 'auto', height: 'auto'}}
                 loading={cardIndex < 3 ? "eager" : "lazy"}
                 className="car-card__image--main"
-                src={`${API_URL}/image/${car?.carsImages[0].source}`}
+                src={`${API_URL}/image/${car?.carsImages[0]?.source}`}
                 alt=""
               />
               <Image
                 width={400}
                 height={400}
+                style={{width: '100%', height: '100%'}}
                 loading="lazy"
                 className="car-card__image--bg"
-                src={`${API_URL}/image/${car?.carsImages[0].source}`}
+                src={`${API_URL}/image/${car?.carsImages[0]?.source}`}
                 alt=""
               />
             </div>

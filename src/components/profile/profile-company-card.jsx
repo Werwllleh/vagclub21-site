@@ -133,10 +133,6 @@ const ProfileCompanyCard = ({company}) => {
     setIsModalOpen(false);
   }
 
-  useEffect(() => {
-    console.log(company)
-  }, [company]);
-
   if (!company) return null;
 
   return (
