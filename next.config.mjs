@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  cacheComponents: process.env.START_MODE === 'production',
-  allowedDevOrigins: ['qa.vagclub21.ru', 'www.qa.vagclub21.ru', '127.0.0.1'],
+  // cacheComponents: process.env.START_MODE === 'production',
   images: {
     unoptimized: process.env.START_MODE === 'development',
     remotePatterns: [
