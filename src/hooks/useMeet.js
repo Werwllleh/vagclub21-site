@@ -7,15 +7,17 @@ import timezone from 'dayjs/plugin/timezone';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export function useMeet() {
+export function useMeet(initialData) {
   const { data, isLoading } = useQuery({
     queryKey: ['meet'],
     queryFn: () => CmsService.fetchMeeting(),
     staleTime: 60 * 60 * 1000,
     retry: 2,
+    initialData: initialData,
+    enabled: !initialData?.data?.meet,
   });
 
-  const meetData = data?.data?.meet ?? null;
+  const meetData = data?.data?.meet ?? initialData?.data?.meet ?? null;
 
   return {
     isLoading,

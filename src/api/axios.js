@@ -13,7 +13,7 @@ const axiosOptions = {
 }
 
 const axiosOptionsCms = {
-  baseURL: API_CMS_URL,
+  baseURL: typeof window === 'undefined' ? API_CMS_URL : '',
   withCredentials: true
 }
 

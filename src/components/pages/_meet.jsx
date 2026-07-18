@@ -16,9 +16,9 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 
-const Meet = () => {
+const Meet = ({meetData}) => {
 
-  const { meet, isLoading, meetDate, meetTimezone } = useMeet();
+  const {meet, isLoading, meetDate, meetTimezone} = useMeet(meetData);
 
   const [isCurrent, setIsCurrent] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -98,3 +98,5 @@ const Meet = () => {
 };
 
 export default Meet;
+
+

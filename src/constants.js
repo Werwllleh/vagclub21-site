@@ -1,8 +1,8 @@
 
-export const SERVER_URL = String(process.env.NEXT_PUBLIC_URL_SERVER);
+export const SERVER_URL = typeof window === 'undefined' ? String(process.env.LOCAL_URL_SERVER) : String(process.env.NEXT_PUBLIC_URL_SERVER);
 export const API_URL = `${SERVER_URL}/api`;
 
-export const CMS_URL = String(process.env.NEXT_PUBLIC_URL_CMS);
+export const CMS_URL = typeof window === 'undefined' ? String(process.env.LOCAL_URL_CMS) : String(process.env.NEXT_PUBLIC_URL_CMS);
 export const API_CMS_URL = `${CMS_URL}/api`;
 
 export const BACKEND_SOCIAL_AUTH_URL = `${API_URL}/auth`
