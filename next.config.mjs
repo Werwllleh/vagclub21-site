@@ -4,14 +4,14 @@ const nextConfig = {
   // cacheComponents: process.env.START_MODE === 'production',
   images: {
     // unoptimized: process.env.START_MODE === 'development',
-    remotePatterns: [
+   /* remotePatterns: [
       {
         protocol: 'http',
         hostname: 'localhost',
         port: '3060',
-        pathname: '/**',
+        pathname: '/!**',
       },
-    ],
+    ],*/
   },
 }
 
