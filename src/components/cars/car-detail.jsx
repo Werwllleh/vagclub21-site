@@ -276,7 +276,7 @@ const CarDetail = ({carData}) => {
                               mask: false,
                               movable: false
                             }}
-                            alt={`${carData.brand} ${carData.model} ${carData.number} #${index}`}
+                            alt={`${carData?.brand} ${carData?.model} ${carData?.number} #${index}`}
                           />
                         </Image.PreviewGroup>
                       </SwiperSlide>
@@ -302,22 +302,22 @@ const CarDetail = ({carData}) => {
                 <li>
                   <span>Марка</span>
                   <hr/>
-                  <p>{carData.brand}</p>
+                  <p>{carData?.brand}</p>
                 </li>
                 <li>
                   <span>Модель</span>
                   <hr/>
-                  <p>{carData.model}</p>
+                  <p>{carData?.model}</p>
                 </li>
                 <li>
                   <span>Год выпуска</span>
                   <hr/>
-                  <p>{carData.year}</p>
+                  <p>{carData?.year}</p>
                 </li>
                 <li>
                   <span>Гос. номер</span>
                   <hr/>
-                  <p>{carData.number}</p>
+                  <p>{carData?.number}</p>
                 </li>
               </InfoList>
               {carData?.note && (

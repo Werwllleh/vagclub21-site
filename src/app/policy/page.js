@@ -1,4 +1,3 @@
-import React from 'react';
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import PolicyContent from "@/components/pages/_policy";
 
@@ -9,7 +8,7 @@ export const metadata = {
 
 const Page = async () => {
   'use cache'
-  return <PolicyContent />;
+  return <PolicyContent/>;
 };
 
 export default Page;

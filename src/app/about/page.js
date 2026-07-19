@@ -8,7 +8,7 @@ export const metadata = {
 
 const Page = async () => {
   'use cache'
-  return <AboutContent />;
+  return <AboutContent/>;
 };
 
 export default Page;
