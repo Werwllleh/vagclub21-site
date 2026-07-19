@@ -7,7 +7,6 @@ export const metadata = {
 };
 
 const Page = async () => {
-  'use cache'
   return <PolicyContent/>;
 };
 
