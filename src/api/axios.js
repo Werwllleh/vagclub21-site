@@ -19,7 +19,10 @@ const axiosOptionsCms = {
 
 export const axiosClassic = axios.create(axiosOptions)
 
-export const axiosCmsClassic = axios.create(axiosOptions)
+export const axiosCmsClassic = axios.create({
+  baseURL: API_CMS_URL,
+  withCredentials: true
+})
 
 export const instance = axios.create(axiosOptions)
 
