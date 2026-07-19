@@ -1,5 +1,3 @@
-
-
 export const SERVER_URL = typeof window === 'undefined' ? String(process.env.LOCAL_URL_SERVER) : String(process.env.NEXT_PUBLIC_URL_SERVER);
 export const API_URL = `${SERVER_URL}/api`;
 

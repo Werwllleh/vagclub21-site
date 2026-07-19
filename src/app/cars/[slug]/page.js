@@ -1,3 +1,4 @@
+
 import CarDetail from "@/components/cars/car-detail";
 import {cache} from "react";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
@@ -35,7 +36,6 @@ export async function generateMetadata({ params }) {
 }
 
 const Page = async ({params}) => {
-
   const {slug} = await params;
 
   if (!slug) return <CarsContent />;

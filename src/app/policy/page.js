@@ -7,7 +7,8 @@ export const metadata = {
   description: PUBLIC_PAGES.POLICY.SEO_DESCRIPTION,
 };
 
-const Page = () => {
+const Page = async () => {
+  'use cache'
   return <PolicyContent />;
 };
 

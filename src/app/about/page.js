@@ -6,7 +6,8 @@ export const metadata = {
   description: PUBLIC_PAGES.ABOUT.SEO_DESCRIPTION,
 };
 
-const Page = () => {
+const Page = async () => {
+  'use cache'
   return <AboutContent />;
 };
 

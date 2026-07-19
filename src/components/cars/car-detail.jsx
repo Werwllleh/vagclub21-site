@@ -269,9 +269,9 @@ const CarDetail = ({carData}) => {
                             fetchPriority="high"
                             key={index}
                             src={image}
-                            width={345}
-                            height={300}
-                            style={{width: "100%"}}
+                            width={500}
+                            height={350}
+                            style={{height: "100%", width: "100%"}}
                             preview={{
                               mask: false,
                               movable: false
