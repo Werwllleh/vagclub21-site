@@ -21,6 +21,11 @@ const nextConfig = {
         hostname: 'qa.vagclub21.ru',
         pathname: 'qa.vagclub21.ru/api/image/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cms.vagclub21.ru',
+        pathname: 'cms.vagclub21.ru/api/**',
+      },
     ],
   },
 }
