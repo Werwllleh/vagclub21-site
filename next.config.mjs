@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  cacheComponents: String(process.env.USE_CACHE) === 'true',
+  cacheComponents: false,
   images: {
     unoptimized: process.env.START_MODE === 'development',
     remotePatterns: [
