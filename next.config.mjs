@@ -26,6 +26,11 @@ const nextConfig = {
         hostname: 'cms.vagclub21.ru',
         pathname: '/api/**',
       },
+      {
+        protocol: 'https',
+        hostname: 't.me',
+        pathname: '/**',
+      },
     ],
   },
 }
