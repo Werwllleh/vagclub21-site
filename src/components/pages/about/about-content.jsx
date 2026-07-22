@@ -1,8 +1,6 @@
 "use client"
-import React, {useEffect, useRef} from 'react';
-import {gsap} from "gsap";
-import {useGSAP} from "@gsap/react";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
+import React, {useRef} from 'react';
+import {motion, useScroll, useTransform} from "framer-motion";
 import H1 from "@/components/UI/h1";
 import SocialsWidget from "@/components/socials-widget";
 import AnimateSection from "@/components/blocks/animate-section";
@@ -10,94 +8,32 @@ import Container from "@/components/container";
 import Image from "next/image"
 import PartnerBanner from "@/components/partners/partner-banner";
 
-// регистрация на уровне модуля: в рендере gsap вызывает Date.now(),
-// что запрещено при пререндере (cacheComponents)
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(useGSAP, ScrollTrigger);
-}
+// Карточка списка «О клубе»: въезжает с бока с привязкой к скроллу
+// (аналог gsap ScrollTrigger scrub, переписан на framer-motion)
+const AboutListItem = ({index, children}) => {
+  const ref = useRef(null);
+
+  const {scrollYProgress} = useScroll({
+    target: ref,
+    // начало анимации — карточка вошла снизу, конец — поднялась до 70% вьюпорта
+    offset: ["start 95%", "start 70%"],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? '-120%' : '120%', '0%']);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="about-list-item"
+      style={{x, opacity, willChange: 'transform,opacity'}}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const AboutContent = () => {
-
-  const description = useRef(null);
-  const list = useRef(null);
-
-  useEffect(() => {
-    gsap.set(description.current, {
-      x: -200,
-      opacity: 0,
-    })
-
-    gsap.to(description.current, {
-      opacity: 1,
-      x: 0,
-      duration: 0.85,
-      ease: "power1.in",
-    });
-  }, [description]);
-
-  useEffect(() => {
-    const block = list.current;
-    if (!block) return;
-
-    const cards = block.querySelectorAll('.about-list-item');
-    if (!cards.length) return;
-
-    const mm = gsap.matchMedia();
-
-    cards.forEach((card, i) => {
-      gsap.set(card, {
-        opacity: 0,
-        xPercent: i % 2 === 0 ? -120 : 120,
-        // zIndex: cards.length + i,
-        willChange: 'transform,opacity',
-      });
-    });
-
-    mm.add("(max-width: 768px)", () => {
-      cards.forEach((card) => {
-        gsap.to(card, {
-          xPercent: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,          // триггерим по самой карточке
-            start: "top 100%",       // когда карточка вошла снизу
-            end: "top 100%",         // участок анимации
-            scrub: 1,               // привязка к скроллу
-            duration: 2.5,
-            // markers: true,
-          },
-        });
-      });
-    });
-
-    mm.add("(min-width: 768px)", () => {
-      cards.forEach((card) => {
-        gsap.to(card, {
-          xPercent: 0,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,          // триггерим по самой карточке
-            start: "top 95%",       // когда карточка вошла снизу
-            end: "top 70%",         // участок анимации
-            scrub: 1,               // привязка к скроллу
-            // duration: 2.5,
-            // markers: true,
-          },
-        });
-      });
-    });
-
-    return () => mm.revert();
-  }, [list]);
-
-  useEffect(() => {
-    window.addEventListener('load', () => {
-      if (!window.gsap) return;
-      ScrollTrigger.refresh();
-    });
-  }, []);
 
 
   return (
@@ -105,7 +41,12 @@ const AboutContent = () => {
       <AnimateSection className="page-about ppt ppb">
         <Container>
           <H1 className="page-about__title pageTitle">О клубе</H1>
-          <div ref={description} className="page-about__description">
+          <motion.div
+            className="page-about__description"
+            initial={{x: -200, opacity: 0}}
+            animate={{x: 0, opacity: 1}}
+            transition={{duration: 0.85, ease: "easeIn"}}
+          >
             <p>
               VAG Club 21&nbsp;&mdash; это автомобильный клуб, объединяющий владельцев автомобилей Volkswagen, Audi,
               Skoda и&nbsp;Seat, входящих в&nbsp;концерн VAG (Volkswagen Group). Клуб был основан в&nbsp;2020 году
@@ -115,9 +56,9 @@ const AboutContent = () => {
               Участники клуба обмениваются информацией, опытом эксплуатации, тюнингом и&nbsp;ремонтом автомобилей,
               а&nbsp;также организуют встречи и&nbsp;мероприятия.
             </p>
-          </div>
-          <div ref={list} className="about-list">
-            <div className="about-list-item">
+          </motion.div>
+          <div className="about-list">
+            <AboutListItem index={0}>
               <div className="about-list-item__body">
                 <div className="about-list-item__image">
                   <Image
@@ -137,8 +78,8 @@ const AboutContent = () => {
                     в&nbsp;наших социальных сетях.</p>
                 </div>
               </div>
-            </div>
-            <div className="about-list-item">
+            </AboutListItem>
+            <AboutListItem index={1}>
               <div className="about-list-item__body">
                 <div className="about-list-item__image">
                   <Image
@@ -170,8 +111,8 @@ const AboutContent = () => {
                   </ul>
                 </div>
               </div>
-            </div>
-            <div className="about-list-item">
+            </AboutListItem>
+            <AboutListItem index={2}>
               <div className="about-list-item__body">
                 <div className="about-list-item__image">
                   <Image
@@ -199,7 +140,7 @@ const AboutContent = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </AboutListItem>
           </div>
           <div className="page-about__partner-banner">
             <PartnerBanner />

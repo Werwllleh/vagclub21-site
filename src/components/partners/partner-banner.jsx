@@ -4,12 +4,29 @@ import styled from "styled-components";
 import Image from "next/image";
 import Container from "@/components/container";
 import {customTheme} from "@/styles/theme";
-import {Modal} from "antd";
-import PartnerForm from "@/components/forms/partner-form";
 import {useUser} from "@/hooks/useUser";
 import {useLenis} from "lenis/react";
-import AuthForm from "@/components/forms/auth-form";
-import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
+import dynamic from "next/dynamic";
+import Loader from "@/components/loader";
+
+// оверлей на время загрузки чанка с модалками: пользователь видит отклик сразу,
+// а не паузу до открытия формы (на медленной сети чанк грузится 1-3 сек)
+const ModalChunkLoading = styled.div`
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.45);
+`
+
+// модалки с antd-формами грузятся лениво — только после первого клика
+const PartnerBannerModals = dynamic(() => import("./partner-banner-modals"), {
+  ssr: false,
+  loading: () => <ModalChunkLoading><Loader/></ModalChunkLoading>,
+});
 
 const BannerWrapper = styled.div`
     position: relative;
@@ -108,12 +125,15 @@ const PartnerBanner = () => {
 
   const [isCompanyFormModalActive, setIsCompanyFormModalActive] = useState(false);
   const [isAuthModalActive, setIsAuthModalActive] = useState(false);
+  // после первого открытия модалки остаются смонтированными (для анимации закрытия)
+  const [modalsRequested, setModalsRequested] = useState(false);
 
   useLenis((lenis) => {
     lenis._isLocked = isCompanyFormModalActive || isAuthModalActive
   })
 
   const openCompanyFormModal = () => {
+    setModalsRequested(true)
     setIsCompanyFormModalActive(true)
   }
 
@@ -125,6 +145,7 @@ const PartnerBanner = () => {
     if (user && user?.data) {
       router.push('/profile?section=companies', {scroll: true})
     } else {
+      setModalsRequested(true)
       setIsAuthModalActive(true)
     }
   }
@@ -157,25 +178,14 @@ const PartnerBanner = () => {
           <Image loading="lazy" src={'/images/partner-banner.webp'} alt="Баннер партнерство" width={1920} height={300}/>
         </BannerBg>
       </BannerWrapper>
-      <Modal
-        className="custom-modal"
-        centered={true}
-        open={isCompanyFormModalActive}
-        onCancel={closeCompanyFormModal}
-        footer={false}
-        width={'auto'}
-      >
-        <PartnerForm onClose={closeCompanyFormModal} />
-      </Modal>
-      <Modal
-        className="custom-modal"
-        centered={true}
-        open={isAuthModalActive}
-        onCancel={closeAuthModal}
-        footer={false}
-      >
-        <AuthForm onClose={closeAuthModal} />
-      </Modal>
+      {modalsRequested && (
+        <PartnerBannerModals
+          isCompanyFormModalActive={isCompanyFormModalActive}
+          closeCompanyFormModal={closeCompanyFormModal}
+          isAuthModalActive={isAuthModalActive}
+          closeAuthModal={closeAuthModal}
+        />
+      )}
     </>
   );
 };

@@ -1,6 +1,4 @@
 'use client'
-import {gsap} from "gsap";
-import {useGSAP} from "@gsap/react";
 import {useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
@@ -101,12 +99,6 @@ const HeaderMobileWrap = styled.div`
 const HeaderMobileInner = styled.div`
     padding-block: 1rem 0;
 `
-
-// регистрация на уровне модуля: в рендере gsap вызывает Date.now(),
-// что запрещено при пререндере (cacheComponents)
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(useGSAP);
-}
 
 const Header = () => {
 
