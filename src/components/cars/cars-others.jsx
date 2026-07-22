@@ -134,7 +134,7 @@ const CarsOthers = ({title}) => {
   const {otherCarsData} = useOtherCars(15);
 
   const refetchData = async () => {
-    await queryClient.refetchQueries(['other-cars'])
+    await queryClient.invalidateQueries({queryKey: ['other-cars']})
   }
 
   useEffect(() => {

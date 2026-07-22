@@ -121,7 +121,11 @@ const ProfileCompanyCard = ({company}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useLenis()._isLocked = isModalOpen;
+  // блокировка скролла страницы при открытой модалке; колбэк-паттерн,
+  // как в partner-banner — присваивание в рендере (useLenis()._isLocked) не работает
+  useLenis((lenis) => {
+    lenis._isLocked = isModalOpen;
+  });
 
   const openModal = () => {
     if (!company.blacklist) {

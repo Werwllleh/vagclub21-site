@@ -94,7 +94,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
     if (res.status === 200) {
       toast.success(res.data.message);
-      await queryClient.invalidateQueries(['user-cars']);
+      await queryClient.invalidateQueries({queryKey: ['user-cars']});
     } else {
       toast.error(res.data.message);
     }
@@ -138,7 +138,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
       if (response.status === 200) {
         toast.success("Файлы успешно загружены!");
         closeFormModal()
-        await queryClient.invalidateQueries(['user-cars']);
+        await queryClient.invalidateQueries({queryKey: ['user-cars']});
         setFileList([])
 
         setTimeout(async () => {
@@ -188,7 +188,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
             if (res.status === 200) {
               setIsSubmittingForm(false);
-              await queryClient.invalidateQueries(['user-cars']);
+              await queryClient.invalidateQueries({queryKey: ['user-cars']});
               toast.success('Данные обновлены');
               setCarRegisterStep(2);
             }
@@ -210,7 +210,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
           if (res.status === 200) {
             setIsSubmittingForm(false);
             setCarRegisterStep(carRegisterStep + 1);
-            await queryClient.invalidateQueries(['user-cars']);
+            await queryClient.invalidateQueries({queryKey: ['user-cars']});
             toast.success('Автомобиль успешно добавлен');
           } else {
             setIsSubmittingForm(false);

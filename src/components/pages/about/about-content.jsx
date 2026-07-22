@@ -1,6 +1,6 @@
 "use client"
-import React, {useRef} from 'react';
-import {motion, useScroll, useTransform} from "framer-motion";
+import React from 'react';
+import {motion} from "framer-motion";
 import H1 from "@/components/UI/h1";
 import SocialsWidget from "@/components/socials-widget";
 import AnimateSection from "@/components/blocks/animate-section";
@@ -8,25 +8,17 @@ import Container from "@/components/container";
 import Image from "next/image"
 import PartnerBanner from "@/components/partners/partner-banner";
 
-// Карточка списка «О клубе»: въезжает с бока с привязкой к скроллу
-// (аналог gsap ScrollTrigger scrub, переписан на framer-motion)
+// Карточка списка «О клубе»: плавно въезжает с бока один раз при появлении
+// во вьюпорте (изначально скрыта — opacity: 0)
 const AboutListItem = ({index, children}) => {
-  const ref = useRef(null);
-
-  const {scrollYProgress} = useScroll({
-    target: ref,
-    // начало анимации — карточка вошла снизу, конец — поднялась до 70% вьюпорта
-    offset: ["start 95%", "start 70%"],
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? '-120%' : '120%', '0%']);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
   return (
     <motion.div
-      ref={ref}
       className="about-list-item"
-      style={{x, opacity, willChange: 'transform,opacity'}}
+      initial={{opacity: 0, x: index % 2 === 0 ? '-15%' : '15%'}}
+      whileInView={{opacity: 1, x: '0%'}}
+      viewport={{once: true, amount: 0.25}}
+      transition={{duration: 0.9, ease: [0.25, 0.1, 0.25, 1]}}
+      style={{willChange: 'transform,opacity'}}
     >
       {children}
     </motion.div>
@@ -43,9 +35,9 @@ const AboutContent = () => {
           <H1 className="page-about__title pageTitle">О клубе</H1>
           <motion.div
             className="page-about__description"
-            initial={{x: -200, opacity: 0}}
-            animate={{x: 0, opacity: 1}}
-            transition={{duration: 0.85, ease: "easeIn"}}
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 0.85, ease: "easeOut"}}
           >
             <p>
               VAG Club 21&nbsp;&mdash; это автомобильный клуб, объединяющий владельцев автомобилей Volkswagen, Audi,

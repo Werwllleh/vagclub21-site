@@ -732,7 +732,8 @@ const PartnerForm = ({type, onSuccess, onClose, values}) => {
           );
       }
 
-      await queryClient.refetchQueries(['user'])
+      // без await: обновление пользователя в фоне, не блокируем закрытие формы
+      queryClient.invalidateQueries({queryKey: ['user']})
 
       toast.success(
         isUpdate

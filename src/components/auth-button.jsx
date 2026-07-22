@@ -3,7 +3,6 @@ import {Button} from "antd";
 import AuthService from "@/services/auth.service";
 import {loginData} from "@/data/test";
 import {LoginButton} from "@telegram-auth/react";
-import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {useEffect, useState} from "react";
@@ -14,7 +13,6 @@ const AuthButton = () => {
 
   const [domain, setDomain] = useState("");
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -24,11 +22,15 @@ const AuthButton = () => {
 
   const loginMutation = useMutation({
     mutationFn: async (data) => AuthService.login(data),
-    onSuccess: async (response) => {
+    onSuccess: (response) => {
       if (response.status === 200) {
-        await queryClient.refetchQueries(['user']);
+        // без await: invalidate обновляет пользователя в фоне
+        queryClient.invalidateQueries({queryKey: ['user']});
         toast.success('Успешная авторизация!');
-        router.push(PROTECTED_PAGES.PROFILE);
+        // полная навигация вместо router.push: клиентский Router Cache хранит
+        // /profile как redirect на /login (закешировано до авторизации), из-за
+        // чего push возвращал обратно на /login
+        window.location.assign(PROTECTED_PAGES.PROFILE);
       } else {
         toast.error('Ошибка авторизации');
       }

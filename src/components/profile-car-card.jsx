@@ -43,7 +43,7 @@ const profileCarCard = ({carId, data}) => {
       const res = await CarService.deleteUserCar(carId);
 
       if (res.status === 200) {
-        await queryClient.invalidateQueries(['user-cars']);
+        await queryClient.invalidateQueries({queryKey: ['user-cars']});
         closeDeleteCarModal();
         toast.success(res.data.message);
       }
