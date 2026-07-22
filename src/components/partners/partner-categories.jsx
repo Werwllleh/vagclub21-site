@@ -13,7 +13,7 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation';
-import Loading from '@/app/loading';
+import Loading from '@/components/loading';
 import {usePartnersStore} from '@/store/partners.store';
 import CmsService from '@/services/cms.service';
 import {pluralize} from '@/utils/utils';
@@ -179,7 +179,7 @@ const PCFindInfo = styled.div`
     color: ${customTheme.color.grey};
 `;
 
-const PartnerCategories = ({closeHandler}) => {
+const PartnerCategories = ({closeHandler, initialData = null}) => {
   const {
     filterPartnersActive,
     setFilterPartnersActive,
@@ -191,7 +191,7 @@ const PartnerCategories = ({closeHandler}) => {
   const {
     partnerCategories,
     isLoading,
-  } = usePartnerCategories();
+  } = usePartnerCategories(initialData);
 
   const router = useRouter();
   const pathname = usePathname();

@@ -83,7 +83,7 @@ const profileCarCard = ({carId, data}) => {
                           <Image
                             src={`${API_URL}/image/${image.source}`}
                           />
-                          <img className="profile-car-card__image--bg" src={`${API_URL}/image/${image.source}`}/>
+                          <img loading="lazy" decoding="async" className="profile-car-card__image--bg" src={`${API_URL}/image/${image.source}`} alt=""/>
                         </div>
                       </SwiperSlide>
                     )

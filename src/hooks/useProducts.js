@@ -71,29 +71,35 @@ const primeProducts = (queryClient, docs) => {
   }
 };
 
-export function useProducts() {
+// серверные данные не передаём в useQuery через initialData — react-query вызывает
+// Date.now(), что запрещено при пререндере (cacheComponents). Запрос отключается,
+// данные мержатся вручную.
+export function useProducts(initialData = null) {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: keys.productsList(),
     queryFn: () => productsService.fetchProducts(),
     staleTime: 1000 * 60 * 5,
+    enabled: !initialData,
     onSuccess: (res) => {
       // твой ответ: { docs: [...], total: n }
       primeProducts(queryClient, res?.data?.docs);
     },
   });
 
+  const merged = data?.data ?? initialData ?? null;
+
   return {
-    isLoading,
+    isLoading: initialData ? false : isLoading,
     data: {
-      products: data?.data?.docs ?? [],
-      total: data?.data?.total ?? 0,
+      products: merged?.docs ?? [],
+      total: merged?.total ?? 0,
     }
   };
 }
 
-export function useProductsTypes(type) {
+export function useProductsTypes(type, initialData = null) {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -101,42 +107,44 @@ export function useProductsTypes(type) {
     queryFn: () => productsService.fetchProductsTypes(type),
     staleTime: 1000 * 60 * 5,
     retry: false,
+    enabled: !initialData,
     onSuccess: (res) => {
       // твой ответ: { type, docs: [...], total }
       primeProducts(queryClient, res?.data?.docs);
     },
   });
 
+  const merged = data?.data ?? initialData ?? null;
+
   return {
-    isLoading,
+    isLoading: initialData ? false : isLoading,
     data: {
-      type: data?.data?.type,
-      items: data?.data?.docs ?? [],
-      total: data?.data?.total ?? 0,
+      type: merged?.type,
+      items: merged?.docs ?? [],
+      total: merged?.total ?? 0,
     },
   };
 }
 
-export function useProduct(slug) {
+export function useProduct(slug, serverData = null) {
   const queryClient = useQueryClient();
 
-  const cached = queryClient.getQueryData(keys.product(slug));
+  const cached = queryClient.getQueryData(keys.product(slug))
+    ?? (serverData ? { data: serverData } : undefined);
 
   const { data, isLoading } = useQuery({
     queryKey: keys.product(slug),
     queryFn: () => productsService.fetchProduct(slug),
 
-    // если есть кэш — запрос не делаем
+    // если есть кэш или серверные данные — запрос не делаем
+    // (в useQuery их не передаём: Date.now() запрещён при пререндере)
     enabled: !!slug && !cached,
-
-    // берём сразу из кэша, чтобы не мигало
-    initialData: cached,
 
     staleTime: 1000 * 60 * 5,
   });
 
   return {
     isLoading: !cached && isLoading,
-    product: data?.data ?? null,
+    product: data?.data ?? cached?.data ?? null,
   };
 }

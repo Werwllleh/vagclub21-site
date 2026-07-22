@@ -173,11 +173,11 @@ const FooterLogo = styled.div`
     justify-content: center;
 `
 
-const Footer = () => {
+const Footer = ({initialMeet = null, currentYear = 2026}) => {
 
   return (
     <>
-      <Marquee/>
+      <Marquee initialMeet={initialMeet}/>
       <FooterContainer>
         <Container>
           <FooterBody>
@@ -216,7 +216,7 @@ const Footer = () => {
                 </Link>
               </FooterLogo>
               <FooterCopyright>
-                ©<FooterDate>{dayjs().year()}</FooterDate>vagclub21. Все права защищены.
+                ©<FooterDate>{currentYear}</FooterDate>vagclub21. Все права защищены.
               </FooterCopyright>
               <FooterEmail>
                 По всем вопросам: <Link href={`mailto:${SOCIAL.EMAIL}`}>{SOCIAL.EMAIL}</Link>

@@ -1,18 +1,18 @@
 'use client'
 import React from 'react';
 import {useProductsTypes} from "@/hooks/useProducts";
-import Loading from "@/app/loading";
+import Loading from "@/components/loading";
 import {PRODUCT_TYPE} from "@/constants";
 import ProductItem from "@/components/products/product-item";
 import ProductsEmpty from "@/components/products/products-empty";
 import AnimateSection from "@/components/blocks/animate-section";
 import H1 from "@/components/UI/h1";
 
-const ProductList = ({type}) => {
+const ProductList = ({type, initialData = null}) => {
 
   if (!type) return <Loading/>;
 
-  const {data, isLoading} = useProductsTypes(type);
+  const {data, isLoading} = useProductsTypes(type, initialData);
 
   return (
     <div className="product-list ppt ppb">

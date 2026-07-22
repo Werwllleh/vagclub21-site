@@ -1,10 +1,10 @@
 export default function robots() {
   return {
     rules: {
-      userAgent: 'Yandex',
+      userAgent: '*',
       allow: '/',
-      disallow: '/private/',
+      disallow: ['/private/', '/profile', '/login', '/register', '/api/'],
     },
-    // sitemap: 'https://acme.com/sitemap.xml',
-  }
+    sitemap: 'https://vagclub21.ru/sitemap.xml',
+  };
 }

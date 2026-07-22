@@ -16,9 +16,9 @@ import Link from "next/link";
 import ProductLabel from "@/components/products/product-label";
 import AnimateSection from "@/components/blocks/animate-section";
 
-const ProductDetail = ({slug}) => {
+const ProductDetail = ({slug, initialData = null}) => {
 
-  const {product, isLoading} = useProduct(slug);
+  const {product, isLoading} = useProduct(slug, initialData);
 
   return (
     <div className="product-detail ppt ppb">
@@ -50,15 +50,15 @@ const ProductDetail = ({slug}) => {
                         >
                           <>
                             <SwiperSlide key={product.mainImage.id}>
-                              <img src={product.mainImage.url} alt={product.mainImage.alt}/>
-                              <img src={product.mainImage.url} alt={product.mainImage.alt}/>
+                              <img loading="lazy" decoding="async" src={product.mainImage.url} alt={product.mainImage.alt}/>
+                              <img loading="lazy" decoding="async" src={product.mainImage.url} alt={product.mainImage.alt}/>
                               <span></span>
                             </SwiperSlide>
                             {product.gallery.map((image) => {
                               return (
                                 <SwiperSlide key={image.id}>
-                                  <img src={image.url} alt={image.alt}/>
-                                  <img src={image.url} alt={image.alt}/>
+                                  <img loading="lazy" decoding="async" src={image.url} alt={image.alt}/>
+                                  <img loading="lazy" decoding="async" src={image.url} alt={image.alt}/>
                                   <span></span>
                                 </SwiperSlide>
                               )

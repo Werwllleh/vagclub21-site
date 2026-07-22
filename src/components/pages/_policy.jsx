@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import AnimateSection from "@/components/blocks/animate-section";
 import {customTheme} from "@/styles/theme";
 import React, {useEffect, useState} from "react";
-import Loading from "@/app/loading";
+import Loading from "@/components/loading";
 
 const PolicyWrap = styled(AnimateSection)`
     background-color: ${customTheme.color.greyLight};
@@ -77,16 +77,17 @@ const PoliceDescription = styled.div`
     }
 `
 
-const PolicyContent = () => {
+const PolicyContent = ({initialData = null}) => {
 
-  const {policy, isLoading} = usePolicy();
+  const {policy, isLoading} = usePolicy(initialData);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true)
   }, []);
 
-  if (isLoading || !isMounted) {
+  // isMounted убран из условия: он блокировал SSR-рендер (сервер отдавал только лоадер)
+  if (isLoading) {
     return <Loading/>;
   }
 

@@ -1,12 +1,22 @@
 import PartnerDetail from "@/components/partners/partner-detail";
 import PartnersContent from "@/components/partners/partners-content";
-import CmsService from "@/services/cms.service";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
-import {cache} from "react";
+import {getPartnerInfo as getPartnerInfoCached} from "@/server/cms-data";
 
-const getPartnerInfo = cache(async (slug) => {
-  return await CmsService.fetchPartnerInfo(slug);
-});
+// кешируемый загрузчик возвращает JSON; оборачиваем в {data} для совместимости
+const getPartnerInfo = async (slug) => {
+  const data = await getPartnerInfoCached(slug).catch(() => null);
+  return {data};
+};
+
+// известные слаги партнёров пререндерим статически, новые — по запросу
+export async function generateStaticParams() {
+  const partners = await import("@/server/cms-data")
+    .then(m => m.getPartners({page: 1, limit: 100}))
+    .catch(() => null);
+
+  return (partners?.partners ?? []).filter(p => p?.slug).map(p => ({slug: p.slug}));
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

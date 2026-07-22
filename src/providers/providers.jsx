@@ -19,7 +19,7 @@ dayjs.extend(timezone);
 dayjs.locale('ru');
 
 
-const Providers = ({children}) => {
+const Providers = ({children, initialTechnicalWork = null}) => {
 
   const [queryClient] = useState(
     () =>
@@ -42,7 +42,7 @@ const Providers = ({children}) => {
       <QueryClientProvider client={queryClient}>
         <LazyMotion features={domAnimation}>
           <ConfigProvider theme={theme}>
-            <AppContent>
+            <AppContent initialTechnicalWork={initialTechnicalWork}>
               {children}
               {/*<AnimateCursor />*/}
             </AppContent>

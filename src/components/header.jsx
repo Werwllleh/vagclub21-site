@@ -102,9 +102,13 @@ const HeaderMobileInner = styled.div`
     padding-block: 1rem 0;
 `
 
-const Header = () => {
-
+// регистрация на уровне модуля: в рендере gsap вызывает Date.now(),
+// что запрещено при пререндере (cacheComponents)
+if (typeof window !== 'undefined') {
   gsap.registerPlugin(useGSAP);
+}
+
+const Header = () => {
 
   const mobileMenuActive = useUiStore((state) => state.mobileMenuActive)
   const setMobileMenuActive = useUiStore((state) => state.setMobileMenuActive)

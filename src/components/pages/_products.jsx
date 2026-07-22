@@ -1,14 +1,14 @@
 'use client'
 import ProductTypes from "@/components/products/products-types";
 import {useProducts} from "@/hooks/useProducts";
-import Loading from "@/app/loading";
+import Loading from "@/components/loading";
 import ProductItem from "@/components/products/product-item";
 import AnimateSection from "@/components/blocks/animate-section";
 import H1 from "@/components/UI/h1";
 
-const ProductsPage = () => {
+const ProductsPage = ({initialData = null}) => {
 
-  const {data, isLoading} = useProducts();
+  const {data, isLoading} = useProducts(initialData);
 
   return (
     <div className="products ppt ppb">

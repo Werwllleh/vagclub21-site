@@ -4,7 +4,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, Pagination, Parallax} from 'swiper/modules';
 import 'swiper/css';
 import Link from "next/link";
-import {motion, useScroll, useTransform} from "motion/react"
+import {motion, useScroll, useTransform} from "framer-motion"
 import {useHeroSlider} from "@/hooks/useHeroSlider";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import {H1Element} from "@/components/UI/h1";
@@ -20,9 +20,9 @@ const SlideTitle = styled(H1Element)`
     margin-inline: auto;
 `
 
-const HeroBlock = () => {
+const HeroBlock = ({initialData = null}) => {
 
-  const {isLoading, slider} = useHeroSlider();
+  const {isLoading, slider} = useHeroSlider(initialData);
 
   const heroSection = useRef(null);
 
@@ -145,6 +145,9 @@ const HeroBlock = () => {
                     >
                       <Image
                         loading={index === 0 ? 'eager' : 'lazy'}
+                        priority={index === 0}
+                        fetchPriority={index === 0 ? 'high' : undefined}
+                        sizes="100vw"
                         width={1920}
                         height={1080}
                         src={slide.bg_image.url}

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import dayjs from "dayjs";
 import styled from "styled-components";
 
@@ -14,9 +14,12 @@ const SnowCanvas = styled.canvas`
 
 const SnowMode = () => {
 
-  const isWinterPeriod = [12, 1, 2].includes(dayjs().month() + 1)
+  // сезон определяем после маунта: дата в рендере запрещена при пререндере (cacheComponents)
+  const [isWinterPeriod, setIsWinterPeriod] = useState(false);
 
-  if (!isWinterPeriod) return;
+  useEffect(() => {
+    setIsWinterPeriod([12, 1, 2].includes(dayjs().month() + 1));
+  }, []);
 
   const canvasRef = useRef(null);
 
@@ -25,6 +28,8 @@ const SnowMode = () => {
   const horizontalDrift = 0.8;
 
   useEffect(() => {
+    if (!isWinterPeriod) return;
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
@@ -140,7 +145,9 @@ const SnowMode = () => {
       window.removeEventListener('resize', resize);
       window.cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isWinterPeriod]);
+
+  if (!isWinterPeriod) return null;
 
   return (
     <SnowCanvas

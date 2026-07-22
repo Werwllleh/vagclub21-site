@@ -2,9 +2,12 @@
 import React, {useEffect, useState} from 'react';
 import {useMeet} from "@/hooks/useMeet";
 import {RichText} from "@payloadcms/richtext-lexical/react";
-import Loading from "../../app/loading";
+import Loading from "@/components/loading";
 import Link from "next/link";
-import YandexMap from "@/components/yandex-map";
+import dynamic from "next/dynamic";
+
+// Карта ниже первого экрана — грузим лениво, не тянем её JS в основной чанк
+const YandexMap = dynamic(() => import("@/components/yandex-map"), {ssr: false});
 import AnimateSection from "@/components/blocks/animate-section";
 
 import dayjs from "dayjs";
@@ -18,7 +21,8 @@ dayjs.extend(timezone);
 
 const Meet = ({meetData}) => {
 
-  const {meet, isLoading, meetDate, meetTimezone} = useMeet(meetData);
+  // useMeet ждёт формат {data: {meet}} — оборачиваем серверный JSON
+  const {meet, isLoading, meetDate, meetTimezone} = useMeet(meetData ? {data: meetData} : undefined);
 
   const [isCurrent, setIsCurrent] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -33,7 +37,8 @@ const Meet = ({meetData}) => {
     }
   }, [meetDate, meetTimezone]);
 
-  if (isLoading || !isMounted) {
+  // isMounted убран из условия: он блокировал SSR-рендер (сервер отдавал только лоадер)
+  if (isLoading) {
     return <Loading/>;
   }
 

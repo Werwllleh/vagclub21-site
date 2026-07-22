@@ -28,14 +28,15 @@ const SectionTitle = styled(H1Element)`
     }
 `
 
-const MainPage = () => {
+const MainPage = ({heroSlider = null, partnersLabels = null}) => {
 
 
   return (
     <div className="page-main">
-      <AnimateSection className={"hero"}>
-        <HeroBlock />
-      </AnimateSection>
+      {/* hero — первый экран: без opacity-анимации, иначе LCP ждёт загрузки JS */}
+      <section className={"hero"}>
+        <HeroBlock initialData={heroSlider} />
+      </section>
       <AnimateSection
         className={"products"}
         initial={{ opacity: 0, y: 40 }}
@@ -65,7 +66,7 @@ const MainPage = () => {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
       >
-        <PartnersLabels />
+        <PartnersLabels initialData={partnersLabels} />
       </AnimateSection>
       <AnimateSection
         className={"about"}

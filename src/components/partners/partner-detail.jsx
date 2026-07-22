@@ -16,7 +16,10 @@ import {customTheme} from "@/styles/theme";
 import AnimateSection from "@/components/blocks/animate-section";
 import SvgIcon from "@/components/svg-icon";
 import Link from "next/link";
-import YandexMap from "@/components/yandex-map";
+import dynamic from "next/dynamic";
+
+// Карта ниже первого экрана — грузим лениво, не тянем её JS в основной чанк
+const YandexMap = dynamic(() => import("@/components/yandex-map"), {ssr: false});
 import React from "react";
 import PartnersLabels, {PartnersLabelsWrapper} from "@/components/partners/partners-labels";
 

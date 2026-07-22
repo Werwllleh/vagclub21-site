@@ -1,18 +1,32 @@
 import CarDetail from "@/components/cars/car-detail";
-import {cache} from "react";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
-import CarService from "@/services/car.service";
 import CarsContent from "@/components/cars/cars-content";
+import {getCarInfo as getCarInfoCached, getCarsList} from "@/server/cms-data";
 
-const getCarInfo = cache(async (slug) => {
+// кешируемый загрузчик (cacheComponents требует кешированных данных в generateMetadata)
+const getCarInfo = async (slug) => {
   const carId = decodeURIComponent(slug.split('_')[1]);
 
   if (!carId) {
-    return null;
+    return {data: null};
   }
 
-  return await CarService.fetchCarInfo(carId);
-});
+  const data = await getCarInfoCached(carId).catch(() => null);
+  return {data};
+};
+
+// ISR: страница обновляется не позже чем через 10 минут
+export const revalidate = 600;
+
+// пререндерим известные авто (формат слага как в car-card: первые буквы марки/модели + id),
+// новые появляются по запросу
+export async function generateStaticParams() {
+  const cars = await getCarsList().catch(() => null);
+
+  return (cars?.data ?? [])
+    .filter(car => car?.id)
+    .map(car => ({slug: `${car.brand?.substring(0, 1) ?? ''}${car.model?.substring(0, 1) ?? ''}_${car.id}`}));
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

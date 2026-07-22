@@ -13,7 +13,7 @@ const ProductItem = ({info}) => {
       {info?.mark && <ProductLabel type={info.mark} />}
       <div className="product-item__body">
         <div className="product-item__image">
-          {info?.mainImage?.url ? <img src={info?.mainImage?.url} alt={info.name}/> : null}
+          {info?.mainImage?.url ? <img loading="lazy" decoding="async" src={info?.mainImage?.url} alt={info.name}/> : null}
           <Link href={link}/>
         </div>
         <div className="product-item__info">

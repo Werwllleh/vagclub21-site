@@ -10,9 +10,13 @@ import Container from "@/components/container";
 import Image from "next/image"
 import PartnerBanner from "@/components/partners/partner-banner";
 
-const AboutContent = () => {
-
+// регистрация на уровне модуля: в рендере gsap вызывает Date.now(),
+// что запрещено при пререндере (cacheComponents)
+if (typeof window !== 'undefined') {
   gsap.registerPlugin(useGSAP, ScrollTrigger);
+}
+
+const AboutContent = () => {
 
   const description = useRef(null);
   const list = useRef(null);

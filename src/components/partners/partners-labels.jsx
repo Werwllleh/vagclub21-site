@@ -77,8 +77,8 @@ const PartnersLabelsItem = styled(Link)`
 `
 
 
-const PartnersLabels = () => {
-  const {isLoading, partnerLabelsData} = usePartnersLabels();
+const PartnersLabels = ({initialData = null}) => {
+  const {isLoading, partnerLabelsData} = usePartnersLabels(initialData);
 
   if (isLoading || !partnerLabelsData?.length) {
     return null;

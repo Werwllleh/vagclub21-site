@@ -1,7 +1,7 @@
 import {SEO_CONFIG} from "@/config/seo.config";
 import ProfileContent from "@/components/profile/profile-content";
 import {Suspense} from "react";
-import Loading from "@/app/loading";
+import Loading from "@/components/loading";
 
 export const metadata = {
   title: SEO_CONFIG.PROFILE.SEO_TITLE,

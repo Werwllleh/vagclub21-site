@@ -53,9 +53,9 @@ const MarqueeItem = styled.div`
     }
 `
 
-const Marquee = () => {
+const Marquee = ({initialMeet = null}) => {
 
-  const { meet, isLoading, meetDate, meetTimezone } = useMeet();
+  const { meet, isLoading, meetDate, meetTimezone } = useMeet(initialMeet ? {data: initialMeet} : undefined);
   const [isCurrent, setIsCurrent] = useState(false);
 
   useEffect(() => {

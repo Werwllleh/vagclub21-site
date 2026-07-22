@@ -3,7 +3,7 @@ import H1 from "../UI/h1";
 import {usePartners} from "@/hooks/usePartners";
 import styled from "styled-components";
 import PartnerCategories, {PCList, PCWrapper} from "@/components/partners/partner-categories";
-import Loading from "@/app/loading";
+import Loading from "@/components/loading";
 import PartnerCard from "@/components/partners/partner-card";
 import {customTheme} from "@/styles/theme";
 import {usePartnersStore} from "@/store/partners.store";
@@ -179,7 +179,7 @@ const PartnersBanner = styled.div`
 
 const SHOW_DATA_PARTNERS_LIMIT = 8
 
-const PartnersContent = () => {
+const PartnersContent = ({initialPartners = null, initialPage = 1, initialCategories = null}) => {
 
   const router = useRouter();
   const pathname = usePathname();
@@ -196,7 +196,12 @@ const PartnersContent = () => {
     return Number.isFinite(p) && p > 0 ? p : 1;
   }, [searchParams]);
 
-  const {partnerData, isLoading} = usePartners({page, limit: SHOW_DATA_PARTNERS_LIMIT});
+  const {partnerData, isLoading} = usePartners({
+    page,
+    limit: SHOW_DATA_PARTNERS_LIMIT,
+    initialData: initialPartners,
+    initialPage,
+  });
 
   const handlePageChange = useCallback(
     (nextPage) => {
@@ -236,7 +241,7 @@ const PartnersContent = () => {
               <SvgIcon name="close"/>
             </PartnersCategoriesContainerClose>
             <PartnerCategoriesTagsContainer>
-              <PartnerCategories closeHandler={() => setIsFiltersActive(false)}/>
+              <PartnerCategories closeHandler={() => setIsFiltersActive(false)} initialData={initialCategories}/>
             </PartnerCategoriesTagsContainer>
           </PartnersCategoriesContainer>
           <PartnersMain>
