@@ -33,7 +33,6 @@ const MainPage = ({heroSlider = null, partnersLabels = null}) => {
 
   return (
     <div className="page-main">
-      {/* hero — первый экран: без opacity-анимации, иначе LCP ждёт загрузки JS */}
       <section className={"hero"}>
         <HeroBlock initialData={heroSlider} />
       </section>

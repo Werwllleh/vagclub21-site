@@ -116,19 +116,23 @@ const PCItem = styled.button`
             }
         }
     `}
-    &:hover {
-        background-color: ${({$loading}) => (
-                $loading
-                        ? customTheme.color.greyLight
-                        : customTheme.color.primary
-        )};
 
-        color: ${({$loading}) => (
-                $loading
-                        ? customTheme.color.grey
-                        : customTheme.color.white
-        )};
+    &:hover {
+        @media (min-width: ${customTheme.breakpoint.mobile}) {
+            background-color: ${({$loading}) => (
+                    $loading
+                            ? customTheme.color.greyLight
+                            : customTheme.color.primary
+            )};
+
+            color: ${({$loading}) => (
+                    $loading
+                            ? customTheme.color.grey
+                            : customTheme.color.white
+            )};
+        }
     }
+
 
     @media (min-width: ${customTheme.breakpoint.mobile}) {
         font-size: clamp(1.4rem, 5vw, 1.6rem);
