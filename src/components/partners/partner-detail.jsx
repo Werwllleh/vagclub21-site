@@ -20,8 +20,31 @@ import dynamic from "next/dynamic";
 
 // Карта ниже первого экрана — грузим лениво, не тянем её JS в основной чанк
 const YandexMap = dynamic(() => import("@/components/yandex-map"), {ssr: false});
-import React from "react";
+import React, {useState, useEffect} from "react";
 import PartnersLabels, {PartnersLabelsWrapper} from "@/components/partners/partners-labels";
+import {useUser} from "@/hooks/useUser";
+import {useLenis} from "lenis/react";
+import {useQuery} from "@tanstack/react-query";
+import PartnersService from "@/services/partners.service";
+import Loader from "@/components/loader";
+
+// оверлей на время загрузки чанка с модалками: пользователь видит отклик сразу,
+// а не паузу до открытия формы (на медленной сети чанк грузится 1-3 сек)
+const ModalChunkLoading = styled.div`
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.45);
+`
+
+// модалки (авторизация + инструкция) грузятся лениво — только после первого клика
+const PartnerAttachModals = dynamic(() => import("./partner-attach-modals"), {
+  ssr: false,
+  loading: () => <ModalChunkLoading><Loader/></ModalChunkLoading>,
+});
 
 const PartnerWrap = styled(AnimateSection)`
     background-color: ${customTheme.color.greyLight};
@@ -437,6 +460,58 @@ const PartnerPagination = styled.div`
 
 const PartnerDetail = ({partnerData}) => {
 
+  const {user} = useUser();
+
+  // занята ли компания (прикреплена ли к какому-либо пользователю) — по данным бэка.
+  // Блок «оставить заявку» показываем только если компания точно свободна.
+  const {data: attachedData} = useQuery({
+    queryKey: ['company-attached', partnerData?.id],
+    queryFn: () => PartnersService.fetchCompanyAttached(partnerData.id),
+    enabled: !!partnerData?.id,
+    staleTime: 60_000,
+  });
+  const isCompanyFree = attachedData?.data?.attached === false;
+
+  const [isAuthModalActive, setIsAuthModalActive] = useState(false);
+  const [isInstructionModalActive, setIsInstructionModalActive] = useState(false);
+  // после первого открытия модалки остаются смонтированными (для анимации закрытия)
+  const [modalsRequested, setModalsRequested] = useState(false);
+  // пользователь кликнул «оставить заявку», будучи анонимом — после логина
+  // сразу показываем инструкцию, не заставляя нажимать кнопку повторно
+  const [pendingInstruction, setPendingInstruction] = useState(false);
+
+  useLenis((lenis) => {
+    lenis._isLocked = isAuthModalActive || isInstructionModalActive
+  })
+
+  const handleAttachClick = () => {
+    setModalsRequested(true)
+    if (user && user?.data) {
+      setIsInstructionModalActive(true)
+    } else {
+      setPendingInstruction(true)
+      setIsAuthModalActive(true)
+    }
+  }
+
+  // авторизация завершилась (AuthForm сам закрыл свою модалку) → открываем инструкцию
+  useEffect(() => {
+    if (pendingInstruction && user && user?.data) {
+      setPendingInstruction(false)
+      setIsAuthModalActive(false)
+      setIsInstructionModalActive(true)
+    }
+  }, [user, pendingInstruction])
+
+  const closeAuthModal = () => {
+    setPendingInstruction(false)
+    setIsAuthModalActive(false)
+  }
+
+  const closeInstructionModal = () => {
+    setIsInstructionModalActive(false)
+  }
+
   return (
     <PartnerWrap as="div">
       <PartnerHero>
@@ -628,12 +703,24 @@ const PartnerDetail = ({partnerData}) => {
           <PartnerNote>
             Администрация автоклуба не&nbsp;отвечает напрямую за&nbsp;услуги партнеров клуба, но&nbsp;всегда готовы помочь разобраться в&nbsp;сложных ситуациях. Если вопрос не&nbsp;удалось решить на&nbsp;месте, пожалуйста, свяжитесь с&nbsp;<Link href={"#"} target={"_blank"}>главным администратором</Link>&nbsp;&mdash; мы&nbsp;найдем решение.
           </PartnerNote>
-          <PartnerAttach>
-            Если это ваша компания и&nbsp;в&nbsp;информации есть неточность, оставьте заявку&nbsp;<button type="button" aria-label="Заявка на прикрепление компании">здесь</button>
-          </PartnerAttach>
+          {isCompanyFree && (
+            <PartnerAttach>
+              Если это ваша компания и&nbsp;в&nbsp;информации есть неточность, оставьте заявку&nbsp;<button type="button" aria-label="Заявка на прикрепление компании" onClick={handleAttachClick}>здесь</button>
+            </PartnerAttach>
+          )}
         </Container>
         <PartnersLabels />
       </PartnerMain>
+      {modalsRequested && (
+        <PartnerAttachModals
+          isAuthModalActive={isAuthModalActive}
+          closeAuthModal={closeAuthModal}
+          isInstructionModalActive={isInstructionModalActive}
+          closeInstructionModal={closeInstructionModal}
+          companyName={partnerData?.title}
+          chatId={user?.data?.chatId}
+        />
+      )}
     </PartnerWrap>
   );
 };

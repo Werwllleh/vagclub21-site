@@ -21,6 +21,11 @@ class PartnersService {
     })
   }
 
+  // занята ли компания (прикреплена ли к какому-либо пользователю)
+  async fetchCompanyAttached(id) {
+    return axiosClassic.get(`/company/${id}/attached`)
+  }
+
 }
 
 export default new PartnersService();

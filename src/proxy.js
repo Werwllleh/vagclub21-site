@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import {ProtectAuthTelegramMiddleware} from "@/server-actions/middlewares/protect-auth-telegram.middleware";
 import {ProtectRegisterPageMiddleware} from "@/server-actions/middlewares/protect-register-page.middleware";
+import {protectAdminPages} from "@/server-actions/middlewares/protect-admin.middleware";
 
 
 
@@ -16,6 +17,10 @@ export async function proxy(request) {
 
   if (pathname === '/quest') {
     return nextRedirect('/', request.url)
+  }
+
+  if (pathname.startsWith(PROTECTED_PAGES.ADMIN)) {
+    return protectAdminPages(request)
   }
 
   if (pathname.startsWith(PROTECTED_PAGES.PROFILE)) {
@@ -40,7 +45,9 @@ export const config = {
     '/register',
     '/quest',
     '/profile',
-    '/partners'
+    '/partners',
+    '/admin',
+    '/admin/:path*'
   ],
 }
 

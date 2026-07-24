@@ -20,6 +20,7 @@ import AnimateSection from "@/components/blocks/animate-section";
 import PartnerBanner from "@/components/partners/partner-banner";
 import scrollIntoView from "scroll-into-view-if-needed";
 import ProfileCompanyCard from "@/components/profile/profile-company-card";
+import {hasAdminAccess} from "@/config/roles";
 
 const profileTabs = [
   {
@@ -239,6 +240,11 @@ const ProfileContent = ({activeSection}) => {
 
   const {isLoading, user} = useUser();
 
+  // для admin/superadmin добавляем таб «Управление» → /admin
+  const tabs = hasAdminAccess(user?.roles)
+    ? [...profileTabs, {title: "Управление", link: "/admin"}]
+    : profileTabs;
+
   const queryClient = useQueryClient();
 
   const [mounted, setMounted] = useState(false);
@@ -326,7 +332,7 @@ const ProfileContent = ({activeSection}) => {
           <ProfileBody>
             <ProfileTabs>
               <ul>
-                {profileTabs.map((item, index) => {
+                {tabs.map((item, index) => {
 
                   const param = item.link.replace('?section=', '')
                   const active = selectedSection ? selectedSection === param : index === 0;
