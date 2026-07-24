@@ -1,0 +1,17 @@
+
+.partner-page {
+
+  &__title {}
+
+  &__content {
+    margin-top: clamp(2rem, 4vw, 4rem);
+
+    .partners-list {
+      gap: 2rem;
+    }
+
+    .partner-card {
+      background: none;
+    }
+  }
+}

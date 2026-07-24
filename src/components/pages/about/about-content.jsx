@@ -1,0 +1,148 @@
+"use client"
+import React from 'react';
+import {motion} from "framer-motion";
+import H1 from "@/components/UI/h1";
+import SocialsWidget from "@/components/socials-widget";
+import AnimateSection from "@/components/blocks/animate-section";
+import Container from "@/components/container";
+import Image from "next/image"
+import PartnerBanner from "@/components/partners/partner-banner";
+
+// Карточка списка «О клубе»: плавно въезжает с бока один раз при появлении
+// во вьюпорте (изначально скрыта — opacity: 0)
+const AboutListItem = ({index, children}) => {
+  return (
+    <motion.div
+      className="about-list-item"
+      initial={{opacity: 0, x: index % 2 === 0 ? '-15%' : '15%'}}
+      whileInView={{opacity: 1, x: '0%'}}
+      viewport={{once: true, amount: 0.25}}
+      transition={{duration: 0.9, ease: [0.25, 0.1, 0.25, 1]}}
+      style={{willChange: 'transform,opacity'}}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+const AboutContent = () => {
+
+
+  return (
+    <>
+      <AnimateSection className="page-about ppt ppb">
+        <Container>
+          <H1 className="page-about__title pageTitle">О клубе</H1>
+          <motion.div
+            className="page-about__description"
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{duration: 0.85, ease: "easeOut"}}
+          >
+            <p>
+              VAG Club 21&nbsp;&mdash; это автомобильный клуб, объединяющий владельцев автомобилей Volkswagen, Audi,
+              Skoda и&nbsp;Seat, входящих в&nbsp;концерн VAG (Volkswagen Group). Клуб был основан в&nbsp;2020 году
+              и&nbsp;объединяет энтузиастов, интересующихся автомобилями этих марок.
+            </p>
+            <p>
+              Участники клуба обмениваются информацией, опытом эксплуатации, тюнингом и&nbsp;ремонтом автомобилей,
+              а&nbsp;также организуют встречи и&nbsp;мероприятия.
+            </p>
+          </motion.div>
+          <div className="about-list">
+            <AboutListItem index={0}>
+              <div className="about-list-item__body">
+                <div className="about-list-item__image">
+                  <Image
+                    src={"/images/about/1.webp"}
+                    alt=""
+                    width={700}
+                    height={500}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="about-list-item__text">
+                  <h5>Встречи</h5>
+                  <p>Встречи клуба проходят в&nbsp;формате живого общения, участники обсуждают проблемы, решения,
+                    делятся
+                    впечатлениями, узнают что-то новое.Встречи клуба&nbsp;&mdash; хорошая возможность познакомиться
+                    с&nbsp;другими участниками клуба. Встречи проходят каждый месяц, о&nbsp;них мы&nbsp;заранее сообщаем
+                    в&nbsp;наших социальных сетях.</p>
+                </div>
+              </div>
+            </AboutListItem>
+            <AboutListItem index={1}>
+              <div className="about-list-item__body">
+                <div className="about-list-item__image">
+                  <Image
+                    src={"/images/about/2.webp"}
+                    alt=""
+                    width={700}
+                    height={500}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="about-list-item__text">
+                  <h5>Эксклюзивные мероприятия</h5>
+                  <p></p>
+                  <ul>
+                    <li>
+                      <p><b>Клубные выезды</b>&nbsp;&mdash; совместные поездки по&nbsp;живописным маршрутам</p>
+                    </li>
+                    <li>
+                      <p><b>Технические семинары</b>&nbsp;&mdash; мастер‑классы от&nbsp;профессионалов
+                        по&nbsp;обслуживанию VAG</p>
+                    </li>
+                    <li>
+                      <p><b>Выставки</b>&nbsp;&mdash; возможность показать свой автомобиль и&nbsp;увидеть лучшие
+                        экземпляры</p>
+                    </li>
+                    <li>
+                      <p><b>Квесты</b>&nbsp;&mdash; командное прохождение испытаний с&nbsp;денежными призами</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </AboutListItem>
+            <AboutListItem index={2}>
+              <div className="about-list-item__body">
+                <div className="about-list-item__image">
+                  <Image
+                    src={"/images/about/3.webp"}
+                    alt=""
+                    width={700}
+                    height={500}
+                    loading="lazy"
+                  />
+                </div>
+                <div className="about-list-item__text">
+                  <h5>Квесты</h5>
+                  <p>
+                    Увлекательные командные приключения от сообщества VAG Club&nbsp;21.
+                  </p>
+                  <p>
+                    Участники объединяются в&nbsp;экипажи и&nbsp;отправляются по&nbsp;маршруту, наполненному загадками,
+                    техническими заданиями и&nbsp;точками с&nbsp;проверкой знаний и умений.
+                  </p>
+                  <p>
+                    Это не&nbsp;только проверка логики и&nbsp;сплочённости команды, но&nbsp;и&nbsp;отличный способ
+                    в&nbsp;динамичном формате лучше узнать возможности своего автомобиля, познакомиться
+                    с&nbsp;единомышленниками и&nbsp;проявить свои навыки. Победителей ждут денежные и ценные призы
+                    от&nbsp;партнёров клуба.
+                  </p>
+                </div>
+              </div>
+            </AboutListItem>
+          </div>
+          <div className="page-about__partner-banner">
+            <PartnerBanner />
+          </div>
+        </Container>
+      </AnimateSection>
+      <SocialsWidget />
+      {/*<AnimateCursor />*/}
+    </>
+  );
+};
+
+export default AboutContent;

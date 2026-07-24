@@ -1,0 +1,66 @@
+@use "../breakpoints";
+@use "../variables";
+
+.burger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 2.8rem;
+  height: 1.6rem;
+  transition-duration: 1s;
+  cursor: pointer;
+
+  span {
+    height: .2rem;
+    width: 100%;
+    background-color: variables.$colorPrimary;
+    position: absolute;
+    transition-duration: .25s;
+    transition-delay: .25s;
+
+    &::before,
+    &::after {
+      position: absolute;
+      left: 0;
+      height: .2rem;
+      width: 100%;
+      background-color: variables.$colorPrimary;
+      content: "";
+      transition-duration: .25s;
+      transition: transform .25s, top .25s .25s;
+    }
+
+    &::before {
+      top: -.5rem;
+    }
+
+    &::after {
+      top: .5rem;
+    }
+
+  }
+
+  &.active {
+
+    span {
+      transition-duration: 0.1s;
+      transition-delay: .25s;
+      background: transparent;
+
+      &::before,
+      &::after {
+        top: 0;
+      }
+
+      &::before {
+        transition: top .25s, transform .25s .25s;
+        transform: rotateZ(-45deg);
+      }
+
+      &::after {
+        transition: top 0.4s, transform .25s .25s;
+        transform: rotateZ(45deg);
+      }
+    }
+  }
+}

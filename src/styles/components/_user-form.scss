@@ -1,0 +1,36 @@
+@use "../variables";
+@use "../breakpoints";
+
+
+.user-form {
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &--fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .ant-form-item {
+
+      }
+
+      .ant-form-item-label {
+        label {
+          font-weight: 400;
+        }
+      }
+    }
+
+    &--footer {
+
+      button {
+        width: 100%;
+        max-width: 30rem;
+      }
+    }
+  }
+}

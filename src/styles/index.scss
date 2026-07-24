@@ -1,15 +1,12 @@
-@import "variables";
-@import "breakpoints";
-@import "base";
-
-//components
-@import "./components/index";
-
-//icons
-//@import "./components/icons/index";
+@use "fonts";
+@use "variables";
+@use "breakpoints";
+@use "typography";
+@use "base";
 
 
-@import "./pages/index";
+@use "global";
 
-
-@import "global";
+@use "./blocks/blocks";
+@use "./components/components";
+@use "./pages/pages";

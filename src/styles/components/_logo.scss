@@ -1,0 +1,52 @@
+@use "../variables";
+@use "../breakpoints";
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 .3rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1;
+  font-family: variables.$ff-main;
+
+  @include breakpoints.mobile {
+    font-size: 2rem;
+  }
+
+  @include breakpoints.w1250 {
+    font-size: 2.4rem;
+  }
+
+  &.inversion {
+    .logo__word {
+      color: variables.$white;
+    }
+
+    .logo__digit{
+      background-color: variables.$white;
+      color: variables.$blue;
+    }
+  }
+
+  &__word {
+    color: variables.$black;
+  }
+
+  &__digit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    background-color: variables.$blue;
+    border-radius: 100%;
+    color: variables.$white;
+    will-change: transform;
+
+    @include breakpoints.mobile {
+      width: 4.2rem;
+      height: 4.2rem;
+    }
+  }
+}

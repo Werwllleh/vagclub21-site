@@ -1,0 +1,25 @@
+@use "../../breakpoints";
+
+
+.partners-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+  gap: 1rem;
+
+  @include breakpoints.semiDesktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include breakpoints.desktop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include breakpoints.small {
+    grid-template-columns: 1fr;
+  }
+
+  &__not-found {
+    margin-top: 2rem;
+  }
+}

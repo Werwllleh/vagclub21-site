@@ -1,0 +1,446 @@
+'use client';
+
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {usePartnerCategories} from '@/hooks/usePartnerCategories';
+import styled, {css} from 'styled-components';
+import {customTheme} from '@/styles/theme';
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
+import Loading from '@/components/loading';
+import {usePartnersStore} from '@/store/partners.store';
+import CmsService from '@/services/cms.service';
+import {pluralize} from '@/utils/utils';
+import {useMediaQuery} from 'react-responsive';
+
+export const PCWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 4rem 0;
+`;
+
+export const PCList = styled.ul`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        gap: 1rem 2rem;
+    }
+
+    @media (max-width: ${customTheme.breakpoint.tablet}) {
+        max-height: calc(100vh - 18rem);
+        overflow-y: auto;
+    }
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    li[data-reset] {
+        display: none;
+
+        @media (min-width: ${customTheme.breakpoint.tablet}) {
+            display: block;
+        }
+    }
+`;
+
+const PCItem = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: max-content;
+    white-space: nowrap;
+    border-radius: ${customTheme.radius.r7};
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${({$loading}) => (
+            $loading
+                    ? customTheme.color.greyLight
+                    : customTheme.color.primary
+    )};
+    background-color: ${({$loading}) => (
+            $loading
+                    ? customTheme.color.greyLight
+                    : customTheme.color.white
+    )};
+    padding-block: 1rem;
+    padding-inline: 1.4rem;
+    font-size: clamp(1.3rem, 5vw, 1.6rem);
+    color: ${({$loading}) => (
+            $loading
+                    ? customTheme.color.grey
+                    : customTheme.color.primaryDark
+    )};
+    line-height: 1;
+
+    ${({$active}) => $active && css`
+        background-color: ${customTheme.color.primary};
+        color: ${customTheme.color.white};
+    `}
+    ${({$loading}) => $loading && css`
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.8),
+                    transparent
+            );
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+    `}
+
+    &:hover {
+        @media (min-width: ${customTheme.breakpoint.mobile}) {
+            background-color: ${({$loading}) => (
+                    $loading
+                            ? customTheme.color.greyLight
+                            : customTheme.color.primary
+            )};
+
+            color: ${({$loading}) => (
+                    $loading
+                            ? customTheme.color.grey
+                            : customTheme.color.white
+            )};
+        }
+    }
+
+
+    @media (min-width: ${customTheme.breakpoint.mobile}) {
+        font-size: clamp(1.4rem, 5vw, 1.6rem);
+        padding-block: 1.2rem;
+        padding-inline: 1.6rem;
+    }
+
+    &[data-reset] {
+        background-color: ${customTheme.color.grey};
+        border-color: ${customTheme.color.grey};
+        color: ${customTheme.color.white};
+    }
+
+    &[data-show] {
+        background-color: ${customTheme.color.primary};
+        color: ${customTheme.color.white};
+    }
+`;
+
+const PCFooter = styled.div`
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 0;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        display: none;
+    }
+`;
+
+const PCActions = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0 3rem;
+
+    button {
+        flex: 1;
+        width: 100%;
+        max-width: none;
+    }
+`;
+
+const PCFindInfo = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: ${customTheme.color.grey};
+`;
+
+const PartnerCategories = ({closeHandler, initialData = null}) => {
+  const {
+    filterPartnersActive,
+    setFilterPartnersActive,
+    filteredPartners,
+    setFilteredPartners,
+    setFilterPartnersLoading,
+  } = usePartnersStore();
+
+  const {
+    partnerCategories,
+    isLoading,
+  } = usePartnerCategories(initialData);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const searchValue = searchParams.get('categories');
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
+
+  const [isMounted, setIsMounted] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const searchSelectedCategoryPartners = useCallback(
+    async (categoriesValue) => {
+      if (!categoriesValue) {
+        setFilterPartnersActive(false);
+        setFilteredPartners([]);
+        setFilterPartnersLoading(false);
+
+        return;
+      }
+
+      setFilterPartnersLoading(true);
+
+      try {
+        const response = await CmsService.fetchPartners(
+          `?categories=${encodeURIComponent(categoriesValue)}`
+        );
+
+        const partners = response?.data?.partners || [];
+
+        setFilteredPartners(partners);
+        setFilterPartnersActive(true);
+      } catch (error) {
+        console.error(
+          'Ошибка при поиске партнеров определенной категории:',
+          error
+        );
+
+        setFilteredPartners([]);
+        setFilterPartnersActive(true);
+      } finally {
+        setFilterPartnersLoading(false);
+      }
+    },
+    [
+      setFilteredPartners,
+      setFilterPartnersActive,
+      setFilterPartnersLoading,
+    ]
+  );
+
+  useEffect(() => {
+    const categories = searchValue
+      ? searchValue.split(',').filter(Boolean)
+      : [];
+
+    setSelectedCategories(categories);
+
+    const timeoutId = window.setTimeout(() => {
+      searchSelectedCategoryPartners(searchValue);
+    }, 300);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [
+    searchValue,
+    searchSelectedCategoryPartners,
+  ]);
+
+  const updateCategoriesQuery = useCallback(
+    (categories) => {
+      const params = new URLSearchParams(
+        searchParams.toString()
+      );
+
+      if (categories.length > 0) {
+        params.set(
+          'categories',
+          categories.join(',')
+        );
+      } else {
+        params.delete('categories');
+      }
+
+      params.delete('page');
+
+      const queryString = params.toString();
+
+      router.replace(
+        queryString
+          ? `${pathname}?${queryString}`
+          : pathname,
+        {
+          scroll: false,
+        }
+      );
+    },
+    [
+      pathname,
+      router,
+      searchParams,
+    ]
+  );
+
+  const selectCategory = useCallback(
+    (slug) => {
+      const nextCategories = selectedCategories.includes(slug)
+        ? selectedCategories.filter(
+          (categorySlug) => categorySlug !== slug
+        )
+        : [...selectedCategories, slug];
+
+      setSelectedCategories(nextCategories);
+      updateCategoriesQuery(nextCategories);
+    },
+    [selectedCategories, updateCategoriesQuery]
+  );
+
+  const handleClearFilter = useCallback(() => {
+    const params = new URLSearchParams(
+      searchParams.toString()
+    );
+
+    params.delete('categories');
+    params.delete('page');
+
+    const queryString = params.toString();
+
+    router.replace(
+      queryString
+        ? `${pathname}?${queryString}`
+        : pathname,
+      {
+        scroll: false,
+      }
+    );
+
+    setSelectedCategories([]);
+    setFilteredPartners([]);
+    setFilterPartnersActive(false);
+    setFilterPartnersLoading(false);
+  }, [
+    pathname,
+    router,
+    searchParams,
+    setFilteredPartners,
+    setFilterPartnersActive,
+    setFilterPartnersLoading,
+  ]);
+
+  if (isLoading || !isMounted) {
+    return <Loading/>;
+  }
+
+  return (
+    <PCWrapper>
+      <PCList
+        data-lenis-prevent={
+          isMobile ? true : undefined
+        }
+      >
+        {partnerCategories.map((category) => (
+          <li key={category.id}>
+            <PCItem
+              type="button"
+              $active={selectedCategories.includes(
+                category.slug
+              )}
+              onClick={() => {
+                selectCategory(category.slug);
+              }}
+            >
+              {category.title}
+            </PCItem>
+          </li>
+        ))}
+
+        {filterPartnersActive && (
+          <li data-reset>
+            <PCItem
+              type="button"
+              data-reset
+              onClick={handleClearFilter}
+            >
+              Сбросить
+            </PCItem>
+          </li>
+        )}
+      </PCList>
+
+      {filterPartnersActive && (
+        <PCFooter>
+          <PCActions>
+            <PCItem
+              type="button"
+              data-reset
+              onClick={handleClearFilter}
+            >
+              Сбросить
+            </PCItem>
+
+            {!!filteredPartners.length && (
+              <PCItem
+                type="button"
+                data-show
+                onClick={closeHandler}
+              >
+                Показать
+              </PCItem>
+            )}
+          </PCActions>
+
+          <PCFindInfo>
+            {pluralize(
+              filteredPartners.length,
+              [
+                'Найдена',
+                'Найдены',
+                'Найдено',
+              ]
+            )}{' '}
+
+            {filteredPartners.length}{' '}
+
+            {pluralize(
+              filteredPartners.length,
+              [
+                'компания',
+                'компании',
+                'компаний',
+              ]
+            )}
+          </PCFindInfo>
+        </PCFooter>
+      )}
+    </PCWrapper>
+  );
+};
+
+export default PartnerCategories;

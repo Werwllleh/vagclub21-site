@@ -1,0 +1,50 @@
+@use "../../variables";
+@use "../../breakpoints";
+
+.product-empty {
+  display: flex;
+  justify-content: center;
+  height: 30rem;
+  max-width: 90rem;
+  margin-inline: auto;
+  position: relative;
+  border-radius: variables.$border-radius20;
+  box-shadow: 0 0 30px 3px #18181869;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+
+  @include breakpoints.tablet {
+    height: 45rem;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 15rem;
+    width: 100%;
+    background: linear-gradient(0deg, #323232ba 37%, #0000 100%);
+    z-index: 0;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: variables.$border-radius20;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  p {
+    position: absolute;
+    bottom: 3rem;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    line-height: 1.5;
+    color: variables.$white;
+    padding-inline: 1rem;
+    text-align: center;
+  }
+}

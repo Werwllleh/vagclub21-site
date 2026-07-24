@@ -1,0 +1,41 @@
+@use "../../variables";
+@use "../../breakpoints";
+
+.profile-car-form {
+
+  .ant-modal-container {
+    padding-block: 4rem 3rem;
+    padding-inline: 1.6rem;
+  }
+
+  .ant-form-item-explain-error {
+    font-size: 1rem;
+    font-weight: 200;
+  }
+
+  .ant-modal-footer {
+    margin-top: 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &_fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &_footer {
+      display: flex;
+      justify-content: center;
+
+      button {
+        width: 100%;
+        max-width: 70%;
+      }
+    }
+  }
+}

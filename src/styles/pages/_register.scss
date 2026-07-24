@@ -1,0 +1,17 @@
+@use "../variables";
+@use "../breakpoints";
+
+
+.register {
+
+  &__body {}
+
+  &__title {
+  }
+
+  &__content {}
+
+  &__form {
+    margin-top: 2rem;
+  }
+}

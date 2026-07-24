@@ -1,29 +1,13 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import SocialLinks from "@/components/social-links";
+import MainPage from "@/components/pages/_main";
+import {getHeroSlider, getPartnersLabels} from "@/server/cms-data";
 
+export default async function Home() {
+  // Данные загружаются на сервере и кешируются (cacheLife 'content'),
+  // контент попадает в HTML для SEO и быстрого LCP
+  const [heroSlider, partnersLabels] = await Promise.all([
+    getHeroSlider().catch(() => null),
+    getPartnersLabels().catch(() => null),
+  ]);
 
-export default function Home() {
-  
-  return (
-    <>
-      <Header/>
-      <main>
-        <div className="page-soon">
-          <div className="container">
-            <div className="page-soon__body">
-              <div className="page-soon__information">
-                <h1 className="page-soon__title">Сайт в разработке</h1>
-                <div className="page-soon__links">
-                  <p className="page-soon__links-text">Вступайте в нашу беседу и подписывайтесь на соц. сети</p>
-                  <SocialLinks />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      <Footer/>
-    </>
-  );
+  return <MainPage heroSlider={heroSlider} partnersLabels={partnersLabels}/>;
 }

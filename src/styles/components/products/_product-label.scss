@@ -1,0 +1,32 @@
+@use "../../variables";
+@use "../../breakpoints";
+
+.product-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: variables.$borderRadius10;
+  padding: .85rem 1.5rem;
+  font-size: 1.4rem;
+  letter-spacing: -0.08rem;
+  font-weight: 500;
+  line-height: 1.25;
+  min-width: 8rem;
+  z-index: 2;
+  pointer-events: none;
+
+  &.popular {
+    background-color: variables.$positive;
+    color: variables.$white;
+  }
+
+  &.new {
+    background-color: variables.$new;
+    color: variables.$black;
+  }
+
+  &.sale {
+    background-color: variables.$sale;
+    color: variables.$white;
+  }
+}

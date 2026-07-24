@@ -1,0 +1,28 @@
+@use "main";
+@use "about";
+@use "products";
+@use "profile-page";
+@use "login-page";
+@use "page-404";
+@use "meet";
+
+//blog
+@use "blog";
+
+//cars
+@use "./cars/cars-content";
+@use "./cars/car-card";
+@use "./cars/car-search";
+
+//profile
+@use "./profile/profile-car-form";
+
+//partners
+@use "./partners/partners-content";
+@use "./partners/partners-list";
+@use "./partners/partner-card";
+@use "./partners/partner-detail";
+@use "./partners/partners-slider-others";
+@use "./partners/partners-search";
+
+@use "register";

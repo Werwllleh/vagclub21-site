@@ -1,0 +1,68 @@
+@use "../variables";
+
+
+.back-button {
+  position: relative;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  width: 100%;
+  background-color: variables.$white;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 0;
+    background-color: variables.$colorPrimary;
+    transition: width variables.$transition;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+  }
+
+  &::after {
+    bottom: 0;
+    right: 0;
+  }
+
+  &:hover {
+
+    &::before,
+    &::after {
+      width: 100%;
+    }
+
+    .back-button__icon {
+      transform: translateX(-1rem);
+    }
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform variables.$transition;
+
+    .anticon {
+
+      svg {
+        fill: variables.$colorPrimaryDark;
+        height: clamp(1.4rem, 3vw, 1.6rem);
+        width: clamp(1.4rem, 3vw, 1.6rem);
+      }
+    }
+  }
+
+  &__text {
+    font-size: clamp(1.8rem, 3vw, 2rem);
+    color: variables.$colorPrimaryDark;
+    line-height: 1;
+  }
+}
