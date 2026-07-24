@@ -105,7 +105,7 @@ const PartnerInfoBody = styled.div`
     color: ${customTheme.color.white};
 
     @media (min-width: ${customTheme.breakpoint.tablet}) {
-        gap: 3rem;
+        gap: 2.4rem;
     }
 
     h1 {
@@ -383,33 +383,54 @@ const PartnerNote = styled.p`
     }
 `
 
+const PartnerAttach = styled.p`
+    margin-top: 2rem;
+    padding-block: 2rem;
+    padding-inline: 2rem;
+    color: ${customTheme.color.grey};
+    background-color: ${customTheme.color.white};
+    border-radius: ${customTheme.radius.r15};
+    font-size: 1.1rem;
+    line-height: 1.5;
+
+    @media (min-width: ${customTheme.breakpoint.tablet}) {
+        font-size: 1.3rem;
+    }
+
+    button {
+        color: ${customTheme.color.red};
+        text-decoration: underline;
+        text-underline-offset: .5rem;
+    }
+`
+
 const PartnerPagination = styled.div`
     display: flex;
     align-items: center;
     gap: .8rem;
-    margin-top: 2rem;
-    /* родитель PartnerInfo на десктопе имеет pointer-events: none — возвращаем клики буллетам */
     pointer-events: auto;
-
-    /* пустой контейнер (нет буллетов) не должен занимать место */
+    max-width: 30rem;
+    
     &:empty {
         display: none;
     }
 
     .swiper-pagination-bullet {
-        width: 1rem;
-        height: 1rem;
-        margin: 0 !important;
-        border-radius: 100%;
+        flex: 0 1 5rem;
+        width: auto;
+        height: .2rem;
+        margin: 0;
+        border-radius: ${customTheme.radius.r20};
         background-color: ${customTheme.color.white};
-        opacity: .5;
+        opacity: 1;
         cursor: pointer;
         transition: opacity ${customTheme.transition.small},
+        flex ${customTheme.transition.small},
         background-color ${customTheme.transition.small};
     }
 
     .swiper-pagination-bullet-active {
-        opacity: 1;
+        flex: 1 1 70%;
         background-color: ${customTheme.color.primary};
     }
 `
@@ -607,6 +628,9 @@ const PartnerDetail = ({partnerData}) => {
           <PartnerNote>
             Администрация автоклуба не&nbsp;отвечает напрямую за&nbsp;услуги партнеров клуба, но&nbsp;всегда готовы помочь разобраться в&nbsp;сложных ситуациях. Если вопрос не&nbsp;удалось решить на&nbsp;месте, пожалуйста, свяжитесь с&nbsp;<Link href={"#"} target={"_blank"}>главным администратором</Link>&nbsp;&mdash; мы&nbsp;найдем решение.
           </PartnerNote>
+          <PartnerAttach>
+            Если это ваша компания и&nbsp;в&nbsp;информации есть неточность, оставьте заявку&nbsp;<button type="button" aria-label="Заявка на прикрепление компании">здесь</button>
+          </PartnerAttach>
         </Container>
         <PartnersLabels />
       </PartnerMain>

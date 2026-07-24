@@ -44,7 +44,6 @@ const PartnersLabelsItem = styled(Link)`
     box-shadow: 0 0 .5rem .5rem #0000000f;
     background-color: #ffffffa1;
     backdrop-filter: blur(1rem);
-
     height: 100%;
 
     @media (min-width: ${customTheme.breakpoint.tablet}) {
@@ -54,16 +53,14 @@ const PartnersLabelsItem = styled(Link)`
     img {
         object-fit: contain;
         height: 10rem;
-        width: 14rem;
-        //width: 10rem;
-        //mix-blend-mode: hard-light;
+        width: 22rem;
         opacity: .8;
         filter: grayscale(1);
         transition: opacity ${customTheme.transition.small}, filter ${customTheme.transition.small};
 
         @media (min-width: ${customTheme.breakpoint.tablet}) {
             height: 13rem;
-            width: 20rem;
+            width: 25rem;
         }
     }
 
