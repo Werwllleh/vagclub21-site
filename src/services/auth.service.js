@@ -7,8 +7,9 @@ class AuthService {
   async login(data) {
     const response = await axiosClassic.post('/auth/login', { data });
 
-    if (response.data.accessToken) {
-      AuthTokenService.saveAccessToken(response.data.accessToken)
+    // Бэкенд ставит httpOnly-куки токенов; на клиенте помечаем наличие сессии
+    if (response.status === 200) {
+      AuthTokenService.setSession();
     }
 
     return response;
@@ -26,7 +27,7 @@ class AuthService {
   async logout() {
     const response = await axiosClassic.post('/auth/logout')
 
-    if (response.data) AuthTokenService.removeAccessToken()
+    AuthTokenService.clearSession();
 
     return response
   }

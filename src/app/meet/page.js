@@ -7,9 +7,12 @@ export const metadata = {
   description: PUBLIC_PAGES.MEET.SEO_DESCRIPTION,
 };
 
+// данные о встрече должны быть всегда актуальны — без кеша, рендер по запросу
+export const dynamic = 'force-dynamic';
+
 const Page = async () => {
 
-  const data = await getMeet().catch(() => null);
+  const data = await getMeet(0).catch(() => null);
 
   return <Meet meetData={data}/>;
 };

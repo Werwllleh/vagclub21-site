@@ -1,24 +1,27 @@
 import Cookies from 'js-cookie';
-import {AuthToken} from "@/constants";
+
+// Токены (accessToken/refreshToken) — httpOnly, из JS недоступны.
+// Поэтому храним лёгкий НЕ-httpOnly маркер сессии, чтобы клиент понимал,
+// нужно ли вообще запрашивать защищённые данные (иначе аноним ловит 401).
+const SESSION_MARKER = 'auth';
+const cookieDomain = process.env.NEXT_PUBLIC_URL_COOKIE_DOMAIN;
 
 class AuthTokenService {
-  getAccessToken() {
-    const accessToken = Cookies.get(AuthToken.ACCESS_TOKEN);
-    return accessToken || null
+  hasSession() {
+    return !!Cookies.get(SESSION_MARKER);
   }
 
-  saveAccessToken(accessToken) {
-    Cookies.set(AuthToken.ACCESS_TOKEN, accessToken, {
-      domain: process.env.NEXT_PUBLIC_URL_COOKIE_DOMAIN,
+  setSession() {
+    Cookies.set(SESSION_MARKER, '1', {
+      domain: cookieDomain,
       sameSite: 'strict',
-      // expires: 7,
-      // maxAge: 60 * 60 * 1000,
-    })
+      expires: 7, // как у refreshToken
+    });
   }
 
-  removeAccessToken() {
-    Cookies.remove(AuthToken.ACCESS_TOKEN)
+  clearSession() {
+    Cookies.remove(SESSION_MARKER, {domain: cookieDomain});
   }
 }
 
-export default new AuthTokenService()
+export default new AuthTokenService();

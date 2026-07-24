@@ -7,7 +7,7 @@ import Image from "next/image";
 
 // Import Swiper React components
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {Autoplay} from 'swiper/modules';
+import {Autoplay, Pagination} from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -35,7 +35,7 @@ const PartnerHero = styled.section`
     flex-direction: column;
     justify-content: flex-end;
 
-    @media (min-width: ${customTheme.breakpoint.tablet}) {
+    @media (min-width: ${customTheme.breakpoint.laptop}) {
         min-height: 100dvh;
     }
 `
@@ -383,6 +383,37 @@ const PartnerNote = styled.p`
     }
 `
 
+const PartnerPagination = styled.div`
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-top: 2rem;
+    /* родитель PartnerInfo на десктопе имеет pointer-events: none — возвращаем клики буллетам */
+    pointer-events: auto;
+
+    /* пустой контейнер (нет буллетов) не должен занимать место */
+    &:empty {
+        display: none;
+    }
+
+    .swiper-pagination-bullet {
+        width: 1rem;
+        height: 1rem;
+        margin: 0 !important;
+        border-radius: 100%;
+        background-color: ${customTheme.color.white};
+        opacity: .5;
+        cursor: pointer;
+        transition: opacity ${customTheme.transition.small},
+        background-color ${customTheme.transition.small};
+    }
+
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+        background-color: ${customTheme.color.primary};
+    }
+`
+
 const PartnerDetail = ({partnerData}) => {
 
   return (
@@ -391,7 +422,7 @@ const PartnerDetail = ({partnerData}) => {
         {!!partnerData?.gallery?.length ? (
           <PartnerSwiper>
             <Swiper
-              modules={[Autoplay]}
+              modules={[Autoplay, Pagination]}
               effect="fade"
               loop={partnerData.gallery.length >= 3}
               spaceBetween={0}
@@ -399,6 +430,10 @@ const PartnerDetail = ({partnerData}) => {
               speed={1500}
               autoplay={{
                 delay: 20000,
+              }}
+              pagination={{
+                el: '.partner-hero__pagination',
+                clickable: true,
               }}
             >
               {partnerData.gallery.map((slide, index) => (
@@ -421,6 +456,9 @@ const PartnerDetail = ({partnerData}) => {
                     </li>
                   ))}
                 </PartnerTagList>
+              )}
+              {partnerData?.gallery?.length > 1 && (
+                <PartnerPagination className="partner-hero__pagination"/>
               )}
             </PartnerInfoBody>
           </Container>

@@ -1,7 +1,6 @@
 import {errorCatch, getContentType} from "@/api/api.helper";
 import {API_URL, API_CMS_URL} from "@/constants";
 import axios from "axios";
-import AuthTokenService from "@/services/auth-token.service";
 import authService from "@/services/auth.service";
 import authTokenService from "@/services/auth-token.service";
 
@@ -28,15 +27,8 @@ export const instance = axios.create(axiosOptions)
 
 export const instanceCms = axios.create(axiosOptionsCms)
 
-instance.interceptors.request.use(config => {
-  const accessToken = AuthTokenService.getAccessToken();
-
-  if (config?.headers && accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`
-  }
-
-  return config
-})
+// Токены отправляются автоматически через httpOnly-куки (withCredentials),
+// заголовок Authorization больше не нужен — токен из JS недоступен.
 
 instance.interceptors.response.use(
   (config) => config,
@@ -59,13 +51,8 @@ instance.interceptors.response.use(
         await authService.getNewTokens();
         return instance.request(originalRequest);
       } catch (refreshError) {
-
-        if (
-          errorCatch(refreshError) === 'jwt expired' ||
-          errorCatch(refreshError) === 'Refresh token not passed'
-        ) {
-          authTokenService.removeAccessToken();
-        }
+        // refresh не удался — сессия недействительна, снимаем маркер
+        authTokenService.clearSession();
       }
     }
 

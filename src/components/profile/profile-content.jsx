@@ -5,7 +5,9 @@ import {useEffect, useState} from "react";
 import Loader from "@/components/loader";
 import UserForm from "@/components/user-form";
 import CarForm from "@/components/car-form";
-import {PlusOutlined} from "@ant-design/icons";
+import {PlusOutlined, LogoutOutlined} from "@ant-design/icons";
+import {useQueryClient} from "@tanstack/react-query";
+import authService from "@/services/auth.service";
 import ProfileCarCard from "@/components/profile-car-card";
 import H1 from "@/components/UI/h1";
 import {useLenis} from "lenis/react";
@@ -181,6 +183,19 @@ const ProfileSectionDescription = styled.div`
 
 const UserProfile = styled.div``
 
+const LogoutWrap = styled.div`
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+
+    button {
+        font-size: 1.5rem;
+        padding-inline: 3rem;
+        padding-block: 1.2rem;
+        line-height: 1;
+    }
+`
+
 const UserCars = styled.div``
 
 const CarsList = styled.ul`
@@ -224,7 +239,24 @@ const ProfileContent = ({activeSection}) => {
 
   const {isLoading, user} = useUser();
 
+  const queryClient = useQueryClient();
+
   const [mounted, setMounted] = useState(false);
+
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await authService.logout();
+      // сбрасываем кэш пользователя, чтобы UI не показывал старые данные
+      queryClient.removeQueries({queryKey: ['user']});
+      router.push('/');
+      router.refresh();
+    } catch (e) {
+      console.error('Ошибка при выходе из аккаунта', e);
+      setIsLoggingOut(false);
+    }
+  };
 
   const [isModalActive, setIsModalActive] = useState(false);
   const [selectCarData, setSelectCarData] = useState({});
@@ -336,6 +368,19 @@ const ProfileContent = ({activeSection}) => {
                       }}/>
                     )}
                   </UserProfile>
+                  {user && user?.data && (
+                    <LogoutWrap>
+                      <Button
+                        onClick={handleLogout}
+                        loading={isLoggingOut}
+                        danger
+                        className="btn"
+                      >
+                        <LogoutOutlined/>
+                        Выйти из аккаунта
+                      </Button>
+                    </LogoutWrap>
+                  )}
                 </ProfileSectionInner>
               )}
               {activeSection === 'cars' && (

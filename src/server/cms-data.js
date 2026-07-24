@@ -5,11 +5,13 @@
 const CMS_API = `${process.env.LOCAL_URL_CMS || process.env.NEXT_PUBLIC_URL_CMS}/api`;
 const SERVER_API = `${process.env.LOCAL_URL_SERVER || process.env.NEXT_PUBLIC_URL_SERVER}/api`;
 
-const REVALIDATE_CONTENT = 600; // 10 минут
-const REVALIDATE_FAST = 60;     // статус техработ — 1 минута
+const REVALIDATE_CONTENT = 600;      // 10 минут
+export const REVALIDATE_FAST = 60;   // короткий кеш (статус техработ, дата встречи в футере) — 1 минута
 
 async function fetchCms(path, revalidate = REVALIDATE_CONTENT) {
-  const res = await fetch(`${CMS_API}${path}`, {next: {revalidate}});
+  // revalidate === 0 → без кеша (всегда свежие данные, страница рендерится динамически)
+  const cacheOpts = revalidate === 0 ? {cache: 'no-store'} : {next: {revalidate}};
+  const res = await fetch(`${CMS_API}${path}`, cacheOpts);
 
   if (!res.ok) {
     throw new Error(`CMS request failed: ${path} → ${res.status}`);
@@ -50,8 +52,10 @@ export async function getPartnersLabels() {
   return fetchCms('/partner/labels');
 }
 
-export async function getMeet() {
-  return fetchCms('/globals/meet');
+export async function getMeet(revalidate = REVALIDATE_CONTENT) {
+  // на странице /meet вызывается с revalidate=0 (актуальные данные),
+  // в layout (бегущая строка футера) — с дефолтным кешем
+  return fetchCms('/globals/meet', revalidate);
 }
 
 export async function getPolicy() {

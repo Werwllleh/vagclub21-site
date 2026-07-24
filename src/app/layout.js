@@ -9,7 +9,7 @@ import YandexMetrica from "@/components/yandex-metrica";
 import Loading from "@/components/loading";
 import Loader from "@/components/loader";
 import StyledComponentsRegistry from "@/lib/styled-registry";
-import {getMeet, getTechnicalWorkStatus, getCurrentYear} from "@/server/cms-data";
+import {getMeet, getTechnicalWorkStatus, getCurrentYear, REVALIDATE_FAST} from "@/server/cms-data";
 
 
 export const metadata = {
@@ -27,7 +27,7 @@ export default async function RootLayout({children}) {
   // дата встречи для бегущей строки в футере и статус техработ —
   // кешируются, попадают в HTML (иначе AppContent рендерит только лоадер при SSR)
   const [meetData, technicalWork, currentYear] = await Promise.all([
-    getMeet().catch(() => null),
+    getMeet(REVALIDATE_FAST).catch(() => null),  // футер: свежесть ≤1 мин, страницы остаются статикой
     getTechnicalWorkStatus().catch(() => null),
     getCurrentYear().catch(() => 2026),
   ]);
