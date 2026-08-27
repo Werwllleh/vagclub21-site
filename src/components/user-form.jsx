@@ -22,7 +22,7 @@ const UserForm = ({initialValues, type, setStep}) => {
         form.resetFields()
         setIsSubmittingForm(false);
       } else {
-        toast.success(res.data.message)
+        toast.error(res.data.message)
         setIsSubmittingForm(false);
       }
     }
@@ -35,7 +35,7 @@ const UserForm = ({initialValues, type, setStep}) => {
         toast.success(res.data.message)
       } else {
         setIsSubmittingForm(false);
-        toast.success(res.data.message)
+        toast.error(res.data.message)
       }
     }
 

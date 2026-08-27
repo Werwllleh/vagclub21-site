@@ -302,7 +302,7 @@ const ProfileContent = ({activeSection}) => {
               alt={"Profile background image"}
               width={2500}
               height={1250}
-              loading="eager"
+              loading="lazy"
             />
           </ProfileHeaderBg>
           <ProfileAvatar>
@@ -476,9 +476,9 @@ const ProfileContent = ({activeSection}) => {
           </div>
         </div>
       </ProfileWrap>
-      {/*<Modal className="profile-car-form" open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
+      <Modal className="profile-car-form" open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
         <CarForm type={'register'} onClose={closeAddCarModal}/>
-      </Modal>*/}
+      </Modal>
     </>
   );
 };
