@@ -14,8 +14,6 @@ const Page = async ({searchParams}) => {
 
   const selectedSection = params.section
 
-  // console.log(params);
-
   return <Suspense fallback={<Loading />}>
     <ProfileContent activeSection={selectedSection ?? null} />
   </Suspense>

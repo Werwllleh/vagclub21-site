@@ -240,6 +240,10 @@ const ProfileContent = ({activeSection}) => {
 
   const {isLoading, user} = useUser();
 
+  useEffect(() => {
+    console.log(user)
+  }, [user]);
+
   // для admin/superadmin добавляем таб «Управление» → /admin
   const tabs = hasAdminAccess(user?.roles)
     ? [...profileTabs, {title: "Управление", link: "/admin"}]
@@ -302,7 +306,7 @@ const ProfileContent = ({activeSection}) => {
               alt={"Profile background image"}
               width={2500}
               height={1250}
-              loading="eager"
+              loading="lazy"
             />
           </ProfileHeaderBg>
           <ProfileAvatar>

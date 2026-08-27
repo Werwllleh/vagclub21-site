@@ -75,7 +75,7 @@ const MainPage = ({heroSlider = null, partnersLabels = null}) => {
         <div className="container">
           <div className="about__body">
             <div className="about__image">
-              <Image loading="lazy" width={600} height={400} src={"/images/sections/about/cars.jpg"} alt="cars" />
+              <Image loading="lazy" width={600} height={400} src={"/images/sections/about/cars.webp"} alt="cars" />
             </div>
             <div className="about__description">
               <SectionTitle as="p">Авто сообщество VAGCLUB21</SectionTitle>
