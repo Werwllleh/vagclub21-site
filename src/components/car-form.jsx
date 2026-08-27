@@ -14,6 +14,7 @@ import {API_URL} from "@/constants";
 import {useQueryClient} from "@tanstack/react-query";
 import {deepEqual, getBase64} from "@/utils/utils";
 
+
 // Import Swiper React components
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Pagination} from 'swiper/modules';
@@ -40,7 +41,8 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
   const closeFormModal = () => {
     onClose?.();
     setCarRegisterStep(1);
-    initialValues.reset();
+    form.resetFields();
+    // initialValues.reset();
   }
 
   useEffect(() => {
@@ -93,8 +95,8 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
     const res = await UploadService.deleteFile(file, "car");
 
     if (res.status === 200) {
+      await queryClient.refetchQueries({queryKey: ['user']});
       toast.success(res.data.message);
-      await queryClient.invalidateQueries({queryKey: ['user-cars']});
     } else {
       toast.error(res.data.message);
     }
@@ -107,11 +109,14 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
     return e?.fileList;
   };
 
+
   useEffect(() => {
 
     if (selectedBrand && brands && models) {
 
       const selectedBrandModels = models[selectedBrand?.toUpperCase()];
+
+      if (!selectedBrandModels) return;
 
       if (selectedModel) {
         const findBrandModel = selectedBrandModels.find(model => model.value === selectedModel);
@@ -120,7 +125,6 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
           form.setFieldsValue({model: undefined});
         }
       }
-
     }
 
   }, [form, brands, models, selectedBrand, selectedModel]);
@@ -138,7 +142,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
       if (response.status === 200) {
         toast.success("Файлы успешно загружены!");
         closeFormModal()
-        await queryClient.invalidateQueries({queryKey: ['user-cars']});
+        await queryClient.refetchQueries({queryKey: ['user']});
         setFileList([])
 
         setTimeout(async () => {
@@ -188,7 +192,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
 
             if (res.status === 200) {
               setIsSubmittingForm(false);
-              await queryClient.invalidateQueries({queryKey: ['user-cars']});
+              await queryClient.refetchQueries({queryKey: ['user']});
               toast.success('Данные обновлены');
               setCarRegisterStep(2);
             }
@@ -210,7 +214,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
           if (res.status === 200) {
             setIsSubmittingForm(false);
             setCarRegisterStep(carRegisterStep + 1);
-            await queryClient.invalidateQueries({queryKey: ['user-cars']});
+            await queryClient.refetchQueries({queryKey: ['user']});
             toast.success('Автомобиль успешно добавлен');
           } else {
             setIsSubmittingForm(false);
@@ -249,6 +253,11 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
     }
   }
 
+  const handleNumberChange = (e) => {
+    const value = e.target.value.toUpperCase();
+    form.setFieldsValue({ number: value });
+  };
+
   return (
     <div className="car-form">
       <Form
@@ -269,7 +278,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
                 rules={[
                   {
                     required: true,
-                    message: 'Укажи бренд!',
+                    message: 'Укажите бренд!',
                   },
                 ]}
               >
@@ -281,7 +290,7 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
                   rules={[
                     {
                       required: true,
-                      message: 'Укажи модель!',
+                      message: 'Укажите модель!',
                     },
                   ]}
                 >
@@ -293,18 +302,22 @@ const CarForm = ({carIndex, initialValues, type, step = 1, images = [], onClose}
                 rules={[
                   {
                     required: true,
-                    message: 'Укажи номер!',
+                    message: 'Укажите номер!',
                   },
                 ]}
               >
-                <Input placeholder="Номер авто"/>
+                <Input
+                  placeholder="Номер авто"
+                  onChange={handleNumberChange}
+                  maxLength={9}
+                />
               </Form.Item>
               <Form.Item
                 name="year"
                 rules={[
                   {
                     required: true,
-                    message: 'Укажи год выпуска!',
+                    message: 'Укажите год выпуска!',
                   },
                 ]}
               >

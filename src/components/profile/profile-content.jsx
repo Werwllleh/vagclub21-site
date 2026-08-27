@@ -240,10 +240,6 @@ const ProfileContent = ({activeSection}) => {
 
   const {isLoading, user} = useUser();
 
-  useEffect(() => {
-    console.log(user)
-  }, [user]);
-
   // для admin/superadmin добавляем таб «Управление» → /admin
   const tabs = hasAdminAccess(user?.roles)
     ? [...profileTabs, {title: "Управление", link: "/admin"}]
@@ -480,9 +476,9 @@ const ProfileContent = ({activeSection}) => {
           </div>
         </div>
       </ProfileWrap>
-      {/*<Modal className="profile-car-form" open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
+      <Modal className="profile-car-form" open={isModalAddCarActive} onCancel={closeAddCarModal} footer={false}>
         <CarForm type={'register'} onClose={closeAddCarModal}/>
-      </Modal>*/}
+      </Modal>
     </>
   );
 };
