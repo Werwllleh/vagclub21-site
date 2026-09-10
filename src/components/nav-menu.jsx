@@ -171,6 +171,7 @@ const NavMenu = ({mobile, onLinkClick}) => {
                         href={subItem.path}
                         role="menuitem"
                         tabIndex={isOpen ? 0 : -1}
+                        target={subItem.target ?? ""}
                         onClick={() => {
                           closeNow()
                           onLinkClick?.()

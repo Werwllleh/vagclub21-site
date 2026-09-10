@@ -87,6 +87,19 @@ export const menuList = [
     ]
   },
   {
+    label: 'Полезное',
+    key: 'useful',
+    path: '',
+    children: [
+      {
+        label: 'Учет расходов',
+        key: 'car-expenses',
+        path: 'https://auto-notes.ru/',
+        target: "_blank"
+      },
+    ]
+  },
+  {
     label: 'Профиль',
     key: 'profile',
     path: '/profile',

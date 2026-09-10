@@ -43,7 +43,7 @@ const HeaderInner = styled.div`
     padding-block: 1.4rem;
     padding-inline: 1.6rem;
 
-    @media (min-width: ${customTheme.breakpoint.tablet}) {
+    @media (min-width: ${customTheme.breakpoint.semiDesktop}) {
         padding-block: 1.6rem;
         padding-inline: 2rem;
     }
@@ -70,7 +70,7 @@ const HeaderDesktopNavWrap = styled.div`
     margin-left: auto;
     display: none;
 
-    @media (min-width: ${customTheme.breakpoint.tablet}) {
+    @media (min-width: ${customTheme.breakpoint.semiDesktop}) {
         display: block;
     }
 `
@@ -79,7 +79,7 @@ const HeaderBurgerWrap = styled.div`
     margin-left: auto;
     display: block;
 
-    @media (min-width: ${customTheme.breakpoint.tablet}) {
+    @media (min-width: ${customTheme.breakpoint.semiDesktop}) {
         display: none;
     }
 `
