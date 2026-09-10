@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import {motion} from "framer-motion";
+import {motion} from "motion/react";
 import H1 from "@/components/UI/h1";
 import SocialsWidget from "@/components/socials-widget";
 import AnimateSection from "@/components/blocks/animate-section";

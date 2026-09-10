@@ -61,6 +61,7 @@ export const customTheme = {
     new: '#f1cc11',
     blue: '#004c9d',
     lightBlue: '#f4f7fb',
+    orange: '#eb6900',
   },
   font: {
     primary: 'Martian Mono, monospace',

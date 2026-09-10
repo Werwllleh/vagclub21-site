@@ -18,6 +18,7 @@ import Container from "@/components/container";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import AnimateSection from "@/components/blocks/animate-section";
 import PartnerBanner from "@/components/partners/partner-banner";
+import CarExpensesBanner from "@/components/car-expenses-banner";
 import scrollIntoView from "scroll-into-view-if-needed";
 import ProfileCompanyCard from "@/components/profile/profile-company-card";
 import {hasAdminAccess} from "@/config/roles";
@@ -203,15 +204,20 @@ const CarsList = styled.ul`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     gap: 3rem 2rem;
+`
 
-    & + button {
-        margin-top: 5rem;
-        margin-inline: auto;
-        font-size: 1.5rem;
-        padding-inline: 3rem;
-        padding-block: 1.2rem;
-        line-height: 1;
-    }
+const CarAddButton = styled.button`
+    margin-top: 5rem;
+    margin-inline: auto;
+    font-size: 1.5rem;
+    gap: 0 1rem;
+    padding-inline: 3rem;
+    padding-block: 1.2rem;
+    line-height: 1;
+`
+
+const ExpensesBanner = styled.div`
+  margin-block: 5rem;
 `
 
 const UserCompanies = styled.div``
@@ -403,14 +409,17 @@ const ProfileContent = ({activeSection}) => {
                           )
                         })}
                       </CarsList>
-                      <Button
+                      <ExpensesBanner>
+                        <CarExpensesBanner />
+                      </ExpensesBanner>
+                      <CarAddButton
                         onClick={openAddCarModal}
                         type="primary"
                         className="btn default"
                       >
                         <PlusOutlined/>
                         Добавить авто
-                      </Button>
+                      </CarAddButton>
                     </UserCars>
                   )}
                 </ProfileSectionInner>

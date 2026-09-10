@@ -94,7 +94,7 @@ export const menuList = [
       {
         label: 'Учет расходов',
         key: 'car-expenses',
-        path: 'https://auto-notes.ru/',
+        path: 'https://auto-notes.ru/?utm_source=vagclub21.ru&utm_medium=menu&utm_campaign=navigation',
         target: "_blank"
       },
     ]
