@@ -276,7 +276,9 @@ const CarExpensesBanner = () => {
             месте</Text>
           <LinkItem
             href="https://auto-notes.ru/?utm_source=vagclub21.ru&utm_medium=profile-page&utm_campaign=car-expenses-banner"
-            aria-label="Начать вести учет расходов">
+            aria-label="Начать вести учет расходов"
+            target={"_blank"}
+          >
             Начать учет
             <span>
                 <SvgIcon name="arrow"/>
