@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import Link from "next/link";
+import Image from "next/image";
 import ProductLabel from "@/components/products/product-label";
 
 
@@ -13,7 +14,17 @@ const ProductItem = ({info}) => {
       {info?.mark && <ProductLabel type={info.mark} />}
       <div className="product-item__body">
         <div className="product-item__image">
-          {info?.mainImage?.url ? <img loading="lazy" decoding="async" src={info?.mainImage?.url} alt={info.name}/> : null}
+          {info?.mainImage?.url ? (
+            <Image
+              loading="lazy"
+              src={info.mainImage.url}
+              alt={info.name || 'Товар'}
+              width={350}
+              height={350}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 350px"
+              style={{width: '100%', height: '100%', objectFit: 'contain'}}
+            />
+          ) : null}
           <Link href={link}/>
         </div>
         <div className="product-item__info">

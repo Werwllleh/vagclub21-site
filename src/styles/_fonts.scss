@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-Thin.ttf');
+  src: url('/fonts/MartianMono-Thin.woff2') format('woff2'),
+       url('/fonts/MartianMono-Thin.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -8,7 +9,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-ExtraLight.ttf');
+  src: url('/fonts/MartianMono-ExtraLight.woff2') format('woff2'),
+       url('/fonts/MartianMono-ExtraLight.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -16,7 +18,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-Light.ttf');
+  src: url('/fonts/MartianMono-Light.woff2') format('woff2'),
+       url('/fonts/MartianMono-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -24,7 +27,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-Regular.ttf');
+  src: url('/fonts/MartianMono-Regular.woff2') format('woff2'),
+       url('/fonts/MartianMono-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -32,7 +36,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-Medium.ttf');
+  src: url('/fonts/MartianMono-Medium.woff2') format('woff2'),
+       url('/fonts/MartianMono-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -40,7 +45,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-SemiBold.ttf');
+  src: url('/fonts/MartianMono-SemiBold.woff2') format('woff2'),
+       url('/fonts/MartianMono-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -48,7 +54,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-Bold.ttf');
+  src: url('/fonts/MartianMono-Bold.woff2') format('woff2'),
+       url('/fonts/MartianMono-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -56,7 +63,8 @@
 
 @font-face {
   font-family: "Martian Mono";
-  src: url('/fonts/MartianMono-ExtraBold.ttf');
+  src: url('/fonts/MartianMono-ExtraBold.woff2') format('woff2'),
+       url('/fonts/MartianMono-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;

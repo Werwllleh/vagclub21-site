@@ -12,14 +12,49 @@ import StyledComponentsRegistry from "@/lib/styled-registry";
 import {getMeet, getTechnicalWorkStatus, getCurrentYear, REVALIDATE_FAST} from "@/server/cms-data";
 
 
+import JsonLd from "@/components/seo/json-ld";
+import {generateOrganizationAndWebSiteJsonLd} from "@/lib/schema-org";
+
 export const metadata = {
   metadataBase: new URL('https://vagclub21.ru'),
-  title: PUBLIC_PAGES.HOME.SEO_TITLE,
+  title: {
+    default: PUBLIC_PAGES.HOME.SEO_TITLE,
+    template: '%s | VAGClub21'
+  },
   description: PUBLIC_PAGES.HOME.SEO_DESCRIPTION,
-  keywords: "VAGCLUB21, автомобильный клуб, Чебоксары, автосообщество, автолюбители, мероприятия, автомобили",
-  // './' — канонический URL резолвится в адрес текущей страницы (а не всегда главной)
-  alternates: {canonical: './'},
-  verification: {yandex: 'e1783a4d4e4edd5b'},
+  keywords: [
+    'VAGCLUB21', 'автоклуб Чебоксары', 'клуб VAG Чувашия', 'Volkswagen Чебоксары',
+    'Audi Чебоксары', 'Skoda Чебоксары', 'SEAT', 'сходки авто Чебоксары', 'автосообщество'
+  ],
+  alternates: {
+    canonical: './'
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'ru_RU',
+    url: 'https://vagclub21.ru',
+    siteName: 'VAGClub21 — Автоклуб Чебоксары',
+    title: PUBLIC_PAGES.HOME.SEO_TITLE,
+    description: PUBLIC_PAGES.HOME.SEO_DESCRIPTION,
+    images: [
+      {
+        url: '/images/og-main.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Автоклуб VAGClub21 Чебоксары',
+        type: 'image/jpeg'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: PUBLIC_PAGES.HOME.SEO_TITLE,
+    description: PUBLIC_PAGES.HOME.SEO_DESCRIPTION,
+    images: ['/images/og-main.jpg']
+  },
+  verification: {
+    yandex: 'e1783a4d4e4edd5b'
+  },
 };
 
 export default async function RootLayout({children}) {
@@ -35,8 +70,9 @@ export default async function RootLayout({children}) {
   return (
     <html lang="ru" data-scroll-behavior="smooth">
     <head>
-      <link rel="preload" href="/fonts/MartianMono-Regular.ttf" as="font" type="font/ttf" crossOrigin="anonymous"/>
-      <link rel="preload" href="/fonts/MartianMono-SemiBold.ttf" as="font" type="font/ttf" crossOrigin="anonymous"/>
+      <link rel="preload" href="/fonts/Montserrat-SemiBold.woff2" as="font" type="font/woff2" crossOrigin="anonymous"/>
+      <link rel="preload" href="/fonts/MartianMono-Regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous"/>
+      <JsonLd data={generateOrganizationAndWebSiteJsonLd()} />
     </head>
     <body>
     <StyledComponentsRegistry>

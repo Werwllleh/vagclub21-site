@@ -4,28 +4,28 @@ export const productsTypes = [
   {
     title: 'Наклейки',
     url: '/stickers',
-    image: 'stickers.jpg',
+    image: 'stickers.webp',
     active: true,
     label: 'Скоро'
   },
   {
     title: 'Ароматизаторы',
     url: '/flavours',
-    image: 'aromatizers.jpg',
+    image: 'aromatizers.webp',
     active: true,
     label: 'Скоро'
   },
   {
     title: 'Одежда',
     url: '',
-    image: 'merch.jpg',
+    image: 'merch.webp',
     active: false,
     label: 'Скоро'
   },
   {
     title: 'Номерные рамки',
     url: '',
-    image: 'number-frames.jpg',
+    image: 'number-frames.webp',
     active: false,
     label: 'Скоро'
   },

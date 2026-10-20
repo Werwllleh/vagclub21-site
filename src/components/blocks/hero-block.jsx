@@ -92,7 +92,7 @@ const HeroBlock = ({initialData = null}) => {
           )}
           {!isLoading && !!slider?.length && slider?.map((slide, index) => {
             return (
-              <SwiperSlide id={slide.id}>
+              <SwiperSlide key={slide.id} id={slide.id}>
                 <div className="hero-block-card">
                   <div className="hero-block-card__container container">
                     <div className="hero-block-card__body">
@@ -138,23 +138,39 @@ const HeroBlock = ({initialData = null}) => {
                       </motion.div>
                     </div>
                   </div>
-                  {slide?.bg_image && slide?.bg_image?.url && (
-                    <motion.div
-                      className="hero-block-card__background"
-                      style={{ filter: bgFilter, scale: bgScale }}
-                    >
-                      <Image
-                        loading={index === 0 ? 'eager' : 'lazy'}
-                        priority={index === 0}
-                        fetchPriority={index === 0 ? 'high' : undefined}
-                        sizes="100vw"
-                        width={1920}
-                        height={1080}
-                        src={slide.bg_image.url}
-                        alt={slide.bg_image.alt ? slide.bg_image.alt : `Слайд #${index}`}
-                      />
-                    </motion.div>
-                  )}
+                  {slide?.bg_image && slide?.bg_image?.url && (() => {
+                    const desktopUrl = slide.bg_image.url;
+                    const mobileUrl = slide.bg_image_mobile?.url || null;
+                    const altText = slide.bg_image_mobile?.alt || slide.bg_image.alt || `Слайд #${index}`;
+
+                    return (
+                      <motion.div
+                        className="hero-block-card__background"
+                        style={{ filter: bgFilter, scale: bgScale }}
+                      >
+                        <picture className="hero-block-card__picture">
+                          <source
+                            media="(max-width: 768px)"
+                            srcSet={`/_next/image?url=${encodeURIComponent(mobileUrl || desktopUrl)}&w=360&q=75 360w, /_next/image?url=${encodeURIComponent(mobileUrl || desktopUrl)}&w=480&q=75 480w, /_next/image?url=${encodeURIComponent(mobileUrl || desktopUrl)}&w=640&q=75 640w`}
+                            sizes="100vw"
+                          />
+                          <source
+                            media="(min-width: 769px)"
+                            srcSet={`/_next/image?url=${encodeURIComponent(desktopUrl)}&w=1080&q=75 1080w, /_next/image?url=${encodeURIComponent(desktopUrl)}&w=1200&q=75 1200w, /_next/image?url=${encodeURIComponent(desktopUrl)}&w=1920&q=75 1920w`}
+                            sizes="100vw"
+                          />
+                          <img
+                            src={`/_next/image?url=${encodeURIComponent(desktopUrl)}&w=1080&q=75`}
+                            alt={altText}
+                            loading={index === 0 ? "eager" : "lazy"}
+                            fetchPriority={index === 0 ? "high" : "auto"}
+                            decoding="async"
+                            className="hero-block-card__img"
+                          />
+                        </picture>
+                      </motion.div>
+                    );
+                  })()}
                 </div>
               </SwiperSlide>
             )

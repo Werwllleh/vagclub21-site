@@ -55,9 +55,10 @@ const AboutContent = () => {
                 <div className="about-list-item__image">
                   <Image
                     src={"/images/about/1.webp"}
-                    alt=""
+                    alt="Встречи клуба"
                     width={700}
                     height={500}
+                    sizes="(max-width: 768px) 100vw, 500px"
                     loading="lazy"
                   />
                 </div>
@@ -76,9 +77,10 @@ const AboutContent = () => {
                 <div className="about-list-item__image">
                   <Image
                     src={"/images/about/2.webp"}
-                    alt=""
+                    alt="Мероприятия клуба"
                     width={700}
                     height={500}
+                    sizes="(max-width: 768px) 100vw, 500px"
                     loading="lazy"
                   />
                 </div>
@@ -109,9 +111,10 @@ const AboutContent = () => {
                 <div className="about-list-item__image">
                   <Image
                     src={"/images/about/3.webp"}
-                    alt=""
+                    alt="Квесты клуба"
                     width={700}
                     height={500}
+                    sizes="(max-width: 768px) 100vw, 500px"
                     loading="lazy"
                   />
                 </div>

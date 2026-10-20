@@ -14,7 +14,7 @@ const TelegramIcon = () => (
   </svg>
 );
 
-const AuthButton = () => {
+const AuthButton = ({ onSuccess, redirectTo = PROTECTED_PAGES.PROFILE }) => {
 
   const [domain, setDomain] = useState("");
   const queryClient = useQueryClient();
@@ -42,10 +42,14 @@ const AuthButton = () => {
         // без await: invalidate обновляет пользователя в фоне
         queryClient.invalidateQueries({queryKey: ['user']});
         toast.success('Успешная авторизация!');
-        // полная навигация вместо router.push: клиентский Router Cache хранит
-        // /profile как redirect на /login (закешировано до авторизации), из-за
-        // чего push возвращал обратно на /login
-        window.location.assign(PROTECTED_PAGES.PROFILE);
+        if (typeof onSuccess === 'function') {
+          onSuccess(response);
+        } else {
+          // полная навигация вместо router.push: клиентский Router Cache хранит
+          // /profile как redirect на /login (закешировано до авторизации), из-за
+          // чего push возвращал обратно на /login
+          window.location.assign(redirectTo);
+        }
       } else {
         toast.error('Ошибка авторизации');
       }

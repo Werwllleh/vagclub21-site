@@ -228,6 +228,7 @@ const PartnerCard = ({partner}) => {
               alt={partner?.logo?.alt || 'logo'}
               width={partner?.logo?.width || 200}
               height={partner?.logo?.height || 200}
+              sizes="(max-width: 768px) 120px, 200px"
             />
           ) : (
             <SvgIcon name="no_photo" />

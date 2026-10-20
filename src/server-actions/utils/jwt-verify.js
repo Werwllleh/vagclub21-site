@@ -1,4 +1,3 @@
-'use server'
 import * as jose from 'jose'
 
 export async function jwtVerifyServer(accessToken) {

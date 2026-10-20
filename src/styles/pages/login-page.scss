@@ -1,10 +1,7 @@
 @use "../variables";
 
 .login-page {
-
-  &__title {}
-
-  &__auth-button {
-    margin: 2rem 0 0 0;
-  }
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1rem 0;
 }

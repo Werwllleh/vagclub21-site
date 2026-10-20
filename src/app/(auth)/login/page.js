@@ -1,16 +1,17 @@
-import AuthButton from "@/components/auth-button";
-import H1 from "@/components/UI/h1";
+import AuthForm from "@/components/forms/auth-form";
+
+export const metadata = {
+  title: 'Вход в аккаунт',
+  description: 'Авторизация в автомобильном сообществе VAGClub21',
+  robots: { index: false, follow: false },
+};
 
 const Page = () => {
-
   return (
     <div className="page ppt ppb">
       <div className="container">
         <div className="login-page">
-          <H1 className="login-page__title pageTitle">Авторизация</H1>
-          <div className="login-page__auth-button">
-            <AuthButton />
-          </div>
+          <AuthForm redirectOnSuccess={true} />
         </div>
       </div>
     </div>

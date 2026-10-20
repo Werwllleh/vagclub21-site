@@ -330,8 +330,15 @@ const CarExpensesBanner = () => {
               </li>
             </ul>
           </Statistic>
-          <Image className="car" loading="lazy" src={'/images/arteon.webp'} alt="Баннер - Учет расходов на автомобиль"
-                 width={700} height={355}/>
+          <Image
+            className="car"
+            loading="lazy"
+            src={'/images/arteon.webp'}
+            alt="Баннер - Учет расходов на автомобиль"
+            width={700}
+            height={355}
+            sizes="(max-width: 768px) 100vw, 700px"
+          />
         </BannerImage>
         <Icons>
           <li>

@@ -18,7 +18,14 @@ const ProductTypes = () => {
               >
                 {product.image ? (
                   <div className="product-types__image">
-                    <Image fetchPriority="high" loading="eager" width={300} height={300} src={`/images/products/${product.image}`} alt=""/>
+                    <Image
+                      loading="lazy"
+                      sizes="(max-width: 768px) 50vw, 300px"
+                      width={300}
+                      height={300}
+                      src={`/images/products/${product.image}`}
+                      alt={product.title || "Товар клуба"}
+                    />
                   </div>
                 ) : (
                   <div className="product-types__noimage">

@@ -21,6 +21,7 @@ import PartnerBanner from "@/components/partners/partner-banner";
 import CarExpensesBanner from "@/components/car-expenses-banner";
 import scrollIntoView from "scroll-into-view-if-needed";
 import ProfileCompanyCard from "@/components/profile/profile-company-card";
+import ProfileSecurity from "@/components/profile/profile-security";
 import {hasAdminAccess} from "@/config/roles";
 
 const profileTabs = [
@@ -308,6 +309,7 @@ const ProfileContent = ({activeSection}) => {
               alt={"Profile background image"}
               width={2500}
               height={1250}
+              sizes="(max-width: 768px) 100vw, 1920px"
               loading="lazy"
             />
           </ProfileHeaderBg>
@@ -323,6 +325,7 @@ const ProfileContent = ({activeSection}) => {
                     alt={"avatar"}
                     width={120}
                     height={120}
+                    sizes="120px"
                   />
                 </span>
                 ) : (
@@ -380,6 +383,9 @@ const ProfileContent = ({activeSection}) => {
                       }}/>
                     )}
                   </UserProfile>
+                  {user && user?.data && (
+                    <ProfileSecurity user={user} />
+                  )}
                   {user && user?.data && (
                     <LogoutWrap>
                       <Button

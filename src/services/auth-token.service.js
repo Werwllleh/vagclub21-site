@@ -14,8 +14,8 @@ class AuthTokenService {
   setSession() {
     Cookies.set(SESSION_MARKER, '1', {
       domain: cookieDomain,
-      sameSite: 'strict',
-      expires: 7, // как у refreshToken
+      sameSite: 'lax',
+      expires: 30, // 30 дней для долгой сессии
     });
   }
 

@@ -4,8 +4,9 @@ import {Suspense} from "react";
 import Loading from "@/components/loading";
 
 export const metadata = {
-  title: SEO_CONFIG.PROFILE.SEO_TITLE,
-  description: SEO_CONFIG.PROFILE.SEO_DESCRIPTION,
+  title: 'Личный кабинет',
+  description: 'Профиль участника автомобильного сообщества VAGClub21',
+  robots: { index: false, follow: false },
 };
 
 const Page = async ({searchParams}) => {

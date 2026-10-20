@@ -81,8 +81,12 @@ const PartnersLabels = ({initialData = null}) => {
     return null;
   }
 
+  const repeatCount = partnerLabelsData?.length
+    ? Math.max(2, Math.ceil(24 / partnerLabelsData.length))
+    : 0;
+
   const duplicatedLabels = partnerLabelsData
-    ? Array.from({length: 10}).flatMap(() => partnerLabelsData)
+    ? Array.from({length: repeatCount}).flatMap(() => partnerLabelsData)
     : [];
 
   return (
@@ -107,10 +111,11 @@ const PartnersLabels = ({initialData = null}) => {
                 {item?.logo?.url && (
                   <Image
                     loading="lazy"
+                    unoptimized
                     src={item.logo.url}
                     alt={item.logo.alt || ''}
-                    width={item.logo.width}
-                    height={item.logo.height}
+                    width={item.logo.width || 120}
+                    height={item.logo.height || 60}
                   />
                 )}
               </PartnersLabelsItem>

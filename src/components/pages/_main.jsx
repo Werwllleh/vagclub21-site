@@ -1,20 +1,32 @@
 "use client"
 import React from 'react';
+import dynamic from 'next/dynamic';
 import HeroBlock from "@/components/blocks/hero-block";
-import CooperationForm from "@/components/cooperation-form";
 import Link from "next/link";
-import ProductTypes from "@/components/products/products-types";
 import AnimateSection from "@/components/blocks/animate-section";
 import styled from "styled-components";
 import {H1Element} from "@/components/UI/h1";
 import {customTheme} from "@/styles/theme";
-import PartnersLabels from "@/components/partners/partners-labels";
-import PartnerBanner from "@/components/partners/partner-banner";
-import PartnersContent from "@/components/partners/partners-content";
-import PartnerAdvantages from "@/components/partners/partner-advantages";
 import Container from "@/components/container";
 import Image from "next/image";
 
+// Динамическая загрузка блоков ниже первого экрана по ходу скролла
+// Это существенно сокращает размер начального JS-бандла и ускоряет FCP/LCP
+const ProductTypes = dynamic(() => import("@/components/products/products-types"), {
+  loading: () => <div style={{ minHeight: '380px' }} />,
+});
+
+const PartnerAdvantages = dynamic(() => import("@/components/partners/partner-advantages"), {
+  loading: () => <div style={{ minHeight: '200px' }} />,
+});
+
+const PartnerBanner = dynamic(() => import("@/components/partners/partner-banner"), {
+  loading: () => <div style={{ minHeight: '260px' }} />,
+});
+
+const PartnersLabels = dynamic(() => import("@/components/partners/partners-labels"), {
+  loading: () => <div style={{ minHeight: '120px' }} />,
+});
 
 const SectionTitle = styled(H1Element)`
     font-weight: 600;
@@ -29,7 +41,6 @@ const SectionTitle = styled(H1Element)`
 `
 
 const MainPage = ({heroSlider = null, partnersLabels = null}) => {
-
 
   return (
     <div className="page-main">
@@ -46,9 +57,6 @@ const MainPage = ({heroSlider = null, partnersLabels = null}) => {
           <ProductTypes />
         </div>
       </AnimateSection>
-      {/*<section className="page-main__cooperation">
-        <CooperationForm />
-      </section>*/}
       <AnimateSection
         className={"partner-block"}
         initial={{ opacity: 0, y: 40 }}
@@ -75,7 +83,14 @@ const MainPage = ({heroSlider = null, partnersLabels = null}) => {
         <div className="container">
           <div className="about__body">
             <div className="about__image">
-              <Image loading="lazy" width={600} height={400} src={"/images/cars.webp"} alt="cars" />
+              <Image
+                loading="lazy"
+                width={600}
+                height={400}
+                sizes="(max-width: 768px) 100vw, 600px"
+                src={"/images/cars.webp"}
+                alt="Автомобили клуба VAGCLUB21"
+              />
             </div>
             <div className="about__description">
               <SectionTitle as="p">Авто сообщество VAGCLUB21</SectionTitle>

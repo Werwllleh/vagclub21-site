@@ -1,5 +1,3 @@
-'use server'
-
 import {getTokensFromRequest} from '@/server-actions/utils/get-tokens-from-request'
 import {jwtVerifyServer} from '@/server-actions/utils/jwt-verify'
 import {nextRedirect} from '@/server-actions/utils/next-redirect'

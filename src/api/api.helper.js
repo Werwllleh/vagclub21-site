@@ -3,12 +3,14 @@ export const getContentType = () => ({
 })
 
 export const errorCatch = (error) => {
-
-  const message = error?.response?.error
+  const data = error?.response?.data;
+  const message = data?.message || data?.error || data;
 
   return message
-    ? typeof error.response.data.message === 'object'
-      ? message[0]
+    ? typeof message === 'object'
+      ? Array.isArray(message)
+        ? message[0]
+        : JSON.stringify(message)
       : message
-    : error.message
+    : error?.message || 'Unknown error';
 }

@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import PartnersService from "@/services/partners.service";
+import CmsService from "@/services/cms.service";
 
 // серверные данные не передаём в useQuery (Date.now() запрещён при пререндере,
 // см. usePartners) — запрос отключён, данные мержатся вручную
@@ -8,9 +8,9 @@ export function usePartner(slug, initialData = null) {
   const { data, isLoading } = useQuery({
     // slug в ключе — иначе при переходе между партнёрами показываются данные предыдущего
     queryKey: ['partner', slug],
-    queryFn: async () => await PartnersService.fetchPartnerInfo(slug),
+    queryFn: async () => await CmsService.fetchPartnerInfo(slug),
     staleTime: 10 * 60 * 1000,
-    enabled: !initialData,
+    enabled: !initialData && Boolean(slug),
   });
 
   const partner = data?.data ?? initialData ?? null;

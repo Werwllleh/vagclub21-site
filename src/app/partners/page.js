@@ -1,12 +1,30 @@
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import PartnersContent from "@/components/partners/partners-content";
 import {getPartners, getPartnerCategories} from "@/server/cms-data";
+import JsonLd from "@/components/seo/json-ld";
+import {generateBreadcrumbsJsonLd} from "@/lib/schema-org";
 
 const SHOW_DATA_PARTNERS_LIMIT = 8;
 
 export const metadata = {
   title: PUBLIC_PAGES.PARTNERS.SEO_TITLE,
   description: PUBLIC_PAGES.PARTNERS.SEO_DESCRIPTION,
+  alternates: { canonical: '/partners' },
+  openGraph: {
+    type: 'website',
+    locale: 'ru_RU',
+    url: 'https://vagclub21.ru/partners',
+    siteName: 'VAGClub21',
+    title: PUBLIC_PAGES.PARTNERS.SEO_TITLE,
+    description: PUBLIC_PAGES.PARTNERS.SEO_DESCRIPTION,
+    images: [{ url: '/images/og-main.jpg', width: 1200, height: 630, alt: 'Партнеры VAGClub21' }]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: PUBLIC_PAGES.PARTNERS.SEO_TITLE,
+    description: PUBLIC_PAGES.PARTNERS.SEO_DESCRIPTION,
+    images: ['/images/og-main.jpg']
+  }
 };
 
 // Страница динамическая (пагинация через searchParams), но данные берутся
@@ -23,12 +41,20 @@ const Page = async ({searchParams}) => {
     getPartnerCategories().catch(() => null),
   ]);
 
+  const breadcrumbs = [
+    { name: 'Главная', url: '/' },
+    { name: 'Партнеры', url: '/partners' }
+  ];
+
   return (
-    <PartnersContent
-      initialPartners={partners}
-      initialPage={page}
-      initialCategories={categories}
-    />
+    <>
+      <JsonLd data={generateBreadcrumbsJsonLd(breadcrumbs)} />
+      <PartnersContent
+        initialPartners={partners}
+        initialPage={page}
+        initialCategories={categories}
+      />
+    </>
   );
 };
 

@@ -41,15 +41,17 @@ const CarCard = ({car, non_gallery = false, cardIndex}) => {
                       <Image
                         width={400}
                         height={400}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                         style={{width: '100%', height: '100%'}}
                         loading={cardIndex < 3 ? "eager" : "lazy"}
                         className="car-card__image--main"
                         src={`${API_URL}/image/${image.source}`}
-                        alt=""
+                        alt={car?.model ? `${car.brand} ${car.model}` : "Автомобиль клуба"}
                       />
                       <Image
                         width={400}
                         height={400}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                         style={{width: "100%", height: "100%"}}
                         loading="lazy"
                         className="car-card__image--bg"
@@ -66,15 +68,16 @@ const CarCard = ({car, non_gallery = false, cardIndex}) => {
               <Image
                 width={400}
                 height={250}
-                // style={{width: 'auto', height: 'auto'}}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                 loading={cardIndex < 3 ? "eager" : "lazy"}
                 className="car-card__image--main"
                 src={`${API_URL}/image/${car?.carsImages[0]?.source}`}
-                alt=""
+                alt={car?.model ? `${car.brand} ${car.model}` : "Автомобиль клуба"}
               />
               <Image
                 width={400}
                 height={400}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                 style={{width: '100%', height: '100%'}}
                 loading="lazy"
                 className="car-card__image--bg"

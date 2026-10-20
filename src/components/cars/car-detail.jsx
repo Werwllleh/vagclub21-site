@@ -259,7 +259,12 @@ const CarDetail = ({carData}) => {
                     return (
                       <SwiperSlide key={image}>
                         <span className="image-blur">
-                          <img loading="lazy" decoding="async" src={image} alt="image-blur"/>
+                          <img
+                            loading="lazy"
+                            decoding="async"
+                            src={`/_next/image?url=${encodeURIComponent(image)}&w=360&q=50`}
+                            alt=""
+                          />
                         </span>
                         <Image.PreviewGroup
                           items={carImages}

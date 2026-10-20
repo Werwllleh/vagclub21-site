@@ -13,6 +13,7 @@ import 'swiper/css/pagination';
 import Loader from "@/components/loader";
 import {RichText} from "@payloadcms/richtext-lexical/react";
 import Link from "next/link";
+import Image from "next/image";
 import ProductLabel from "@/components/products/product-label";
 import AnimateSection from "@/components/blocks/animate-section";
 
@@ -50,15 +51,41 @@ const ProductDetail = ({slug, initialData = null}) => {
                         >
                           <>
                             <SwiperSlide key={product.mainImage.id}>
-                              <img loading="lazy" decoding="async" src={product.mainImage.url} alt={product.mainImage.alt}/>
-                              <img loading="lazy" decoding="async" src={product.mainImage.url} alt={product.mainImage.alt}/>
+                              <Image
+                                loading="eager"
+                                src={product.mainImage.url}
+                                alt={product.mainImage.alt || product.name}
+                                width={600}
+                                height={600}
+                                sizes="(max-width: 768px) 100vw, 600px"
+                                style={{width: '100%', height: '100%', objectFit: 'contain'}}
+                              />
+                              <img
+                                loading="lazy"
+                                decoding="async"
+                                src={`/_next/image?url=${encodeURIComponent(product.mainImage.url)}&w=360&q=50`}
+                                alt=""
+                              />
                               <span></span>
                             </SwiperSlide>
                             {product.gallery.map((image) => {
                               return (
                                 <SwiperSlide key={image.id}>
-                                  <img loading="lazy" decoding="async" src={image.url} alt={image.alt}/>
-                                  <img loading="lazy" decoding="async" src={image.url} alt={image.alt}/>
+                                  <Image
+                                    loading="lazy"
+                                    src={image.url}
+                                    alt={image.alt || ''}
+                                    width={600}
+                                    height={600}
+                                    sizes="(max-width: 768px) 100vw, 600px"
+                                    style={{width: '100%', height: '100%', objectFit: 'contain'}}
+                                  />
+                                  <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    src={`/_next/image?url=${encodeURIComponent(image.url)}&w=360&q=50`}
+                                    alt=""
+                                  />
                                   <span></span>
                                 </SwiperSlide>
                               )

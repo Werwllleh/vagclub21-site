@@ -175,7 +175,14 @@ const PartnerBanner = () => {
           </BannerInfo>
         </Container>
         <BannerBg>
-          <Image loading="lazy" src={'/images/partner-banner.webp'} alt="Баннер партнерство" width={1920} height={300}/>
+          <Image
+            loading="lazy"
+            src={'/images/partner-banner.webp'}
+            alt="Баннер партнерство"
+            width={1920}
+            height={300}
+            sizes="(max-width: 768px) 100vw, 1200px"
+          />
         </BannerBg>
       </BannerWrapper>
       {modalsRequested && (

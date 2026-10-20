@@ -2,6 +2,8 @@ import CarDetail from "@/components/cars/car-detail";
 import {PUBLIC_PAGES} from "@/config/pages/public.config";
 import CarsContent from "@/components/cars/cars-content";
 import {getCarInfo as getCarInfoCached, getCarsList} from "@/server/cms-data";
+import JsonLd from "@/components/seo/json-ld";
+import {generateCarJsonLd, generateBreadcrumbsJsonLd} from "@/lib/schema-org";
 
 // кешируемый загрузчик (cacheComponents требует кешированных данных в generateMetadata)
 const getCarInfo = async (slug) => {
@@ -39,12 +41,48 @@ export async function generateMetadata({ params }) {
   }
 
   const {data} = await getCarInfo(slug);
+  if (!data?.brand || !data?.model) {
+    return {
+      title: PUBLIC_PAGES.CARS.SEO_TITLE,
+      description: PUBLIC_PAGES.CARS.SEO_DESCRIPTION,
+    };
+  }
+
+  const carTitle = `${data.brand} ${data.model} ${data.year ? `(${data.year})` : ''} ${data.number || ''}`.trim();
+  const pageTitle = `${carTitle} — участник автоклуба в Чебоксарах`;
+  const pageDescription = data.note 
+    ? `${carTitle}: ${data.note.slice(0, 110)}... Участник автоклуба VAGClub21 в г. Чебоксары.`
+    : `Автомобиль ${carTitle} участника автоклуба VAGClub21 в г. Чебоксары. Фотографии, технические характеристики и доработки.`;
+
+  const serverUrl = process.env.NEXT_PUBLIC_URL_SERVER || 'https://vagclub21.ru';
+  const ogImages = (data.carsImages ?? []).map(img => ({
+    url: img.source?.startsWith('http') ? img.source : `${serverUrl}/image/${img.source}`,
+    width: 1200,
+    height: 800,
+    alt: `${data.brand} ${data.model} #${data.number || ''}`
+  })).filter(img => Boolean(img.url));
+
+  const mainImage = ogImages[0]?.url || 'https://vagclub21.ru/images/og-main.jpg';
 
   return {
-    title: `${data?.brand} ${data?.model} ${data?.number} | VagClub21` || 'Информация об авто | VagClub21',
+    title: pageTitle,
+    description: pageDescription,
+    alternates: { canonical: `/cars/${slug}` },
     openGraph: {
-      title: `${data?.brand} ${data?.model} ${data?.number} | VagClub21` || 'Информация об авто | VagClub21',
+      type: 'article',
+      locale: 'ru_RU',
+      url: `https://vagclub21.ru/cars/${slug}`,
+      siteName: 'VAGClub21',
+      title: pageTitle,
+      description: pageDescription,
+      images: ogImages.length > 0 ? ogImages : [{ url: mainImage, width: 1200, height: 630 }]
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageTitle,
+      description: pageDescription,
+      images: [mainImage]
+    }
   };
 }
 
@@ -55,8 +93,18 @@ const Page = async ({params}) => {
 
   const {data} = await getCarInfo(slug);
 
+  const breadcrumbs = [
+    { name: 'Главная', url: '/' },
+    { name: 'Клубные авто', url: '/cars' },
+    { name: `${data?.brand || ''} ${data?.model || ''}`.trim() || 'Автомобиль', url: `/cars/${slug}` }
+  ];
+
   return (
-    <CarDetail carData={data} />
+    <>
+      <JsonLd data={generateCarJsonLd(data, slug)} />
+      <JsonLd data={generateBreadcrumbsJsonLd(breadcrumbs)} />
+      <CarDetail carData={data} />
+    </>
   );
 };
 
