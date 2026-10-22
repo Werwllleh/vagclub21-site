@@ -21,6 +21,10 @@ const AuthButton = ({ onSuccess, redirectTo = PROTECTED_PAGES.PROFILE }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (window.location.hostname === 'www.vagclub21.ru') {
+        window.location.replace(`https://vagclub21.ru${window.location.pathname}${window.location.search}`);
+        return;
+      }
       setDomain(window.location.hostname);
     }
   }, []);

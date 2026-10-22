@@ -86,6 +86,7 @@ class PublicPages {
   AUTH = '/auth'
   LOGIN = '/login'
   REGISTER = '/register'
+  RESET_PASSWORD = '/reset-password'
 }
 
 export const PUBLIC_PAGES = new PublicPages()

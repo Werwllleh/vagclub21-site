@@ -39,6 +39,14 @@ class AuthService {
     return await instance.post('/auth/set-credentials', { email, password, currentPassword });
   }
 
+  async forgotPassword({ email }) {
+    return await axiosClassic.post('/auth/forgot-password', { email });
+  }
+
+  async resetPassword({ token, password }) {
+    return await axiosClassic.post('/auth/reset-password', { token, password });
+  }
+
   async getNewTokens() {
 
     return await axiosClassic.post(

@@ -113,6 +113,67 @@ const TgButtonWrap = styled.div`
   }
 `;
 
+const ForgotPasswordRow = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.6rem;
+  margin-bottom: 1.2rem;
+
+  .forgot-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: ${customTheme.color.primary};
+    font-size: 1.25rem;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
+
+const ForgotDescription = styled.p`
+  font-size: 1.35rem;
+  color: ${customTheme.color.grey};
+  line-height: 1.5;
+  margin-bottom: 1.6rem;
+  text-align: center;
+`;
+
+const SuccessMessageBox = styled.div`
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 1.4rem;
+  border-radius: ${customTheme.radius.r10};
+  font-size: 1.35rem;
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 1.6rem;
+`;
+
+const BackToLoginButton = styled.button`
+  background: none;
+  border: none;
+  color: ${customTheme.color.primary};
+  font-size: 1.35rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.2rem;
+  width: 100%;
+  justify-content: center;
+  font-family: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 const AuthForm = ({
   onClose,
   redirectTo = PROTECTED_PAGES.PROFILE,
@@ -121,8 +182,11 @@ const AuthForm = ({
   const shouldRedirect = redirectOnSuccess !== undefined ? redirectOnSuccess : !onClose;
   const [activeTab, setActiveTab] = useState("login"); // "login" | "register"
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
+  const [forgotSent, setForgotSent] = useState(false);
   const [loginForm] = Form.useForm();
   const [registerForm] = Form.useForm();
+  const [forgotForm] = Form.useForm();
   const queryClient = useQueryClient();
 
   const {user, isLoading} = useUser();
@@ -151,6 +215,25 @@ const AuthForm = ({
       }
     } catch (err) {
       const msg = err.response?.data?.error || err.message || 'Ошибка авторизации';
+      toast.error(msg);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleForgot = async (values) => {
+    setIsSubmitting(true);
+    try {
+      const res = await authService.forgotPassword({
+        email: values.email,
+      });
+
+      if (res.status === 200) {
+        setForgotSent(true);
+        toast.success('Инструкция отправлена!');
+      }
+    } catch (err) {
+      const msg = err.response?.data?.error || err.message || 'Ошибка при отправке запроса';
       toast.error(msg);
     } finally {
       setIsSubmitting(false);
@@ -201,27 +284,102 @@ const AuthForm = ({
     <AuthFormWrap>
       <AuthFormBody>
         <AuthFormTitle>
-          {activeTab === "login" ? "Вход в аккаунт" : "Регистрация"}
+          {showForgot
+            ? "Восстановление пароля"
+            : activeTab === "login"
+            ? "Вход в аккаунт"
+            : "Регистрация"}
         </AuthFormTitle>
 
-        <TabSwitcher>
-          <TabButton
-            type="button"
-            $active={activeTab === "login"}
-            onClick={() => setActiveTab("login")}
-          >
-            Вход
-          </TabButton>
-          <TabButton
-            type="button"
-            $active={activeTab === "register"}
-            onClick={() => setActiveTab("register")}
-          >
-            Регистрация
-          </TabButton>
-        </TabSwitcher>
+        {!showForgot && (
+          <TabSwitcher>
+            <TabButton
+              type="button"
+              $active={activeTab === "login"}
+              onClick={() => {
+                setActiveTab("login");
+                setShowForgot(false);
+              }}
+            >
+              Вход
+            </TabButton>
+            <TabButton
+              type="button"
+              $active={activeTab === "register"}
+              onClick={() => {
+                setActiveTab("register");
+                setShowForgot(false);
+              }}
+            >
+              Регистрация
+            </TabButton>
+          </TabSwitcher>
+        )}
 
-        {activeTab === "login" ? (
+        {showForgot ? (
+          <div>
+            {forgotSent ? (
+              <>
+                <SuccessMessageBox>
+                  Ссылка для сброса пароля отправлена! Проверьте Telegram-бот <b>VW21AuthBot</b> или вашу электронную почту. Ссылка действует 1 час.
+                </SuccessMessageBox>
+                <BackToLoginButton
+                  type="button"
+                  onClick={() => {
+                    setShowForgot(false);
+                    setForgotSent(false);
+                    forgotForm.resetFields();
+                  }}
+                >
+                  ← Вернуться ко входу
+                </BackToLoginButton>
+              </>
+            ) : (
+              <>
+                <ForgotDescription>
+                  Введите ваш email, и мы отправим ссылку для установки нового пароля в Telegram или на почту.
+                </ForgotDescription>
+                <StyledForm
+                  form={forgotForm}
+                  layout="vertical"
+                  variant="filled"
+                  onFinish={handleForgot}
+                  disabled={isSubmitting}
+                  requiredMark={false}
+                >
+                  <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[
+                      { required: true, message: 'Введите адрес email' },
+                      { type: 'email', message: 'Некорректный формат email' },
+                    ]}
+                  >
+                    <Input placeholder="example@mail.ru" autoComplete="email" />
+                  </Form.Item>
+
+                  <Button
+                    className="btn default l submit-btn"
+                    type="primary"
+                    htmlType="submit"
+                    loading={isSubmitting}
+                  >
+                    Отправить ссылку
+                  </Button>
+                </StyledForm>
+                <BackToLoginButton
+                  type="button"
+                  onClick={() => {
+                    setShowForgot(false);
+                    setForgotSent(false);
+                  }}
+                >
+                  ← Назад ко входу
+                </BackToLoginButton>
+              </>
+            )}
+          </div>
+        ) : activeTab === "login" ? (
           <StyledForm
             form={loginForm}
             layout="vertical"
@@ -248,6 +406,19 @@ const AuthForm = ({
             >
               <Input.Password placeholder="Ваш пароль" autoComplete="current-password" />
             </Form.Item>
+
+            <ForgotPasswordRow>
+              <button
+                type="button"
+                className="forgot-btn"
+                onClick={() => {
+                  setShowForgot(true);
+                  setForgotSent(false);
+                }}
+              >
+                Забыли пароль?
+              </button>
+            </ForgotPasswordRow>
 
             <Button
               className="btn default l submit-btn"
@@ -314,13 +485,17 @@ const AuthForm = ({
           </StyledForm>
         )}
 
-        <DividerWrap>
-          <span>или через Telegram</span>
-        </DividerWrap>
+        {!showForgot && (
+          <>
+            <DividerWrap>
+              <span>или через Telegram</span>
+            </DividerWrap>
 
-        <TgButtonWrap>
-          <AuthButton onSuccess={handleTelegramSuccess} redirectTo={redirectTo} />
-        </TgButtonWrap>
+            <TgButtonWrap>
+              <AuthButton onSuccess={handleTelegramSuccess} redirectTo={redirectTo} />
+            </TgButtonWrap>
+          </>
+        )}
       </AuthFormBody>
     </AuthFormWrap>
   );

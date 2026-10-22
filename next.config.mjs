@@ -73,6 +73,21 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.vagclub21.ru',
+          },
+        ],
+        destination: 'https://vagclub21.ru/:path*',
+        permanent: true,
+      },
+    ];
+  },
 }
 
 export default nextConfig
