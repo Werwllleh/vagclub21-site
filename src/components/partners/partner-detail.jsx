@@ -701,7 +701,7 @@ const PartnerDetail = ({partnerData}) => {
             )}
           </PartnerFooter>
           <PartnerNote>
-            Администрация автоклуба не&nbsp;отвечает напрямую за&nbsp;услуги партнеров клуба, но&nbsp;всегда готовы помочь разобраться в&nbsp;сложных ситуациях. Если вопрос не&nbsp;удалось решить на&nbsp;месте, пожалуйста, свяжитесь с&nbsp;<Link href={"#"} target={"_blank"}>главным администратором</Link>&nbsp;&mdash; мы&nbsp;найдем решение.
+            Администрация автоклуба не&nbsp;отвечает напрямую за&nbsp;услуги партнеров клуба, но&nbsp;всегда готовы помочь разобраться в&nbsp;сложных ситуациях. Если вопрос не&nbsp;удалось решить на&nbsp;месте, пожалуйста, свяжитесь с&nbsp;<Link href="https://t.me/billycreis" target="_blank" rel="noopener noreferrer">главным администратором</Link>&nbsp;&mdash; мы&nbsp;найдем решение.
           </PartnerNote>
           {isCompanyFree && (
             <PartnerAttach>
