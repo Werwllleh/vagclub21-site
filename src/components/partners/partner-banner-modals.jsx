@@ -31,7 +31,11 @@ const PartnerBannerModals = ({
         onCancel={closeAuthModal}
         footer={false}
       >
-        <AuthForm onClose={closeAuthModal} />
+        <AuthForm
+          onClose={closeAuthModal}
+          redirectTo="/profile?section=companies"
+          redirectOnSuccess={true}
+        />
       </Modal>
     </>
   );

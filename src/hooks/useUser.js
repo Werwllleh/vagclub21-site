@@ -11,8 +11,17 @@ export function useUser() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    setEnabled(AuthTokenService.hasSession());
+    const updateSession = () => {
+      setEnabled(AuthTokenService.hasSession());
+    };
+
+    updateSession();
     setChecked(true);
+
+    window.addEventListener('auth-session-change', updateSession);
+    return () => {
+      window.removeEventListener('auth-session-change', updateSession);
+    };
   }, []);
 
   const { data, isLoading } = useQuery({
@@ -25,6 +34,6 @@ export function useUser() {
   return {
     // пока не проверили маркер — держим загрузку; аноним после проверки → false
     isLoading: !checked || (enabled && isLoading),
-    user: data?.data?.user ?? null,
+    user: enabled ? (data?.data?.user ?? null) : null,
   };
 }
